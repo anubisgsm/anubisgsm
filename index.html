@@ -33,7 +33,7 @@
             justify-content: center;
             gap: 15px;
             margin-bottom: 10px;
-            cursor: pointer; /* Logoya tıklandığını belli eder */
+            cursor: pointer;
             user-select: none;
         }
         .logo-container img {
@@ -248,12 +248,11 @@
             color: #2b2b2b;
         }
 
-        /* İşlem Sütunu Başlangıçta Gizli (Müşteriler Görmez) */
         .admin-col {
             display: none;
         }
 
-        /* MODAL */
+        /* MODAL (AÇILIR KART) */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -315,12 +314,12 @@
             border-radius: 6px;
             margin-bottom: 8px;
         }
-        .url-input-box {
+        .input-group-box {
             display: none; /* Müşterilerde gizli, admin girince açılır */
             gap: 5px;
             margin-top: 8px;
         }
-        .url-input-box input {
+        .input-group-box input, .input-group-box textarea {
             flex: 1;
             padding: 6px 10px;
             font-size: 12px;
@@ -328,7 +327,7 @@
             border-radius: 4px;
             outline: none;
         }
-        .url-input-box button {
+        .input-group-box button {
             padding: 6px 12px;
             background: var(--primary-color);
             color: white;
@@ -342,11 +341,23 @@
             margin: 8px 0;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             border-bottom: 1px solid #eee;
             padding-bottom: 6px;
         }
         .modal-body strong {
             color: var(--primary-color);
+        }
+        .modal-edit-input {
+            padding: 4px 8px;
+            font-size: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            width: 200px;
+            outline: none;
+        }
+        .modal-edit-input:focus {
+            border-color: var(--accent-gold);
         }
         .desc-box {
             margin-top: 15px;
@@ -355,12 +366,24 @@
             border-radius: 6px;
             border-left: 4px solid var(--accent-gold);
         }
+        .admin-save-card-btn {
+            display: none;
+            width: 100%;
+            background: #2a9d8f;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- Üstteki logo alanına 4 kez üst üste tıklayarak gizli paneli açabilirsin -->
         <div class="logo-container" onclick="handleLogoClick()" title="ANUBIS GSM">
             <img src="logo.png" alt="ANUBIS GSM Logo" onerror="this.style.display='none'">
             <div>
@@ -430,24 +453,25 @@
                 <div class="modal-img-container">
                     <img id="modalImage" src="" alt="Ürün Görseli" style="display:none;">
                     <div id="noImageView" style="color: #64748b; font-size: 13px; margin-bottom: 8px;">Görsel Eklenmemiş</div>
-                    <!-- Görsel URL Ekleme Kutusu (Sadece Admin Giriş Yapınca Görünür) -->
-                    <div id="adminUrlBox" class="url-input-box">
+                    <div id="adminUrlBox" class="input-group-box">
                         <input type="text" id="imageUrlInput" placeholder="Görsel URL'si yapıştırın (https://...)">
-                        <button onclick="updateImageFromUrl()">Kaydet</button>
                     </div>
                 </div>
 
-                <p><strong>Model:</strong> <span id="mModel">-</span></p>
-                <p><strong>Hafıza:</strong> <span id="mStorage">-</span></p>
-                <p><strong>Kayıt Durumu:</strong> <span id="mReg">-</span></p>
-                <p><strong>Dolar Fiyatı:</strong> <span id="mUsd">-</span></p>
+                <p><strong>Model:</strong> <span id="mModelText" class="view-mode">-</span><input type="text" id="mModelInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Hafıza:</strong> <span id="mStorageText" class="view-mode">-</span><input type="text" id="mStorageInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Kayıt Durumu:</strong> <span id="mRegText" class="view-mode">-</span><input type="text" id="mRegInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Dolar Fiyatı:</strong> <span id="mUsdText" class="view-mode">-</span><input type="number" id="mUsdInput" class="modal-edit-input edit-mode" style="display:none;"></p>
                 <p><strong>Güncel TL:</strong> <span id="mTl" style="color: #2a9d8f; font-weight: bold;">-</span></p>
-                <p><strong>Stok Durumu:</strong> <span id="mStock">-</span></p>
+                <p><strong>Stok Durumu:</strong> <span id="mStockText" class="view-mode">-</span><input type="text" id="mStockInput" class="modal-edit-input edit-mode" style="display:none;"></p>
                 
                 <div class="desc-box">
                     <strong style="display: block; margin-bottom: 4px; color: var(--primary-color);">Cihaz Açıklaması / Notu:</strong>
-                    <span id="mDesc" style="color: #475569;">Açıklama bulunmuyor.</span>
+                    <span id="mDescText" class="view-mode" style="color: #475569;">Açıklama bulunmuyor.</span>
+                    <textarea id="mDescInput" class="edit-mode" style="display:none; width:100%; height:60px; padding:6px; border:1px solid #cbd5e1; border-radius:4px; font-size:13px; outline:none; resize:vertical;"></textarea>
                 </div>
+
+                <button id="saveCardBtn" class="admin-save-card-btn" onclick="saveCardChanges()">Değişiklikleri Kaydet</button>
             </div>
         </div>
     </div>
@@ -473,9 +497,8 @@
         ];
 
         let products = JSON.parse(localStorage.getItem("anubis_products")) || defaultProducts;
-        let isAdmin = false; // Varsayılan olarak müşteri modunda başlar
+        let isAdmin = false;
 
-        // Logoya 4 kez arka arkaya tıklanınca şifre isteyip paneli açar
         let logoClickCount = 0;
         let logoClickTimer = null;
         function handleLogoClick() {
@@ -486,7 +509,7 @@
             if (logoClickCount >= 4) {
                 logoClickCount = 0;
                 let pass = prompt("Yönetim Şifresi:");
-                if (pass === "anubis2026") { // İstediğin şifreyi buraya yazabilirsin
+                if (pass === "anubis2026") {
                     isAdmin = true;
                     toggleAdminPanel(true);
                     renderTable();
@@ -505,7 +528,6 @@
             let tbody = document.getElementById("tableBody");
             tbody.innerHTML = "";
 
-            // Admin moduna göre işlem sütunlarını gizle/göster
             let adminCols = document.querySelectorAll(".admin-col");
             adminCols.forEach(col => col.style.display = isAdmin ? "" : "none");
 
@@ -518,8 +540,6 @@
                     tr.innerHTML = `<td colspan="${colSpanVal}">${item.category}</td>`;
                 } else {
                     tr.className = "product-row";
-                    tr.setAttribute("data-desc", item.desc || "");
-                    tr.setAttribute("data-img", item.img || "");
                     tr.onclick = function() { openModal(this, index); };
 
                     let regBadge = item.reg.includes("KAYITSIZ") || item.reg.includes("AİT") || item.reg.includes("SERVER") 
@@ -527,7 +547,6 @@
                         : `<span class="badge-green">${item.reg}</span>`;
 
                     let stockBadge = `<span class="badge-green">${item.stock}</span>`;
-
                     let adminButtonTd = isAdmin ? `<td><button class="admin-btn-danger" onclick="deleteProduct(${index}); event.stopPropagation();">Sil</button></td>` : '';
 
                     tr.innerHTML = `
@@ -663,22 +682,50 @@
             let item = products[index];
 
             document.getElementById("modalTitle").textContent = item.model + " (" + item.storage + ")";
-            document.getElementById("mModel").textContent = item.model;
-            document.getElementById("mStorage").textContent = item.storage;
-            document.getElementById("mReg").innerHTML = item.reg;
-            document.getElementById("mUsd").textContent = item.usd + " $";
             let tlVal = row.querySelector(".price-tl").textContent;
             document.getElementById("mTl").textContent = tlVal;
-            document.getElementById("mStock").innerHTML = item.stock;
-            document.getElementById("mDesc").textContent = item.desc || "Açıklama bulunmuyor.";
+
+            // Metin görünümleri (Müşteri için)
+            document.getElementById("mModelText").textContent = item.model;
+            document.getElementById("mStorageText").textContent = item.storage;
+            document.getElementById("mRegText").textContent = item.reg;
+            document.getElementById("mUsdText").textContent = item.usd + " $";
+            document.getElementById("mStockText").textContent = item.stock;
+            document.getElementById("mDescText").textContent = item.desc || "Açıklama bulunmuyor.";
+
+            // Input alanları (Admin için)
+            document.getElementById("mModelInput").value = item.model;
+            document.getElementById("mStorageInput").value = item.storage;
+            document.getElementById("mRegInput").value = item.reg;
+            document.getElementById("mUsdInput").value = item.usd;
+            document.getElementById("mStockInput").value = item.stock;
+            document.getElementById("mDescInput").value = item.desc || "";
 
             let modalImg = document.getElementById("modalImage");
             let noImgView = document.getElementById("noImageView");
-            let urlInputBox = document.getElementById("adminUrlBox");
+            let adminUrlBox = document.getElementById("adminUrlBox");
             let urlInput = document.getElementById("imageUrlInput");
+            let saveCardBtn = document.getElementById("saveCardBtn");
 
             urlInput.value = item.img || "";
-            urlInputBox.style.display = isAdmin ? "flex" : "none"; // Sadece admin ise görsel link kutusu görünür
+
+            // Görünürlük ayarları (Admin vs Müşteri)
+            let viewElements = document.querySelectorAll(".view-mode");
+            let editElements = document.querySelectorAll(".edit-mode");
+
+            if (isAdmin) {
+                viewElements.forEach(el => el.style.display = "none");
+                editElements.forEach(el => el.style.display = "inline-block");
+                document.getElementById("mDescInput").style.display = "block";
+                adminUrlBox.style.display = "block";
+                saveCardBtn.style.display = "block";
+            } else {
+                viewElements.forEach(el => el.style.display = "inline");
+                editElements.forEach(el => el.style.display = "none");
+                document.getElementById("mDescInput").style.display = "none";
+                adminUrlBox.style.display = "none";
+                saveCardBtn.style.display = "none";
+            }
 
             if (item.img && item.img.trim() !== "") {
                 modalImg.src = item.img;
@@ -693,27 +740,34 @@
             document.getElementById("productModal").style.display = "flex";
         }
 
-        function updateImageFromUrl() {
-            if (!isAdmin) return;
-            let urlInput = document.getElementById("imageUrlInput").value.trim();
-            if (activeProductIndex !== null) {
-                products[activeProductIndex].img = urlInput;
-                saveToStorage();
-                renderTable();
+        function saveCardChanges() {
+            if (!isAdmin || activeProductIndex === null) return;
 
-                let modalImg = document.getElementById("modalImage");
-                let noImgView = document.getElementById("noImageView");
+            let newModel = document.getElementById("mModelInput").value.trim();
+            let newStorage = document.getElementById("mStorageInput").value.trim();
+            let newReg = document.getElementById("mRegInput").value.trim();
+            let newUsd = parseFloat(document.getElementById("mUsdInput").value);
+            let newStock = document.getElementById("mStockInput").value.trim();
+            let newDesc = document.getElementById("mDescInput").value.trim();
+            let newImg = document.getElementById("imageUrlInput").value.trim();
 
-                if (urlInput !== "") {
-                    modalImg.src = urlInput;
-                    modalImg.style.display = "block";
-                    noImgView.style.display = "none";
-                } else {
-                    modalImg.src = "";
-                    modalImg.style.display = "none";
-                    noImgView.style.display = "block";
-                }
+            if (newModel === "") {
+                alert("Model alanı boş bırakılamaz!");
+                return;
             }
+
+            products[activeProductIndex].model = newModel;
+            products[activeProductIndex].storage = newStorage;
+            products[activeProductIndex].reg = newReg;
+            products[activeProductIndex].usd = isNaN(newUsd) ? 0 : newUsd;
+            products[activeProductIndex].stock = newStock;
+            products[activeProductIndex].desc = newDesc;
+            products[activeProductIndex].img = newImg;
+
+            saveToStorage();
+            renderTable();
+            closeModal();
+            alert("Ürün bilgileri başarıyla güncellendi!");
         }
 
         function closeModal() {

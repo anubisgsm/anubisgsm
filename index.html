@@ -3,155 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANUBIS GSM - Fiyat Listesi</title>
-    <!-- Tailwind CSS - Modern ve şık görünüm için -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>ANUBIS GSM - Teknoloji Marketi</title>
     <style>
-        /* Logodaki renk paletini buraya entegre ediyoruz */
         :root {
-            --color-gold: #d4af37; /* Logo Altın Sarısı */
-            --color-teal: #40e0d0; /* Logo Turkuaz/Camgöbeği */
-            --color-bg-dark: #111827; /* Koyu Arka Plan */
-            --color-bg-card: #1f2937; /* Kart Arka Plan */
-            --color-border: #374151; /* Kenarlık Rengi */
+            --primary-color: #0b2545;
+            --accent-gold: #d4af37;
+            --teal-bg: #134074;
+            --light-bg: #f8f9fa;
+            --text-dark: #222;
         }
-
         body {
-            background-color: var(--color-bg-dark);
-            color: #e5e7eb;
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
         }
-
-        /* Logodaki Altın Sarısını vurgulayan stil */
-        .text-gold { color: var(--color-gold); }
-        .bg-gold { background-color: var(--color-gold); }
-        .border-gold { border-color: var(--color-gold); }
-
-        /* Logodaki Turkuazı vurgulayan stil */
-        .text-teal { color: var(--color-teal); }
-        .bg-teal { background-color: var(--color-teal); }
-        .border-teal { border-color: var(--color-teal); }
-
-        /* İnteraktif öğeler için hover efektleri */
-        .hover:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-            transition: all 0.2s ease;
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--accent-gold);
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .logo-container img {
+            height: 50px;
+            width: auto;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: 1px;
+            color: var(--accent-gold);
+        }
+        header p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .search-box:focus {
+            border-color: var(--accent-gold);
+        }
+        .table-wrapper {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background-color: var(--teal-bg);
+            color: white;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+        .category-row {
+            background-color: #1d3557 !important;
+            color: var(--accent-gold);
+            font-weight: bold;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+        .badge-green {
+            background-color: #2a9d8f;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .badge-orange {
+            background-color: #f4a261;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .price-tl {
+            font-weight: bold;
+            color: #2b2b2b;
+        }
+        .price-usd {
+            color: #666;
+            font-size: 12px;
+        }
+        .update-date {
+            text-align: right;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
     </style>
 </head>
-<body class="min-h-screen">
+<body>
 
-    <!-- Üst Header / Logo -->
-    <header class="bg-slate-900 border-b border-gold/30 py-4 px-6 shadow-lg sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <!-- Metin Tabanlı Logo -->
-                <span class="text-3xl font-black tracking-tight text-gold">ANUBIS</span>
-                <span class="text-3xl font-bold text-teal">GSM</span>
-            </div>
-            
-            <!-- Sosyal Medya / Grup Bağlantıları (Logo Renkleri) -->
-            <div class="flex flex-wrap gap-2 justify-center">
-                <a href="#" class="bg-teal text-slate-950 text-xs px-4 py-2 rounded-lg font-semibold transition hover">📞 WhatsApp Destek</a>
-                <a href="#" class="bg-gold text-slate-950 text-xs px-4 py-2 rounded-lg font-semibold transition hover">🌐 Telegram Kanalı</a>
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="ANUBIS GSM Logo" onerror="this.style.display='none'">
+            <div>
+                <h1>ANUBIS GSM</h1>
+                <p>Teknoloji Marketi</p>
             </div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto p-4 sm:p-8 space-y-8">
+    <div class="container">
+        <div class="update-date">LİSTE SON GÜNCELLEME TARİHİ: 30.07.2026</div>
+        <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara (Örn: iPhone 16, S25 Ultra, Xiaomi)..." onkeyup="filterTable()">
 
-        <!-- Dolar Kuru & İletişim -->
-        <div class="bg-slate-950 border border-slate-700 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-6 shadow-inner">
-            <div class="text-center md:text-left w-full md:w-auto">
-                <h3 class="text-sm text-slate-400 font-medium">Güncel Dolar Kuru</h3>
-                <p class="text-3xl font-extrabold text-teal tracking-tight">₺ 34.65 <span class="text-sm text-slate-500 font-normal">/ Güncel Kur</span></p>
-            </div>
-            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-                <a href="#" target="_blank" class="flex-1 text-center bg-gold hover:bg-gold/80 text-slate-950 text-sm px-6 py-3 rounded-xl font-bold transition hover">
-                    📑 Fiyat Listesini Excel Olarak İndir
-                </a>
-            </div>
+        <div class="table-wrapper">
+            <table id="priceTable">
+                <thead>
+                    <tr>
+                        <th>MODEL</th>
+                        <th>HAFIZA</th>
+                        <th>KAYIT DURUMU</th>
+                        <th>DOLAR ($)</th>
+                        <th>TL (₺)</th>
+                        <th>STOK DURUMU</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- APPLE / iPHONE -->
+                    <tr class="category-row"><td colspan="6">İPHONE SERİSİ</td></tr>
+                    <tr><td>IPHONE 16 PRO MAX</td><td>512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>1.520</td><td class="price-tl">65.616.880 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 16 PRO MAX</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>1.330</td><td class="price-tl">57.414.770 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 16 PRO</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>1.220</td><td class="price-tl">52.666.180 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 16 PRO</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>1.150</td><td class="price-tl">49.644.350 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 15 PRO MAX (değişim)</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>1.100</td><td class="price-tl">47.485.900 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 15 PRO (değişim)</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>910</td><td class="price-tl">39.283.790 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 16</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>880</td><td class="price-tl">37.988.720 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 15</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>690</td><td class="price-tl">29.786.610 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+
+                    <!-- SAMSUNG -->
+                    <tr class="category-row"><td colspan="6">SAMSUNG MODELLERİ</td></tr>
+                    <tr><td>SAMSUNG S25 ULTRA</td><td>12/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td>1.200</td><td class="price-tl">51.802.800 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>SAMSUNG S26 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td>1.140</td><td class="price-tl">49.212.660 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>SAMSUNG S24 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td>935</td><td class="price-tl">40.363.015 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>SAMSUNG S23 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td>800</td><td class="price-tl">34.535.200 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>SAMSUNG S23 ULTRA</td><td>12/256GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>970</td><td class="price-tl">41.873.930 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+
+                    <!-- XIAOMI & POCO -->
+                    <tr class="category-row"><td colspan="6">XIAOMI & POCO MODELLERİ</td></tr>
+                    <tr><td>XIAOMI 15 ULTRA (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td>1.160</td><td class="price-tl">50.076.040 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>XIAOMI 15 (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td>900</td><td class="price-tl">38.852.100 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>XIAOMI MIX FLIP</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td>910</td><td class="price-tl">39.283.790 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>XIAOMI 14 ULTRA</td><td>16/512GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>980</td><td class="price-tl">42.305.620 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>XIAOMI 14</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>705</td><td class="price-tl">30.434.145 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>POCO F7 ULTRA (YENİ)</td><td>16/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td>765</td><td class="price-tl">33.024.285 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>POCO F7 PRO (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td>580</td><td class="price-tl">25.038.020 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>POCO X7 PRO</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td>420</td><td class="price-tl">18.130.980 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+
+                    <!-- GOOGLE PIXEL -->
+                    <tr class="category-row"><td colspan="6">GOOGLE PIXEL MODELLERİ</td></tr>
+                    <tr><td>GOOGLE PIXEL 9</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>690</td><td class="price-tl">29.786.610 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>GOOGLE PIXEL 9</td><td>256GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>810</td><td class="price-tl">34.966.890 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>GOOGLE PIXEL 9 PRO</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>880</td><td class="price-tl">37.988.720 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>GOOGLE PIXEL 9 PRO XL</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>1.080</td><td class="price-tl">46.622.520 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+
+                    <!-- ONEPLUS -->
+                    <tr class="category-row"><td colspan="6">ONEPLUS MODELLERİ</td></tr>
+                    <tr><td>ONEPLUS 9 PRO (2123)</td><td>8/128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>480</td><td class="price-tl">20.721.120 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>ONEPLUS 11</td><td>16/256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>580</td><td class="price-tl">25.038.020 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>ONEPLUS 11</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>650</td><td class="price-tl">28.059.850 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>ONEPLUS 12</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>795</td><td class="price-tl">34.319.355 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>ONEPLUS 12</td><td>24/1TB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>880</td><td class="price-tl">37.988.720 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                </tbody>
+            </table>
         </div>
+    </div>
 
-        <!-- Filtreleme Alanı (Marka, Seri, Kapasite) -->
-        <div class="bg-slate-950 border border-slate-700 rounded-2xl p-6 grid grid-cols-1 md:grid-cols-3 gap-5 shadow-xl">
-            <div>
-                <label class="block text-xs font-medium text-slate-400 mb-2">MARKA SEÇİNİZ</label>
-                <select class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-gold/80">
-                    <option value="">Tüm Markalar</option>
-                    <option value="apple">🍏 Apple iPhone</option>
-                    <option value="samsung">📱 Samsung Galaxy</option>
-                    <option value="xiaomi">🤖 Xiaomi Redmi</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-xs font-medium text-slate-400 mb-2">SERİ SEÇİNİZ</label>
-                <select class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-gold/80" disabled>
-                    <option value="">Önce Marka Seçin</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-xs font-medium text-slate-400 mb-2">RAM / HAFIZA SEÇİNİZ</label>
-                <select class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-gold/80" disabled>
-                    <option value="">Önce Seri Seçin</option>
-                </select>
-            </div>
-        </div>
+    <script>
+        function filterTable() {
+            let input = document.getElementById("searchInput");
+            let filter = input.value.toUpperCase();
+            let table = document.getElementById("priceTable");
+            let tr = table.getElementsByTagName("tr");
 
-        <!-- Ürün Liste Tablosu (Renkli Başlık) -->
-        <div class="bg-slate-950 border border-slate-700 rounded-2xl overflow-hidden shadow-xl">
-            <div class="p-6 border-b border-slate-700 flex justify-between items-center">
-                <h2 class="text-xl font-bold text-gold">🔥 GÜNCEL CİHAZ LİSTESİ</h2>
-                <span class="text-xs text-slate-500">Son Güncelleme: 1 Saat Önce</span>
-            </div>
-            
-            <div class="p-8 text-center text-slate-400 text-base min-h-60 flex items-center justify-center bg-slate-900/50">
-                <p>Cihaz verileri yükleniyor... <br> Filtreleme kullanarak istediğiniz modele hızlıca ulaşabilirsiniz.</p>
-            </div>
-        </div>
-
-        <!-- Sıkça Sorulan Sorular (SSS) ve Bilgi Kartları -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- SSS Kartı -->
-            <div class="bg-slate-950 border border-slate-700 rounded-2xl p-6 space-y-5 shadow-xl">
-                <h3 class="text-lg font-bold text-gold border-b border-slate-700 pb-3 flex items-center gap-2">
-                    <svg class="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.79 4 4 0 1.425-.731 2.739-1.863 3.492l-1.327.884a2 2 0 0 0-.884 1.663M12 19h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path></svg>
-                    SSS (Sıkça Sorulan Sorular)
-                </h3>
-                <div class="space-y-4 text-sm text-slate-300">
-                    <div>
-                        <strong class="text-teal">📌 Cihazlar Kayıtlı mı?</strong>
-                        <p class="text-slate-400 mt-1">Hayır, tüm cihazlar yurt dışı ve kayıtsızdır. Ancak "Kayıtlı" ibaresi olan modeller aksini belirtir.</p>
-                    </div>
-                    <div>
-                        <strong class="text-teal">📌 Garanti Koşulları Nedir?</strong>
-                        <p class="text-slate-400 mt-1">Aksi belirtilmedikçe cihazlar garanti kapsamında değildir. İlk kullanımda sorun yaşanırsa, video kayıtlı teslimat ile değişim sağlanır.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Kayıt Yöntemleri Kartı -->
-            <div class="bg-slate-950 border border-slate-700 rounded-2xl p-6 space-y-5 shadow-xl">
-                <h3 class="text-lg font-bold text-gold border-b border-slate-700 pb-3 flex items-center gap-2">
-                   <svg class="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"></path></svg>
-                   Kayıt Yöntemleri Hakkında
-                </h3>
-                <div class="space-y-3 text-sm text-slate-400">
-                   <p><strong class="text-white">• Direnç Kaydı:</strong> Anakart üzerindeki çipe fiziksel işlem uygulanarak yapılan kayıt yöntemidir.</p>
-                   <p><strong class="text-white">• Server Kaydı (Samsung):</strong> Yazılımsal olarak IMEI işlemi uygulanır, hurda IMEI gerekir.</p>
-                   <p><strong class="text-white">• CPID Kaydı (Xiaomi):</strong> Yazılımsal olarak uzaktan tek SIM kaydıdır.</p>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="text-center py-10 px-6 text-xs text-slate-600 border-t border-slate-800 mt-12 bg-slate-950/50">
-        ANUBIS GSM © 2026 - Tüm Hakları Saklıdır. <br> 
-        Güvenilir ve Modern Telefon Alım-Satım Platformu.
-    </footer>
-
+            for (let i = 1; i < tr.length; i++) {
+                if (tr[i].classList.contains("category-row")) continue;
+                let txtValue = tr[i].textContent || tr[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 </body>
 </html>

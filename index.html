@@ -53,6 +53,44 @@
             margin: 20px auto;
             padding: 0 15px;
         }
+        .rate-container {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .rate-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+        .rate-input {
+            width: 110px;
+            padding: 6px 10px;
+            font-size: 16px;
+            border: 2px solid var(--accent-gold);
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            background: white;
+            color: var(--primary-color);
+            outline: none;
+        }
+        .update-date {
+            font-size: 13px;
+            color: #cbd5e1;
+            font-weight: bold;
+        }
         .search-box {
             width: 100%;
             padding: 12px 20px;
@@ -120,17 +158,6 @@
             font-weight: bold;
             color: #2b2b2b;
         }
-        .price-usd {
-            color: #666;
-            font-size: 12px;
-        }
-        .update-date {
-            text-align: right;
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
@@ -146,7 +173,15 @@
     </header>
 
     <div class="container">
-        <div class="update-date">LİSTE SON GÜNCELLEME TARİHİ: 30.07.2026</div>
+        <!-- Kur ve Tarih Alanı -->
+        <div class="rate-container">
+            <div class="rate-box">
+                <span>GÜNCEL DOLAR KURU ➔</span>
+                <input type="number" id="dollarRate" class="rate-input" value="43.169" step="0.001" oninput="calculatePrices()">
+            </div>
+            <div class="update-date">LİSTE SON GÜNCELLEME TARİHİ: 30.07.2026</div>
+        </div>
+
         <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara (Örn: iPhone 16, S25 Ultra, Xiaomi)..." onkeyup="filterTable()">
 
         <div class="table-wrapper">
@@ -164,54 +199,73 @@
                 <tbody>
                     <!-- APPLE / iPHONE -->
                     <tr class="category-row"><td colspan="6">İPHONE SERİSİ</td></tr>
-                    <tr><td>IPHONE 16 PRO MAX</td><td>512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>1.520</td><td class="price-tl">65.616.880 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 16 PRO MAX</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>1.330</td><td class="price-tl">57.414.770 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 16 PRO</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>1.220</td><td class="price-tl">52.666.180 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 16 PRO</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>1.150</td><td class="price-tl">49.644.350 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 15 PRO MAX (değişim)</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>1.100</td><td class="price-tl">47.485.900 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 15 PRO (değişim)</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>910</td><td class="price-tl">39.283.790 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 16</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>880</td><td class="price-tl">37.988.720 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 15</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>690</td><td class="price-tl">29.786.610 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 16 PRO MAX</td><td>512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">1520</td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 16 PRO MAX</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">1330</td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 16 PRO</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">1220</td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 16 PRO</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">1150</td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 15 PRO MAX (değişim)</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">1100</td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 15 PRO (değişim)</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">910</td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 16</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">880</td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr><td>IPHONE 15</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">690</td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
 
                     <!-- SAMSUNG -->
                     <tr class="category-row"><td colspan="6">SAMSUNG MODELLERİ</td></tr>
-                    <tr><td>SAMSUNG S25 ULTRA</td><td>12/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td>1.200</td><td class="price-tl">51.802.800 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>SAMSUNG S26 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td>1.140</td><td class="price-tl">49.212.660 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>SAMSUNG S24 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td>935</td><td class="price-tl">40.363.015 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>SAMSUNG S23 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td>800</td><td class="price-tl">34.535.200 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>SAMSUNG S23 ULTRA</td><td>12/256GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>970</td><td class="price-tl">41.873.930 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>SAMSUNG S25 ULTRA</td><td>12/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td class="usd-val">1200</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>SAMSUNG S26 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td class="usd-val">1140</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>SAMSUNG S24 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td class="usd-val">935</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>SAMSUNG S23 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td class="usd-val">800</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>SAMSUNG S23 ULTRA</td><td>12/256GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td class="usd-val">970</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
 
                     <!-- XIAOMI & POCO -->
                     <tr class="category-row"><td colspan="6">XIAOMI & POCO MODELLERİ</td></tr>
-                    <tr><td>XIAOMI 15 ULTRA (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td>1.160</td><td class="price-tl">50.076.040 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>XIAOMI 15 (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td>900</td><td class="price-tl">38.852.100 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>XIAOMI MIX FLIP</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td>910</td><td class="price-tl">39.283.790 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>XIAOMI 14 ULTRA</td><td>16/512GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>980</td><td class="price-tl">42.305.620 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>XIAOMI 14</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>705</td><td class="price-tl">30.434.145 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>POCO F7 ULTRA (YENİ)</td><td>16/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td>765</td><td class="price-tl">33.024.285 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>POCO F7 PRO (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td>580</td><td class="price-tl">25.038.020 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>POCO X7 PRO</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td>420</td><td class="price-tl">18.130.980 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>XIAOMI 15 ULTRA (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td class="usd-val">1160</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>XIAOMI 15 (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td class="usd-val">900</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>XIAOMI MIX FLIP</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td class="usd-val">910</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>XIAOMI 14 ULTRA</td><td>16/512GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td class="usd-val">980</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>XIAOMI 14</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">705</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>POCO F7 ULTRA (YENİ)</td><td>16/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td class="usd-val">765</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>POCO F7 PRO (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td class="usd-val">580</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>POCO X7 PRO</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td class="usd-val">420</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
 
                     <!-- GOOGLE PIXEL -->
                     <tr class="category-row"><td colspan="6">GOOGLE PIXEL MODELLERİ</td></tr>
-                    <tr><td>GOOGLE PIXEL 9</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>690</td><td class="price-tl">29.786.610 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>GOOGLE PIXEL 9</td><td>256GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>810</td><td class="price-tl">34.966.890 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>GOOGLE PIXEL 9 PRO</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>880</td><td class="price-tl">37.988.720 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>GOOGLE PIXEL 9 PRO XL</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>1.080</td><td class="price-tl">46.622.520 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>GOOGLE PIXEL 9</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td class="usd-val">690</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>GOOGLE PIXEL 9</td><td>256GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td class="usd-val">810</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>GOOGLE PIXEL 9 PRO</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td class="usd-val">880</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>GOOGLE PIXEL 9 PRO XL</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td class="usd-val">1080</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
 
                     <!-- ONEPLUS -->
                     <tr class="category-row"><td colspan="6">ONEPLUS MODELLERİ</td></tr>
-                    <tr><td>ONEPLUS 9 PRO (2123)</td><td>8/128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td>480</td><td class="price-tl">20.721.120 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>ONEPLUS 11</td><td>16/256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>580</td><td class="price-tl">25.038.020 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>ONEPLUS 11</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>650</td><td class="price-tl">28.059.850 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>ONEPLUS 12</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>795</td><td class="price-tl">34.319.355 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>ONEPLUS 12</td><td>24/1TB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td>880</td><td class="price-tl">37.988.720 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>ONEPLUS 9 PRO (2123)</td><td>8/128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td class="usd-val">480</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>ONEPLUS 11</td><td>16/256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">580</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>ONEPLUS 11</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">650</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>ONEPLUS 12</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">795</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr><td>ONEPLUS 12</td><td>24/1TB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td class="usd-val">880</td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
                 </tbody>
             </table>
         </div>
     </div>
 
     <script>
+        function calculatePrices() {
+            let rateInput = document.getElementById("dollarRate").value;
+            let rate = parseFloat(rateInput);
+            if (isNaN(rate) || rate <= 0) return;
+
+            let rows = document.querySelectorAll("#priceTable tbody tr");
+            rows.forEach(row => {
+                if (row.classList.contains("category-row")) return;
+                let usdCell = row.querySelector(".usd-val");
+                let tlCell = row.querySelector(".price-tl");
+                
+                if (usdCell && tlCell) {
+                    let usdVal = parseFloat(usdCell.textContent.replace(",", "."));
+                    let totalTl = usdVal * rate;
+                    tlCell.textContent = totalTl.toLocaleString('tr-TR', { minimumFractionDigits: 3, maximumFractionDigits: 3 }) + " ₺";
+                }
+            });
+        }
+
         function filterTable() {
             let input = document.getElementById("searchInput");
             let filter = input.value.toUpperCase();
@@ -228,6 +282,8 @@
                 }
             }
         }
+
+        window.onload = calculatePrices;
     </script>
 </body>
 </html>

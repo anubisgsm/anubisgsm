@@ -247,6 +247,24 @@
     </div>
 
     <script>
+        // Sayfa açıldığında canlı döviz kurunu çeken fonksiyon
+        async function fetchLiveRate() {
+            try {
+                // Ücretsiz ve güvenilir kur API'si
+                let response = await fetch('https://open.er-api.com/v6/latest/USD');
+                let data = await response.json();
+                if (data && data.rates && data.rates.TRY) {
+                    let liveRate = data.rates.TRY;
+                    // Input alanına küsuratlı güncel kuru yaz (3 basamaklı)
+                    document.getElementById("dollarRate").value = liveRate.toFixed(3);
+                    calculatePrices(); // Fiyatları otomatik güncelle
+                }
+            } catch (error) {
+                console.log("Kur çekilemedi, manuel girilen kur kullanılacak.", error);
+                calculatePrices();
+            }
+        }
+
         function calculatePrices() {
             let rateInput = document.getElementById("dollarRate").value;
             let rate = parseFloat(rateInput);
@@ -283,7 +301,8 @@
             }
         }
 
-        window.onload = calculatePrices;
+        // Sayfa ilk yüklendiğinde canlı kuru çek ve hesapla
+        window.onload = fetchLiveRate;
     </script>
 </body>
 </html>

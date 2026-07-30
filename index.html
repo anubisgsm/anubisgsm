@@ -137,8 +137,12 @@
             font-size: 12px;
             letter-spacing: 0.5px;
         }
-        tr:hover {
-            background-color: #f1f5f9;
+        .product-row {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .product-row:hover {
+            background-color: #e2e8f0;
         }
         .category-row {
             background-color: #1d3557 !important;
@@ -180,6 +184,113 @@
             font-weight: bold;
             color: #2b2b2b;
         }
+
+        /* MODAL (AÇILIR KART) STİLLERİ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-card {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border-top: 5px solid var(--accent-gold);
+            animation: slideUp 0.3s ease;
+        }
+        .modal-header {
+            background: var(--primary-color);
+            color: var(--accent-gold);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+        }
+        .modal-body {
+            padding: 20px;
+            font-size: 14px;
+            color: var(--text-dark);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-img-container {
+            text-align: center;
+            margin-bottom: 15px;
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .modal-img-container img {
+            max-height: 160px;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        .url-input-box {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        .url-input-box input {
+            flex: 1;
+            padding: 6px 10px;
+            font-size: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            outline: none;
+        }
+        .url-input-box button {
+            padding: 6px 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .modal-body p {
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 6px;
+        }
+        .modal-body strong {
+            color: var(--primary-color);
+        }
+        .desc-box {
+            margin-top: 15px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-gold);
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -198,10 +309,10 @@
         <!-- Kur ve Tarih Alanı -->
         <div class="rate-container">
             <div class="rate-box">
-                <span>GÜNCEL KUR (AYarla):</span>
+                <span>GÜNCEL KUR:</span>
                 <input type="number" id="dollarRate" class="rate-input" value="43.169" step="0.001" oninput="calculatePrices()">
             </div>
-            <div id="liveRateText" class="live-rate-display">DOLAR KURU: Yükleniyor...</div>
+            <div id="liveRateText" class="live-rate-display">CANLI KUR: Yükleniyor...</div>
             <div class="update-date">LİSTE SON GÜNCELLEME: 30.07.2026</div>
         </div>
 
@@ -222,50 +333,83 @@
                 <tbody>
                     <!-- APPLE / iPHONE -->
                     <tr class="category-row"><td colspan="6">İPHONE SERİSİ</td></tr>
-                    <tr><td>IPHONE 16 PRO MAX</td><td>512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="1520" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 16 PRO MAX</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="1330" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 16 PRO</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="1220" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 16 PRO</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="1150" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 15 PRO MAX (değişim)</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="1100" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 15 PRO (değişim)</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="910" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 16</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="880" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
-                    <tr><td>IPHONE 15</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="690" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Kutu açılımsız, sıfır kapalı kutu cihaz. Global garantilidir." data-img=""><td>IPHONE 16 PRO MAX</td><td>512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="1520" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="256GB Hafıza seçeneğiyle stoklarda. Tüm renkler mevcuttur." data-img=""><td>IPHONE 16 PRO MAX</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="1330" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Kompakt ve güçlü Pro modeli." data-img=""><td>IPHONE 16 PRO</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="1220" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="128GB Pro modeli." data-img=""><td>IPHONE 16 PRO</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="1150" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Apple değişim cihazıdır." data-img=""><td>IPHONE 15 PRO MAX (değişim)</td><td>256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="1100" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Apple değişim cihazıdır." data-img=""><td>IPHONE 15 PRO (değişim)</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="910" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Standart iPhone 16 modeli." data-img=""><td>IPHONE 16</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="880" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Standart iPhone 15 modeli." data-img=""><td>IPHONE 15</td><td>128GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="690" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">FULL RENK</span></td></tr>
 
                     <!-- SAMSUNG -->
                     <tr class="category-row"><td colspan="6">SAMSUNG MODELLERİ</td></tr>
-                    <tr><td>SAMSUNG S25 ULTRA</td><td>12/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td><input type="number" class="usd-input" value="1200" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>SAMSUNG S26 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td><input type="number" class="usd-input" value="1140" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>SAMSUNG S24 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td><input type="number" class="usd-input" value="935" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>SAMSUNG S23 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td><input type="number" class="usd-input" value="800" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>SAMSUNG S23 ULTRA</td><td>12/256GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="970" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Amiral gemisi S25 Ultra." data-img=""><td>SAMSUNG S25 ULTRA</td><td>12/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td><input type="number" class="usd-input" value="1200" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Yeni seri S26 Ultra." data-img=""><td>SAMSUNG S26 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td><input type="number" class="usd-input" value="1140" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="S24 Ultra modeli." data-img=""><td>SAMSUNG S24 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td><input type="number" class="usd-input" value="935" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="S23 Ultra kayıtsız." data-img=""><td>SAMSUNG S23 ULTRA</td><td>12/256GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td><input type="number" class="usd-input" value="800" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="S23 Ultra çift kayıtlı model." data-img=""><td>SAMSUNG S23 ULTRA</td><td>12/256GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="970" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
 
                     <!-- XIAOMI & POCO -->
                     <tr class="category-row"><td colspan="6">XIAOMI & POCO MODELLERİ</td></tr>
-                    <tr><td>XIAOMI 15 ULTRA (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td><input type="number" class="usd-input" value="1160" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>XIAOMI 15 (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td><input type="number" class="usd-input" value="900" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>XIAOMI MIX FLIP</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td><input type="number" class="usd-input" value="910" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>XIAOMI 14 ULTRA</td><td>16/512GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="980" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>XIAOMI 14</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="705" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>POCO F7 ULTRA (YENİ)</td><td>16/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td><input type="number" class="usd-input" value="765" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>POCO F7 PRO (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td><input type="number" class="usd-input" value="580" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>POCO X7 PRO</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td><input type="number" class="usd-input" value="420" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Xiaomi 15 Ultra yeni seri." data-img=""><td>XIAOMI 15 ULTRA (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td><input type="number" class="usd-input" value="1160" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Xiaomi 15 yeni seri." data-img=""><td>XIAOMI 15 (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td><input type="number" class="usd-input" value="900" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Katlanabilir Xiaomi Mix Flip." data-img=""><td>XIAOMI MIX FLIP</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td><input type="number" class="usd-input" value="910" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Xiaomi 14 Ultra çift kayıtlı." data-img=""><td>XIAOMI 14 ULTRA</td><td>16/512GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="980" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Xiaomi 14 modeli." data-img=""><td>XIAOMI 14</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="705" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Poco F7 Ultra yeni model." data-img=""><td>POCO F7 ULTRA (YENİ)</td><td>16/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td><input type="number" class="usd-input" value="765" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Poco F7 Pro yeni model." data-img=""><td>POCO F7 PRO (YENİ)</td><td>12/512GB</td><td><span class="badge-orange">KAYITSIZ</span></td><td><input type="number" class="usd-input" value="580" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Poco X7 Pro server kayıtlı." data-img=""><td>POCO X7 PRO</td><td>12/512GB</td><td><span class="badge-orange">TEK HAT SERVER KAYITLI</span></td><td><input type="number" class="usd-input" value="420" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
 
                     <!-- GOOGLE PIXEL -->
                     <tr class="category-row"><td colspan="6">GOOGLE PIXEL MODELLERİ</td></tr>
-                    <tr><td>GOOGLE PIXEL 9</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="690" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>GOOGLE PIXEL 9</td><td>256GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="810" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>GOOGLE PIXEL 9 PRO</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="880" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>GOOGLE PIXEL 9 PRO XL</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="1080" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Google Pixel 9 çift kayıtlı." data-img=""><td>GOOGLE PIXEL 9</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="690" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Google Pixel 9 256GB." data-img=""><td>GOOGLE PIXEL 9</td><td>256GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="810" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Google Pixel 9 Pro." data-img=""><td>GOOGLE PIXEL 9 PRO</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="880" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="Google Pixel 9 Pro XL." data-img=""><td>GOOGLE PIXEL 9 PRO XL</td><td>128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="1080" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
 
                     <!-- ONEPLUS -->
                     <tr class="category-row"><td colspan="6">ONEPLUS MODELLERİ</td></tr>
-                    <tr><td>ONEPLUS 9 PRO (2123)</td><td>8/128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="480" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>ONEPLUS 11</td><td>16/256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="580" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>ONEPLUS 11</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="650" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>ONEPLUS 12</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="795" oninput="calculatePrices()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
-                    <tr><td>ONEPLUS 12</td><td>24/1TB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="880" oninput="calculatePrices()"></td><td class="price-tl">0 ₂</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="OnePlus 9 Pro çift kayıtlı." data-img=""><td>ONEPLUS 9 PRO (2123)</td><td>8/128GB</td><td><span class="badge-green">ÇİFT KAYITLI</span></td><td><input type="number" class="usd-input" value="480" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="OnePlus 11 256GB." data-img=""><td>ONEPLUS 11</td><td>16/256GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="580" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="OnePlus 11 512GB." data-img=""><td>ONEPLUS 11</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="650" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="OnePlus 12 512GB." data-img=""><td>ONEPLUS 12</td><td>16/512GB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="795" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
+                    <tr class="product-row" onclick="openModal(this)" data-desc="OnePlus 12 1TB." data-img=""><td>ONEPLUS 12</td><td>24/1TB</td><td><span class="badge-orange">KAYIT ALICI AİT</span></td><td><input type="number" class="usd-input" value="880" oninput="event.stopPropagation(); calculatePrices();" onclick="event.stopPropagation()"></td><td class="price-tl">0 ₺</td><td><span class="badge-green">HAZIR STOK</span></td></tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <!-- DETAY KARTI (MODAL) -->
+    <div id="productModal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="modalTitle">Ürün Detayı</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Ürün Görseli ve URL Alanı -->
+                <div class="modal-img-container">
+                    <img id="modalImage" src="" alt="Ürün Görseli" style="display:none;">
+                    <div id="noImageView" style="color: #64748b; font-size: 13px; margin-bottom: 8px;">Görsel Eklenmemiş</div>
+                    <div class="url-input-box">
+                        <input type="text" id="imageUrlInput" placeholder="Görsel URL'si yapıştırın (https://...)">
+                        <button onclick="updateImageFromUrl()">Ekle</button>
+                    </div>
+                </div>
+
+                <p><strong>Model:</strong> <span id="mModel">-</span></p>
+                <p><strong>Hafıza:</strong> <span id="mStorage">-</span></p>
+                <p><strong>Kayıt Durumu:</strong> <span id="mReg">-</span></p>
+                <p><strong>Dolar Fiyatı:</strong> <span id="mUsd">-</span></p>
+                <p><strong>Güncel TL:</strong> <span id="mTl" style="color: #2a9d8f; font-weight: bold;">-</span></p>
+                <p><strong>Stok Durumu:</strong> <span id="mStock">-</span></p>
+                
+                <div class="desc-box">
+                    <strong style="display: block; margin-bottom: 4px; color: var(--primary-color);">Cihaz Açıklaması / Notu:</strong>
+                    <span id="mDesc" style="color: #475569;">Açıklama bulunmuyor.</span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -292,9 +436,8 @@
             let rate = parseFloat(rateInput);
             if (isNaN(rate) || rate <= 0) return;
 
-            let rows = document.querySelectorAll("#priceTable tbody tr");
+            let rows = document.querySelectorAll("#priceTable tbody tr.product-row");
             rows.forEach(row => {
-                if (row.classList.contains("category-row")) return;
                 let usdInput = row.querySelector(".usd-input");
                 let tlCell = row.querySelector(".price-tl");
                 
@@ -323,6 +466,79 @@
                     tr[i].style.display = "none";
                 }
             }
+        }
+
+        let activeProductRow = null;
+
+        // Modal Açma Fonksiyonu
+        function openModal(row) {
+            activeProductRow = row;
+            let model = row.cells[0].textContent;
+            let storage = row.cells[1].textContent;
+            let reg = row.cells[2].innerHTML;
+            let usdVal = row.querySelector(".usd-input").value;
+            let tlVal = row.querySelector(".price-tl").textContent;
+            let stock = row.cells[5].innerHTML;
+            let desc = row.getAttribute("data-desc") || "Açıklama bulunmuyor.";
+            let img = row.getAttribute("data-img");
+
+            document.getElementById("modalTitle").textContent = model + " (" + storage + ")";
+            document.getElementById("mModel").textContent = model;
+            document.getElementById("mStorage").textContent = storage;
+            document.getElementById("mReg").innerHTML = reg;
+            document.getElementById("mUsd").textContent = usdVal + " $";
+            document.getElementById("mTl").textContent = tlVal;
+            document.getElementById("mStock").innerHTML = stock;
+            document.getElementById("mDesc").textContent = desc;
+
+            let modalImg = document.getElementById("modalImage");
+            let noImgView = document.getElementById("noImageView");
+            let urlInput = document.getElementById("imageUrlInput");
+
+            urlInput.value = img || "";
+
+            if (img && img.trim() !== "") {
+                modalImg.src = img;
+                modalImg.style.display = "block";
+                noImgView.style.display = "none";
+            } else {
+                modalImg.src = "";
+                modalImg.style.display = "none";
+                noImgView.style.display = "block";
+            }
+
+            document.getElementById("productModal").style.display = "flex";
+        }
+
+        // URL'den Görseli Güncelleme
+        function updateImageFromUrl() {
+            let urlInput = document.getElementById("imageUrlInput").value.trim();
+            let modalImg = document.getElementById("modalImage");
+            let noImgView = document.getElementById("noImageView");
+
+            if (urlInput !== "") {
+                modalImg.src = urlInput;
+                modalImg.style.display = "block";
+                noImgView.style.display = "none";
+
+                if (activeProductRow) {
+                    activeProductRow.setAttribute("data-img", urlInput);
+                }
+            } else {
+                modalImg.src = "";
+                modalImg.style.display = "none";
+                noImgView.style.display = "block";
+
+                if (activeProductRow) {
+                    activeProductRow.setAttribute("data-img", "");
+                }
+            }
+        }
+
+        // Modal Kapatma Fonksiyonu
+        function closeModal() {
+            document.getElementById("productModal").style.display = "none";
+            activeProductRow = null;
         }
 
         window.onload = fetchLiveRate;

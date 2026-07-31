@@ -66,12 +66,11 @@
             gap: 20px;
         }
 
-        /* ORİJİNAL LOGO ALANI (Yazı / Tipografi Logosu) */
+        /* YENİ LOGO ALANI (Görsel Logolu) */
         .logo-area {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
             cursor: pointer;
             user-select: none;
             margin: 0 auto;
@@ -79,39 +78,6 @@
         }
         .logo-area:hover {
             transform: scale(1.02);
-        }
-
-        .logo-text-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 38px;
-            letter-spacing: 3px;
-            color: var(--accent-gold);
-            font-weight: 800;
-            text-shadow: 0 2px 15px var(--accent-gold-glow);
-            text-align: left;
-        }
-        header p.subtitle {
-            margin: 6px 0 0 0;
-            font-size: 15px;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-align: left;
-            font-weight: 600;
-        }
-        header p.slogan {
-            margin: 6px 0 0 0;
-            font-size: 13.5px;
-            color: #38bdf8;
-            font-style: italic;
-            letter-spacing: 0.5px;
-            text-align: left;
         }
 
         .header-right-area {
@@ -574,9 +540,6 @@
             header { padding: 20px 15px; }
             .header-content { flex-direction: column; text-align: center; gap: 15px; }
             .logo-area { flex-direction: column; gap: 10px; }
-            header h1 { font-size: 28px; text-align: center; }
-            header p.subtitle, header p.slogan { text-align: center; }
-            .logo-text-container { align-items: center; }
             .header-right-area { align-items: center; width: 100%; }
             .controls-wrapper { flex-direction: column; }
             .search-box, .faq-open-btn { width: 100%; }
@@ -597,12 +560,38 @@
 
     <header>
         <div class="header-content">
+            <!-- YENİ GÖRSEL LOGO ALANI -->
             <div class="logo-area" onclick="handleLogoClick()" title="ANUBIS GSM">
-                <div class="logo-text-container">
-                    <h1>ANUBIS GSM</h1>
-                    <p class="subtitle">Premium Teknoloji Marketi</p>
-                    <p class="slogan">"Cüzdanınızı ağlatmayan, yüzünüzü güldüren teknoloji adresi 🚀"</p>
-                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 140" style="max-height: 75px; width: auto;">
+                    <defs>
+                        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#f59e0b" />
+                            <stop offset="100%" stop-color="#d97706" />
+                        </linearGradient>
+                        <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#38bdf8" />
+                            <stop offset="100%" stop-color="#0284c7" />
+                        </linearGradient>
+                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                    </defs>
+
+                    <!-- Sembol / İkon Kısmı -->
+                    <g transform="translate(10, 20)">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="url(#goldGrad)" stroke-width="2.5" opacity="0.8" />
+                        <path d="M50 15 L75 40 L65 75 L35 75 L25 40 Z" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.4" />
+                        <polygon points="50,22 68,42 60,70 40,70 32,42" fill="url(#blueGlow)" opacity="0.25" />
+                        <path d="M50 28 L67 68 L57 68 L53 55 L47 55 L43 68 L33 68 Z" fill="url(#goldGrad)" filter="url(#glow)" />
+                        <path d="M46 47 L54 47 L50 35 Z" fill="#07090e" />
+                    </g>
+
+                    <!-- Tipografi / Yazı Kısmı -->
+                    <text x="115" y="65" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="800" font-size="36" fill="url(#goldGrad)" letter-spacing="3" filter="url(#glow)">ANUBIS</text>
+                    <text x="315" y="65" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="800" font-size="36" fill="#38bdf8" letter-spacing="2">GSM</text>
+                    <text x="117" y="92" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="600" font-size="13" fill="#94a3b8" letter-spacing="3.5">PREMIUM TEKNOLOJİ</text>
+                </svg>
             </div>
 
             <div class="header-right-area">

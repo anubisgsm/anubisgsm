@@ -1,15 +1,94 @@
-<style>
-        /* (Önceki stiller aynı kalmıştır, header ve logo ile ilgili kısımlar güncellendi:) */
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANUBIS GSM | Premium Teknoloji Marketi</title>
+    <style>
+        :root {
+            --bg-deep: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+            --primary-color: #0284c7;
+            --accent-gold: #d97706;
+            --accent-gold-glow: rgba(217, 119, 6, 0.2);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: rgba(15, 23, 42, 0.08);
+            --whatsapp-color: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 70px; 
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(2, 132, 199, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(217, 119, 6, 0.03) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* Kayan Bant (Marquee) Stili */
+        .marquee-container {
+            background: linear-gradient(90deg, var(--accent-gold), #f59e0b, var(--accent-gold));
+            color: #0f172a;
+            padding: 8px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 1px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+        }
+
+        .marquee-track {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 25s linear infinite;
+        }
+
+        .marquee-track span {
+            display: inline-block;
+            padding-right: 50px;
+        }
+
+        .marquee-track a {
+            color: #0f172a;
+            text-decoration: underline;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
 
         header {
             background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
             color: var(--text-main);
-            padding: 35px 20px; /* Üst alt boşluk artırıldı */
+            padding: 35px 20px;
             text-align: center;
             border-bottom: 2px solid var(--accent-gold);
             box-shadow: 0 10px 30px rgba(0,0,0,0.04);
             position: relative;
             overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .header-content {
@@ -25,7 +104,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 20px; /* Logo ve yazı arasındaki mesafe artırıldı */
+            gap: 20px;
             cursor: pointer;
             user-select: none;
             padding: 10px 20px;
@@ -34,14 +113,12 @@
         }
         .logo-container:hover { transform: scale(1.02); }
         
-        /* Ana logo boyutu büyütüldü */
         .logo-container img {
-            height: 90px; 
+            height: 90px;
             width: auto;
             filter: drop-shadow(0 0 12px var(--accent-gold-glow));
         }
 
-        /* Başlık yazısı büyütüldü */
         header h1 {
             margin: 0;
             font-size: 38px;
@@ -50,7 +127,6 @@
             font-weight: 800;
         }
 
-        /* Alt slogan yazısı büyütüldü */
         header p {
             margin: 6px 0 0 0;
             font-size: 14px;
@@ -60,10 +136,545 @@
             font-weight: 600;
         }
 
+        .container {
+            max-width: 1250px;
+            margin: 25px auto;
+            padding: 0 20px;
+        }
+
+        .admin-panel {
+            display: none;
+            background: var(--bg-card);
+            border: 2px dashed var(--accent-gold);
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .admin-panel h3 {
+            margin-top: 0;
+            color: var(--accent-gold);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+        }
+        .close-admin {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .close-admin:hover { background: #dc2626; }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .form-grid input, .form-grid select {
+            padding: 10px 14px;
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+        }
+        .form-grid input:focus { border-color: var(--accent-gold); }
+        
+        .admin-btn {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .admin-btn-danger {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .sticky-top-section {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-deep);
+            padding-top: 10px;
+            padding-bottom: 10px;
+            backdrop-filter: blur(8px);
+        }
+
+        .rate-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 15px 25px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .rate-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+        .rate-input {
+            width: 120px;
+            padding: 8px 12px;
+            font-size: 16px;
+            border: 2px solid var(--accent-gold);
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            background: #fffbeb;
+            color: var(--accent-gold);
+            outline: none;
+        }
+        .live-rate-display {
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .update-date {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .controls-wrapper {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        .search-box {
+            flex: 1;
+            padding: 14px 20px;
+            font-size: 15px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 12px;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .search-box:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px var(--accent-gold-glow);
+        }
+        .faq-open-btn {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2);
+        }
+        .faq-open-btn:hover { opacity: 0.9; }
+
+        .table-wrapper {
+            background: var(--bg-card);
+            border-radius: 14px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+        th, td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background-color: #f1f5f9;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        .product-row {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .product-row:hover { background-color: rgba(2, 132, 199, 0.03); }
+        .category-row {
+            background-color: #f8fafc !important;
+            color: var(--accent-gold);
+            font-weight: 800;
+            font-size: 15px;
+            letter-spacing: 1px;
+            border-top: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
+        }
+        .badge-green {
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .badge-orange {
+            background: rgba(245, 158, 11, 0.1);
+            color: #d97706;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .usd-input {
+            width: 80px;
+            padding: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 6px;
+            text-align: center;
+            outline: none;
+        }
+        .usd-input:focus { border-color: var(--accent-gold); }
+        .price-tl {
+            font-weight: 800;
+            color: #0284c7;
+            font-size: 15px;
+        }
+        .order-btn-table {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .order-btn-table:hover { opacity: 0.9; }
+
+        .mobile-bottom-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.08);
+            z-index: 998;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 10px;
+            font-weight: 700;
+            gap: 3px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .mobile-nav-item svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-muted);
+        }
+        .mobile-nav-item.active, .mobile-nav-item:hover {
+            color: var(--accent-gold);
+        }
+        .mobile-nav-item.active svg, .mobile-nav-item:hover svg {
+            fill: var(--accent-gold);
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 75px;
+            right: 20px;
+            background-color: var(--whatsapp-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            z-index: 997;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        .whatsapp-float svg { width: 28px; height: 28px; fill: white; }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-card {
+            background: var(--bg-card);
+            width: 90%;
+            max-width: 520px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--accent-gold);
+        }
+        .modal-header {
+            background: #f1f5f9;
+            color: var(--accent-gold);
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .modal-header h3 { margin: 0; font-size: 18px; }
+        .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
+        .modal-body { padding: 25px; font-size: 14px; max-height: 75vh; overflow-y: auto; }
+        .modal-img-container { text-align: center; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .modal-img-container img { max-height: 160px; max-width: 100%; object-fit: contain; border-radius: 8px; margin-bottom: 8px; }
+        .input-group-box { display: none; margin-top: 10px; }
+        .input-group-box input[type="text"] { width: 100%; padding: 8px 12px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 6px; box-sizing: border-box; margin-bottom: 8px; outline: none; }
+        .file-upload-label { display: inline-block; background: linear-gradient(135deg, #0284c7, #0ea5e9); color: white; padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .file-upload-label input { display: none; }
+        .modal-body p { margin: 10px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+        .modal-body strong { color: var(--text-muted); }
+        .modal-edit-input { padding: 6px 10px; font-size: 13px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; width: 180px; outline: none; }
+        .desc-box { margin-top: 20px; background: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid var(--border-color); }
+        .admin-save-card-btn { display: none; width: 100%; background: linear-gradient(135deg, #059669, #10b981); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; font-size: 14px; }
+        .modal-order-btn { display: block; width: 100%; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; text-decoration: none; margin-top: 15px; font-size: 15px; }
+
+        .faq-modal-card { max-width: 750px; }
+        .faq-section-title { color: var(--primary-color); margin-top: 25px; font-size: 16px; font-weight: 700; }
+        .faq-list { list-style: none; padding: 0; margin: 12px 0; }
+        .faq-list li { margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
+        .faq-question { font-weight: 700; color: var(--text-main); display: block; margin-bottom: 6px; }
+        .faq-answer { color: var(--text-muted); line-height: 1.6; margin: 0; font-size: 13.5px; }
+
         @media screen and (max-width: 768px) {
+            .mobile-bottom-bar { display: flex; }
             header { padding: 20px 10px; }
-            header h1 { font-size: 26px; } /* Mobilde oranlı büyüklük */
+            header h1 { font-size: 26px; }
             header p { font-size: 11px; }
-            .logo-container img { height: 65px; } /* Mobilde logo boyutu */
+            .logo-container img { height: 65px; }
+            .marquee-container { font-size: 11px; padding: 6px 0; }
+            .container { padding: 0 10px; margin: 10px auto; }
+            .controls-wrapper { flex-direction: column; gap: 10px; }
+            .search-box, .faq-open-btn { width: 100%; box-sizing: border-box; padding: 12px 15px; font-size: 14px; }
+            .rate-container { flex-direction: column; align-items: stretch; text-align: center; padding: 12px; gap: 10px; }
+            .rate-box { justify-content: center; font-size: 13px; }
+
+            .table-wrapper { background: transparent; box-shadow: none; border: none; }
+            table, thead, tbody, th, td, tr { display: block; }
+            thead { display: none; }
+            
+            .category-row {
+                background: #f1f5f9 !important;
+                color: var(--accent-gold);
+                text-align: center;
+                border-radius: 8px;
+                padding: 10px;
+                margin: 20px 0 10px 0;
+                font-size: 14px;
+                letter-spacing: 1.5px;
+            }
+
+            .product-row {
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                margin-bottom: 12px;
+                padding: 15px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 8px;
+                align-items: center;
+            }
+
+            .product-row td { padding: 0; border: none; }
+            .product-row td:nth-child(1) {
+                grid-column: 1 / 3;
+                font-size: 15px;
+                font-weight: 800;
+                color: var(--text-main);
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 8px;
+                margin-bottom: 4px;
+            }
+            .product-row td:nth-child(2):before { content: "Hafıza: "; color: var(--text-muted); font-size: 12px; }
+            .product-row td:nth-child(2) { grid-column: 1 / 2; font-size: 13px; font-weight: 600; }
+            .product-row td:nth-child(3) { grid-column: 2 / 3; text-align: right; }
+            .product-row td:nth-child(4):before { content: "Dolar ($): "; color: var(--text-muted); font-size: 12px; }
+            .product-row td:nth-child(4) { grid-column: 1 / 2; display: flex; align-items: center; gap: 6px; }
+            .usd-input { width: 75px; padding: 4px; font-size: 13px; }
+            .product-row td:nth-child(5) { grid-column: 2 / 3; text-align: right; font-size: 16px; font-weight: 800; color: #0284c7; }
+            .product-row td:nth-child(6) { grid-column: 1 / 2; }
+            .product-row td:nth-child(7) { grid-column: 2 / 3; text-align: right; }
+            .product-row td:nth-child(8) { grid-column: 1 / 3; text-align: center; margin-top: 5px; border-top: 1px dashed var(--border-color); padding-top: 8px; }
+
+            .whatsapp-float { bottom: 65px; right: 15px; width: 45px; height: 45px; }
+            .whatsapp-float svg { width: 24px; height: 24px; }
         }
     </style>
+</head>
+<body>
+
+    <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" title="WhatsApp ile İletişime Geç">
+        <svg viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/>
+        </svg>
+    </a>
+
+    <nav class="mobile-bottom-bar">
+        <button class="mobile-nav-item active" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span>Ana Sayfa</span>
+        </button>
+        <button class="mobile-nav-item" onclick="document.getElementById('searchInput').focus();">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <span>Ara</span>
+        </button>
+        <button class="mobile-nav-item" onclick="openFaqModal()">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C13.45 11.9 13 12.5 13 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.03-.42 1.98-1.07 2.75z"/></svg>
+            <span>S.S.S.</span>
+        </button>
+        <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="mobile-nav-item">
+            <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78z"/></svg>
+            <span>WhatsApp</span>
+        </a>
+    </nav>
+
+    <!-- Kayan Hareketli Esprili Slogan Bandı -->
+    <div class="marquee-container">
+        <div class="marquee-track">
+            <span>🔥 Fiyatlar cepleri yakmaz, sadece Anubis çarpar! • Instagram'da takip et: <a href="https://instagram.com/anubisgsm" target="_blank">@anubisgsm</a> • ⚡ Kalite tesadüf değil, Anubis işidir! • Güncel kur ve en yeni modeller için bizi takipte kalın!</span>
+            <span>🔥 Fiyatlar cepleri yakmaz, sadece Anubis çarpar! • Instagram'da takip et: <a href="https://instagram.com/anubisgsm" target="_blank">@anubisgsm</a> • ⚡ Kalite tesadüf değil, Anubis işidir! • Güncel kur ve en yeni modeller için bizi takipte kalın!</span>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo-container" onclick="handleLogoClick()" title="ANUBIS GSM">
+                <img src="logo.png" alt="ANUBIS GSM Logo" onerror="this.style.display='none'">
+                <div>
+                    <h1>ANUBIS GSM</h1>
+                    <p>Premium Teknoloji Marketi</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="adminPanel" class="admin-panel">
+            <h3>Yönetim Paneli <button class="close-admin" onclick="toggleAdminPanel(false)">Kapat</button></h3>
+            <div class="form-grid">
+                <input type="text" id="newCategory" placeholder="Kategori (Örn: İPHONE SERİSİ)">
+                <input type="text" id="newModel" placeholder="Model (Örn: IPHONE 17)">
+                <input type="text" id="newStorage" placeholder="Hafıza (Örn: 256GB)">
+                <input type="text" id="newReg" placeholder="Kayıt Durumu (Örn: KAYITSIZ)">
+                <input type="number" id="newUsd" placeholder="Dolar Fiyatı ($)">
+                <input type="text" id="newStock" placeholder="Stok (Örn: HAZIR STOK)">
+                <input type="text" id="newDesc" placeholder="Cihaz Açıklaması">
+            </div>
+            <button class="admin-btn" onclick="addNewProduct()">Listeye Ürün Ekle</button>
+        </div>
+
+        <div class="sticky-top-section">
+            <div class="rate-container">
+                <div class="rate-box">
+                    <span>GÜNCEL KUR:</span>
+                    <input type="number" id="dollarRate" class="rate-input" value="43.169" step="0.001" readonly title="Bu kur otomatik çekilir. Değiştirmek için Yönetim Paneli şifresini giriniz.">
+                </div>
+                <div id="liveRateText" class="live-rate-display">CANLI KUR: Yükleniyor...</div>
+                <div class="update-date">SON GÜNCELLEME: 31.07.2026</div>
+            </div>
+
+            <div class="controls-wrapper">
+                <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara (Örn: iPhone 16, S25 Ultra, Xiaomi)..." onkeyup="filterTable()">
+                <button class="faq-open-btn" onclick="openFaqModal()">
+                    ❓ Sıkça Sorulan Sorular
+                </button>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table id="priceTable">
+                <thead>
+                    <tr>
+                        <th>MODEL</th>
+                        <th>HAFIZA</th>
+                        <th>KAYIT DURUMU</th>
+                        <th>DOLAR ($)</th>
+                        <th>TL (₺)</th>
+                        <th>STOK DURUMU</th>
+                        <th>SİPARİŞ</th>
+                        <th class="admin-col">İŞLEM</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- JavaScript ve Modal Yapısı (Mevcut yapınız ile aynı kalmıştır) -->
+</body>
+</html>

@@ -81,7 +81,7 @@
         }
         .right-icon {
             margin-left: 30px;
-            transform: scaleX(-1); /* Simetri için diğer tarafa bakar */
+            transform: scaleX(-1);
         }
         .right-icon:hover {
             transform: scaleX(-1) scale(1.05);
@@ -252,7 +252,7 @@
             font-weight: 600;
         }
 
-        /* ÜST KONTROL ALANI (Arama ve SSS Butonu) */
+        /* ÜST KONTROL ALANI */
         .controls-wrapper {
             display: flex;
             gap: 15px;
@@ -427,7 +427,7 @@
             fill: white;
         }
 
-        /* MODAL ORTAK (Ürün ve SSS için) */
+        /* MODAL ORTAK */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -490,11 +490,10 @@
         }
         .input-group-box {
             display: none;
-            gap: 8px;
             margin-top: 10px;
         }
-        .input-group-box input {
-            flex: 1;
+        .input-group-box input[type="text"] {
+            width: 100%;
             padding: 8px 12px;
             font-size: 12px;
             background: #07090e;
@@ -502,7 +501,23 @@
             color: white;
             border-radius: 6px;
             outline: none;
+            margin-bottom: 8px;
+            box-sizing: border-box;
         }
+        .file-upload-label {
+            display: inline-block;
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .file-upload-label:hover { opacity: 0.9; }
+        .file-upload-label input { display: none; }
+
         .modal-body p {
             margin: 10px 0;
             display: flex;
@@ -562,10 +577,8 @@
         }
         .modal-order-btn:hover { opacity: 0.9; }
 
-        /* SSS MODAL ÖZEL GENİŞLİK */
-        .faq-modal-card {
-            max-width: 750px;
-        }
+        /* SSS MODAL */
+        .faq-modal-card { max-width: 750px; }
         .faq-section-title {
             color: var(--primary-color);
             margin-top: 25px;
@@ -575,40 +588,12 @@
             gap: 10px;
             font-weight: 700;
         }
-        .faq-list {
-            list-style: none;
-            padding: 0;
-            margin: 12px 0;
-        }
-        .faq-list li {
-            margin-bottom: 15px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .faq-question {
-            font-weight: 700;
-            color: white;
-            display: block;
-            margin-bottom: 6px;
-        }
-        .faq-answer {
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin: 0;
-            font-size: 13.5px;
-        }
-        .sub-faq-list {
-            list-style: disc;
-            margin-left: 20px;
-            margin-top: 8px;
-            color: var(--text-muted);
-            font-size: 13.5px;
-        }
-        .sub-faq-list li {
-            margin-bottom: 8px;
-            border-bottom: none;
-            padding-bottom: 0;
-        }
+        .faq-list { list-style: none; padding: 0; margin: 12px 0; }
+        .faq-list li { margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
+        .faq-question { font-weight: 700; color: white; display: block; margin-bottom: 6px; }
+        .faq-answer { color: var(--text-muted); line-height: 1.6; margin: 0; font-size: 13.5px; }
+        .sub-faq-list { list-style: disc; margin-left: 20px; margin-top: 8px; color: var(--text-muted); font-size: 13.5px; }
+        .sub-faq-list li { margin-bottom: 8px; border-bottom: none; padding-bottom: 0; }
     </style>
 </head>
 <body>
@@ -647,7 +632,6 @@
                 <input type="text" id="newReg" placeholder="Kayıt Durumu (Örn: KAYITSIZ)">
                 <input type="number" id="newUsd" placeholder="Dolar Fiyatı ($)">
                 <input type="text" id="newStock" placeholder="Stok (Örn: HAZIR STOK)">
-                <input type="text" id="newImg" placeholder="Görsel URL (İsteğe bağlı)">
                 <input type="text" id="newDesc" placeholder="Cihaz Açıklaması">
             </div>
             <button class="admin-btn" onclick="addNewProduct()">Listeye Ürün Ekle</button>
@@ -693,7 +677,7 @@
         </div>
     </div>
 
-    <!-- SSS MODAL (AÇILIR PENCERE) -->
+    <!-- SSS MODAL -->
     <div id="faqModal" class="modal-overlay" onclick="closeFaqModal()">
         <div class="modal-card faq-modal-card" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -772,7 +756,11 @@
                     <img id="modalImage" src="" alt="Ürün Görseli" style="display:none;">
                     <div id="noImageView" style="color: var(--text-muted); font-size: 13px; margin-bottom: 8px;">Görsel Eklenmemiş</div>
                     <div id="adminUrlBox" class="input-group-box">
-                        <input type="text" id="imageUrlInput" placeholder="Görsel URL'si yapıştırın (https://...)">
+                        <input type="text" id="imageUrlInput" placeholder="Veya görsel URL'si yapıştırın (https://...)">
+                        <label class="file-upload-label">
+                            📁 Bilgisayardan Fotoğraf Seç
+                            <input type="file" id="imageFileInput" accept="image/*" onchange="handleImageUpload(event)">
+                        </label>
                     </div>
                 </div>
 
@@ -817,6 +805,7 @@
 
         let products = JSON.parse(localStorage.getItem("anubis_products")) || defaultProducts;
         let isAdmin = false;
+        let tempUploadedImage = ""; // Bilgisayardan seçilen geçici görsel verisi
 
         let logoClickCount = 0;
         let logoClickTimer = null;
@@ -916,14 +905,13 @@
             let reg = document.getElementById("newReg").value.trim();
             let usd = parseFloat(document.getElementById("newUsd").value);
             let stock = document.getElementById("newStock").value.trim();
-            let img = document.getElementById("newImg").value.trim();
             let desc = document.getElementById("newDesc").value.trim();
 
             if (cat !== "") {
                 products.push({ category: cat });
             } else if (model !== "") {
                 if (isNaN(usd)) usd = 0;
-                products.push({ model, storage, reg, usd, stock, img, desc });
+                products.push({ model, storage, reg, usd, stock, img: "", desc });
             } else {
                 alert("Lütfen en azından Kategori veya Model adı girin!");
                 return;
@@ -938,7 +926,6 @@
             document.getElementById("newReg").value = "";
             document.getElementById("newUsd").value = "";
             document.getElementById("newStock").value = "";
-            document.getElementById("newImg").value = "";
             document.getElementById("newDesc").value = "";
         }
 
@@ -1013,20 +1000,17 @@
             });
         }
 
-        /* SSS Modal Kontrolleri */
-        function openFaqModal() {
-            document.getElementById("faqModal").style.display = "flex";
-        }
-        function closeFaqModal() {
-            document.getElementById("faqModal").style.display = "none";
-        }
+        /* SSS Modal */
+        function openFaqModal() { document.getElementById("faqModal").style.display = "flex"; }
+        function closeFaqModal() { document.getElementById("faqModal").style.display = "none"; }
 
-        /* Ürün Detay Kartı Modal Kontrolleri */
+        /* Ürün Detay Kartı & Dosya Yükleme */
         let activeProductIndex = null;
 
         function openModal(row, index) {
             activeProductIndex = index;
             let item = products[index];
+            tempUploadedImage = item.img || "";
 
             document.getElementById("modalTitle").textContent = item.model + " (" + item.storage + ")";
             let tlVal = row.querySelector(".price-tl").textContent;
@@ -1046,7 +1030,6 @@
             document.getElementById("mStockInput").value = item.stock;
             document.getElementById("mDescInput").value = item.desc || "";
 
-            // Detay Modalındaki Sipariş Butonu Linkini Güncelle
             let modalOrderBtn = document.getElementById("modalOrderBtn");
             modalOrderBtn.href = getWhatsAppOrderLink(item.model, item.storage, item.reg);
 
@@ -1056,7 +1039,7 @@
             let urlInput = document.getElementById("imageUrlInput");
             let saveCardBtn = document.getElementById("saveCardBtn");
 
-            urlInput.value = item.img || "";
+            urlInput.value = "";
 
             let viewElements = document.querySelectorAll(".view-mode");
             let editElements = document.querySelectorAll(".edit-mode");
@@ -1075,8 +1058,28 @@
                 saveCardBtn.style.display = "none";
             }
 
-            if (item.img && item.img.trim() !== "") {
-                modalImg.src = item.img;
+            updateModalImageView();
+            document.getElementById("productModal").style.display = "flex";
+        }
+
+        function handleImageUpload(event) {
+            let file = event.target.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    tempUploadedImage = e.target.result;
+                    updateModalImageView();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function updateModalImageView() {
+            let modalImg = document.getElementById("modalImage");
+            let noImgView = document.getElementById("noImageView");
+
+            if (tempUploadedImage && tempUploadedImage.trim() !== "") {
+                modalImg.src = tempUploadedImage;
                 modalImg.style.display = "block";
                 noImgView.style.display = "none";
             } else {
@@ -1084,8 +1087,6 @@
                 modalImg.style.display = "none";
                 noImgView.style.display = "block";
             }
-
-            document.getElementById("productModal").style.display = "flex";
         }
 
         function saveCardChanges() {
@@ -1097,11 +1098,15 @@
             let newUsd = parseFloat(document.getElementById("mUsdInput").value);
             let newStock = document.getElementById("mStockInput").value.trim();
             let newDesc = document.getElementById("mDescInput").value.trim();
-            let newImg = document.getElementById("imageUrlInput").value.trim();
+            let urlInputVal = document.getElementById("imageUrlInput").value.trim();
 
             if (newModel === "") {
                 alert("Model alanı boş bırakılamaz!");
                 return;
+            }
+
+            if (urlInputVal !== "") {
+                tempUploadedImage = urlInputVal;
             }
 
             products[activeProductIndex].model = newModel;
@@ -1110,7 +1115,7 @@
             products[activeProductIndex].usd = isNaN(newUsd) ? 0 : newUsd;
             products[activeProductIndex].stock = newStock;
             products[activeProductIndex].desc = newDesc;
-            products[activeProductIndex].img = newImg;
+            products[activeProductIndex].img = tempUploadedImage;
 
             saveToStorage();
             renderTable();
@@ -1121,6 +1126,7 @@
         function closeModal() {
             document.getElementById("productModal").style.display = "none";
             activeProductIndex = null;
+            tempUploadedImage = "";
         }
 
         window.onload = function() {

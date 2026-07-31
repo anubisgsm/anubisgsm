@@ -8,12 +8,15 @@
         :root {
             --bg-deep: #07090e;
             --bg-card: #0f172a;
+            --bg-glass: rgba(15, 23, 42, 0.75);
             --primary-color: #38bdf8;
             --accent-gold: #f59e0b;
+            --accent-gold-glow: rgba(245, 158, 11, 0.4);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: rgba(255, 255, 255, 0.08);
             --whatsapp-color: #25d366;
+            --instagram-color: #e1306c;
         }
 
         body {
@@ -31,15 +34,32 @@
         header {
             background: linear-gradient(135deg, #090d16 0%, #111b2e 100%);
             color: white;
-            padding: 20px;
+            padding: 30px 20px;
+            text-align: center;
             border-bottom: 2px solid var(--accent-gold);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .header-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: relative;
             max-width: 1250px;
             margin: 0 auto;
             flex-wrap: wrap;
@@ -49,12 +69,46 @@
         .logo-area {
             display: flex;
             align-items: center;
+            justify-content: center;
+            gap: 20px;
             cursor: pointer;
             user-select: none;
+            margin: 0 auto;
             transition: transform 0.3s;
         }
         .logo-area:hover {
             transform: scale(1.02);
+        }
+        .logo-area img {
+            height: 95px;
+            width: auto;
+            filter: drop-shadow(0 0 20px var(--accent-gold-glow));
+        }
+        header h1 {
+            margin: 0;
+            font-size: 38px;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+            font-weight: 800;
+            text-shadow: 0 2px 15px var(--accent-gold-glow);
+            text-align: left;
+        }
+        header p.subtitle {
+            margin: 6px 0 0 0;
+            font-size: 15px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: left;
+            font-weight: 600;
+        }
+        header p.slogan {
+            margin: 6px 0 0 0;
+            font-size: 13.5px;
+            color: #38bdf8;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            text-align: left;
         }
 
         .header-right-area {
@@ -70,21 +124,22 @@
             gap: 8px;
             background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
             color: white;
-            padding: 8px 16px;
+            padding: 10px 18px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             box-shadow: 0 4px 15px rgba(225, 48, 108, 0.4);
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
             white-space: nowrap;
         }
         .instagram-badge:hover {
             transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(225, 48, 108, 0.6);
         }
         .instagram-badge svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             fill: white;
         }
 
@@ -96,9 +151,9 @@
             background: #1e293b;
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 8px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             cursor: pointer;
             transition: background 0.2s;
@@ -111,6 +166,7 @@
             padding: 0 20px;
         }
 
+        /* GİZLİ YÖNETİM PANELİ */
         .admin-panel {
             display: none;
             background: var(--bg-card);
@@ -118,6 +174,7 @@
             padding: 25px;
             border-radius: 14px;
             margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
         .admin-panel h3 {
             margin-top: 0;
@@ -139,6 +196,7 @@
             font-size: 12px;
             font-weight: bold;
         }
+        .close-admin:hover { background: #dc2626; }
 
         .form-grid {
             display: grid;
@@ -155,6 +213,8 @@
             font-size: 13px;
             outline: none;
         }
+        .form-grid input:focus { border-color: var(--accent-gold); }
+        
         .admin-btn {
             background: linear-gradient(135deg, #059669, #10b981);
             color: white;
@@ -175,6 +235,7 @@
             font-weight: bold;
         }
 
+        /* KUR VE BİLGİ BARI */
         .rate-container {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -184,6 +245,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             flex-wrap: wrap;
             gap: 15px;
         }
@@ -224,9 +286,14 @@
             font-size: 11px;
             cursor: pointer;
             font-weight: bold;
+            transition: background 0.2s;
         }
-        .refresh-rate-btn:hover { background: var(--primary-color); color: #07090e; }
+        .refresh-rate-btn:hover {
+            background: var(--primary-color);
+            color: #07090e;
+        }
 
+        /* KATEGORİ FİLTRE SEKMELERİ */
         .filter-tabs {
             display: flex;
             gap: 10px;
@@ -250,6 +317,7 @@
             border-color: var(--primary-color);
         }
 
+        /* ÜST KONTROL ALANI */
         .controls-wrapper {
             display: flex;
             gap: 15px;
@@ -267,8 +335,12 @@
             color: white;
             border-radius: 12px;
             outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-        .search-box:focus { border-color: var(--accent-gold); }
+        .search-box:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px var(--accent-gold-glow);
+        }
         .faq-open-btn {
             background: linear-gradient(135deg, #0284c7, #0ea5e9);
             color: white;
@@ -284,6 +356,7 @@
             white-space: nowrap;
         }
 
+        /* TABLO ALANI */
         .table-wrapper {
             background: var(--bg-card);
             border-radius: 14px;
@@ -309,8 +382,13 @@
             letter-spacing: 1px;
             font-weight: 700;
         }
-        .product-row { cursor: pointer; transition: background-color 0.2s; }
-        .product-row:hover { background-color: rgba(56, 189, 248, 0.04); }
+        .product-row {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .product-row:hover {
+            background-color: rgba(56, 189, 248, 0.04);
+        }
         .category-row {
             background-color: #05080f !important;
             color: var(--accent-gold);
@@ -346,7 +424,14 @@
             border-radius: 6px;
             font-size: 11px;
             font-weight: 700;
+            animation: pulse-animation 1.5s infinite;
         }
+        @keyframes pulse-animation {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
         .usd-input {
             width: 85px;
             padding: 6px;
@@ -359,7 +444,11 @@
             text-align: center;
             outline: none;
         }
-        .price-display { font-weight: 800; color: #38bdf8; font-size: 15px; }
+        .price-display {
+            font-weight: 800;
+            color: #38bdf8;
+            font-size: 15px;
+        }
         .order-btn-table {
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
@@ -376,6 +465,7 @@
             white-space: nowrap;
         }
 
+        /* TOAST BİLDİRİMİ */
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -395,8 +485,12 @@
             transition: visibility 0.3s, opacity 0.3s;
             opacity: 0;
         }
-        #toast.show { visibility: visible; opacity: 1; }
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
 
+        /* WHATSAPP SABİT BUTON */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
@@ -415,6 +509,7 @@
         }
         .whatsapp-float svg { width: 35px; height: 35px; fill: white; }
 
+        /* MODAL ORTAK */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -452,71 +547,67 @@
         .modal-header h3 { margin: 0; font-size: 18px; }
         .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
         .modal-body { padding: 25px; font-size: 14px; overflow-y: auto; flex: 1; }
-        
-        .product-detail-content p {
-            margin: 10px 0;
-            color: var(--text-muted);
-        }
-        .product-detail-content strong {
-            color: var(--text-main);
-        }
-        .modal-order-btn {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            padding: 12px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-            box-sizing: border-box;
+        .modal-img-container { text-align: center; margin-bottom: 20px; background: #07090e; padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .modal-img-container img { max-height: 180px; max-width: 100%; object-fit: contain; border-radius: 8px; margin-bottom: 8px; }
+        .input-group-box { display: none; margin-top: 10px; }
+        .input-group-box input[type="text"] { width: 100%; padding: 8px; font-size: 12px; background: #07090e; border: 1px solid var(--border-color); color: white; border-radius: 6px; margin-bottom: 8px; }
+        .file-upload-label { display: inline-block; background: linear-gradient(135deg, #0284c7, #0ea5e9); color: white; padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .file-upload-label input { display: none; }
+        .modal-body p { margin: 10px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+        .modal-edit-input { padding: 6px; font-size: 13px; background: #07090e; border: 1px solid var(--border-color); color: white; border-radius: 6px; width: 200px; }
+        .desc-box { margin-top: 20px; background: #07090e; padding: 15px; border-radius: 10px; border: 1px solid var(--border-color); }
+        .admin-save-card-btn { display: none; width: 100%; background: linear-gradient(135deg, #059669, #10b981); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .modal-order-btn { display: block; width: 100%; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; text-align: center; text-decoration: none; }
+
+        /* SSS MODAL */
+        .faq-modal-card { max-width: 750px; }
+        .faq-section-title { color: var(--primary-color); margin-top: 25px; font-size: 16px; font-weight: 700; }
+        .faq-list { list-style: none; padding: 0; margin: 12px 0; }
+        .faq-list li { margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
+        .faq-question { font-weight: 700; color: white; display: block; margin-bottom: 6px; }
+        .faq-answer { color: var(--text-muted); line-height: 1.6; margin: 0; font-size: 13.5px; }
+
+        @media (max-width: 768px) {
+            header { padding: 20px 15px; }
+            .header-content { flex-direction: column; text-align: center; gap: 15px; }
+            .logo-area { flex-direction: column; gap: 10px; }
+            .logo-area img { height: 75px; }
+            header h1 { font-size: 28px; text-align: center; }
+            header p.subtitle, header p.slogan { text-align: center; }
+            .header-right-area { align-items: center; width: 100%; }
+            .controls-wrapper { flex-direction: column; }
+            .search-box, .faq-open-btn { width: 100%; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Toast Bildirim Kutusu -->
     <div id="toast">Sipariş mesajınız kopyalandı, WhatsApp'a yönlendiriliyorsunuz! 🚀</div>
 
-    <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float">
-        <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/></svg>
+    <!-- WhatsApp Sabit Buton -->
+    <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" title="WhatsApp ile İletişime Geç">
+        <svg viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/>
+        </svg>
     </a>
 
     <header>
         <div class="header-content">
             <div class="logo-area" onclick="handleLogoClick()" title="ANUBIS GSM">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 140" style="max-height: 65px; width: auto;">
-                    <defs>
-                        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#f59e0b" />
-                            <stop offset="100%" stop-color="#d97706" />
-                        </linearGradient>
-                        <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#38bdf8" />
-                            <stop offset="100%" stop-color="#0284c7" />
-                        </linearGradient>
-                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="3" result="blur" />
-                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                        </filter>
-                    </defs>
-                    <g transform="translate(10, 20)">
-                        <circle cx="50" cy="50" r="45" fill="none" stroke="url(#goldGrad)" stroke-width="2.5" opacity="0.8" />
-                        <path d="M50 15 L75 40 L65 75 L35 75 L25 40 Z" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.4" />
-                        <polygon points="50,22 68,42 60,70 40,70 32,42" fill="url(#blueGlow)" opacity="0.25" />
-                        <path d="M50 28 L67 68 L57 68 L53 55 L47 55 L43 68 L33 68 Z" fill="url(#goldGrad)" filter="url(#glow)" />
-                        <path d="M46 47 L54 47 L50 35 Z" fill="#07090e" />
-                    </g>
-                    <text x="115" y="65" font-family="'Inter', sans-serif" font-weight="800" font-size="36" fill="url(#goldGrad)" letter-spacing="3" filter="url(#glow)">ANUBIS</text>
-                    <text x="315" y="65" font-family="'Inter', sans-serif" font-weight="800" font-size="36" fill="#38bdf8" letter-spacing="2">GSM</text>
-                    <text x="117" y="92" font-family="'Inter', sans-serif" font-weight="600" font-size="13" fill="#94a3b8" letter-spacing="3.5">PREMIUM TEKNOLOJİ</text>
-                </svg>
+                <img src="logo.png" alt="ANUBIS GSM Logo" onerror="this.style.display='none'">
+                <div>
+                    <h1>ANUBIS GSM</h1>
+                    <p class="subtitle">Premium Teknoloji Marketi</p>
+                    <p class="slogan">"Cüzdanınızı ağlatmayan, yüzünüzü güldüren teknoloji adresi 🚀"</p>
+                </div>
             </div>
 
             <div class="header-right-area">
                 <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge">
-                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
                     @anubisgsm
                 </a>
                 <div class="top-tools-bar">
@@ -528,31 +619,34 @@
     </header>
 
     <div class="container">
+        <!-- Gizli Yönetim Paneli -->
         <div id="adminPanel" class="admin-panel">
             <h3>Yönetim Paneli <button class="close-admin" onclick="toggleAdminPanel(false)">Kapat</button></h3>
             <div class="form-grid">
-                <input type="text" id="newCategory" placeholder="Kategori">
-                <input type="text" id="newModel" placeholder="Model">
-                <input type="text" id="newStorage" placeholder="Hafıza">
-                <input type="text" id="newReg" placeholder="Kayıt Durumu">
-                <input type="number" id="newUsd" placeholder="Dolar ($)">
-                <input type="text" id="newStock" placeholder="Stok">
-                <input type="text" id="newDesc" placeholder="Açıklama">
+                <input type="text" id="newCategory" placeholder="Kategori (Örn: İPHONE SERİSİ)">
+                <input type="text" id="newModel" placeholder="Model (Örn: IPHONE 17)">
+                <input type="text" id="newStorage" placeholder="Hafıza (Örn: 256GB)">
+                <input type="text" id="newReg" placeholder="Kayıt Durumu (Örn: KAYITSIZ)">
+                <input type="number" id="newUsd" placeholder="Dolar Fiyatı ($)">
+                <input type="text" id="newStock" placeholder="Stok (Örn: HAZIR STOK veya SON 2 ÜRÜN)">
+                <input type="text" id="newDesc" placeholder="Cihaz Açıklaması">
             </div>
-            <button class="admin-btn" onclick="addNewProduct()">Ekle</button>
+            <button class="admin-btn" onclick="addNewProduct()">Listeye Ürün Ekle</button>
         </div>
 
+        <!-- Kur ve Tarih Alanı -->
         <div class="rate-container">
             <div class="rate-box">
                 <span>GÜNCEL KUR (USD/TRY):</span>
                 <input type="number" id="dollarRate" class="rate-input" value="43.169" step="0.001" oninput="renderTable()">
             </div>
             <div class="update-date">
-                <span id="rateUpdateStatus">Kur Güncelleniyor...</span>
+                <span id="rateUpdateStatus">Kur Canlı Çekiliyor...</span>
                 <button class="refresh-rate-btn" onclick="fetchLiveExchangeRate()">Kuru Güncelle</button>
             </div>
         </div>
 
+        <!-- Hızlı Filtreleme Sekmeleri -->
         <div class="filter-tabs">
             <button class="filter-tab active" onclick="filterByCategory('TÜMÜ', this)">Tüm Ürünler</button>
             <button class="filter-tab" onclick="filterByCategory('İPHONE', this)">İPhone Serisi</button>
@@ -560,11 +654,15 @@
             <button class="filter-tab" onclick="filterByCategory('SON ÜRÜN', this)">🔥 Son Ürünler</button>
         </div>
 
+        <!-- Üst Arama ve SSS Butonu -->
         <div class="controls-wrapper">
-            <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara..." onkeyup="filterTable()">
-            <button class="faq-open-btn" onclick="openFaqModal()">❓ Sıkça Sorulan Sorular</button>
+            <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara (Örn: iPhone 16, S25 Ultra)..." onkeyup="filterTable()">
+            <button class="faq-open-btn" onclick="openFaqModal()">
+                ❓ Sıkça Sorulan Sorular
+            </button>
         </div>
 
+        <!-- Ürün Tablosu -->
         <div class="table-wrapper">
             <table id="priceTable">
                 <thead>
@@ -584,29 +682,58 @@
         </div>
     </div>
 
-    <!-- SSS Modal -->
+    <!-- SSS MODAL -->
     <div id="faqModal" class="modal-overlay" onclick="closeFaqModal()">
-        <div class="modal-card" onclick="event.stopPropagation()">
+        <div class="modal-card faq-modal-card" onclick="event.stopPropagation()">
             <div class="modal-header">
-                <h3>❓ Sıkça Sorulan Sorular</h3>
+                <h3>❓ Sıkça Sorulan Sorular (SSS)</h3>
                 <button class="close-btn" onclick="closeFaqModal()">&times;</button>
             </div>
             <div class="modal-body">
-                <p><strong>Satılan telefonlar kayıtlı mı?</strong><br>Hayır, tüm cihazlar yurt dışı ve kayıtsızdır.</p>
-                <p><strong>Telefonlar orijinal mi?</strong><br>Evet, %100 orijinal ve sıfırdır.</p>
+                <h3 class="faq-section-title">📌 Satış ve Cihaz Durumu</h3>
+                <ul class="faq-list">
+                    <li><span class="faq-question">• Satılan telefonlar kayıtlı mı?</span><p class="faq-answer">Hayır, tüm cihazlar yurt dışı ve kayıtsızdır.</p></li>
+                    <li><span class="faq-question">• Telefonlar orijinal mi?</span><p class="faq-answer">Evet. Tüm cihazlarımız %100 orijinal ve sıfırdır.</p></li>
+                </ul>
             </div>
         </div>
     </div>
 
-    <!-- Ürün Detay Kartı / Modalı -->
-    <div id="productModal" class="modal-overlay" onclick="closeProductModal()">
+    <!-- ÜRÜN DETAY KARTI (MODAL) -->
+    <div id="productModal" class="modal-overlay" onclick="closeModal()">
         <div class="modal-card" onclick="event.stopPropagation()">
             <div class="modal-header">
-                <h3 id="modalProductTitle">Cihaz Detayı</h3>
-                <button class="close-btn" onclick="closeProductModal()">&times;</button>
+                <h3 id="modalTitle">Ürün Detayı</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
             </div>
-            <div class="modal-body product-detail-content" id="modalProductBody">
-                <!-- Dinamik dolacak -->
+            <div class="modal-body">
+                <div class="modal-img-container">
+                    <img id="modalImage" src="" alt="Ürün Görseli" style="display:none;">
+                    <div id="noImageView" style="color: var(--text-muted); font-size: 13px;">Görsel Eklenmemiş</div>
+                    <div id="adminUrlBox" class="input-group-box">
+                        <input type="text" id="imageUrlInput" placeholder="Veya görsel URL'si yapıştırın">
+                        <label class="file-upload-label">
+                            📁 Bilgisayardan Fotoğraf Seç
+                            <input type="file" id="imageFileInput" accept="image/*" onchange="handleImageUpload(event)">
+                        </label>
+                    </div>
+                </div>
+
+                <p><strong>Model:</strong> <span id="mModelText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mModelInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Hafıza:</strong> <span id="mStorageText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mStorageInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Kayıt Durumu:</strong> <span id="mRegText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mRegInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Dolar Fiyatı:</strong> <span id="mUsdText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="number" id="mUsdInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Güncel Fiyat:</strong> <span id="mPrice" style="color: #38bdf8; font-weight: 800; font-size: 16px;">-</span></p>
+                <p><strong>Stok Durumu:</strong> <span id="mStockText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mStockInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                
+                <div class="desc-box">
+                    <strong style="color: var(--accent-gold);">Açıklama:</strong>
+                    <span id="mDescText" class="view-mode" style="color: var(--text-muted); display:block; margin-top:5px;">Açıklama bulunmuyor.</span>
+                    <textarea id="mDescInput" class="edit-mode" style="display:none; width:100%; height:60px; background:#07090e; border:1px solid var(--border-color); color:white; border-radius:6px; margin-top:5px;"></textarea>
+                </div>
+
+                <a id="modalOrderBtn" href="#" target="_blank" class="modal-order-btn" onclick="triggerToastAndOrder(event)">📲 Bu Ürünü Hemen Sipariş Ver</a>
+                <button id="saveCardBtn" class="admin-save-card-btn" onclick="saveCardChanges()">Değişiklikleri Kaydet</button>
             </div>
         </div>
     </div>
@@ -614,26 +741,33 @@
     <script>
         let defaultProducts = [
             { category: "İPHONE SERİSİ" },
-            { model: "IPHONE 17 PRO MAX", storage: "256 GB", reg: 'KAYIT ALICI AİT', usd: 1400, stock: "FULL RENK", desc: "Apple A19 Pro çip, titanyum tasarım ve profesyonel kamera sistemi.", img: "" },
-            { model: "IPHONE 16 PRO MAX", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1330, stock: "FULL RENK", desc: "Gelişmiş pil ömrü, 4K 120 FPS video kayıt ve güçlü performans.", img: "" },
-            { model: "IPHONE 16 PRO", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1220, stock: "FULL RENK", desc: "Kompakt Pro deneyimi, titanyum kasa ve aksiyon tuşu.", img: "" },
-            { model: "IPHONE 16 PRO", storage: "128GB", reg: 'KAYIT ALICI AİT', usd: 1150, stock: "FULL RENK", desc: "Giriş seviyesi Pro güç ve hız.", img: "" },
-            { model: "IPHONE 15 PRO MAX (değişim)", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1100, stock: "FULL RENK", desc: "Değişim cihazı, sıfır ayarında.", img: "" },
+            { model: "IPHONE 16 PRO MAX", storage: "512GB", reg: 'KAYIT ALICI AİT', usd: 1520, stock: "SON 2 ÜRÜN", desc: "Kutu açılımsız, sıfır kapalı kutu cihaz.", img: "" },
+            { model: "IPHONE 16 PRO MAX", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1330, stock: "FULL RENK", desc: "256GB Hafıza seçeneğiyle stoklarda.", img: "" },
+            { model: "IPHONE 16 PRO", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1220, stock: "HAZIR STOK", desc: "Kompakt ve güçlü Pro modeli.", img: "" },
+            { model: "IPHONE 15 PRO MAX (değişim)", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1100, stock: "SON 1 ÜRÜN", desc: "Apple değişim cihazıdır.", img: "" },
+            
             { category: "SAMSUNG MODELLERİ" },
-            { model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Galaxy AI özellikleri, Snapdragon işlemci ve harika kalem deneyimi.", img: "" }
+            { model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Amiral gemisi S25 Ultra.", img: "" },
+            { model: "SAMSUNG S24 ULTRA", storage: "12/256GB", reg: 'KAYITSIZ', usd: 935, stock: "SON 3 ÜRÜN", desc: "S24 Ultra modeli.", img: "" }
         ];
 
         let products = JSON.parse(localStorage.getItem("anubis_products"));
-        if (!products || products.length === 0) { products = defaultProducts; }
+        if (!products || products.length === 0) {
+            products = defaultProducts;
+            localStorage.setItem("anubis_products", JSON.stringify(defaultProducts));
+        }
 
         let isAdmin = false;
+        let tempUploadedImage = "";
         let currentCurrency = 'TL';
-        let logoClickCount = 0, logoClickTimer = null;
 
+        let logoClickCount = 0;
+        let logoClickTimer = null;
         function handleLogoClick() {
             logoClickCount++;
             clearTimeout(logoClickTimer);
             logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 1000);
+
             if (logoClickCount >= 4) {
                 logoClickCount = 0;
                 let pass = prompt("Yönetim Şifresi:");
@@ -641,59 +775,85 @@
                     isAdmin = true;
                     toggleAdminPanel(true);
                     renderTable();
-                    alert("Yönetim Paneli Aktif!");
+                    alert("Yönetim Paneli Aktif Edildi!");
                 }
             }
         }
 
-        function saveToStorage() { localStorage.setItem("anubis_products", JSON.stringify(products)); }
+        function saveToStorage() {
+            localStorage.setItem("anubis_products", JSON.stringify(products));
+        }
+
         function getWhatsAppOrderLink(model, storage, reg) {
-            return `https://wa.me/905000000000?text=` + encodeURIComponent(`Merhaba, ${model} (${storage} - ${reg}) sipariş vermek istiyorum.`);
+            let message = `Merhaba, ANUBIS GSM fiyat listesinden ${model} (${storage} - ${reg}) modelini sipariş vermek istiyorum.`;
+            return `https://wa.me/905000000000?text=` + encodeURIComponent(message);
         }
-        function triggerToast() {
-            let t = document.getElementById("toast");
-            t.className = "show";
-            setTimeout(() => { t.className = ""; }, 3000);
+
+        function showToast() {
+            let toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
         }
+
+        function triggerToastAndOrder(event) {
+            showToast();
+        }
+
         function toggleCurrencyMode() {
             currentCurrency = currentCurrency === 'TL' ? 'USD' : 'TL';
             document.getElementById("currencyModeLabel").textContent = currentCurrency === 'TL' ? 'TL (₺)' : 'USD ($)';
             renderTable();
         }
-        function toggleTheme() { alert("Tema modu aktif!"); }
+
+        function toggleTheme() {
+            alert("Tema modu aktif!");
+        }
 
         let activeCategoryFilter = 'TÜMÜ';
-        function filterByCategory(cat, btn) {
+        function filterByCategory(cat, btnElement) {
             document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            btnElement.classList.add('active');
             activeCategoryFilter = cat;
             renderTable();
         }
 
+        // CANLI KUR ÇEKME FONKSİYONU
         async function fetchLiveExchangeRate() {
-            let status = document.getElementById("rateUpdateStatus");
+            let statusSpan = document.getElementById("rateUpdateStatus");
+            statusSpan.textContent = "Kur güncelleniyor...";
             try {
-                let res = await fetch('https://open.er-api.com/v6/latest/USD');
-                let data = await res.json();
-                if (data?.rates?.TRY) {
-                    document.getElementById("dollarRate").value = data.rates.TRY.toFixed(3);
-                    status.textContent = "Canlı Kur Aktif";
+                let response = await fetch('https://open.er-api.com/v6/latest/USD');
+                let data = await response.json();
+                if (data && data.rates && data.rates.TRY) {
+                    let liveRate = data.rates.TRY;
+                    document.getElementById("dollarRate").value = liveRate.toFixed(3);
+                    statusSpan.textContent = "Canlı Kur Aktif (" + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ")";
                     renderTable();
+                } else {
+                    throw new Error("Kur verisi alınamadı");
                 }
-            } catch (e) { status.textContent = "Kur manuel modda"; renderTable(); }
+            } catch (error) {
+                console.error("Kur çekilemedi, manuel değere devam ediliyor:", error);
+                statusSpan.textContent = "Kur manuel modda";
+                renderTable();
+            }
         }
 
         function renderTable() {
             let tbody = document.getElementById("tableBody");
             tbody.innerHTML = "";
-            document.querySelectorAll(".admin-col").forEach(c => c.style.display = isAdmin ? "" : "none");
+
+            let adminCols = document.querySelectorAll(".admin-col");
+            adminCols.forEach(col => col.style.display = isAdmin ? "" : "none");
 
             let currentCatName = "";
+
             products.forEach((item, index) => {
                 if (item.category) {
                     currentCatName = item.category;
                     if (activeCategoryFilter === 'İPHONE' && !currentCatName.includes('İPHONE')) return;
                     if (activeCategoryFilter === 'SAMSUNG' && !currentCatName.includes('SAMSUNG')) return;
+
                     let tr = document.createElement("tr");
                     tr.className = "category-row";
                     tr.innerHTML = `<td colspan="${isAdmin ? 8 : 7}">${item.category}</td>`;
@@ -707,23 +867,34 @@
 
                 let tr = document.createElement("tr");
                 tr.className = "product-row";
-                // Satıra tıklanınca detay kartını açması için olay bağlandı
-                tr.onclick = () => openProductModal(item);
+                tr.onclick = function() { openModal(this, index); };
 
-                let regBadge = `<span class="badge-orange">${item.reg}</span>`;
-                let stockBadge = item.stock.includes("SON") ? `<span class="badge-pulse">${item.stock}</span>` : `<span class="badge-green">${item.stock}</span>`;
+                let regBadge = item.reg.includes("KAYITSIZ") || item.reg.includes("AİT") 
+                    ? `<span class="badge-orange">${item.reg}</span>` 
+                    : `<span class="badge-green">${item.reg}</span>`;
+
+                let stockBadge = item.stock.includes("SON") 
+                    ? `<span class="badge-pulse">${item.stock}</span>` 
+                    : `<span class="badge-green">${item.stock}</span>`;
+
+                let waLink = getWhatsAppOrderLink(item.model, item.storage, item.reg);
+                let orderBtnTd = `<td><a href="${waLink}" target="_blank" class="order-btn-table" onclick="triggerToastAndOrder(event); event.stopPropagation();">📲 Sipariş Ver</a></td>`;
+                let adminButtonTd = isAdmin ? `<td><button class="admin-btn-danger" onclick="deleteProduct(${index}); event.stopPropagation();">Sil</button></td>` : '';
+
                 let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
-                let priceText = currentCurrency === 'TL' ? (item.usd * rate).toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " ₺" : item.usd.toLocaleString() + " $";
+                let priceText = currentCurrency === 'TL' 
+                    ? (item.usd * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺"
+                    : item.usd.toLocaleString() + " $";
 
                 tr.innerHTML = `
                     <td style="font-weight:600;">${item.model}</td>
                     <td>${item.storage}</td>
                     <td>${regBadge}</td>
-                    <td><input type="number" class="usd-input" value="${item.usd}" ${isAdmin ? '' : 'readonly'} oninput="updateUsd(${index}, this.value)" onclick="event.stopPropagation()"></td>
+                    <td><input type="number" class="usd-input" value="${item.usd}" ${isAdmin ? '' : 'readonly'} oninput="updateUsdPrice(${index}, this.value); event.stopPropagation();" onclick="event.stopPropagation()"></td>
                     <td class="price-display">${priceText}</td>
                     <td>${stockBadge}</td>
-                    <td><a href="${getWhatsAppOrderLink(item.model, item.storage, item.reg)}" target="_blank" class="order-btn-table" onclick="triggerToast(); event.stopPropagation();">📲 Sipariş Ver</a></td>
-                    ${isAdmin ? `<td><button class="admin-btn-danger" onclick="deleteProduct(${index}); event.stopPropagation();">Sil</button></td>` : ''}
+                    ${orderBtnTd}
+                    ${adminButtonTd}
                 `;
                 tbody.appendChild(tr);
             });
@@ -738,63 +909,133 @@
         function addNewProduct() {
             let cat = document.getElementById("newCategory").value.trim();
             let model = document.getElementById("newModel").value.trim();
-            if (cat) products.push({ category: cat });
-            else if (model) {
-                products.push({
-                    model: model,
-                    storage: document.getElementById("newStorage").value.trim(),
-                    reg: document.getElementById("newReg").value.trim(),
-                    usd: parseFloat(document.getElementById("newUsd").value) || 0,
-                    stock: document.getElementById("newStock").value.trim() || "HAZIR STOK",
-                    desc: document.getElementById("newDesc").value.trim(),
-                    img: ""
-                });
+            let storage = document.getElementById("newStorage").value.trim();
+            let reg = document.getElementById("newReg").value.trim();
+            let usd = parseFloat(document.getElementById("newUsd").value);
+            let stock = document.getElementById("newStock").value.trim();
+            let desc = document.getElementById("newDesc").value.trim();
+
+            if (cat !== "") {
+                products.push({ category: cat });
+            } else if (model !== "") {
+                products.push({ model, storage, reg, usd: isNaN(usd)?0:usd, stock: stock||"HAZIR STOK", img: "", desc });
             }
             saveToStorage();
             renderTable();
         }
 
         function deleteProduct(index) {
-            if (confirm("Silinsin mi?")) { products.splice(index, 1); saveToStorage(); renderTable(); }
+            if (confirm("Silmek istediğinize emin misiniz?")) {
+                products.splice(index, 1);
+                saveToStorage();
+                renderTable();
+            }
         }
 
-        function updateUsd(index, val) {
+        function updateUsdPrice(index, val) {
             if (!isAdmin) return;
-            let p = parseFloat(val);
-            if (!isNaN(p)) { products[index].usd = p; saveToStorage(); renderTable(); }
+            let parsed = parseFloat(val);
+            if (!isNaN(parsed)) {
+                products[index].usd = parsed;
+                saveToStorage();
+                renderTable();
+            }
         }
 
         function filterTable() {
-            let q = document.getElementById("searchInput").value.toUpperCase();
-            document.querySelectorAll("#priceTable tbody tr.product-row").forEach(r => {
-                r.style.display = r.textContent.toUpperCase().includes(q) ? "" : "none";
+            let input = document.getElementById("searchInput").value.toUpperCase();
+            let tr = document.querySelectorAll("#priceTable tbody tr.product-row");
+            tr.forEach(row => {
+                let txt = row.textContent || row.innerText;
+                row.style.display = txt.toUpperCase().indexOf(input) > -1 ? "" : "none";
             });
         }
 
         function openFaqModal() { document.getElementById("faqModal").style.display = "flex"; }
         function closeFaqModal() { document.getElementById("faqModal").style.display = "none"; }
 
-        function openProductModal(item) {
-            document.getElementById("modalProductTitle").textContent = item.model;
-            let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
-            let priceTl = (item.usd * rate).toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " ₺";
-            
-            let body = document.getElementById("modalProductBody");
-            body.innerHTML = `
-                <p><strong>Hafıza / Kapasite:</strong> ${item.storage}</p>
-                <p><strong>Kayıt Durumu:</strong> ${item.reg}</p>
-                <p><strong>Dolar Fiyatı:</strong> $${item.usd.toLocaleString()}</p>
-                <p><strong>Güncel Tutar:</strong> ${priceTl}</p>
-                <p><strong>Stok Durumu:</strong> ${item.stock}</p>
-                <p><strong>Açıklama:</strong> ${item.desc || 'Bu cihaz için ek açıklama girilmemiştir.'}</p>
-                <a href="${getWhatsAppOrderLink(item.model, item.storage, item.reg)}" target="_blank" class="modal-order-btn" onclick="triggerToast()">📲 WhatsApp ile Hemen Sipariş Ver</a>
-            `;
+        let activeProductIndex = null;
+        function openModal(row, index) {
+            activeProductIndex = index;
+            let item = products[index];
+            tempUploadedImage = item.img || "";
+
+            document.getElementById("modalTitle").textContent = item.model + " (" + item.storage + ")";
+            document.getElementById("mPrice").textContent = row.querySelector(".price-display").textContent;
+
+            document.getElementById("mModelText").textContent = item.model;
+            document.getElementById("mStorageText").textContent = item.storage;
+            document.getElementById("mRegText").textContent = item.reg;
+            document.getElementById("mUsdText").textContent = item.usd + " $";
+            document.getElementById("mStockText").textContent = item.stock;
+            document.getElementById("mDescText").textContent = item.desc || "Açıklama bulunmuyor.";
+
+            document.getElementById("modalOrderBtn").href = getWhatsAppOrderLink(item.model, item.storage, item.reg);
+
+            let viewElements = document.querySelectorAll(".view-mode");
+            let editElements = document.querySelectorAll(".edit-mode");
+
+            if (isAdmin) {
+                viewElements.forEach(el => el.style.display = "none");
+                editElements.forEach(el => el.style.display = "inline-block");
+                document.getElementById("adminUrlBox").style.display = "block";
+                document.getElementById("saveCardBtn").style.display = "block";
+            } else {
+                viewElements.forEach(el => el.style.display = "inline");
+                editElements.forEach(el => el.style.display = "none");
+                document.getElementById("adminUrlBox").style.display = "none";
+                document.getElementById("saveCardBtn").style.display = "none";
+            }
+
+            updateModalImageView();
             document.getElementById("productModal").style.display = "flex";
         }
 
-        function closeProductModal() { document.getElementById("productModal").style.display = "none"; }
+        function handleImageUpload(event) {
+            let file = event.target.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    tempUploadedImage = e.target.result;
+                    updateModalImageView();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
 
-        window.onload = fetchLiveExchangeRate;
+        function updateModalImageView() {
+            let modalImg = document.getElementById("modalImage");
+            let noImgView = document.getElementById("noImageView");
+            if (tempUploadedImage && tempUploadedImage.trim() !== "") {
+                modalImg.src = tempUploadedImage;
+                modalImg.style.display = "block";
+                noImgView.style.display = "none";
+            } else {
+                modalImg.style.display = "none";
+                noImgView.style.display = "block";
+            }
+        }
+
+        function saveCardChanges() {
+            if (!isAdmin || activeProductIndex === null) return;
+            let urlInputVal = document.getElementById("imageUrlInput").value.trim();
+            if (urlInputVal !== "") tempUploadedImage = urlInputVal;
+
+            products[activeProductIndex].img = tempUploadedImage;
+            saveToStorage();
+            renderTable();
+            closeModal();
+            alert("Güncellendi!");
+        }
+
+        function closeModal() {
+            document.getElementById("productModal").style.display = "none";
+            activeProductIndex = null;
+        }
+
+        window.onload = function() {
+            fetchLiveExchangeRate();
+        };
     </script>
 </body>
 </html>

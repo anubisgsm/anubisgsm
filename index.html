@@ -452,6 +452,27 @@
         .modal-header h3 { margin: 0; font-size: 18px; }
         .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
         .modal-body { padding: 25px; font-size: 14px; overflow-y: auto; flex: 1; }
+        
+        .product-detail-content p {
+            margin: 10px 0;
+            color: var(--text-muted);
+        }
+        .product-detail-content strong {
+            color: var(--text-main);
+        }
+        .modal-order-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
@@ -563,6 +584,7 @@
         </div>
     </div>
 
+    <!-- SSS Modal -->
     <div id="faqModal" class="modal-overlay" onclick="closeFaqModal()">
         <div class="modal-card" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -576,16 +598,29 @@
         </div>
     </div>
 
+    <!-- Ürün Detay Kartı / Modalı -->
+    <div id="productModal" class="modal-overlay" onclick="closeProductModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="modalProductTitle">Cihaz Detayı</h3>
+                <button class="close-btn" onclick="closeProductModal()">&times;</button>
+            </div>
+            <div class="modal-body product-detail-content" id="modalProductBody">
+                <!-- Dinamik dolacak -->
+            </div>
+        </div>
+    </div>
+
     <script>
         let defaultProducts = [
             { category: "İPHONE SERİSİ" },
-            { model: "IPHONE 17 PRO MAX", storage: "256 GB", reg: 'KAYIT ALICI AİT', usd: 1400, stock: "FULL RENK", desc: "", img: "" },
-            { model: "IPHONE 16 PRO MAX", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1330, stock: "FULL RENK", desc: "", img: "" },
-            { model: "IPHONE 16 PRO", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1220, stock: "FULL RENK", desc: "", img: "" },
-            { model: "IPHONE 16 PRO", storage: "128GB", reg: 'KAYIT ALICI AİT', usd: 1150, stock: "FULL RENK", desc: "", img: "" },
-            { model: "IPHONE 15 PRO MAX (değişim)", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1100, stock: "FULL RENK", desc: "", img: "" },
+            { model: "IPHONE 17 PRO MAX", storage: "256 GB", reg: 'KAYIT ALICI AİT', usd: 1400, stock: "FULL RENK", desc: "Apple A19 Pro çip, titanyum tasarım ve profesyonel kamera sistemi.", img: "" },
+            { model: "IPHONE 16 PRO MAX", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1330, stock: "FULL RENK", desc: "Gelişmiş pil ömrü, 4K 120 FPS video kayıt ve güçlü performans.", img: "" },
+            { model: "IPHONE 16 PRO", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1220, stock: "FULL RENK", desc: "Kompakt Pro deneyimi, titanyum kasa ve aksiyon tuşu.", img: "" },
+            { model: "IPHONE 16 PRO", storage: "128GB", reg: 'KAYIT ALICI AİT', usd: 1150, stock: "FULL RENK", desc: "Giriş seviyesi Pro güç ve hız.", img: "" },
+            { model: "IPHONE 15 PRO MAX (değişim)", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1100, stock: "FULL RENK", desc: "Değişim cihazı, sıfır ayarında.", img: "" },
             { category: "SAMSUNG MODELLERİ" },
-            { model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "", img: "" }
+            { model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Galaxy AI özellikleri, Snapdragon işlemci ve harika kalem deneyimi.", img: "" }
         ];
 
         let products = JSON.parse(localStorage.getItem("anubis_products"));
@@ -672,6 +707,9 @@
 
                 let tr = document.createElement("tr");
                 tr.className = "product-row";
+                // Satıra tıklanınca detay kartını açması için olay bağlandı
+                tr.onclick = () => openProductModal(item);
+
                 let regBadge = `<span class="badge-orange">${item.reg}</span>`;
                 let stockBadge = item.stock.includes("SON") ? `<span class="badge-pulse">${item.stock}</span>` : `<span class="badge-green">${item.stock}</span>`;
                 let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
@@ -735,6 +773,26 @@
 
         function openFaqModal() { document.getElementById("faqModal").style.display = "flex"; }
         function closeFaqModal() { document.getElementById("faqModal").style.display = "none"; }
+
+        function openProductModal(item) {
+            document.getElementById("modalProductTitle").textContent = item.model;
+            let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
+            let priceTl = (item.usd * rate).toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " ₺";
+            
+            let body = document.getElementById("modalProductBody");
+            body.innerHTML = `
+                <p><strong>Hafıza / Kapasite:</strong> ${item.storage}</p>
+                <p><strong>Kayıt Durumu:</strong> ${item.reg}</p>
+                <p><strong>Dolar Fiyatı:</strong> $${item.usd.toLocaleString()}</p>
+                <p><strong>Güncel Tutar:</strong> ${priceTl}</p>
+                <p><strong>Stok Durumu:</strong> ${item.stock}</p>
+                <p><strong>Açıklama:</strong> ${item.desc || 'Bu cihaz için ek açıklama girilmemiştir.'}</p>
+                <a href="${getWhatsAppOrderLink(item.model, item.storage, item.reg)}" target="_blank" class="modal-order-btn" onclick="triggerToast()">📲 WhatsApp ile Hemen Sipariş Ver</a>
+            `;
+            document.getElementById("productModal").style.display = "flex";
+        }
+
+        function closeProductModal() { document.getElementById("productModal").style.display = "none"; }
 
         window.onload = fetchLiveExchangeRate;
     </script>

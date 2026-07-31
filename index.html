@@ -54,6 +54,39 @@
             100% { transform: translateX(100%); }
         }
 
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* YANDAKİ ŞEFFAF ANUBİS SİMGELERİ */
+        .header-anubis-icon {
+            height: 75px;
+            width: auto;
+            opacity: 0.22;
+            filter: drop-shadow(0 0 12px var(--accent-gold-glow));
+            transition: opacity 0.3s, transform 0.3s;
+            user-select: none;
+        }
+        .header-anubis-icon:hover {
+            opacity: 0.45;
+            transform: scale(1.05);
+        }
+        .left-icon {
+            margin-right: 30px;
+        }
+        .right-icon {
+            margin-left: 30px;
+            transform: scaleX(-1); /* Simetri için diğer tarafa bakar */
+        }
+        .right-icon:hover {
+            transform: scaleX(-1) scale(1.05);
+        }
+
         .logo-container {
             display: inline-flex;
             align-items: center;
@@ -69,13 +102,13 @@
             transform: scale(1.02);
         }
         .logo-container img {
-            height: 55px;
+            height: 70px;
             width: auto;
-            filter: drop-shadow(0 0 10px var(--accent-gold-glow));
+            filter: drop-shadow(0 0 15px var(--accent-gold-glow));
         }
         header h1 {
             margin: 0;
-            font-size: 28px;
+            font-size: 30px;
             letter-spacing: 2px;
             color: var(--accent-gold);
             font-weight: 800;
@@ -588,12 +621,18 @@
     </a>
 
     <header>
-        <div class="logo-container" onclick="handleLogoClick()" title="ANUBIS GSM">
-            <img src="logo.png" alt="ANUBIS GSM Logo" onerror="this.style.display='none'">
-            <div>
-                <h1>ANUBIS GSM</h1>
-                <p>Premium Teknoloji Marketi</p>
+        <div class="header-content">
+            <img src="logo.png" alt="Anubis Sol" class="header-anubis-icon left-icon" onerror="this.style.display='none'">
+            
+            <div class="logo-container" onclick="handleLogoClick()" title="ANUBIS GSM">
+                <img src="logo.png" alt="ANUBIS GSM Logo" onerror="this.style.display='none'">
+                <div>
+                    <h1>ANUBIS GSM</h1>
+                    <p>Premium Teknoloji Marketi</p>
+                </div>
             </div>
+
+            <img src="logo.png" alt="Anubis Sağ" class="header-anubis-icon right-icon" onerror="this.style.display='none'">
         </div>
     </header>
 

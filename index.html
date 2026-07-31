@@ -66,12 +66,12 @@
             gap: 20px;
         }
 
-        /* ANİMASYONLU ANUBİS LOGO & AMBLEM ALANI */
+        /* ORİJİNAL LOGO ALANI (Yazı / Tipografi Logosu) */
         .logo-area {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 22px;
+            gap: 15px;
             cursor: pointer;
             user-select: none;
             margin: 0 auto;
@@ -81,64 +81,10 @@
             transform: scale(1.02);
         }
 
-        /* ANUBİS İKON / ANİMASYON KONTEYNERİ */
-        .anubis-emblem {
-            position: relative;
-            width: 85px;
-            height: 85px;
+        .logo-text-container {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(7, 9, 14, 0.8) 70%);
-            border-radius: 50%;
-            border: 2px solid rgba(245, 158, 11, 0.4);
-            box-shadow: 0 0 25px var(--accent-gold-glow);
-            animation: emblemPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes emblemPulse {
-            0%, 100% {
-                box-shadow: 0 0 15px rgba(245, 158, 11, 0.3), inset 0 0 10px rgba(56, 189, 248, 0.2);
-                border-color: rgba(245, 158, 11, 0.4);
-            }
-            50% {
-                box-shadow: 0 0 35px rgba(245, 158, 11, 0.7), inset 0 0 20px rgba(56, 189, 248, 0.5);
-                border-color: var(--accent-gold);
-            }
-        }
-
-        /* SVG ANUBİS ÇİZİMİ VE ANİMASYONLARI */
-        .anubis-svg {
-            width: 55px;
-            height: 55px;
-            fill: url(#goldGradient);
-            filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8));
-            animation: anubisFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes anubisFloat {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-4px) scale(1.03); }
-        }
-
-        /* HİYEROGLİF / ARKAPLAN ÇEMBER DÖNÜŞÜ */
-        .anubis-ring {
-            position: absolute;
-            top: -5px; left: -5px; right: -5px; bottom: -5px;
-            border: 2px dashed rgba(56, 189, 248, 0.4);
-            border-radius: 50%;
-            animation: spinRing 15s linear infinite;
-        }
-
-        @keyframes spinRing {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .logo-area img {
-            height: 80px;
-            width: auto;
-            filter: drop-shadow(0 0 20px var(--accent-gold-glow));
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         header h1 {
@@ -628,9 +574,9 @@
             header { padding: 20px 15px; }
             .header-content { flex-direction: column; text-align: center; gap: 15px; }
             .logo-area { flex-direction: column; gap: 10px; }
-            .logo-area img { height: 75px; }
             header h1 { font-size: 28px; text-align: center; }
             header p.subtitle, header p.slogan { text-align: center; }
+            .logo-text-container { align-items: center; }
             .header-right-area { align-items: center; width: 100%; }
             .controls-wrapper { flex-direction: column; }
             .search-box, .faq-open-btn { width: 100%; }
@@ -652,22 +598,7 @@
     <header>
         <div class="header-content">
             <div class="logo-area" onclick="handleLogoClick()" title="ANUBIS GSM">
-                <!-- SVG Gradient Tanımı ve Animasyonlu Anubis Amblemi -->
-                <div class="anubis-emblem">
-                    <div class="anubis-ring"></div>
-                    <svg class="anubis-svg" viewBox="0 0 24 24">
-                        <defs>
-                            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#f59e0b" />
-                                <stop offset="50%" stop-color="#fbbf24" />
-                                <stop offset="100%" stop-color="#38bdf8" />
-                            </linearGradient>
-                        </defs>
-                        <!-- Anubis Silüeti (Çakal Başlı Tanrı Formu) -->
-                        <path d="M12 2C11.5 2 11 2.2 10.7 2.6L7 7.5C6.4 8.3 6 9.3 6 10.4V12C6 13.7 7.3 15 9 15H10V18.5C10 19.3 10.7 20 11.5 20H12.5C13.3 20 14 19.3 14 18.5V15H15C16.7 15 18 13.7 18 12V10.4C18 9.3 17.6 8.3 17 7.5L13.3 2.6C13 2.2 12.5 2 12 2ZM11.2 4.1L14.2 8H9.8L11.2 4.1ZM12 9.5C12.8 9.5 13.5 10.2 13.5 11C13.5 11.8 12.8 12.5 12 12.5C11.2 12.5 10.5 11.8 10.5 11C10.5 10.2 11.2 9.5 12 9.5Z"/>
-                    </svg>
-                </div>
-                <div>
+                <div class="logo-text-container">
                     <h1>ANUBIS GSM</h1>
                     <p class="subtitle">Premium Teknoloji Marketi</p>
                     <p class="slogan">"Cüzdanınızı ağlatmayan, yüzünüzü güldüren teknoloji adresi 🚀"</p>

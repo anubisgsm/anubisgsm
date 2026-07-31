@@ -219,17 +219,23 @@
             font-weight: 600;
         }
 
-        /* ARAMA ÇUBUĞU */
+        /* ÜST KONTROL ALANI (Arama ve SSS Butonu) */
+        .controls-wrapper {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
         .search-box {
-            width: 100%;
+            flex: 1;
+            min-width: 250px;
             padding: 15px 25px;
             font-size: 16px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             color: white;
             border-radius: 12px;
-            margin-bottom: 25px;
-            box-sizing: border-box;
             outline: none;
             transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
@@ -237,6 +243,26 @@
         .search-box:focus {
             border-color: var(--accent-gold);
             box-shadow: 0 0 15px var(--accent-gold-glow);
+        }
+        .faq-open-btn {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s, opacity 0.2s;
+            white-space: nowrap;
+        }
+        .faq-open-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
         }
 
         /* TABLO ALANI */
@@ -349,7 +375,7 @@
             fill: white;
         }
 
-        /* MODAL */
+        /* MODAL ORTAK (Ürün ve SSS için) */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -466,25 +492,13 @@
             font-size: 14px;
         }
 
-        /* SSS BÖLÜMÜ */
-        .faq-container {
-            margin-top: 40px;
-            background: var(--bg-card);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            border: 1px solid var(--border-color);
-        }
-        .faq-container h2 {
-            color: var(--accent-gold);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 12px;
-            margin-top: 0;
-            font-size: 20px;
+        /* SSS MODAL ÖZEL GENİŞLİK */
+        .faq-modal-card {
+            max-width: 750px;
         }
         .faq-section-title {
             color: var(--primary-color);
-            margin-top: 30px;
+            margin-top: 25px;
             font-size: 16px;
             display: flex;
             align-items: center;
@@ -529,7 +543,7 @@
 </head>
 <body>
 
-    <!-- WhatsApp Sabit Buton (Numaranı veya bağlantını buraya yazabilirsin) -->
+    <!-- WhatsApp Sabit Buton -->
     <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" title="WhatsApp ile İletişime Geç">
         <svg viewBox="0 0 24 24">
             <path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/>
@@ -573,8 +587,15 @@
             <div class="update-date">LİSTE SON GÜNCELLEME: 31.07.2026</div>
         </div>
 
-        <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara (Örn: iPhone 16, S25 Ultra, Xiaomi)..." onkeyup="filterTable()">
+        <!-- Üst Arama ve SSS Butonu -->
+        <div class="controls-wrapper">
+            <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara (Örn: iPhone 16, S25 Ultra, Xiaomi)..." onkeyup="filterTable()">
+            <button class="faq-open-btn" onclick="openFaqModal()">
+                ❓ Sıkça Sorulan Sorular
+            </button>
+        </div>
 
+        <!-- Ürün Tablosu -->
         <div class="table-wrapper">
             <table id="priceTable">
                 <thead>
@@ -593,70 +614,76 @@
                 </tbody>
             </table>
         </div>
+    </div>
 
-        <!-- Sıkça Sorulan Sorular Bölümü -->
-        <div class="faq-container">
-            <h2>❓ Sıkça Sorulan Sorular (SSS)</h2>
+    <!-- SSS MODAL (AÇILIR PENCERE) -->
+    <div id="faqModal" class="modal-overlay" onclick="closeFaqModal()">
+        <div class="modal-card faq-modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>❓ Sıkça Sorulan Sorular (SSS)</h3>
+                <button class="close-btn" onclick="closeFaqModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3 class="faq-section-title">📌 Satış ve Cihaz Durumu</h3>
+                <ul class="faq-list">
+                    <li>
+                        <span class="faq-question">• Satılan telefonlar kayıtlı mı?</span>
+                        <p class="faq-answer">Hayır, tüm cihazlar yurt dışı ve kayıtsızdır. Ancak "Kayıtlı" olarak belirtilen modeller kayıtlı şekilde gönderilir.</p>
+                    </li>
+                    <li>
+                        <span class="faq-question">• Telefonlar orijinal mi?</span>
+                        <p class="faq-answer">Evet. Tüm cihazlarımız %100 orijinal, sıfır ve kullanılmamış ürünlerdir.</p>
+                    </li>
+                    <li>
+                        <span class="faq-question">• iPhone Değişim Cihazı Nedir?</span>
+                        <p class="faq-answer">Apple’ın garanti kapsamında arızalı cihazlar karşılığında verdiği yenilenmiş, sıfır ve kapalı kutulu cihazlardır.</p>
+                    </li>
+                    <li>
+                        <span class="faq-question">• Şarj cihazı orijinal mi?</span>
+                        <p class="faq-answer">Kutu içeriğinde şarj cihazı varsa orijinal olarak, yoksa Xiaomi marka adaptörle gönderilir.</p>
+                    </li>
+                </ul>
 
-            <h3 class="faq-section-title">📌 Satış ve Cihaz Durumu</h3>
-            <ul class="faq-list">
-                <li>
-                    <span class="faq-question">• Satılan telefonlar kayıtlı mı?</span>
-                    <p class="faq-answer">Hayır, tüm cihazlar yurt dışı ve kayıtsızdır. Ancak "Kayıtlı" olarak belirtilen modeller kayıtlı şekilde gönderilir.</p>
-                </li>
-                <li>
-                    <span class="faq-question">• Telefonlar orijinal mi?</span>
-                    <p class="faq-answer">Evet. Tüm cihazlarımız %100 orijinal, sıfır ve kullanılmamış ürünlerdir.</p>
-                </li>
-                <li>
-                    <span class="faq-question">• iPhone Değişim Cihazı Nedir?</span>
-                    <p class="faq-answer">Apple’ın garanti kapsamında arızalı cihazlar karşılığında verdiği yenilenmiş, sıfır ve kapalı kutulu cihazlardır.</p>
-                </li>
-                <li>
-                    <span class="faq-question">• Şarj cihazı orijinal mi?</span>
-                    <p class="faq-answer">Kutu içeriğinde şarj cihazı varsa orijinal olarak, yoksa Xiaomi marka adaptörle gönderilir.</p>
-                </li>
-            </ul>
+                <h3 class="faq-section-title">📌 IMEI ve Kayıt İşlemleri</h3>
+                <ul class="faq-list">
+                    <li>
+                        <span class="faq-question">• IMEI kaydı yapıyor musunuz?</span>
+                        <p class="faq-answer">Evet, modele göre Dirençle, CPID ya da Server (Samsung) kaydı yapılabilir. Kayıt yöntemi ve ücreti ürün açıklamasında belirtilir. Dilerseniz kendi IMEI’nizi verebilirsiniz.</p>
+                    </li>
+                    <li>
+                        <span class="faq-question">• Atılan IMEI’lerin garantisi var mı?</span>
+                        <p class="faq-answer">Atılan IMEI’ler garanti kapsamında değildir. Klona düşme/kopyalanma durumunda sorun uygun fiyatla uzaktan bağlantı yoluyla çözülebilir.</p>
+                    </li>
+                    <li>
+                        <span class="faq-question">• Kayıt Yöntemleri:</span>
+                        <ul class="sub-faq-list">
+                            <li><strong>Server Kaydı:</strong> Samsung cihazlara yazılımsal IMEI işlemi uygulanır. Hurda Samsung cihaz IMEI’si gereklidir. Kayıt sonrası oluşabilecek sorunların sorumluluğu kullanıcıya aittir.</li>
+                            <li><strong>Direnç Kaydı:</strong> Anakart üzerindeki direnç çipine işlem uygulanarak yapılan fiziksel kayıt yöntemidir.</li>
+                            <li><strong>CPID Kaydı:</strong> Xiaomi cihazlarda uygulanan tek SIM destekli yazılımsal kayıt yöntemidir. Uzaktan yapılır, cihaz sıfırlanır. Sadece 1 adet şahsi IMEI girilebilir.</li>
+                        </ul>
+                    </li>
+                </ul>
 
-            <h3 class="faq-section-title">📌 IMEI ve Kayıt İşlemleri</h3>
-            <ul class="faq-list">
-                <li>
-                    <span class="faq-question">• IMEI kaydı yapıyor musunuz?</span>
-                    <p class="faq-answer">Evet, modele göre Dirençle, CPID ya da Server (Samsung) kaydı yapılabilir. Kayıt yöntemi ve ücreti ürün açıklamasında belirtilir. Dilerseniz kendi IMEI’nizi verebilirsiniz.</p>
-                </li>
-                <li>
-                    <span class="faq-question">• Atılan IMEI’lerin garantisi var mı?</span>
-                    <p class="faq-answer">Atılan IMEI’ler garanti kapsamında değildir. Klona düşme/kopyalanma durumunda sorun uygun fiyatla uzaktan bağlantı yoluyla çözülebilir.</p>
-                </li>
-                <li>
-                    <span class="faq-question">• Kayıt Yöntemleri:</span>
-                    <ul class="sub-faq-list">
-                        <li><strong>Server Kaydı:</strong> Samsung cihazlara yazılımsal IMEI işlemi uygulanır. Hurda Samsung cihaz IMEI’si gereklidir. Kayıt sonrası oluşabilecek sorunların sorumluluğu kullanıcıya aittir.</li>
-                        <li><strong>Direnç Kaydı:</strong> Anakart üzerindeki direnç çipine işlem uygulanarak yapılan fiziksel kayıt yöntemidir.</li>
-                        <li><strong>CPID Kaydı:</strong> Xiaomi cihazlarda uygulanan tek SIM destekli yazılımsal kayıt yöntemidir. Uzaktan yapılır, cihaz sıfırlanır. Sadece 1 adet şahsi IMEI girilebilir.</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <h3 class="faq-section-title">📌 Sipariş, Kargo ve Garanti</h3>
-            <ul class="faq-list">
-                <li>
-                    <span class="faq-question">• Siparişim ne zaman kargoya verilir?</span>
-                    <p class="faq-answer">EFT ödemesi mesai saatleri içinde yapıldıysa genellikle aynı gün kargoya verilir. Kargo alımı olmazsa gönderim ertesi güne kalabilir.</p>
-                </li>
-                <li>
-                    <span class="faq-question">• Garanti var mı?</span>
-                    <p class="faq-answer">Cihazlarımız aksi belirtilmedikçe garanti kapsamında değildir. İlk kullanımda sorun yaşanırsa, video kayıtlı teslimatla ilk gün değişim sağlanır.</p>
-                </li>
-                <li>
-                    <span class="faq-question">• Kargoda risk olursa ne olur?</span>
-                    <p class="faq-answer">Çalınma, kaybolma, el konulması gibi durumlar alıcı sorumluluğundadır. Teslim alırken mutlaka video ile kutu açılışı yapılmalıdır.</p>
-                </li>
-            </ul>
+                <h3 class="faq-section-title">📌 Sipariş, Kargo ve Garanti</h3>
+                <ul class="faq-list">
+                    <li>
+                        <span class="faq-question">• Siparişim ne zaman kargoya verilir?</span>
+                        <p class="faq-answer">EFT ödemesi mesai saatleri içinde yapıldıysa genellikle aynı gün kargoya verilir. Kargo alımı olmazsa gönderim ertesi güne kalabilir.</p>
+                    </li>
+                    <li>
+                        <span class="faq-question">• Garanti var mı?</span>
+                        <p class="faq-answer">Cihazlarımız aksi belirtilmedikçe garanti kapsamında değildir. İlk kullanımda sorun yaşanırsa, video kayıtlı teslimatla ilk gün değişim sağlanır.</p>
+                    </li>
+                    <li>
+                        <span class="faq-question">• Kargoda risk olursa ne olur?</span>
+                        <p class="faq-answer">Çalınma, kaybolma, el konulması gibi durumlar alıcı sorumluluğundadır. Teslim alırken mutlaka video ile kutu açılışı yapılmalıdır.</p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <!-- DETAY KARTI (MODAL) -->
+    <!-- ÜRÜN DETAY KARTI (MODAL) -->
     <div id="productModal" class="modal-overlay" onclick="closeModal()">
         <div class="modal-card" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -900,6 +927,15 @@
             });
         }
 
+        /* SSS Modal Kontrolleri */
+        function openFaqModal() {
+            document.getElementById("faqModal").style.display = "flex";
+        }
+        function closeFaqModal() {
+            document.getElementById("faqModal").style.display = "none";
+        }
+
+        /* Ürün Detay Kartı Modal Kontrolleri */
         let activeProductIndex = null;
 
         function openModal(row, index) {

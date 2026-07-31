@@ -675,6 +675,311 @@
         </div>
     </div>
 
-    <!-- JavaScript ve Modal Yapısı (Mevcut yapınız ile aynı kalmıştır) -->
+    <!-- Ürün Detay Modalı -->
+    <div id="productModal" class="modal-overlay" onclick="closeModalOnOutside(event)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modalTitle">Ürün Detayı</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-img-container">
+                    <img id="modalProductImg" src="" alt="Ürün Görseli" onerror="this.src='https://via.placeholder.com/200?text=ANUBIS+GSM'">
+                    <div id="imageUploadBox" class="input-group-box">
+                        <label class="file-upload-label">
+                            📁 Görsel Değiştir
+                            <input type="file" id="modalImageInput" accept="image/*" onchange="previewImage(event)">
+                        </label>
+                    </div>
+                </div>
+                <p><strong>Model:</strong> <span id="modalModelText"></span> <input type="text" id="modalEditModel" class="modal-edit-input input-group-box"></p>
+                <p><strong>Hafıza:</strong> <span id="modalStorageText"></span> <input type="text" id="modalEditStorage" class="modal-edit-input input-group-box"></p>
+                <p><strong>Kayıt Durumu:</strong> <span id="modalRegText"></span> <input type="text" id="modalEditReg" class="modal-edit-input input-group-box"></p>
+                <p><strong>Dolar Fiyatı ($):</strong> <span id="modalUsdText"></span> <input type="number" id="modalEditUsd" class="modal-edit-input input-group-box"></p>
+                <p><strong>Stok Durumu:</strong> <span id="modalStockText"></span> <input type="text" id="modalEditStock" class="modal-edit-input input-group-box"></p>
+                <div class="desc-box">
+                    <strong>Cihaz Açıklaması / Notlar:</strong>
+                    <p id="modalDescText" style="margin: 5px 0 0 0; border: none; padding: 0; display: block; color: var(--text-main);"></p>
+                    <textarea id="modalEditDesc" class="modal-edit-input input-group-box" style="width: 100%; height: 60px;"></textarea>
+                </div>
+                <button id="adminSaveCardBtn" class="admin-save-card-btn" onclick="saveCardChanges()">Değişiklikleri Kaydet</button>
+                <a id="modalOrderBtn" href="#" target="_blank" class="modal-order-btn">WhatsApp ile Sipariş Ver</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- S.S.S. Modalı -->
+    <div id="faqModal" class="modal-overlay" onclick="closeFaqModalOnOutside(event)">
+        <div class="modal-card faq-modal-card">
+            <div class="modal-header">
+                <h3>Sıkça Sorulan Sorular (S.S.S.)</h3>
+                <button class="close-btn" onclick="openFaqModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4 class="faq-section-title">📦 Alışveriş ve Teslimat</h4>
+                <ul class="faq-list">
+                    <li>
+                        <span class="faq-question">Cihazlar orijinal mi ve garantili mi?</span>
+                        <p class="faq-answer">Sattığımız tüm cihazlar orijinal olup, belirtilen ithalatçı veya resmi garanti koşulları altındadır. Anubis GSM güvencesiyle test edilerek teslim edilir.</p>
+                    </li>
+                    <li>
+                        <span class="faq-question">Kargo ve teslimat süreci nasıl işliyor?</span>
+                        <p class="faq-answer">Hafta içi saat 16:00'ya kadar verilen siparişler aynı gün anlaşmalı kargoya verilir. Şube içi elden teslimat seçeneklerimiz de mevcuttur.</p>
+                    </li>
+                </ul>
+
+                <h4 class="faq-section-title">🛠️ Teknik Detaylar ve Kayıt</h4>
+                <ul class="faq-list">
+                    <li>
+                        <span class="faq-question">Kayıtsız cihazların kullanım süresi nedir?</span>
+                        <p class="faq-answer">Yurtdışı kayıtsız cihazlar BTK yasal süresi boyunca (çift sim kartlı modellerde toplam 8+8 ay) kesintisiz kullanılabilir.</p>
+                    </li>
+                    <li>
+                        <span class="faq-question">Fiyatlar dövize göre güncelleniyor mu?</span>
+                        <p class="faq-answer">Evet, listemizdeki Dolar bazlı fiyatlar piyasa koşullarına ve anlık kur hareketlerine endeksli olarak otomatik veya manuel olarak güncellenmektedir.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let products = [
+            { category: "İPHONE SERİSİ", model: "IPHONE 16 PRO MAX", storage: "256 GB", reg: "KAYITSIZ", usd: 1250, stock: "HAZIR STOK", desc: "Kapalı kutu, 1 yıl uluslararası garanti.", img: "" },
+            { category: "İPHONE SERİSİ", model: "IPHONE 16 PRO", storage: "128 GB", reg: "KAYITSIZ", usd: 1100, stock: "HAZIR STOK", desc: "Titanyum tasarım, sıfır cihaz.", img: "" },
+            { category: "İPHONE SERİSİ", model: "IPHONE 15 PRO MAX", storage: "256 GB", reg: "KAYITLI", usd: 1050, stock: "TÜKENDİ", desc: "Pasaport kayıtlı hatasız cihaz.", img: "" },
+            { category: "SAMSUNG SERİSİ", model: "GALAXY S25 ULTRA", storage: "512 GB", reg: "KAYITSIZ", usd: 1150, stock: "HAZIR STOK", desc: "Snapdragon işlemci, yapay zeka destekli.", img: "" },
+            { category: "SAMSUNG SERİSİ", model: "GALAXY S24 ULTRA", storage: "256 GB", reg: "KAYITLI", usd: 950, stock: "HAZIR STOK", desc: "Temiz kullanılmış kutulu.", img: "" }
+        ];
+
+        let isAdmin = false;
+        let selectedProductIndex = null;
+        let tempImageBase64 = "";
+
+        async function fetchLiveDollarRate() {
+            try {
+                let response = await fetch('https://api.genelpara.com/embed/doviz.json');
+                let data = await response.json();
+                if (data && data.USD) {
+                    let liveUsd = parseFloat(data.USD.satis);
+                    document.getElementById('liveRateText').innerText = `CANLI KUR: ${liveUsd.toFixed(3)} ₺`;
+                    let manualInput = document.getElementById('dollarRate');
+                    if (!isAdmin && manualInput.value != liveUsd.toFixed(3)) {
+                        manualInput.value = liveUsd.toFixed(3);
+                        renderTable();
+                    }
+                }
+            } catch (e) {
+                document.getElementById('liveRateText').innerText = "CANLI KUR: Çekilemedi (Manuel Kur Aktif)";
+            }
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            const rate = parseFloat(document.getElementById('dollarRate').value) || 0;
+
+            let currentCategory = '';
+            products.forEach((p, index) => {
+                if (p.category !== currentCategory) {
+                    currentCategory = p.category;
+                    let catTr = document.createElement('tr');
+                    catTr.className = 'category-row';
+                    catTr.innerHTML = `<td colspan="8">📁 ${currentCategory}</td>`;
+                    tbody.appendChild(catTr);
+                }
+
+                let tlPrice = (p.usd * rate).toLocaleString('tr-TR', { maximumFractionDigits: 0 });
+                let stockBadge = p.stock === 'HAZIR STOK' ? '<span class="badge-green">HAZIR STOK</span>' : '<span class="badge-orange">TÜKENDİ</span>';
+                let regBadge = p.reg === 'KAYITLI' ? '<span class="badge-green">KAYITLI</span>' : '<span class="badge-orange">KAYITSIZ</span>';
+
+                let tr = document.createElement('tr');
+                tr.className = 'product-row';
+                
+                tr.innerHTML = `
+                    <td onclick="openModal(${index})" style="font-weight:700;">${p.model}</td>
+                    <td onclick="openModal(${index})">${p.storage}</td>
+                    <td onclick="openModal(${index})">${regBadge}</td>
+                    <td>
+                        <input type="number" class="usd-input" value="${p.usd}" ${isAdmin ? '' : 'readonly'} onchange="updateUsd(${index}, this.value)" onclick="event.stopPropagation()">
+                    </td>
+                    <td class="price-tl" onclick="openModal(${index})">${tlPrice} ₺</td>
+                    <td onclick="openModal(${index})">${stockBadge}</td>
+                    <td>
+                        <a href="https://wa.me/905000000000?text=Merhaba,%20${encodeURIComponent(p.model)}%20(${p.storage})%20fiyatını%20sormak%20istiyorum." target="_blank" class="order-btn-table" onclick="event.stopPropagation()">
+                            💬 Sipariş
+                        </a>
+                    </td>
+                    <td class="admin-col" style="display: ${isAdmin ? 'table-cell' : 'none'};">
+                        <button class="admin-btn-danger" onclick="deleteProduct(${index}, event)">Sil</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateUsd(index, val) {
+            products[index].usd = parseFloat(val) || 0;
+            renderTable();
+        }
+
+        function filterTable() {
+            let query = document.getElementById('searchInput').value.toLowerCase();
+            let rows = document.querySelectorAll('#tableBody .product-row');
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        }
+
+        function openModal(index) {
+            selectedProductIndex = index;
+            let p = products[index];
+            document.getElementById('modalTitle').innerText = p.model;
+            document.getElementById('modalProductImg').src = p.img || 'https://via.placeholder.com/200?text=ANUBIS+GSM';
+            
+            document.getElementById('modalModelText').innerText = p.model;
+            document.getElementById('modalStorageText').innerText = p.storage;
+            document.getElementById('modalRegText').innerText = p.reg;
+            document.getElementById('modalUsdText').innerText = p.usd + " $";
+            document.getElementById('modalStockText').innerText = p.stock;
+            document.getElementById('modalDescText').innerText = p.desc || "Açıklama girilmemiş.";
+
+            document.getElementById('modalEditModel').value = p.model;
+            document.getElementById('modalEditStorage').value = p.storage;
+            document.getElementById('modalEditReg').value = p.reg;
+            document.getElementById('modalEditUsd').value = p.usd;
+            document.getElementById('modalEditStock').value = p.stock;
+            document.getElementById('modalEditDesc').value = p.desc || "";
+
+            let waBtn = document.getElementById('modalOrderBtn');
+            waBtn.href = `https://wa.me/905000000000?text=Merhaba,%20${encodeURIComponent(p.model)}%20(${p.storage})%20detayları%20hakkında%20bilgi%20almak%20istiyorum.`;
+
+            if (isAdmin) {
+                document.querySelectorAll('.modal-body span').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.input-group-box').forEach(el => el.style.display = 'block');
+                document.getElementById('adminSaveCardBtn').style.display = 'block';
+                waBtn.style.display = 'none';
+            } else {
+                document.querySelectorAll('.modal-body span').forEach(el => el.style.display = 'inline');
+                document.querySelectorAll('.input-group-box').forEach(el => el.style.display = 'none');
+                document.getElementById('adminSaveCardBtn').style.display = 'none';
+                waBtn.style.display = 'block';
+            }
+
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+            tempImageBase64 = "";
+        }
+
+        function closeModalOnOutside(e) {
+            if (e.target === document.getElementById('productModal')) closeModal();
+        }
+
+        function previewImage(event) {
+            let reader = new FileReader();
+            reader.onload = function() {
+                tempImageBase64 = reader.result;
+                document.getElementById('modalProductImg').src = tempImageBase64;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function saveCardChanges() {
+            if (selectedProductIndex === null) return;
+            let p = products[selectedProductIndex];
+            p.model = document.getElementById('modalEditModel').value;
+            p.storage = document.getElementById('modalEditStorage').value;
+            p.reg = document.getElementById('modalEditReg').value;
+            p.usd = parseFloat(document.getElementById('modalEditUsd').value) || 0;
+            p.stock = document.getElementById('modalEditStock').value;
+            p.desc = document.getElementById('modalEditDesc').value;
+            if (tempImageBase64) {
+                p.img = tempImageBase64;
+            }
+            closeModal();
+            renderTable();
+        }
+
+        function openFaqModal() {
+            let m = document.getElementById('faqModal');
+            m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function closeFaqModalOnOutside(e) {
+            if (e.target === document.getElementById('faqModal')) openFaqModal();
+        }
+
+        let logoClickCount = 0;
+        let logoTimer = null;
+        function handleLogoClick() {
+            logoClickCount++;
+            if (logoClickCount === 1) {
+                logoTimer = setTimeout(() => { logoClickCount = 0; }, 2000);
+            } else if (logoClickCount === 5) {
+                clearTimeout(logoTimer);
+                logoClickCount = 0;
+                let pass = prompt("Yönetim Paneli Şifresini Giriniz:");
+                if (pass === "1234") {
+                    toggleAdminPanel(true);
+                } else {
+                    alert("Hatalı Şifre!");
+                }
+            }
+        }
+
+        function toggleAdminPanel(show) {
+            isAdmin = show;
+            document.getElementById('adminPanel').style.display = show ? 'block' : 'none';
+            document.getElementById('dollarRate').readOnly = !show;
+            document.querySelectorAll('.admin-col').forEach(el => el.style.display = show ? 'table-cell' : 'none');
+            renderTable();
+            alert(show ? "Yönetim Paneli Açıldı! (Fiyatları tabloda doğrudan düzenleyebilirsin)" : "Yönetim Paneli Kapatıldı.");
+        }
+
+        function addNewProduct() {
+            let cat = document.getElementById('newCategory').value.trim().toUpperCase();
+            let model = document.getElementById('newModel').value.trim().toUpperCase();
+            let storage = document.getElementById('newStorage').value.trim().toUpperCase();
+            let reg = document.getElementById('newReg').value.trim().toUpperCase();
+            let usd = parseFloat(document.getElementById('newUsd').value) || 0;
+            let stock = document.getElementById('newStock').value.trim().toUpperCase();
+            let desc = document.getElementById('newDesc').value.trim();
+
+            if (!cat || !model || !usd) {
+                alert("Lütfen en az Kategori, Model ve Dolar Fiyatı alanlarını doldurun!");
+                return;
+            }
+
+            products.push({ category: cat, model: model, storage: storage || "Standart", reg: reg || "KAYITSIZ", usd: usd, stock: stock || "HAZIR STOK", desc: desc, img: "" });
+            
+            document.getElementById('newCategory').value = '';
+            document.getElementById('newModel').value = '';
+            document.getElementById('newStorage').value = '';
+            document.getElementById('newReg').value = '';
+            document.getElementById('newUsd').value = '';
+            document.getElementById('newStock').value = '';
+            document.getElementById('newDesc').value = '';
+
+            renderTable();
+            alert("Ürün başarıyla eklendi!");
+        }
+
+        function deleteProduct(index, e) {
+            e.stopPropagation();
+            if (confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
+                products.splice(index, 1);
+                renderTable();
+            }
+        }
+
+        window.onload = function() {
+            fetchLiveDollarRate();
+            renderTable();
+        };
+    </script>
 </body>
 </html>

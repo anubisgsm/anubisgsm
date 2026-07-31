@@ -345,7 +345,26 @@
             color: #38bdf8;
             font-size: 15px;
         }
-        .admin-col { display: none; }
+        .order-btn-table {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.2s, transform 0.2s;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .order-btn-table:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
 
         /* WHATSAPP SABİT BUTON */
         .whatsapp-float {
@@ -491,6 +510,24 @@
             margin-top: 20px;
             font-size: 14px;
         }
+        .modal-order-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 15px;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: opacity 0.2s;
+        }
+        .modal-order-btn:hover { opacity: 0.9; }
 
         /* SSS MODAL ÖZEL GENİŞLİK */
         .faq-modal-card {
@@ -606,6 +643,7 @@
                         <th>DOLAR ($)</th>
                         <th>TL (₺)</th>
                         <th>STOK DURUMU</th>
+                        <th>SİPARİŞ</th>
                         <th class="admin-col">İŞLEM</th>
                     </tr>
                 </thead>
@@ -712,6 +750,7 @@
                     <textarea id="mDescInput" class="edit-mode" style="display:none; width:100%; height:60px; padding:8px; background:#07090e; border:1px solid var(--border-color); color:white; border-radius:6px; font-size:13px; outline:none; resize:vertical;"></textarea>
                 </div>
 
+                <a id="modalOrderBtn" href="#" target="_blank" class="modal-order-btn">📲 Bu Ürünü Hemen Sipariş Ver</a>
                 <button id="saveCardBtn" class="admin-save-card-btn" onclick="saveCardChanges()">Değişiklikleri Kaydet</button>
             </div>
         </div>
@@ -768,6 +807,11 @@
             localStorage.setItem("anubis_products", JSON.stringify(products));
         }
 
+        function getWhatsAppOrderLink(model, storage, reg) {
+            let message = `Merhaba, ANUBIS GSM fiyat listesinden ${model} (${storage} - ${reg}) modelini sipariş vermek istiyorum. Ödeme ve teslimat detaylarını görüşebilir miyiz?`;
+            return `https://wa.me/905000000000?text=` + encodeURIComponent(message);
+        }
+
         function renderTable() {
             let tbody = document.getElementById("tableBody");
             tbody.innerHTML = "";
@@ -780,7 +824,7 @@
 
                 if (item.category) {
                     tr.className = "category-row";
-                    let colSpanVal = isAdmin ? 7 : 6;
+                    let colSpanVal = isAdmin ? 8 : 7;
                     tr.innerHTML = `<td colspan="${colSpanVal}">${item.category}</td>`;
                 } else {
                     tr.className = "product-row";
@@ -791,6 +835,8 @@
                         : `<span class="badge-green">${item.reg}</span>`;
 
                     let stockBadge = `<span class="badge-green">${item.stock}</span>`;
+                    let waLink = getWhatsAppOrderLink(item.model, item.storage, item.reg);
+                    let orderBtnTd = `<td><a href="${waLink}" target="_blank" class="order-btn-table" onclick="event.stopPropagation()">📲 Sipariş Ver</a></td>`;
                     let adminButtonTd = isAdmin ? `<td><button class="admin-btn-danger" onclick="deleteProduct(${index}); event.stopPropagation();">Sil</button></td>` : '';
 
                     tr.innerHTML = `
@@ -800,6 +846,7 @@
                         <td><input type="number" class="usd-input" value="${item.usd}" ${isAdmin ? '' : 'readonly'} oninput="updateUsdPrice(${index}, this.value); event.stopPropagation();" onclick="event.stopPropagation()"></td>
                         <td class="price-tl">0 ₺</td>
                         <td>${stockBadge}</td>
+                        ${orderBtnTd}
                         ${adminButtonTd}
                     `;
                 }
@@ -959,6 +1006,10 @@
             document.getElementById("mUsdInput").value = item.usd;
             document.getElementById("mStockInput").value = item.stock;
             document.getElementById("mDescInput").value = item.desc || "";
+
+            // Detay Modalındaki Sipariş Butonu Linkini Güncelle
+            let modalOrderBtn = document.getElementById("modalOrderBtn");
+            modalOrderBtn.href = getWhatsAppOrderLink(item.model, item.storage, item.reg);
 
             let modalImg = document.getElementById("modalImage");
             let noImgView = document.getElementById("noImageView");

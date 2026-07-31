@@ -3,185 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANUBIS GSM - Teknoloji Marketi</title>
+    <title>ANUBIS GSM | Premium Teknoloji Marketi</title>
     <style>
         :root {
-            --primary-color: #0b2545;
-            --accent-gold: #d4af37;
-            --teal-bg: #134074;
-            --light-bg: #f8f9fa;
-            --text-dark: #222;
+            --bg-deep: #07090e;
+            --bg-card: #0f172a;
+            --bg-glass: rgba(15, 23, 42, 0.75);
+            --primary-color: #38bdf8;
+            --accent-gold: #f59e0b;
+            --accent-gold-glow: rgba(245, 158, 11, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --whatsapp-color: #25d366;
         }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light-bg);
-            color: var(--text-dark);
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
             margin: 0;
             padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
         }
+
         header {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, #090d16 0%, #111b2e 100%);
             color: white;
-            padding: 20px;
+            padding: 25px 20px;
             text-align: center;
-            border-bottom: 4px solid var(--accent-gold);
+            border-bottom: 2px solid var(--accent-gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             position: relative;
+            overflow: hidden;
         }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
         .logo-container {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 10px;
             cursor: pointer;
             user-select: none;
+            padding: 5px 15px;
+            border-radius: 12px;
+            transition: transform 0.3s;
+        }
+        .logo-container:hover {
+            transform: scale(1.02);
         }
         .logo-container img {
-            height: 50px;
+            height: 55px;
             width: auto;
+            filter: drop-shadow(0 0 10px var(--accent-gold-glow));
         }
         header h1 {
             margin: 0;
-            font-size: 24px;
-            letter-spacing: 1px;
+            font-size: 28px;
+            letter-spacing: 2px;
             color: var(--accent-gold);
+            font-weight: 800;
+            text-shadow: 0 2px 10px var(--accent-gold-glow);
         }
         header p {
-            margin: 5px 0 0 0;
-            font-size: 14px;
-            color: #cbd5e1;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-        .rate-container {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .rate-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--accent-gold);
-        }
-        .rate-input {
-            width: 110px;
-            padding: 6px 10px;
-            font-size: 16px;
-            border: 2px solid var(--accent-gold);
-            border-radius: 6px;
-            text-align: center;
-            font-weight: bold;
-            background: #e2e8f0;
-            color: var(--primary-color);
-            outline: none;
-        }
-        .live-rate-display {
-            background-color: #2a9d8f;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-        .update-date {
+            margin: 4px 0 0 0;
             font-size: 13px;
-            color: #cbd5e1;
-            font-weight: bold;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
-        .search-box {
-            width: 100%;
-            padding: 12px 20px;
-            font-size: 16px;
-            border: 2px solid #cbd5e1;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        .search-box:focus {
-            border-color: var(--accent-gold);
+
+        .container {
+            max-width: 1250px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
 
         /* GİZLİ YÖNETİM PANELİ */
         .admin-panel {
             display: none;
-            background: white;
+            background: var(--bg-card);
             border: 2px dashed var(--accent-gold);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
         .admin-panel h3 {
             margin-top: 0;
-            color: var(--primary-color);
-            border-bottom: 2px solid #eee;
-            padding-bottom: 8px;
+            color: var(--accent-gold);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 16px;
         }
         .close-admin {
-            background: #e63946;
+            background: #ef4444;
             color: white;
             border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
+            padding: 6px 12px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
+            font-weight: bold;
+            transition: background 0.2s;
         }
+        .close-admin:hover { background: #dc2626; }
+
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 15px;
         }
         .form-grid input, .form-grid select {
-            padding: 8px;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
+            padding: 10px 14px;
+            background: #07090e;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 8px;
             font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
         }
+        .form-grid input:focus { border-color: var(--accent-gold); }
+        
         .admin-btn {
-            background: #2a9d8f;
+            background: linear-gradient(135deg, #059669, #10b981);
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
+            padding: 10px 20px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
+            transition: opacity 0.2s;
         }
+        .admin-btn:hover { opacity: 0.9; }
+
         .admin-btn-danger {
-            background: #e63946;
+            background: #ef4444;
             color: white;
             border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 6px 12px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
+            font-weight: bold;
         }
 
-        .table-wrapper {
-            background: white;
+        /* KUR BARI */
+        .rate-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 18px 25px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .rate-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+        .rate-input {
+            width: 120px;
+            padding: 8px 12px;
+            font-size: 16px;
+            border: 2px solid var(--accent-gold);
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            font-weight: bold;
+            background: #07090e;
+            color: var(--accent-gold);
+            outline: none;
+        }
+        .live-rate-display {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .update-date {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* ARAMA ÇUBUĞU */
+        .search-box {
+            width: 100%;
+            padding: 15px 25px;
+            font-size: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .search-box:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px var(--accent-gold-glow);
+        }
+
+        /* TABLO ALANI */
+        .table-wrapper {
+            background: var(--bg-card);
+            border-radius: 14px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             overflow-x: auto;
+            border: 1px solid var(--border-color);
         }
         table {
             width: 100%;
@@ -190,53 +254,60 @@
             font-size: 14px;
         }
         th, td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
         }
         th {
-            background-color: var(--teal-bg);
-            color: white;
+            background-color: #090d16;
+            color: var(--text-muted);
             text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 0.5px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 700;
         }
         .product-row {
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s, transform 0.1s;
         }
         .product-row:hover {
-            background-color: #e2e8f0;
+            background-color: rgba(56, 189, 248, 0.04);
         }
         .category-row {
-            background-color: #1d3557 !important;
+            background-color: #05080f !important;
             color: var(--accent-gold);
-            font-weight: bold;
+            font-weight: 800;
             font-size: 15px;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            border-top: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
         }
         .badge-green {
-            background-color: #2a9d8f;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 5px 10px;
+            border-radius: 6px;
             font-size: 11px;
-            font-weight: bold;
+            font-weight: 700;
         }
         .badge-orange {
-            background-color: #f4a261;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 5px 10px;
+            border-radius: 6px;
             font-size: 11px;
-            font-weight: bold;
+            font-weight: 700;
         }
         .usd-input {
-            width: 80px;
-            padding: 5px;
+            width: 85px;
+            padding: 6px;
             font-size: 14px;
             font-weight: bold;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
+            background: #07090e;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 6px;
             text-align: center;
             outline: none;
         }
@@ -244,189 +315,210 @@
             border-color: var(--accent-gold);
         }
         .price-tl {
-            font-weight: bold;
-            color: #2b2b2b;
+            font-weight: 800;
+            color: #38bdf8;
+            font-size: 15px;
+        }
+        .admin-col { display: none; }
+
+        /* WHATSAPP SABİT BUTON */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--whatsapp-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.6);
+        }
+        .whatsapp-float svg {
+            width: 35px;
+            height: 35px;
+            fill: white;
         }
 
-        .admin-col {
-            display: none;
-        }
-
-        /* MODAL (AÇILIR KART) */
+        /* MODAL */
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
         .modal-card {
-            background: white;
+            background: var(--bg-card);
             width: 90%;
-            max-width: 500px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 520px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
             overflow: hidden;
-            border-top: 5px solid var(--accent-gold);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--accent-gold);
         }
         .modal-header {
-            background: var(--primary-color);
+            background: #090d16;
             color: var(--accent-gold);
-            padding: 15px 20px;
+            padding: 18px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--border-color);
         }
-        .modal-header h3 {
-            margin: 0;
-            font-size: 18px;
-        }
+        .modal-header h3 { margin: 0; font-size: 18px; }
         .close-btn {
             background: none;
             border: none;
-            color: white;
-            font-size: 22px;
+            color: var(--text-muted);
+            font-size: 24px;
             cursor: pointer;
+            transition: color 0.2s;
         }
+        .close-btn:hover { color: white; }
         .modal-body {
-            padding: 20px;
+            padding: 25px;
             font-size: 14px;
-            color: var(--text-dark);
             max-height: 80vh;
             overflow-y: auto;
         }
         .modal-img-container {
             text-align: center;
-            margin-bottom: 15px;
-            background: #f1f5f9;
-            padding: 10px;
-            border-radius: 8px;
+            margin-bottom: 20px;
+            background: #07090e;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
         }
         .modal-img-container img {
-            max-height: 160px;
+            max-height: 180px;
             max-width: 100%;
             object-fit: contain;
-            border-radius: 6px;
+            border-radius: 8px;
             margin-bottom: 8px;
         }
         .input-group-box {
             display: none;
-            gap: 5px;
-            margin-top: 8px;
+            gap: 8px;
+            margin-top: 10px;
         }
-        .input-group-box input, .input-group-box textarea {
+        .input-group-box input {
             flex: 1;
-            padding: 6px 10px;
+            padding: 8px 12px;
             font-size: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
+            background: #07090e;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 6px;
             outline: none;
         }
-        .input-group-box button {
-            padding: 6px 12px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-        }
         .modal-body p {
-            margin: 8px 0;
+            margin: 10px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
         }
-        .modal-body strong {
-            color: var(--primary-color);
-        }
+        .modal-body strong { color: var(--text-muted); }
         .modal-edit-input {
-            padding: 4px 8px;
+            padding: 6px 10px;
             font-size: 13px;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
+            background: #07090e;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 6px;
             width: 200px;
             outline: none;
         }
-        .modal-edit-input:focus {
-            border-color: var(--accent-gold);
-        }
         .desc-box {
-            margin-top: 15px;
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 6px;
+            margin-top: 20px;
+            background: #07090e;
+            padding: 15px;
+            border-radius: 10px;
             border-left: 4px solid var(--accent-gold);
+            border: 1px solid var(--border-color);
         }
         .admin-save-card-btn {
             display: none;
             width: 100%;
-            background: #2a9d8f;
+            background: linear-gradient(135deg, #059669, #10b981);
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 14px;
         }
 
-        /* SSS BÖLÜMÜ STİLLERİ */
+        /* SSS BÖLÜMÜ */
         .faq-container {
             margin-top: 40px;
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            border: 1px solid var(--border-color);
         }
         .faq-container h2 {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--accent-gold);
-            padding-bottom: 10px;
+            color: var(--accent-gold);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
             margin-top: 0;
+            font-size: 20px;
         }
         .faq-section-title {
-            color: var(--teal-bg);
-            margin-top: 25px;
-            font-size: 18px;
+            color: var(--primary-color);
+            margin-top: 30px;
+            font-size: 16px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            font-weight: 700;
         }
         .faq-list {
             list-style: none;
             padding: 0;
-            margin: 10px 0;
+            margin: 12px 0;
         }
         .faq-list li {
             margin-bottom: 15px;
             padding-bottom: 12px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-color);
         }
         .faq-question {
-            font-weight: bold;
-            color: var(--primary-color);
+            font-weight: 700;
+            color: white;
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
         .faq-answer {
-            color: #475569;
-            line-height: 1.5;
+            color: var(--text-muted);
+            line-height: 1.6;
             margin: 0;
+            font-size: 13.5px;
         }
         .sub-faq-list {
             list-style: disc;
             margin-left: 20px;
             margin-top: 8px;
+            color: var(--text-muted);
+            font-size: 13.5px;
         }
         .sub-faq-list li {
             margin-bottom: 8px;
@@ -437,12 +529,19 @@
 </head>
 <body>
 
+    <!-- WhatsApp Sabit Buton (Numaranı veya bağlantını buraya yazabilirsin) -->
+    <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" title="WhatsApp ile İletişime Geç">
+        <svg viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/>
+        </svg>
+    </a>
+
     <header>
         <div class="logo-container" onclick="handleLogoClick()" title="ANUBIS GSM">
             <img src="logo.png" alt="ANUBIS GSM Logo" onerror="this.style.display='none'">
             <div>
                 <h1>ANUBIS GSM</h1>
-                <p>Teknoloji Marketi</p>
+                <p>Premium Teknoloji Marketi</p>
             </div>
         </div>
     </header>
@@ -471,7 +570,7 @@
                 <input type="number" id="dollarRate" class="rate-input" value="43.169" step="0.001" readonly title="Bu kur otomatik çekilir. Değiştirmek için Yönetim Paneli şifresini giriniz.">
             </div>
             <div id="liveRateText" class="live-rate-display">CANLI KUR: Yükleniyor...</div>
-            <div class="update-date">LİSTE SON GÜNCELLEME: 30.07.2026</div>
+            <div class="update-date">LİSTE SON GÜNCELLEME: 31.07.2026</div>
         </div>
 
         <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara (Örn: iPhone 16, S25 Ultra, Xiaomi)..." onkeyup="filterTable()">
@@ -523,7 +622,7 @@
             <ul class="faq-list">
                 <li>
                     <span class="faq-question">• IMEI kaydı yapıyor musunuz?</span>
-                    <p class="faq-answer">Evet, modele göre Dirençle, CPID ya da Server (Samsung) kaydı yapılabilir. Kayıt yöntemi and ücreti ürün açıklamasında belirtilir. Dilerseniz kendi IMEI’nizi verebilirsiniz.</p>
+                    <p class="faq-answer">Evet, modele göre Dirençle, CPID ya da Server (Samsung) kaydı yapılabilir. Kayıt yöntemi ve ücreti ürün açıklamasında belirtilir. Dilerseniz kendi IMEI’nizi verebilirsiniz.</p>
                 </li>
                 <li>
                     <span class="faq-question">• Atılan IMEI’lerin garantisi var mı?</span>
@@ -567,23 +666,23 @@
             <div class="modal-body">
                 <div class="modal-img-container">
                     <img id="modalImage" src="" alt="Ürün Görseli" style="display:none;">
-                    <div id="noImageView" style="color: #64748b; font-size: 13px; margin-bottom: 8px;">Görsel Eklenmemiş</div>
+                    <div id="noImageView" style="color: var(--text-muted); font-size: 13px; margin-bottom: 8px;">Görsel Eklenmemiş</div>
                     <div id="adminUrlBox" class="input-group-box">
                         <input type="text" id="imageUrlInput" placeholder="Görsel URL'si yapıştırın (https://...)">
                     </div>
                 </div>
 
-                <p><strong>Model:</strong> <span id="mModelText" class="view-mode">-</span><input type="text" id="mModelInput" class="modal-edit-input edit-mode" style="display:none;"></p>
-                <p><strong>Hafıza:</strong> <span id="mStorageText" class="view-mode">-</span><input type="text" id="mStorageInput" class="modal-edit-input edit-mode" style="display:none;"></p>
-                <p><strong>Kayıt Durumu:</strong> <span id="mRegText" class="view-mode">-</span><input type="text" id="mRegInput" class="modal-edit-input edit-mode" style="display:none;"></p>
-                <p><strong>Dolar Fiyatı:</strong> <span id="mUsdText" class="view-mode">-</span><input type="number" id="mUsdInput" class="modal-edit-input edit-mode" style="display:none;"></p>
-                <p><strong>Güncel TL:</strong> <span id="mTl" style="color: #2a9d8f; font-weight: bold;">-</span></p>
-                <p><strong>Stok Durumu:</strong> <span id="mStockText" class="view-mode">-</span><input type="text" id="mStockInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Model:</strong> <span id="mModelText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mModelInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Hafıza:</strong> <span id="mStorageText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mStorageInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Kayıt Durumu:</strong> <span id="mRegText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mRegInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Dolar Fiyatı:</strong> <span id="mUsdText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="number" id="mUsdInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Güncel TL:</strong> <span id="mTl" style="color: #38bdf8; font-weight: 800; font-size: 16px;">-</span></p>
+                <p><strong>Stok Durumu:</strong> <span id="mStockText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mStockInput" class="modal-edit-input edit-mode" style="display:none;"></p>
                 
                 <div class="desc-box">
-                    <strong style="display: block; margin-bottom: 4px; color: var(--primary-color);">Cihaz Açıklaması / Notu:</strong>
-                    <span id="mDescText" class="view-mode" style="color: #475569;">Açıklama bulunmuyor.</span>
-                    <textarea id="mDescInput" class="edit-mode" style="display:none; width:100%; height:60px; padding:6px; border:1px solid #cbd5e1; border-radius:4px; font-size:13px; outline:none; resize:vertical;"></textarea>
+                    <strong style="display: block; margin-bottom: 6px; color: var(--accent-gold);">Cihaz Açıklaması / Notu:</strong>
+                    <span id="mDescText" class="view-mode" style="color: var(--text-muted); line-height: 1.5;">Açıklama bulunmuyor.</span>
+                    <textarea id="mDescInput" class="edit-mode" style="display:none; width:100%; height:60px; padding:8px; background:#07090e; border:1px solid var(--border-color); color:white; border-radius:6px; font-size:13px; outline:none; resize:vertical;"></textarea>
                 </div>
 
                 <button id="saveCardBtn" class="admin-save-card-btn" onclick="saveCardChanges()">Değişiklikleri Kaydet</button>
@@ -627,10 +726,9 @@
                 if (pass === "anubis2026") {
                     isAdmin = true;
                     toggleAdminPanel(true);
-                    // Yönetim paneli açıldığında kur kutusunun kilidini açıp müdahaleye izin verelim
                     let rateInput = document.getElementById("dollarRate");
                     rateInput.removeAttribute("readonly");
-                    rateInput.style.background = "white";
+                    rateInput.style.background = "#07090e";
                     renderTable();
                     alert("Yönetim Paneli Aktif Edildi! Artık kuru manuel olarak da değiştirebilirsin.");
                 } else if (pass !== null) {
@@ -669,7 +767,7 @@
                     let adminButtonTd = isAdmin ? `<td><button class="admin-btn-danger" onclick="deleteProduct(${index}); event.stopPropagation();">Sil</button></td>` : '';
 
                     tr.innerHTML = `
-                        <td>${item.model}</td>
+                        <td style="font-weight:600;">${item.model}</td>
                         <td>${item.storage}</td>
                         <td>${regBadge}</td>
                         <td><input type="number" class="usd-input" value="${item.usd}" ${isAdmin ? '' : 'readonly'} oninput="updateUsdPrice(${index}, this.value); event.stopPropagation();" onclick="event.stopPropagation()"></td>
@@ -690,10 +788,10 @@
             let rateInput = document.getElementById("dollarRate");
             if (show) {
                 rateInput.removeAttribute("readonly");
-                rateInput.style.background = "white";
+                rateInput.style.background = "#07090e";
             } else {
                 rateInput.setAttribute("readonly", true);
-                rateInput.style.background = "#e2e8f0";
+                rateInput.style.background = "#07090e";
             }
             renderTable();
         }
@@ -901,7 +999,7 @@
 
         window.onload = function() {
             renderTable();
-            fetchLiveRate(); // Sayfa açılınca kuru otomatik çeker ve kutuyu kilitli tutar
+            fetchLiveRate();
         };
     </script>
 </body>

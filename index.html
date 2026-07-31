@@ -8,10 +8,8 @@
         :root {
             --bg-deep: #07090e;
             --bg-card: #0f172a;
-            --bg-glass: rgba(15, 23, 42, 0.75);
             --primary-color: #38bdf8;
             --accent-gold: #f59e0b;
-            --accent-gold-glow: rgba(245, 158, 11, 0.4);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: rgba(255, 255, 255, 0.08);
@@ -33,25 +31,21 @@
         header {
             background: linear-gradient(135deg, #090d16 0%, #111b2e 100%);
             color: white;
-            padding: 25px 20px;
+            padding: 20px;
             border-bottom: 2px solid var(--accent-gold);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
         }
 
         .header-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: relative;
             max-width: 1250px;
             margin: 0 auto;
             flex-wrap: wrap;
             gap: 20px;
         }
 
-        /* LOGO SOLA SABİTLENDİ */
         .logo-area {
             display: flex;
             align-items: center;
@@ -117,7 +111,6 @@
             padding: 0 20px;
         }
 
-        /* YÖNETİM PANELİ */
         .admin-panel {
             display: none;
             background: var(--bg-card);
@@ -125,7 +118,6 @@
             padding: 25px;
             border-radius: 14px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
         .admin-panel h3 {
             margin-top: 0;
@@ -183,7 +175,6 @@
             font-weight: bold;
         }
 
-        /* KUR ALANI */
         .rate-container {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -193,7 +184,6 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             flex-wrap: wrap;
             gap: 15px;
         }
@@ -237,7 +227,6 @@
         }
         .refresh-rate-btn:hover { background: var(--primary-color); color: #07090e; }
 
-        /* FİLTRELER */
         .filter-tabs {
             display: flex;
             gap: 10px;
@@ -295,7 +284,6 @@
             white-space: nowrap;
         }
 
-        /* TABLO */
         .table-wrapper {
             background: var(--bg-card);
             border-radius: 14px;
@@ -464,7 +452,6 @@
         .modal-header h3 { margin: 0; font-size: 18px; }
         .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
         .modal-body { padding: 25px; font-size: 14px; overflow-y: auto; flex: 1; }
-        .modal-order-btn { display: block; width: 100%; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; text-align: center; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -477,7 +464,6 @@
 
     <header>
         <div class="header-content">
-            <!-- LOGO BURADA -->
             <div class="logo-area" onclick="handleLogoClick()" title="ANUBIS GSM">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 140" style="max-height: 65px; width: auto;">
                     <defs>

@@ -273,6 +273,24 @@
             font-size: 13px;
             color: var(--text-muted);
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .refresh-rate-btn {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .refresh-rate-btn:hover {
+            background: var(--primary-color);
+            color: #07090e;
         }
 
         /* KATEGORİ FİLTRE SEKMELERİ */
@@ -398,7 +416,6 @@
             font-size: 11px;
             font-weight: 700;
         }
-        /* Son ürünler için dikkat çekici yanıp sönen rozet */
         .badge-pulse {
             background: rgba(239, 68, 68, 0.15);
             color: #f87171;
@@ -620,10 +637,13 @@
         <!-- Kur ve Tarih Alanı -->
         <div class="rate-container">
             <div class="rate-box">
-                <span>GÜNCEL KUR:</span>
-                <input type="number" id="dollarRate" class="rate-input" value="43.169" step="0.001" readonly>
+                <span>GÜNCEL KUR (USD/TRY):</span>
+                <input type="number" id="dollarRate" class="rate-input" value="43.169" step="0.001" oninput="renderTable()">
             </div>
-            <div class="update-date">LİSTE SON GÜNCELLEME: 31.07.2026</div>
+            <div class="update-date">
+                <span id="rateUpdateStatus">Kur Canlı Çekiliyor...</span>
+                <button class="refresh-rate-btn" onclick="fetchLiveExchangeRate()">Kuru Güncelle</button>
+            </div>
         </div>
 
         <!-- Hızlı Filtreleme Sekmeleri -->
@@ -739,7 +759,7 @@
 
         let isAdmin = false;
         let tempUploadedImage = "";
-        let currentCurrency = 'TL'; // TL veya USD
+        let currentCurrency = 'TL';
 
         let logoClickCount = 0;
         let logoClickTimer = null;
@@ -786,7 +806,6 @@
         }
 
         function toggleTheme() {
-            // Basit estetik tema değişimi için geleceğe dönük altyapı
             alert("Tema modu aktif!");
         }
 
@@ -796,6 +815,28 @@
             btnElement.classList.add('active');
             activeCategoryFilter = cat;
             renderTable();
+        }
+
+        // CANLI KUR ÇEKME FONKSİYONU
+        async function fetchLiveExchangeRate() {
+            let statusSpan = document.getElementById("rateUpdateStatus");
+            statusSpan.textContent = "Kur güncelleniyor...";
+            try {
+                let response = await fetch('https://open.er-api.com/v6/latest/USD');
+                let data = await response.json();
+                if (data && data.rates && data.rates.TRY) {
+                    let liveRate = data.rates.TRY;
+                    document.getElementById("dollarRate").value = liveRate.toFixed(3);
+                    statusSpan.textContent = "Canlı Kur Aktif (" + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ")";
+                    renderTable();
+                } else {
+                    throw new Error("Kur verisi alınamadı");
+                }
+            } catch (error) {
+                console.error("Kur çekilemedi, manuel değere devam ediliyor:", error);
+                statusSpan.textContent = "Kur manuel modda";
+                renderTable();
+            }
         }
 
         function renderTable() {
@@ -820,7 +861,6 @@
                     return;
                 }
 
-                // Kategori filtrelerine göre kontrol
                 if (activeCategoryFilter === 'İPHONE' && !currentCatName.includes('İPHONE')) return;
                 if (activeCategoryFilter === 'SAMSUNG' && !currentCatName.includes('SAMSUNG')) return;
                 if (activeCategoryFilter === 'SON ÜRÜN' && !item.stock.includes('SON')) return;
@@ -994,7 +1034,7 @@
         }
 
         window.onload = function() {
-            renderTable();
+            fetchLiveExchangeRate();
         };
     </script>
 </body>

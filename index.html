@@ -1,112 +1,1111 @@
-            const countSpan = document.getElementById('selected-count');
-            
-            countSpan.textContent = `${selectedProductsForCompare.length}/3`;
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANUBIS GSM | Premium Teknoloji Marketi</title>
+    <style>
+        :root {
+            --bg-deep: #07090e;
+            --bg-card: #0f172a;
+            --bg-glass: rgba(15, 23, 42, 0.75);
+            --primary-color: #38bdf8;
+            --accent-gold: #f59e0b;
+            --accent-gold-glow: rgba(245, 158, 11, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --whatsapp-color: #25d366;
+            --instagram-color: #e1306c;
+        }
 
-            if (selectedProductsForCompare.length > 0) {
-                bar.classList.remove('translate-y-full');
-            } else {
-                bar.classList.add('translate-y-full');
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        header {
+            background: linear-gradient(135deg, #090d16 0%, #111b2e 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            max-width: 1250px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        /* ANİMASYONLU ANUBİS LOGO & AMBLEM ALANI */
+        .logo-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 22px;
+            cursor: pointer;
+            user-select: none;
+            margin: 0 auto;
+            transition: transform 0.3s;
+        }
+        .logo-area:hover {
+            transform: scale(1.02);
+        }
+
+        /* ANUBİS İKON / ANİMASYON KONTEYNERİ */
+        .anubis-emblem {
+            position: relative;
+            width: 85px;
+            height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(7, 9, 14, 0.8) 70%);
+            border-radius: 50%;
+            border: 2px solid rgba(245, 158, 11, 0.4);
+            box-shadow: 0 0 25px var(--accent-gold-glow);
+            animation: emblemPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes emblemPulse {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(245, 158, 11, 0.3), inset 0 0 10px rgba(56, 189, 248, 0.2);
+                border-color: rgba(245, 158, 11, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(245, 158, 11, 0.7), inset 0 0 20px rgba(56, 189, 248, 0.5);
+                border-color: var(--accent-gold);
             }
         }
 
-        function clearComparison() {
-            document.querySelectorAll('.compare-checkbox').forEach(cb => cb.checked = false);
-            selectedProductsForCompare = [];
-            updateComparisonBar();
+        /* SVG ANUBİS ÇİZİMİ VE ANİMASYONLARI */
+        .anubis-svg {
+            width: 55px;
+            height: 55px;
+            fill: url(#goldGradient);
+            filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8));
+            animation: anubisFloat 3s ease-in-out infinite;
         }
 
-        function openEpeyComparison() {
-            if (selectedProductsForCompare.length === 0) return;
+        @keyframes anubisFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-4px) scale(1.03); }
+        }
+
+        /* HİYEROGLİF / ARKAPLAN ÇEMBER DÖNÜŞÜ */
+        .anubis-ring {
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border: 2px dashed rgba(56, 189, 248, 0.4);
+            border-radius: 50%;
+            animation: spinRing 15s linear infinite;
+        }
+
+        @keyframes spinRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-area img {
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0 0 20px var(--accent-gold-glow));
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 38px;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+            font-weight: 800;
+            text-shadow: 0 2px 15px var(--accent-gold-glow);
+            text-align: left;
+        }
+        header p.subtitle {
+            margin: 6px 0 0 0;
+            font-size: 15px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: left;
+            font-weight: 600;
+        }
+        header p.slogan {
+            margin: 6px 0 0 0;
+            font-size: 13.5px;
+            color: #38bdf8;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            text-align: left;
+        }
+
+        .header-right-area {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .instagram-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(225, 48, 108, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            white-space: nowrap;
+        }
+        .instagram-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(225, 48, 108, 0.6);
+        }
+        .instagram-badge svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .top-tools-bar {
+            display: flex;
+            gap: 8px;
+        }
+        .utility-btn {
+            background: #1e293b;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .utility-btn:hover { background: #334155; }
+
+        .container {
+            max-width: 1250px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* GİZLİ YÖNETİM PANELİ */
+        .admin-panel {
+            display: none;
+            background: var(--bg-card);
+            border: 2px dashed var(--accent-gold);
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .admin-panel h3 {
+            margin-top: 0;
+            color: var(--accent-gold);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+        }
+        .close-admin {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .close-admin:hover { background: #dc2626; }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .form-grid input, .form-grid select {
+            padding: 10px 14px;
+            background: #07090e;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+        }
+        .form-grid input:focus { border-color: var(--accent-gold); }
+        
+        .admin-btn {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .admin-btn-danger {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* KUR VE BİLGİ BARI */
+        .rate-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 18px 25px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .rate-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+        .rate-input {
+            width: 120px;
+            padding: 8px 12px;
+            font-size: 16px;
+            border: 2px solid var(--accent-gold);
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            background: #07090e;
+            color: var(--accent-gold);
+            outline: none;
+        }
+        .update-date {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .refresh-rate-btn {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .refresh-rate-btn:hover {
+            background: var(--primary-color);
+            color: #07090e;
+        }
+
+        /* KATEGORİ FİLTRE SEKMELERİ */
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-tab {
+            background: var(--bg-card);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-tab:hover, .filter-tab.active {
+            background: var(--primary-color);
+            color: #07090e;
+            border-color: var(--primary-color);
+        }
+
+        /* ÜST KONTROL ALANI */
+        .controls-wrapper {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 25px;
+            font-size: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 12px;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .search-box:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px var(--accent-gold-glow);
+        }
+        .faq-open-btn {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        /* TABLO ALANI */
+        .table-wrapper {
+            background: var(--bg-card);
+            border-radius: 14px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+        th, td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background-color: #090d16;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        .product-row {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .product-row:hover {
+            background-color: rgba(56, 189, 248, 0.04);
+        }
+        .category-row {
+            background-color: #05080f !important;
+            color: var(--accent-gold);
+            font-weight: 800;
+            font-size: 15px;
+            letter-spacing: 1px;
+            border-top: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
+        }
+        .badge-green {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .badge-orange {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .badge-pulse {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            animation: pulse-animation 1.5s infinite;
+        }
+        @keyframes pulse-animation {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .usd-input {
+            width: 85px;
+            padding: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            background: #07090e;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 6px;
+            text-align: center;
+            outline: none;
+        }
+        .price-display {
+            font-weight: 800;
+            color: #38bdf8;
+            font-size: 15px;
+        }
+        .order-btn-table {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        /* TOAST BİLDİRİMİ */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #10b981;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: visibility 0.3s, opacity 0.3s;
+            opacity: 0;
+        }
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* WHATSAPP SABİT BUTON */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--whatsapp-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            text-decoration: none;
+        }
+        .whatsapp-float svg { width: 35px; height: 35px; fill: white; }
+
+        /* MODAL ORTAK */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .modal-card {
+            background: var(--bg-card);
+            width: 100%;
+            max-width: 520px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--accent-gold);
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-header {
+            background: #090d16;
+            color: var(--accent-gold);
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .modal-header h3 { margin: 0; font-size: 18px; }
+        .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
+        .modal-body { padding: 25px; font-size: 14px; overflow-y: auto; flex: 1; }
+        .modal-img-container { text-align: center; margin-bottom: 20px; background: #07090e; padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .modal-img-container img { max-height: 180px; max-width: 100%; object-fit: contain; border-radius: 8px; margin-bottom: 8px; }
+        .input-group-box { display: none; margin-top: 10px; }
+        .input-group-box input[type="text"] { width: 100%; padding: 8px; font-size: 12px; background: #07090e; border: 1px solid var(--border-color); color: white; border-radius: 6px; margin-bottom: 8px; }
+        .file-upload-label { display: inline-block; background: linear-gradient(135deg, #0284c7, #0ea5e9); color: white; padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .file-upload-label input { display: none; }
+        .modal-body p { margin: 10px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+        .modal-edit-input { padding: 6px; font-size: 13px; background: #07090e; border: 1px solid var(--border-color); color: white; border-radius: 6px; width: 200px; }
+        .desc-box { margin-top: 20px; background: #07090e; padding: 15px; border-radius: 10px; border: 1px solid var(--border-color); }
+        .admin-save-card-btn { display: none; width: 100%; background: linear-gradient(135deg, #059669, #10b981); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .modal-order-btn { display: block; width: 100%; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; text-align: center; text-decoration: none; }
+
+        /* SSS MODAL */
+        .faq-modal-card { max-width: 750px; }
+        .faq-section-title { color: var(--primary-color); margin-top: 25px; font-size: 16px; font-weight: 700; }
+        .faq-list { list-style: none; padding: 0; margin: 12px 0; }
+        .faq-list li { margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
+        .faq-question { font-weight: 700; color: white; display: block; margin-bottom: 6px; }
+        .faq-answer { color: var(--text-muted); line-height: 1.6; margin: 0; font-size: 13.5px; }
+
+        @media (max-width: 768px) {
+            header { padding: 20px 15px; }
+            .header-content { flex-direction: column; text-align: center; gap: 15px; }
+            .logo-area { flex-direction: column; gap: 10px; }
+            .logo-area img { height: 75px; }
+            header h1 { font-size: 28px; text-align: center; }
+            header p.subtitle, header p.slogan { text-align: center; }
+            .header-right-area { align-items: center; width: 100%; }
+            .controls-wrapper { flex-direction: column; }
+            .search-box, .faq-open-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Toast Bildirim Kutusu -->
+    <div id="toast">Sipariş mesajınız kopyalandı, WhatsApp'a yönlendiriliyorsunuz! 🚀</div>
+
+    <!-- WhatsApp Sabit Buton -->
+    <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" title="WhatsApp ile İletişime Geç">
+        <svg viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/>
+        </svg>
+    </a>
+
+    <header>
+        <div class="header-content">
+            <div class="logo-area" onclick="handleLogoClick()" title="ANUBIS GSM">
+                <!-- SVG Gradient Tanımı ve Animasyonlu Anubis Amblemi -->
+                <div class="anubis-emblem">
+                    <div class="anubis-ring"></div>
+                    <svg class="anubis-svg" viewBox="0 0 24 24">
+                        <defs>
+                            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#f59e0b" />
+                                <stop offset="50%" stop-color="#fbbf24" />
+                                <stop offset="100%" stop-color="#38bdf8" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Anubis Silüeti (Çakal Başlı Tanrı Formu) -->
+                        <path d="M12 2C11.5 2 11 2.2 10.7 2.6L7 7.5C6.4 8.3 6 9.3 6 10.4V12C6 13.7 7.3 15 9 15H10V18.5C10 19.3 10.7 20 11.5 20H12.5C13.3 20 14 19.3 14 18.5V15H15C16.7 15 18 13.7 18 12V10.4C18 9.3 17.6 8.3 17 7.5L13.3 2.6C13 2.2 12.5 2 12 2ZM11.2 4.1L14.2 8H9.8L11.2 4.1ZM12 9.5C12.8 9.5 13.5 10.2 13.5 11C13.5 11.8 12.8 12.5 12 12.5C11.2 12.5 10.5 11.8 10.5 11C10.5 10.2 11.2 9.5 12 9.5Z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1>ANUBIS GSM</h1>
+                    <p class="subtitle">Premium Teknoloji Marketi</p>
+                    <p class="slogan">"Cüzdanınızı ağlatmayan, yüzünüzü güldüren teknoloji adresi 🚀"</p>
+                </div>
+            </div>
+
+            <div class="header-right-area">
+                <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    @anubisgsm
+                </a>
+                <div class="top-tools-bar">
+                    <button class="utility-btn" onclick="toggleCurrencyMode()">Para Birimi: <span id="currencyModeLabel">TL (₺)</span></button>
+                    <button class="utility-btn" onclick="toggleTheme()">Tema Değiştir</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Gizli Yönetim Paneli -->
+        <div id="adminPanel" class="admin-panel">
+            <h3>Yönetim Paneli <button class="close-admin" onclick="toggleAdminPanel(false)">Kapat</button></h3>
+            <div class="form-grid">
+                <input type="text" id="newCategory" placeholder="Kategori (Örn: İPHONE SERİSİ)">
+                <input type="text" id="newModel" placeholder="Model (Örn: IPHONE 17)">
+                <input type="text" id="newStorage" placeholder="Hafıza (Örn: 256GB)">
+                <input type="text" id="newReg" placeholder="Kayıt Durumu (Örn: KAYITSIZ)">
+                <input type="number" id="newUsd" placeholder="Dolar Fiyatı ($)">
+                <input type="text" id="newStock" placeholder="Stok (Örn: HAZIR STOK veya SON 2 ÜRÜN)">
+                <input type="text" id="newDesc" placeholder="Cihaz Açıklaması">
+            </div>
+            <button class="admin-btn" onclick="addNewProduct()">Listeye Ürün Ekle</button>
+        </div>
+
+        <!-- Kur ve Tarih Alanı -->
+        <div class="rate-container">
+            <div class="rate-box">
+                <span>GÜNCEL KUR (USD/TRY):</span>
+                <input type="number" id="dollarRate" class="rate-input" value="43.169" step="0.001" oninput="renderTable()">
+            </div>
+            <div class="update-date">
+                <span id="rateUpdateStatus">Kur Canlı Çekiliyor...</span>
+                <button class="refresh-rate-btn" onclick="fetchLiveExchangeRate()">Kuru Güncelle</button>
+            </div>
+        </div>
+
+        <!-- Hızlı Filtreleme Sekmeleri -->
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filterByCategory('TÜMÜ', this)">Tüm Ürünler</button>
+            <button class="filter-tab" onclick="filterByCategory('İPHONE', this)">İPhone Serisi</button>
+            <button class="filter-tab" onclick="filterByCategory('SAMSUNG', this)">Samsung Modelleri</button>
+            <button class="filter-tab" onclick="filterByCategory('SON ÜRÜN', this)">🔥 Son Ürünler</button>
+        </div>
+
+        <!-- Üst Arama ve SSS Butonu -->
+        <div class="controls-wrapper">
+            <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara (Örn: iPhone 16, S25 Ultra)..." onkeyup="filterTable()">
+            <button class="faq-open-btn" onclick="openFaqModal()">
+                ❓ Sıkça Sorulan Sorular
+            </button>
+        </div>
+
+        <!-- Ürün Tablosu -->
+        <div class="table-wrapper">
+            <table id="priceTable">
+                <thead>
+                    <tr>
+                        <th>MODEL</th>
+                        <th>HAFIZA</th>
+                        <th>KAYIT DURUMU</th>
+                        <th>DOLAR ($)</th>
+                        <th>FİYAT</th>
+                        <th>STOK DURUMU</th>
+                        <th>SİPARİŞ</th>
+                        <th class="admin-col">İŞLEM</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- SSS MODAL -->
+    <div id="faqModal" class="modal-overlay" onclick="closeFaqModal()">
+        <div class="modal-card faq-modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>❓ Sıkça Sorulan Sorular (SSS)</h3>
+                <button class="close-btn" onclick="closeFaqModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3 class="faq-section-title">📌 Satış ve Cihaz Durumu</h3>
+                <ul class="faq-list">
+                    <li><span class="faq-question">• Satılan telefonlar kayıtlı mı?</span><p class="faq-answer">Hayır, tüm cihazlar yurt dışı ve kayıtsızdır.</p></li>
+                    <li><span class="faq-question">• Telefonlar orijinal mi?</span><p class="faq-answer">Evet. Tüm cihazlarımız %100 orijinal ve sıfırdır.</p></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÜRÜN DETAY KARTI (MODAL) -->
+    <div id="productModal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="modalTitle">Ürün Detayı</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-img-container">
+                    <img id="modalImage" src="" alt="Ürün Görseli" style="display:none;">
+                    <div id="noImageView" style="color: var(--text-muted); font-size: 13px;">Görsel Eklenmemiş</div>
+                    <div id="adminUrlBox" class="input-group-box">
+                        <input type="text" id="imageUrlInput" placeholder="Veya görsel URL'si yapıştırın">
+                        <label class="file-upload-label">
+                            📁 Bilgisayardan Fotoğraf Seç
+                            <input type="file" id="imageFileInput" accept="image/*" onchange="handleImageUpload(event)">
+                        </label>
+                    </div>
+                </div>
+
+                <p><strong>Model:</strong> <span id="mModelText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mModelInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Hafıza:</strong> <span id="mStorageText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mStorageInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Kayıt Durumu:</strong> <span id="mRegText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mRegInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Dolar Fiyatı:</strong> <span id="mUsdText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="number" id="mUsdInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                <p><strong>Güncel Fiyat:</strong> <span id="mPrice" style="color: #38bdf8; font-weight: 800; font-size: 16px;">-</span></p>
+                <p><strong>Stok Durumu:</strong> <span id="mStockText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mStockInput" class="modal-edit-input edit-mode" style="display:none;"></p>
+                
+                <div class="desc-box">
+                    <strong style="color: var(--accent-gold);">Açıklama:</strong>
+                    <span id="mDescText" class="view-mode" style="color: var(--text-muted); display:block; margin-top:5px;">Açıklama bulunmuyor.</span>
+                    <textarea id="mDescInput" class="edit-mode" style="display:none; width:100%; height:60px; background:#07090e; border:1px solid var(--border-color); color:white; border-radius:6px; margin-top:5px;"></textarea>
+                </div>
+
+                <a id="modalOrderBtn" href="#" target="_blank" class="modal-order-btn" onclick="triggerToastAndOrder(event)">📲 Bu Ürünü Hemen Sipariş Ver</a>
+                <button id="saveCardBtn" class="admin-save-card-btn" onclick="saveCardChanges()">Değişiklikleri Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let defaultProducts = [
+            { category: "İPHONE SERİSİ" },
+            { model: "IPHONE 16 PRO MAX", storage: "512GB", reg: 'KAYIT ALICI AİT', usd: 1520, stock: "SON 2 ÜRÜN", desc: "Kutu açılımsız, sıfır kapalı kutu cihaz.", img: "" },
+            { model: "IPHONE 16 PRO MAX", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1330, stock: "FULL RENK", desc: "256GB Hafıza seçeneğiyle stoklarda.", img: "" },
+            { model: "IPHONE 16 PRO", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1220, stock: "HAZIR STOK", desc: "Kompakt ve güçlü Pro modeli.", img: "" },
+            { model: "IPHONE 15 PRO MAX (değişim)", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1100, stock: "SON 1 ÜRÜN", desc: "Apple değişim cihazıdır.", img: "" },
             
-            selectedProductsForCompare.forEach(item => {
-                if(item.url) {
-                    window.open(item.url, '_blank');
-                } else {
-                    alert(`${item.name} için Epey linki tanımlanmamış.`);
+            { category: "SAMSUNG MODELLERİ" },
+            { model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Amiral gemisi S25 Ultra.", img: "" },
+            { model: "SAMSUNG S24 ULTRA", storage: "12/256GB", reg: 'KAYITSIZ', usd: 935, stock: "SON 3 ÜRÜN", desc: "S24 Ultra modeli.", img: "" }
+        ];
+
+        let products = JSON.parse(localStorage.getItem("anubis_products"));
+        if (!products || products.length === 0) {
+            products = defaultProducts;
+            localStorage.setItem("anubis_products", JSON.stringify(defaultProducts));
+        }
+
+        let isAdmin = false;
+        let tempUploadedImage = "";
+        let currentCurrency = 'TL';
+
+        let logoClickCount = 0;
+        let logoClickTimer = null;
+        function handleLogoClick() {
+            logoClickCount++;
+            clearTimeout(logoClickTimer);
+            logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 1000);
+
+            if (logoClickCount >= 4) {
+                logoClickCount = 0;
+                let pass = prompt("Yönetim Şifresi:");
+                if (pass === "anubis2026") {
+                    isAdmin = true;
+                    toggleAdminPanel(true);
+                    renderTable();
+                    alert("Yönetim Paneli Aktif Edildi!");
                 }
-            });
-        }
-
-        function orderViaWhatsApp(name, price) {
-            const phone = "905000000000";
-            const text = encodeURIComponent(`Merhaba, ${name} (${price.toLocaleString('tr-TR')} ₺) hakkında bilgi almak ve sipariş vermek istiyorum.`);
-            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
-        }
-
-        function openAdminModal() {
-            document.getElementById('admin-modal').classList.remove('hidden');
-        }
-
-        function closeAdminModal() {
-            document.getElementById('admin-modal').classList.add('hidden');
-            document.getElementById('admin-login-form').classList.remove('hidden');
-            document.getElementById('admin-panel-content').classList.add('hidden');
-            document.getElementById('admin-pass').value = '';
-        }
-
-        function checkAdminLogin() {
-            const pass = document.getElementById('admin-pass').value;
-            if(pass === 'anubis2026') {
-                document.getElementById('admin-login-form').classList.add('hidden');
-                document.getElementById('admin-panel-content').classList.remove('hidden');
-                renderAdminList();
-            } else {
-                alert('Hatalı şifre!');
             }
         }
 
-        function renderAdminList() {
-            const list = document.getElementById('admin-product-list');
-            list.innerHTML = '';
-            products.forEach(p => {
-                const item = document.createElement('div');
-                item.className = "flex items-center justify-between bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-xs";
-                item.innerHTML = `
-                    <span class="truncate max-w-[150px] font-medium text-white">${p.name}</span>
-                    <span class="text-amber-400 font-bold">${p.price.toLocaleString('tr-TR')} ₺</span>
-                    <button onclick="deleteProduct(${p.id})" class="text-red-400 hover:text-red-300 px-2 py-1"><i class="fa-solid fa-trash"></i></button>
+        function saveToStorage() {
+            localStorage.setItem("anubis_products", JSON.stringify(products));
+        }
+
+        function getWhatsAppOrderLink(model, storage, reg) {
+            let message = `Merhaba, ANUBIS GSM fiyat listesinden ${model} (${storage} - ${reg}) modelini sipariş vermek istiyorum.`;
+            return `https://wa.me/905000000000?text=` + encodeURIComponent(message);
+        }
+
+        function showToast() {
+            let toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        function triggerToastAndOrder(event) {
+            showToast();
+        }
+
+        function toggleCurrencyMode() {
+            currentCurrency = currentCurrency === 'TL' ? 'USD' : 'TL';
+            document.getElementById("currencyModeLabel").textContent = currentCurrency === 'TL' ? 'TL (₺)' : 'USD ($)';
+            renderTable();
+        }
+
+        function toggleTheme() {
+            alert("Tema modu aktif!");
+        }
+
+        let activeCategoryFilter = 'TÜMÜ';
+        function filterByCategory(cat, btnElement) {
+            document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+            activeCategoryFilter = cat;
+            renderTable();
+        }
+
+        // CANLI KUR ÇEKME FONKSİYONU
+        async function fetchLiveExchangeRate() {
+            let statusSpan = document.getElementById("rateUpdateStatus");
+            statusSpan.textContent = "Kur güncelleniyor...";
+            try {
+                let response = await fetch('https://open.er-api.com/v6/latest/USD');
+                let data = await response.json();
+                if (data && data.rates && data.rates.TRY) {
+                    let liveRate = data.rates.TRY;
+                    document.getElementById("dollarRate").value = liveRate.toFixed(3);
+                    statusSpan.textContent = "Canlı Kur Aktif (" + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ")";
+                    renderTable();
+                } else {
+                    throw new Error("Kur verisi alınamadı");
+                }
+            } catch (error) {
+                console.error("Kur çekilemedi, manuel değere devam ediliyor:", error);
+                statusSpan.textContent = "Kur manuel modda";
+                renderTable();
+            }
+        }
+
+        function renderTable() {
+            let tbody = document.getElementById("tableBody");
+            tbody.innerHTML = "";
+
+            let adminCols = document.querySelectorAll(".admin-col");
+            adminCols.forEach(col => col.style.display = isAdmin ? "" : "none");
+
+            let currentCatName = "";
+
+            products.forEach((item, index) => {
+                if (item.category) {
+                    currentCatName = item.category;
+                    if (activeCategoryFilter === 'İPHONE' && !currentCatName.includes('İPHONE')) return;
+                    if (activeCategoryFilter === 'SAMSUNG' && !currentCatName.includes('SAMSUNG')) return;
+
+                    let tr = document.createElement("tr");
+                    tr.className = "category-row";
+                    tr.innerHTML = `<td colspan="${isAdmin ? 8 : 7}">${item.category}</td>`;
+                    tbody.appendChild(tr);
+                    return;
+                }
+
+                if (activeCategoryFilter === 'İPHONE' && !currentCatName.includes('İPHONE')) return;
+                if (activeCategoryFilter === 'SAMSUNG' && !currentCatName.includes('SAMSUNG')) return;
+                if (activeCategoryFilter === 'SON ÜRÜN' && !item.stock.includes('SON')) return;
+
+                let tr = document.createElement("tr");
+                tr.className = "product-row";
+                tr.onclick = function() { openModal(this, index); };
+
+                let regBadge = item.reg.includes("KAYITSIZ") || item.reg.includes("AİT") 
+                    ? `<span class="badge-orange">${item.reg}</span>` 
+                    : `<span class="badge-green">${item.reg}</span>`;
+
+                let stockBadge = item.stock.includes("SON") 
+                    ? `<span class="badge-pulse">${item.stock}</span>` 
+                    : `<span class="badge-green">${item.stock}</span>`;
+
+                let waLink = getWhatsAppOrderLink(item.model, item.storage, item.reg);
+                let orderBtnTd = `<td><a href="${waLink}" target="_blank" class="order-btn-table" onclick="triggerToastAndOrder(event); event.stopPropagation();">📲 Sipariş Ver</a></td>`;
+                let adminButtonTd = isAdmin ? `<td><button class="admin-btn-danger" onclick="deleteProduct(${index}); event.stopPropagation();">Sil</button></td>` : '';
+
+                let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
+                let priceText = currentCurrency === 'TL' 
+                    ? (item.usd * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺"
+                    : item.usd.toLocaleString() + " $";
+
+                tr.innerHTML = `
+                    <td style="font-weight:600;">${item.model}</td>
+                    <td>${item.storage}</td>
+                    <td>${regBadge}</td>
+                    <td><input type="number" class="usd-input" value="${item.usd}" ${isAdmin ? '' : 'readonly'} oninput="updateUsdPrice(${index}, this.value); event.stopPropagation();" onclick="event.stopPropagation()"></td>
+                    <td class="price-display">${priceText}</td>
+                    <td>${stockBadge}</td>
+                    ${orderBtnTd}
+                    ${adminButtonTd}
                 `;
-                list.appendChild(item);
+                tbody.appendChild(tr);
             });
         }
 
-        function deleteProduct(id) {
-            products = products.filter(p => p.id !== id);
-            localStorage.setItem('anubis_products', JSON.stringify(products));
-            renderProducts();
-            renderAdminList();
-            selectedProductsForCompare = selectedProductsForCompare.filter(item => item.id != id);
-            updateComparisonBar();
+        function toggleAdminPanel(show) {
+            document.getElementById("adminPanel").style.display = show ? "block" : "none";
+            isAdmin = show;
+            renderTable();
         }
 
-        function addNewProductPrompt() {
-            const name = prompt("Ürün adı:");
-            if(!name) return;
-            const category = prompt("Kategori (telefon / tablet / aksesuar):", "telefon");
-            const price = parseFloat(prompt("Fiyat (TL):", "50000"));
-            const epey_url = prompt("Epey Linki (Opsiyonel):", "https://www.epey.com/");
-            const image = prompt("Görsel URL (Unsplash vb.):", "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80");
+        function addNewProduct() {
+            let cat = document.getElementById("newCategory").value.trim();
+            let model = document.getElementById("newModel").value.trim();
+            let storage = document.getElementById("newStorage").value.trim();
+            let reg = document.getElementById("newReg").value.trim();
+            let usd = parseFloat(document.getElementById("newUsd").value);
+            let stock = document.getElementById("newStock").value.trim();
+            let desc = document.getElementById("newDesc").value.trim();
 
-            if(name && !isNaN(price)) {
-                const newP = {
-                    id: Date.now(),
-                    name,
-                    category: category || 'telefon',
-                    price,
-                    stock: 5,
-                    epey_url: epey_url || '',
-                    image: image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80'
-                };
-                products.push(newP);
-                localStorage.setItem('anubis_products', JSON.stringify(products));
-                renderProducts();
-                renderAdminList();
+            if (cat !== "") {
+                products.push({ category: cat });
+            } else if (model !== "") {
+                products.push({ model, storage, reg, usd: isNaN(usd)?0:usd, stock: stock||"HAZIR STOK", img: "", desc });
+            }
+            saveToStorage();
+            renderTable();
+        }
+
+        function deleteProduct(index) {
+            if (confirm("Silmek istediğinize emin misiniz?")) {
+                products.splice(index, 1);
+                saveToStorage();
+                renderTable();
             }
         }
 
-        window.onload = () => {
-            fetchExchangeRate();
-            renderProducts();
+        function updateUsdPrice(index, val) {
+            if (!isAdmin) return;
+            let parsed = parseFloat(val);
+            if (!isNaN(parsed)) {
+                products[index].usd = parsed;
+                saveToStorage();
+                renderTable();
+            }
+        }
+
+        function filterTable() {
+            let input = document.getElementById("searchInput").value.toUpperCase();
+            let tr = document.querySelectorAll("#priceTable tbody tr.product-row");
+            tr.forEach(row => {
+                let txt = row.textContent || row.innerText;
+                row.style.display = txt.toUpperCase().indexOf(input) > -1 ? "" : "none";
+            });
+        }
+
+        function openFaqModal() { document.getElementById("faqModal").style.display = "flex"; }
+        function closeFaqModal() { document.getElementById("faqModal").style.display = "none"; }
+
+        let activeProductIndex = null;
+        function openModal(row, index) {
+            activeProductIndex = index;
+            let item = products[index];
+            tempUploadedImage = item.img || "";
+
+            document.getElementById("modalTitle").textContent = item.model + " (" + item.storage + ")";
+            document.getElementById("mPrice").textContent = row.querySelector(".price-display").textContent;
+
+            document.getElementById("mModelText").textContent = item.model;
+            document.getElementById("mStorageText").textContent = item.storage;
+            document.getElementById("mRegText").textContent = item.reg;
+            document.getElementById("mUsdText").textContent = item.usd + " $";
+            document.getElementById("mStockText").textContent = item.stock;
+            document.getElementById("mDescText").textContent = item.desc || "Açıklama bulunmuyor.";
+
+            document.getElementById("modalOrderBtn").href = getWhatsAppOrderLink(item.model, item.storage, item.reg);
+
+            let viewElements = document.querySelectorAll(".view-mode");
+            let editElements = document.querySelectorAll(".edit-mode");
+
+            if (isAdmin) {
+                viewElements.forEach(el => el.style.display = "none");
+                editElements.forEach(el => el.style.display = "inline-block");
+                document.getElementById("adminUrlBox").style.display = "block";
+                document.getElementById("saveCardBtn").style.display = "block";
+            } else {
+                viewElements.forEach(el => el.style.display = "inline");
+                editElements.forEach(el => el.style.display = "none");
+                document.getElementById("adminUrlBox").style.display = "none";
+                document.getElementById("saveCardBtn").style.display = "none";
+            }
+
+            updateModalImageView();
+            document.getElementById("productModal").style.display = "flex";
+        }
+
+        function handleImageUpload(event) {
+            let file = event.target.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    tempUploadedImage = e.target.result;
+                    updateModalImageView();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function updateModalImageView() {
+            let modalImg = document.getElementById("modalImage");
+            let noImgView = document.getElementById("noImageView");
+            if (tempUploadedImage && tempUploadedImage.trim() !== "") {
+                modalImg.src = tempUploadedImage;
+                modalImg.style.display = "block";
+                noImgView.style.display = "none";
+            } else {
+                modalImg.style.display = "none";
+                noImgView.style.display = "block";
+            }
+        }
+
+        function saveCardChanges() {
+            if (!isAdmin || activeProductIndex === null) return;
+            let urlInputVal = document.getElementById("imageUrlInput").value.trim();
+            if (urlInputVal !== "") tempUploadedImage = urlInputVal;
+
+            products[activeProductIndex].img = tempUploadedImage;
+            saveToStorage();
+            renderTable();
+            closeModal();
+            alert("Güncellendi!");
+        }
+
+        function closeModal() {
+            document.getElementById("productModal").style.display = "none";
+            activeProductIndex = null;
+        }
+
+        window.onload = function() {
+            fetchLiveExchangeRate();
         };
     </script>
 </body>

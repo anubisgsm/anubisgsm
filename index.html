@@ -807,6 +807,40 @@
             localStorage.setItem("anubis_products", JSON.stringify(defaultProducts));
         }
 
+        // Bozuk veya içi boş/ürünü olmayan kategori kalıntılarını temizle
+        function cleanEmptyCategories() {
+            let cleaned = [];
+            let lastCategoryObj = null;
+            let hasProductUnderCurrentCat = false;
+
+            // Önce sondan geriye doğru veya geçici diziyle içinde ürün olan kategorileri süzelim
+            for (let i = 0; i < products.length; i++) {
+                let item = products[i];
+                if (!item) continue;
+
+                if (item.category) {
+                    // Eğer bir önceki kategoride hiç ürün yoksa, o önceki kategori nesnesini ekleme
+                    if (lastCategoryObj && !hasProductUnderCurrentCat) {
+                        cleaned.pop(); // Önceki kategori başlığını listeden çıkar
+                    }
+                    lastCategoryObj = item;
+                    hasProductUnderCurrentCat = false;
+                    cleaned.push(item);
+                } else if (item.model) {
+                    hasProductUnderCurrentCat = true;
+                    cleaned.push(item);
+                }
+            }
+            // En sondaki kategori için de kontrol
+            if (lastCategoryObj && !hasProductUnderCurrentCat) {
+                cleaned.pop();
+            }
+            products = cleaned;
+            localStorage.setItem("anubis_products", JSON.stringify(products));
+        }
+
+        cleanEmptyCategories();
+
         let isAdmin = false;
         let tempUploadedImage = "";
         let currentCurrency = 'TL';
@@ -831,6 +865,7 @@
         }
 
         function saveToStorage() {
+            cleanEmptyCategories();
             localStorage.setItem("anubis_products", JSON.stringify(products));
         }
 
@@ -896,17 +931,40 @@
             adminCols.forEach(col => col.style.display = isAdmin ? "" : "none");
 
             let currentCatName = "";
+            let categoryHasVisibleProducts = {};
+
+            // Önce hangi kategorilerde filtrelere uygun ürün var tespit edelim
+            let activeCatTracker = "";
+            products.forEach(item => {
+                if (!item) return;
+                if (item.category) {
+                    activeCatTracker = item.category;
+                    categoryHasVisibleProducts[activeCatTracker] = false;
+                } else if (item.model) {
+                    let matchesCategory = true;
+                    if (activeCategoryFilter === 'İPHONE' && !activeCatTracker.toUpperCase().includes('İPHONE')) matchesCategory = false;
+                    if (activeCategoryFilter === 'SAMSUNG' && !activeCatTracker.toUpperCase().includes('SAMSUNG')) matchesCategory = false;
+                    if (activeCategoryFilter === 'SON ÜRÜN' && (!item.stock || !item.stock.toUpperCase().includes('SON'))) matchesCategory = false;
+
+                    if (matchesCategory) {
+                        categoryHasVisibleProducts[activeCatTracker] = true;
+                    }
+                }
+            });
+
+            let printedCategories = {};
 
             products.forEach((item, index) => {
-                // Eğer veri bozuksa veya sadece boş kategori girdisiyse atla
                 if (!item) return;
 
                 if (item.category) {
                     currentCatName = item.category;
-                    return; // Kategorileri burada doğrudan basmıyoruz, ürün varsa başlığını göstereceğiz
+                    return;
                 }
 
-                // Ürün düzeyinde filtre kontrolleri
+                // Sadece modeli olan gerçek ürünleri işleme al
+                if (!item.model) return;
+
                 let matchesCategory = true;
                 if (activeCategoryFilter === 'İPHONE' && !currentCatName.toUpperCase().includes('İPHONE')) matchesCategory = false;
                 if (activeCategoryFilter === 'SAMSUNG' && !currentCatName.toUpperCase().includes('SAMSUNG')) matchesCategory = false;
@@ -914,15 +972,13 @@
 
                 if (!matchesCategory) return;
 
-                // Eğer bu kategori için henüz başlık basılmadıysa, ürün basılmadan önce kategori başlığını ekle
-                if (currentCatName && !tbody.dataset["cat_" + index]) {
-                    // Kontrol edelim: Bu kategoride listelenecek ürün var mı diye bakmaya gerek yok, başlığı atıyoruz
+                // Eğer bu kategori için başlık henüz basılmadıysa ve altında gösterilecek ürün varsa başlığı bas
+                if (currentCatName && !printedCategories[currentCatName] && categoryHasVisibleProducts[currentCatName]) {
                     let headerTr = document.createElement("tr");
                     headerTr.className = "category-row";
                     headerTr.innerHTML = `<td colspan="${isAdmin ? 8 : 7}">${currentCatName}</td>`;
                     tbody.appendChild(headerTr);
-                    // Aynı kategori başlığının üst üste binmesini önlemek için işaretle
-                    tbody.dataset["cat_" + index] = "true";
+                    printedCategories[currentCatName] = true;
                 }
 
                 let tr = document.createElement("tr");
@@ -950,7 +1006,7 @@
                     : usdVal.toLocaleString() + " $";
 
                 tr.innerHTML = `
-                    <td style="font-weight:600;">${item.model || "İsimsiz Model"}</td>
+                    <td style="font-weight:600;">${item.model}</td>
                     <td>${item.storage || "-"}</td>
                     <td>${regBadge}</td>
                     <td><input type="number" class="usd-input" value="${usdVal}" ${isAdmin ? '' : 'readonly'} oninput="updateUsdPrice(${index}, this.value); event.stopPropagation();" onclick="event.stopPropagation()"></td>
@@ -978,9 +1034,7 @@
             let stock = document.getElementById("newStock").value.trim();
             let desc = document.getElementById("newDesc").value.trim();
 
-            // Eğer hem kategori hem model doluysa veya sadece model girildiyse ürünü ekle
             if (model !== "") {
-                // Eğer yeni bir kategori ismi yazıldıysa önce kategori nesnesini ekle
                 if (cat !== "") {
                     products.push({ category: cat });
                 }
@@ -993,15 +1047,11 @@
                     img: "", 
                     desc: desc || "" 
                 });
-            } else if (cat !== "") {
-                // Sadece kategori adı girildiyse
-                products.push({ category: cat });
             } else {
                 alert("Lütfen en azından Model adını doldurun!");
                 return;
             }
 
-            // Inputları temizle
             document.getElementById("newCategory").value = "";
             document.getElementById("newModel").value = "";
             document.getElementById("newStorage").value = "";
@@ -1049,7 +1099,7 @@
         function openModal(row, index) {
             activeProductIndex = index;
             let item = products[index];
-            if (!item || item.category) return; // Kategori satırına tıklanırsa modal açma
+            if (!item || item.category) return;
 
             tempUploadedImage = item.img || "";
 
@@ -1123,7 +1173,7 @@
             if (urlInputVal !== "") tempUploadedImage = urlInputVal;
 
             products[activeProductIndex].model = document.getElementById("mModelInput").value;
-            products[activeProductIndex].storage = document.getElementById("mStorageInput").value;
+            products[activeProductIndex].storage = document.getElementById("mStorageInput5").value || document.getElementById("mStorageInput").value;
             products[activeProductIndex].reg = document.getElementById("mRegInput").value;
             products[activeProductIndex].usd = parseFloat(document.getElementById("mUsdInput").value) || 0;
             products[activeProductIndex].stock = document.getElementById("mStockInput").value;

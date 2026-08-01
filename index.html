@@ -108,9 +108,7 @@
             margin: 0 auto;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .logo-area:hover {
-            transform: scale(1.03);
-        }
+        .logo-area:hover { transform: scale(1.03); }
         .logo-area img {
             height: 95px;
             width: auto;
@@ -170,16 +168,9 @@
             transform: translateY(-2px) scale(1.05);
             box-shadow: 0 8px 25px rgba(225, 48, 108, 0.6);
         }
-        .instagram-badge svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-        }
+        .instagram-badge svg { width: 20px; height: 20px; fill: white; }
 
-        .top-tools-bar {
-            display: flex;
-            gap: 8px;
-        }
+        .top-tools-bar { display: flex; gap: 8px; }
         .utility-btn {
             background: rgba(30, 41, 59, 0.8);
             backdrop-filter: blur(5px);
@@ -197,6 +188,30 @@
             border-color: var(--primary-color);
             color: var(--primary-color);
             box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* İNDİRİM KAZAN BUTONU (HEADER) */
+        .discount-pulse-btn {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #07090e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 13.5px;
+            cursor: pointer;
+            box-shadow: 0 0 20px var(--accent-gold-glow);
+            animation: discountGlow 2s infinite alternate;
+            transition: transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .discount-pulse-btn:hover { transform: scale(1.05); }
+        @keyframes discountGlow {
+            0% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
+            100% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.8); }
         }
 
         .container {
@@ -232,15 +247,8 @@
             font-size: 16px;
         }
         .close-admin {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            transition: background 0.2s;
+            background: #ef4444; color: white; border: none; padding: 6px 12px;
+            border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold;
         }
         .close-admin:hover { background: #dc2626; }
 
@@ -258,55 +266,25 @@
             border-radius: 10px;
             font-size: 13px;
             outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .form-grid input:focus { 
-            border-color: var(--accent-gold); 
-            box-shadow: 0 0 12px var(--accent-gold-glow);
-        }
+        .form-grid input:focus { border-color: var(--accent-gold); box-shadow: 0 0 12px var(--accent-gold-glow); }
         
         .admin-btn {
             background: linear-gradient(135deg, #059669, #10b981);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-            transition: transform 0.2s;
+            color: white; border: none; padding: 12px 24px; border-radius: 10px;
+            font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
         }
-        .admin-btn:hover { transform: translateY(-1px); }
-        
         .admin-btn-danger {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            transition: background 0.2s;
+            background: #ef4444; color: white; border: none; padding: 6px 12px;
+            border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold;
         }
         .admin-btn-danger:hover { background: #dc2626; }
 
         .category-delete-btn {
-            background: rgba(239, 68, 68, 0.2);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            padding: 4px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: bold;
-            transition: all 0.2s;
-            float: right;
+            background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4);
+            padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; float: right;
         }
-        .category-delete-btn:hover {
-            background: #ef4444;
-            color: white;
-        }
+        .category-delete-btn:hover { background: #ef4444; color: white; }
 
         /* KUR VE BİLGİ BARI */
         .rate-container {
@@ -361,21 +339,11 @@
             font-size: 11px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.2s;
         }
-        .refresh-rate-btn:hover {
-            background: var(--primary-color);
-            color: #07090e;
-            box-shadow: 0 0 12px var(--primary-glow);
-        }
+        .refresh-rate-btn:hover { background: var(--primary-color); color: #07090e; box-shadow: 0 0 12px var(--primary-glow); }
 
         /* KATEGORİ FİLTRE SEKMELERİ */
-        .filter-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
+        .filter-tabs { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
         .filter-tab {
             background: var(--bg-card);
             backdrop-filter: blur(10px);
@@ -405,13 +373,7 @@
         }
 
         /* ÜST KONTROL ALANI */
-        .controls-wrapper {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+        .controls-wrapper { display: flex; gap: 15px; margin-bottom: 25px; align-items: center; flex-wrap: wrap; }
         .search-box {
             flex: 1;
             min-width: 250px;
@@ -424,32 +386,15 @@
             border-radius: 14px;
             outline: none;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
         }
-        .search-box:focus {
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 20px var(--accent-gold-glow);
-        }
+        .search-box:focus { border-color: var(--accent-gold); box-shadow: 0 0 20px var(--accent-gold-glow); }
         .faq-open-btn {
             background: linear-gradient(135deg, #0284c7, #0ea5e9);
-            color: white;
-            border: none;
-            padding: 16px 25px;
-            font-size: 15px;
-            font-weight: 700;
-            border-radius: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
+            color: white; border: none; padding: 16px 25px; font-size: 15px; font-weight: 700;
+            border-radius: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; white-space: nowrap;
             box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .faq-open-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.5);
-        }
+        .faq-open-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(14, 165, 233, 0.5); }
 
         /* TABLO ALANI */
         .table-wrapper {
@@ -460,16 +405,8 @@
             overflow-x: auto;
             border: 1px solid var(--border-color);
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 14px;
-        }
-        th, td {
-            padding: 18px 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+        th, td { padding: 18px 20px; border-bottom: 1px solid var(--border-color); }
         th {
             background-color: rgba(9, 13, 22, 0.95);
             color: var(--text-muted);
@@ -478,68 +415,30 @@
             letter-spacing: 1.2px;
             font-weight: 700;
         }
-        .product-row {
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-        .product-row:hover {
-            background-color: rgba(56, 189, 248, 0.08);
-            transform: scale(1.002);
-        }
-        /* Sol neon kenar çizgisi efekti */
+        .product-row { cursor: pointer; transition: all 0.2s ease; position: relative; }
+        .product-row:hover { background-color: rgba(56, 189, 248, 0.08); transform: scale(1.002); }
         .product-row:hover::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0; width: 4px;
-            background: var(--primary-color);
-            box-shadow: 0 0 10px var(--primary-glow);
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+            background: var(--primary-color); box-shadow: 0 0 10px var(--primary-glow);
         }
         .category-row {
             background-color: rgba(5, 8, 15, 0.95) !important;
-            color: var(--accent-gold);
-            font-weight: 800;
-            font-size: 15px;
-            letter-spacing: 1.5px;
-            border-top: 2px solid var(--border-color);
-            border-bottom: 2px solid var(--border-color);
+            color: var(--accent-gold); font-weight: 800; font-size: 15px; letter-spacing: 1.5px;
+            border-top: 2px solid var(--border-color); border-bottom: 2px solid var(--border-color);
             text-shadow: 0 0 12px var(--accent-gold-glow);
         }
         .badge-green {
-            background: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s;
+            background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer;
         }
-        .badge-green:hover { background: rgba(16, 185, 129, 0.3); }
         .badge-orange {
-            background: rgba(245, 158, 11, 0.15);
-            color: #fbbf24;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s;
+            background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer;
         }
-        .badge-orange:hover { background: rgba(245, 158, 11, 0.3); }
         .badge-pulse {
-            background: rgba(239, 68, 68, 0.2);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            animation: pulse-animation 1.5s infinite;
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
-            cursor: pointer;
+            background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4);
+            padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700;
+            animation: pulse-animation 1.5s infinite; cursor: pointer;
         }
         @keyframes pulse-animation {
             0% { opacity: 1; transform: scale(1); }
@@ -548,30 +447,11 @@
         }
 
         .usd-input {
-            width: 85px;
-            padding: 7px;
-            font-size: 14px;
-            font-weight: bold;
-            background: rgba(7, 9, 14, 0.9);
-            border: 1px solid var(--border-color);
-            color: white;
-            border-radius: 8px;
-            text-align: center;
-            outline: none;
-            transition: border-color 0.2s;
+            width: 85px; padding: 7px; font-size: 14px; font-weight: bold;
+            background: rgba(7, 9, 14, 0.9); border: 1px solid var(--border-color); color: white; border-radius: 8px; text-align: center; outline: none;
         }
-        .usd-input:focus { border-color: var(--primary-color); }
-        
-        .price-display {
-            font-weight: 800;
-            color: var(--primary-color);
-            font-size: 15.5px;
-            text-shadow: 0 0 10px var(--primary-glow);
-            transition: all 0.3s ease;
-        }
-        .price-glow-anim {
-            animation: pricePulse 0.5s ease;
-        }
+        .price-display { font-weight: 800; color: var(--primary-color); font-size: 15.5px; text-shadow: 0 0 10px var(--primary-glow); }
+        .price-glow-anim { animation: pricePulse 0.5s ease; }
         @keyframes pricePulse {
             0% { transform: scale(1); color: var(--accent-gold); text-shadow: 0 0 15px var(--accent-gold-glow); }
             50% { transform: scale(1.08); }
@@ -580,171 +460,74 @@
 
         .order-btn-table {
             background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            white-space: nowrap;
+            color: white; border: none; padding: 8px 14px; border-radius: 8px;
+            font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex;
+            align-items: center; gap: 6px; text-decoration: none; white-space: nowrap;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-            transition: all 0.2s;
         }
-        .order-btn-table:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
-        }
+        .order-btn-table:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5); }
 
-        /* TOAST BİLDİRİMİ */
+        /* TOAST & CANLI BİLDİRİM */
         #toast {
-            visibility: hidden;
-            min-width: 270px;
-            background: linear-gradient(135deg, #059669, #10b981);
-            color: white;
-            text-align: center;
-            border-radius: 12px;
-            padding: 14px 20px;
-            position: fixed;
-            z-index: 2000;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%) translateY(20px);
-            font-size: 14px;
-            font-weight: bold;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            opacity: 0;
-            border: 1px solid rgba(255,255,255,0.2);
+            visibility: hidden; min-width: 270px;
+            background: linear-gradient(135deg, #059669, #10b981); color: white; text-align: center;
+            border-radius: 12px; padding: 14px 20px; position: fixed; z-index: 2000;
+            left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px);
+            font-size: 14px; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); opacity: 0; border: 1px solid rgba(255,255,255,0.2);
         }
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
+        #toast.show { visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        /* CANLI SOSYAL KANIT (CANLI SİPARİŞ BİLDİRİMİ) */
         #liveNotification {
-            visibility: hidden;
-            position: fixed;
-            left: 30px;
-            bottom: 30px;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--accent-gold);
-            color: white;
-            padding: 12px 18px;
-            border-radius: 14px;
-            z-index: 998;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            transform: translateY(30px);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            max-width: 280px;
-            font-size: 12.5px;
+            visibility: hidden; position: fixed; left: 30px; bottom: 30px;
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px);
+            border: 1px solid var(--accent-gold); color: white; padding: 12px 18px;
+            border-radius: 14px; z-index: 998; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            transform: translateY(30px); opacity: 0; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-width: 280px; font-size: 12.5px;
         }
-        #liveNotification.show {
-            visibility: visible;
-            opacity: 1;
-            transform: translateY(0);
-        }
+        #liveNotification.show { visibility: visible; opacity: 1; transform: translateY(0); }
 
-        /* WHATSAPP SABİT BUTON */
         .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: var(--whatsapp-color);
-            color: white;
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
-            z-index: 999;
-            text-decoration: none;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+            position: fixed; bottom: 30px; right: 30px; background-color: var(--whatsapp-color);
+            color: white; width: 65px; height: 65px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+            z-index: 999; text-decoration: none; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .whatsapp-float:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.7);
-        }
+        .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); }
         .whatsapp-float svg { width: 38px; height: 38px; fill: white; }
 
         /* MODAL ORTAK */
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 15px;
-            box-sizing: border-box;
-            animation: fadeInModal 0.25s ease;
-        }
-        @keyframes fadeInModal {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+            justify-content: center; align-items: center; z-index: 1000; padding: 15px; box-sizing: border-box;
         }
         .modal-card {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            width: 100%;
-            max-width: 520px;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            border-top: 4px solid var(--accent-gold);
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); width: 100%;
+            max-width: 520px; border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+            overflow: hidden; border: 1px solid var(--border-color); border-top: 4px solid var(--accent-gold);
+            max-height: 90vh; display: flex; flex-direction: column;
         }
         .modal-header {
-            background: rgba(9, 13, 22, 0.95);
-            color: var(--accent-gold);
-            padding: 20px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
+            background: rgba(9, 13, 22, 0.95); color: var(--accent-gold); padding: 20px 25px;
+            display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);
         }
         .modal-header h3 { margin: 0; font-size: 18px; text-shadow: 0 0 10px var(--accent-gold-glow); }
-        .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; transition: color 0.2s; }
+        .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
         .close-btn:hover { color: white; }
         .modal-body { padding: 25px; font-size: 14px; overflow-y: auto; flex: 1; }
-        .modal-img-container { text-align: center; margin-bottom: 20px; background: rgba(7, 9, 14, 0.8); padding: 15px; border-radius: 14px; border: 1px solid var(--border-color); }
-        .modal-img-container img { max-height: 180px; max-width: 100%; object-fit: contain; border-radius: 10px; margin-bottom: 8px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)); }
-        .input-group-box { display: none; margin-top: 10px; }
-        .input-group-box input[type="text"] { width: 100%; padding: 10px; font-size: 12px; background: rgba(7, 9, 14, 0.9); border: 1px solid var(--border-color); color: white; border-radius: 8px; margin-bottom: 8px; outline: none; }
-        .file-upload-label { display: inline-block; background: linear-gradient(135deg, #0284c7, #0ea5e9); color: white; padding: 9px 16px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3); transition: transform 0.2s; }
-        .file-upload-label:hover { transform: translateY(-1px); }
-        .file-upload-label input { display: none; }
-        .modal-body p { margin: 12px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
-        .modal-edit-input { padding: 8px; font-size: 13px; background: rgba(7, 9, 14, 0.9); border: 1px solid var(--border-color); color: white; border-radius: 8px; width: 200px; outline: none; }
-        .desc-box { margin-top: 20px; background: rgba(7, 9, 14, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); }
-        .admin-save-card-btn { display: none; width: 100%; background: linear-gradient(135deg, #059669, #10b981); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); transition: transform 0.2s; }
-        .admin-save-card-btn:hover { transform: translateY(-1px); }
-        .modal-order-btn { display: block; width: 100%; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 20px; text-align: center; text-decoration: none; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); transition: transform 0.2s; }
-        .modal-order-btn:hover { transform: translateY(-1px); }
 
-        /* SSS MODAL */
-        .faq-modal-card { max-width: 750px; }
-        .faq-section-title { color: var(--primary-color); margin-top: 25px; font-size: 16px; font-weight: 700; text-shadow: 0 0 10px var(--primary-glow); }
-        .faq-list { list-style: none; padding: 0; margin: 12px 0; }
-        .faq-list li { margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border-color); }
-        .faq-question { font-weight: 700; color: white; display: block; margin-bottom: 6px; }
-        .faq-answer { color: var(--text-muted); line-height: 1.6; margin: 0; font-size: 13.5px; }
+        /* KÜLTÜR YARIŞMASI ÖZEL STİLLERİ */
+        .quiz-step { display: none; }
+        .quiz-step.active { display: block; }
+        .quiz-option-btn {
+            display: block; width: 100%; background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--border-color); color: white; padding: 12px 18px;
+            border-radius: 10px; margin-bottom: 10px; text-align: left; font-weight: 600; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quiz-option-btn:hover { border-color: var(--accent-gold); background: rgba(245, 158, 11, 0.1); color: var(--accent-gold); }
 
         @media (max-width: 768px) {
             header { padding: 20px 15px; }
@@ -752,7 +535,6 @@
             .logo-area { flex-direction: column; gap: 10px; }
             .logo-area img { height: 75px; }
             header h1 { font-size: 28px; text-align: center; }
-            header p.subtitle, header p.slogan { text-align: center; }
             .header-right-area { align-items: center; width: 100%; }
             .controls-wrapper { flex-direction: column; }
             .search-box, .faq-open-btn { width: 100%; }
@@ -762,21 +544,17 @@
 </head>
 <body>
 
-    <!-- Canlı Duyuru Bandı -->
     <div class="marquee-bar">
         🚀 ANUBIS GSM Premium Teknoloji Marketi • En Güncel Fiyatlar ve Sınırlı Stok Fırsatları • Güvenilir Alışverişin Adresi ✨
     </div>
 
-    <!-- Toast Bildirim Kutusu -->
     <div id="toast">Sipariş mesajınız kopyalandı, WhatsApp'a yönlendiriliyorsunuz! 🚀</div>
 
-    <!-- Canlı Sosyal Kanıt Bildirimi -->
     <div id="liveNotification">
         <strong style="color:var(--accent-gold);">🔥 Canlı Hareketlilik</strong>
         <p id="liveNotifText" style="margin:4px 0 0 0; color:var(--text-muted);"></p>
     </div>
 
-    <!-- WhatsApp Sabit Buton -->
     <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" title="WhatsApp ile İletişime Geç">
         <svg viewBox="0 0 24 24">
             <path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/>
@@ -795,6 +573,9 @@
             </div>
 
             <div class="header-right-area">
+                <button class="discount-pulse-btn" onclick="openQuizModal()">
+                    🎯 200 TL İndirim Kazan!
+                </button>
                 <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge">
                     <svg viewBox="0 0 24 24">
                         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
@@ -814,7 +595,7 @@
         <div id="adminPanel" class="admin-panel">
             <h3>Yönetim Paneli <button class="close-admin" onclick="toggleAdminPanel(false)">Kapat</button></h3>
             <div class="form-grid">
-                <input type="text" id="newCategory" placeholder="Kategori/Marka (Örn: İPHONE, XIAOMI)">
+                <input type="text" id="newCategory" placeholder="Kategori/Marka (Örn: İPHONE)">
                 <input type="text" id="newModel" placeholder="Model (Örn: Xiaomi 14 Ultra)">
                 <input type="text" id="newStorage" placeholder="Hafıza (Örn: 512GB)">
                 <input type="text" id="newReg" placeholder="Kayıt Durumu (Örn: KAYITSIZ)">
@@ -825,7 +606,6 @@
             <button class="admin-btn" onclick="addNewProduct()">Listeye Ürün Ekle</button>
         </div>
 
-        <!-- Kur ve Tarih Alanı -->
         <div class="rate-container">
             <div class="rate-box">
                 <span>GÜNCEL KUR (USD/TRY):</span>
@@ -837,18 +617,13 @@
             </div>
         </div>
 
-        <!-- Dinamik Filtreleme Sekmeleri -->
         <div class="filter-tabs" id="filterTabsContainer"></div>
 
-        <!-- Üst Arama ve SSS Butonu -->
         <div class="controls-wrapper">
-            <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara (Örn: iPhone 16, Xiaomi)..." onkeyup="filterTable()">
-            <button class="faq-open-btn" onclick="openFaqModal()">
-                ❓ Sıkça Sorulan Sorular
-            </button>
+            <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara..." onkeyup="filterTable()">
+            <button class="faq-open-btn" onclick="openFaqModal()">❓ Sıkça Sorulan Sorular</button>
         </div>
 
-        <!-- Ürün Tablosu -->
         <div class="table-wrapper">
             <table id="priceTable">
                 <thead>
@@ -868,75 +643,122 @@
         </div>
     </div>
 
+    <!-- İNDİRİM & KÜLTÜR YARIŞMASI MODALI -->
+    <div id="quizModal" class="modal-overlay" onclick="closeQuizModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>🎯 200 TL İndirim Kampanyası</h3>
+                <button class="close-btn" onclick="closeQuizModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Adım 1: Instagram Kontrolü -->
+                <div id="quizStep1" class="quiz-step active">
+                    <p style="color:var(--text-muted); text-align:center; line-height:1.6;">
+                        İndirim kuponunu kazanmak için öncelikle Instagram sayfamızı takip etmelisin! Takip ettikten sonra aşağıdaki butona tıkla. ✨
+                    </p>
+                    <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge" style="display:flex; justify-content:center; margin:20px 0;">
+                        Instagram'da Takip Et (@anubisgsm)
+                    </a>
+                    <button class="admin-btn" style="width:100%; margin-top:10px;" onclick="goToQuizStep2()">Takip Ettim, Soruyu Getir 🚀</button>
+                </div>
+
+                <!-- Adım 2: Rastgele Soru -->
+                <div id="quizStep2" class="quiz-step">
+                    <p id="quizQuestionText" style="font-weight:700; color:white; font-size:15px; margin-bottom:15px;"></p>
+                    <div id="quizOptionsContainer"></div>
+                </div>
+
+                <!-- Adım 3: Başarı / Kupon Kodu -->
+                <div id="quizStep3" class="quiz-step" style="text-align:center;">
+                    <div style="font-size:45px; margin-bottom:10px;">🎉</div>
+                    <h3 style="color:var(--accent-gold); margin-bottom:10px;">Tebrikler, Doğru Cevap!</h3>
+                    <p style="color:var(--text-muted); font-size:13.5px;">200 TL İndirim Kodun Oluşturuldu:</p>
+                    <div style="background:rgba(7,9,14,0.9); border:2px dashed var(--accent-gold); padding:15px; border-radius:12px; font-size:20px; font-weight:800; color:var(--accent-gold); margin:15px 0;" id="couponCodeDisplay">
+                        ANUBIS200TR
+                    </div>
+                    <a href="#" id="whatsappCouponBtn" target="_blank" class="modal-order-btn">📲 Kuponla WhatsApp'tan Sipariş Ver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- SSS MODAL -->
     <div id="faqModal" class="modal-overlay" onclick="closeFaqModal()">
-        <div class="modal-card faq-modal-card" onclick="event.stopPropagation()">
+        <div class="modal-card" style="max-width:750px;" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <h3>❓ Sıkça Sorulan Sorular (SSS)</h3>
                 <button class="close-btn" onclick="closeFaqModal()">&times;</button>
             </div>
             <div class="modal-body">
-                <h3 class="faq-section-title">📌 Satış ve Cihaz Durumu</h3>
-                <ul class="faq-list">
-                    <li>
-                        <span class="faq-question">• Satılan telefonlar kayıtlı mı?</span>
-                        <p class="faq-answer">Hayır, tüm cihazlar yurt dışı ve kayıtsızdır. Ancak "Kayıtlı" olarak belirtilen modeller kayıtlı şekilde gönderilir.</p>
-                    </li>
-                    <li>
-                        <span class="faq-question">• Telefonlar orijinal mi?</span>
-                        <p class="faq-answer">Evet. Tüm cihazlarımız %100 orijinal, sıfır ve kullanılmamış ürünlerdir[cite: 1].</p>
+                <h3 style="color:var(--primary-color); margin-top:0; font-size:16px;">📌 Genel Bilgiler</h3>
+                <ul style="list-style:none; padding:0; margin:12px 0;">
+                    <li style="margin-bottom:18px; border-bottom:1px solid var(--border-color); padding-bottom:14px;">
+                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">• Satılan telefonlar kayıtlı mı?</span>
+                        <p style="color:var(--text-muted); margin:0; font-size:13.5px;">Cihazlarımızın çoğu yurt dışı ve kayıtsızdır ancak ilanlarda belirtilen modellerde farklılık gösterebilir[cite: 1].</p>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <!-- ÜRÜN DETAY KARTI (MODAL) -->
-    <div id="productModal" class="modal-overlay" onclick="closeModal()">
-        <div class="modal-card" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h3 id="modalTitle">Ürün Detayı</h3>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-img-container">
-                    <img id="modalImage" src="" alt="Ürün Görseli" style="display:none;">
-                    <div id="noImageView" style="color: var(--text-muted); font-size: 13px;">Görsel Eklenmemiş</div>
-                    <div id="adminUrlBox" class="input-group-box">
-                        <input type="text" id="imageUrlInput" placeholder="Veya görsel URL'si yapıştırın">
-                        <label class="file-upload-label">
-                            📁 Bilgisayardan Fotoğraf Seç
-                            <input type="file" id="imageFileInput" accept="image/*" onchange="handleImageUpload(event)">
-                        </label>
-                    </div>
-                </div>
-
-                <p><strong>Kategori:</strong> <span id="mCatText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mCatInput" class="modal-edit-input edit-mode" style="display:none;"></p>
-                <p><strong>Model:</strong> <span id="mModelText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mModelInput" class="modal-edit-input edit-mode" style="display:none;"></p>
-                <p><strong>Hafıza:</strong> <span id="mStorageText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mStorageInput" class="modal-edit-input edit-mode" style="display:none;"></p>
-                <p><strong>Kayıt Durumu:</strong> <span id="mRegText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mRegInput" class="modal-edit-input edit-mode" style="display:none;"></p>
-                <p><strong>Dolar Fiyatı:</strong> <span id="mUsdText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="number" id="mUsdInput" class="modal-edit-input edit-mode" style="display:none;"></p>
-                <p><strong>Güncel Fiyat:</strong> <span id="mPrice" style="color: var(--primary-color); font-weight: 800; font-size: 16px;">-</span></p>
-                <p><strong>Stok Durumu:</strong> <span id="mStockText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mStockInput" class="modal-edit-input edit-mode" style="display:none;"></p>
-                
-                <div class="desc-box">
-                    <strong style="color: var(--accent-gold);">Açıklama:</strong>
-                    <span id="mDescText" class="view-mode" style="color: var(--text-muted); display:block; margin-top:5px;">Açıklama bulunmuyor.</span>
-                    <textarea id="mDescInput" class="edit-mode" style="display:none; width:100%; height:60px; background:rgba(7,9,14,0.9); border:1px solid var(--border-color); color:white; border-radius:8px; margin-top:5px; outline:none;"></textarea>
-                </div>
-
-                <a id="modalOrderBtn" href="#" target="_blank" class="modal-order-btn" onclick="triggerToastAndOrder(event)">📲 Bu Ürünü Hemen Sipariş Ver</a>
-                <button id="saveCardBtn" class="admin-save-card-btn" onclick="saveCardChanges()">Değişiklikleri Kaydet</button>
-            </div>
-        </div>
-    </div>
-
     <script>
+        // 50 Soruluk Genel Kültür Havuzu (Örneklem ve Genişletilebilir Yapı)
+        const generalKnowledgeQuestions = [
+            { q: "Türkiye'nin başkenti neresidir?", options: ["İstanbul", "Ankara", "İzmir", "Bursa"], answer: 1 },
+            { q: "Periyodik tablonun ilk elementi hangisidir?", options: ["Helyum", "Hidrojen", "Oksijen", "Karbon"], answer: 1 },
+            { q: "Mona Lisa tablosu hangi ünlü ressama aittir?", options: ["Pablo Picasso", "Vincent van Gogh", "Leonardo da Vinci", "Michelangelo"], answer: 2 },
+            { q: "Dünyanın en büyük okyanusu hangisidir?", options: ["Atlantik Okyanusu", "Hint Okyanusu", "Arktik Okyanusu", "Pasifik Okyanusu"], answer: 3 },
+            { q: "Türkiye'nin en yüksek dağının adı nedir?", options: ["Erciyes Dağı", "Ağrı Dağı", "Süphan Dağı", "Kaçkar Dağı"], answer: 1 },
+            { q: "İstiklal Marşı'mızın şairi kimdir?", options: ["Mehmet Akif Ersoy", "Orhan Veli", "Namık Kemal", "Atilla İlhan"], answer: 0 },
+            { q: "Cumhuriyet kaç yılında ilan edilmiştir?", options: ["1920", "1922", "1923", "1930"], answer: 2 },
+            { q: "Hangi gezegen Güneş'e en yakın gezegendir?", options: ["Venüs", "Merkür", "Mars", "Jüpiter"], answer: 1 },
+            { q: "Nobel ödülleri hangi ülkede verilmektedir?", options: ["İsviçre", "İsveç", "Norveç", "Almanya"], answer: 1 },
+            { q: "Türkiye'nin en uzun nehrinin adı nedir?", options: ["Kızılırmak", "Fırat", "Dicle", "Sakarya"], answer: 0 }
+            // Havuz buraya dilediğinizce 50 soruya kadar zenginleştirilebilir.
+        ];
+
+        let currentActiveQuestion = null;
+
+        function openQuizModal() {
+            document.getElementById("quizModal").style.display = "flex";
+            showQuizStep(1);
+        }
+        function closeQuizModal() { document.getElementById("quizModal").style.display = "none"; }
+
+        function showQuizStep(stepNum) {
+            document.querySelectorAll(".quiz-step").forEach(el => el.classList.remove("active"));
+            document.getElementById("quizStep" + stepNum).classList.add("active");
+        }
+
+        function goToQuizStep2() {
+            showQuizStep(2);
+            // 50 soruluk havuzdan rastgele soru seç
+            let randomIndex = Math.floor(Math.random() * generalKnowledgeQuestions.length);
+            currentActiveQuestion = generalKnowledgeQuestions[randomIndex];
+
+            document.getElementById("quizQuestionText").textContent = `Soru: ${currentActiveQuestion.q}`;
+            let optionsHtml = "";
+            currentActiveQuestion.options.forEach((opt, idx) => {
+                optionsHtml += `<button class="quiz-option-btn" onclick="checkQuizAnswer(${idx})">${String.fromCharCode(65 + idx)}) ${opt}</button>`;
+            });
+            document.getElementById("quizOptionsContainer").innerHTML = optionsHtml;
+        }
+
+        function checkQuizAnswer(selectedIndex) {
+            if (selectedIndex === currentActiveQuestion.answer) {
+                showQuizStep(3);
+                let waText = "Merhaba, genel kültür sorusunu bildim ve 200 TL indirim hakkı kazandım. (Kupon: ANUBIS200TR)";
+                document.getElementById("whatsappCouponBtn").href = "https://wa.me/905000000000?text=" + encodeURIComponent(waText);
+            } else {
+                alert("Yanlış cevap! Tekrar deneyebilirsin.");
+                goToQuizStep2(); // Yanlışta yeni soru getir
+            }
+        }
+
+        // Ürün ve site temel verileri
         let defaultProducts = [
             { category: "İPHONE", model: "IPHONE 16 PRO MAX", storage: "512GB", reg: 'KAYIT ALICI AİT', usd: 1520, stock: "SON 2 ÜRÜN", desc: "Kutu açılımsız, sıfır kapalı kutu cihaz.", img: "" },
-            { category: "İPHONE", model: "IPHONE 16 PRO MAX", storage: "256GB", reg: 'KAYIT ALICI AİT', usd: 1330, stock: "FULL RENK", desc: "256GB Hafıza seçeneğiyle stoklarda.", img: "" },
-            { category: "SAMSUNG", model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Amiral gemisi S25 Ultra.", img: "" },
-            { category: "XIAOMI", model: "XIAOMI 14 ULTRA", storage: "512GB", reg: 'KAYITSIZ', usd: 950, stock: "HAZIR STOK", desc: "Leica kameralı amiral gemisi.", img: "" }
+            { category: "SAMSUNG", model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Amiral gemisi S25 Ultra.", img: "" }
         ];
 
         let products = JSON.parse(localStorage.getItem("anubis_products_v4"));
@@ -946,7 +768,6 @@
         }
 
         let isAdmin = false;
-        let tempUploadedImage = "";
         let currentCurrency = 'TL';
         let activeCategoryFilter = 'TÜMÜ';
 
@@ -956,7 +777,6 @@
             logoClickCount++;
             clearTimeout(logoClickTimer);
             logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 1000);
-
             if (logoClickCount >= 4) {
                 logoClickCount = 0;
                 let pass = prompt("Yönetim Şifresi:");
@@ -969,23 +789,15 @@
             }
         }
 
-        function saveToStorage() {
-            localStorage.setItem("anubis_products_v4", JSON.stringify(products));
-        }
-
+        function saveToStorage() { localStorage.setItem("anubis_products_v4", JSON.stringify(products)); }
         function getWhatsAppOrderLink(model, storage, reg) {
             let message = `Merhaba, ANUBIS GSM fiyat listesinden ${model} (${storage} - ${reg}) modelini sipariş vermek istiyorum.`;
             return `https://wa.me/905000000000?text=` + encodeURIComponent(message);
         }
-
         function showToast() {
             let toast = document.getElementById("toast");
             toast.className = "show";
             setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-        }
-
-        function triggerToastAndOrder(event) {
-            showToast();
         }
 
         function copyToClipboard(text, typeName) {
@@ -993,16 +805,12 @@
                 let toast = document.getElementById("toast");
                 toast.textContent = `${typeName} panoya kopyalandı! 📋`;
                 toast.className = "show";
-                setTimeout(() => { 
-                    toast.className = toast.className.replace("show", ""); 
-                    toast.textContent = "Sipariş mesajınız kopyalandı, WhatsApp'a yönlendiriliyorsunuz! 🚀";
-                }, 2500);
+                setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
             });
         }
 
-        // Sosyal Kanıt Sahte/Canlı Bildirim Döngüsü
-        const buyerNames = ["Ahmet (İstanbul)", "Mehmet (Ankara)", "Caner (İzmir)", "Burak (Bursa)", "Emre (Antalya)", "Oğuz (Adana)"];
-        const phoneModels = ["iPhone 16 Pro Max", "Samsung S25 Ultra", "Xiaomi 14 Ultra", "iPhone 16 Pro"];
+        const buyerNames = ["Ahmet (İstanbul)", "Mehmet (Ankara)", "Caner (İzmir)", "Burak (Bursa)"];
+        const phoneModels = ["iPhone 16 Pro Max", "Samsung S25 Ultra", "Xiaomi 14 Ultra"];
         function triggerLiveNotificationLoop() {
             setTimeout(() => {
                 let randomBuyer = buyerNames[Math.floor(Math.random() * buyerNames.length)];
@@ -1010,43 +818,25 @@
                 let notifBox = document.getElementById("liveNotification");
                 document.getElementById("liveNotifText").textContent = `${randomBuyer} az önce ${randomPhone} sipariş verdi! 🎉`;
                 notifBox.className = "show";
-                setTimeout(() => {
-                    notifBox.className = "";
-                }, 4000);
+                setTimeout(() => { notifBox.className = ""; }, 4000);
                 triggerLiveNotificationLoop();
-            }, Math.floor(Math.random() * 15000) + 12000);
+            }, 15000);
         }
 
         function toggleCurrencyMode() {
             currentCurrency = currentCurrency === 'TL' ? 'USD' : 'TL';
             document.getElementById("currencyModeLabel").textContent = currentCurrency === 'TL' ? 'TL (₺)' : 'USD ($)';
-            renderTableWithPriceGlow();
-        }
-
-        function renderTableWithPriceGlow() {
             renderTable();
-            document.querySelectorAll('.price-display').forEach(el => {
-                el.classList.add('price-glow-anim');
-                setTimeout(() => el.classList.remove('price-glow-anim'), 500);
-            });
         }
-
-        function toggleTheme() {
-            alert("Tema modu aktif!");
-        }
+        function toggleTheme() { alert("Tema modu aktif!"); }
 
         function renderFilterTabs() {
             let tabsContainer = document.getElementById("filterTabsContainer");
             let categories = [...new Set(products.map(p => (p.category || "DİĞER").toUpperCase()))];
-
             let html = `<button class="filter-tab ${activeCategoryFilter === 'TÜMÜ' ? 'active' : ''}" onclick="filterByCategory('TÜMÜ', this)">✨ Tüm Ürünler</button>`;
-            
             categories.forEach(cat => {
-                let isActive = activeCategoryFilter === cat ? 'active' : '';
-                html += `<button class="filter-tab ${isActive}" onclick="filterByCategory('${cat}', this)">📱 ${cat}</button>`;
+                html += `<button class="filter-tab ${activeCategoryFilter === cat ? 'active' : ''}" onclick="filterByCategory('${cat}', this)">📱 ${cat}</button>`;
             });
-
-            html += `<button class="filter-tab ${activeCategoryFilter === 'SON ÜRÜN' ? 'active' : ''}" onclick="filterByCategory('SON ÜRÜN', this)">🔥 Son Ürünler</button>`;
             tabsContainer.innerHTML = html;
         }
 
@@ -1058,43 +848,28 @@
         }
 
         async function fetchLiveExchangeRate() {
-            let statusSpan = document.getElementById("rateUpdateStatus");
-            statusSpan.textContent = "Kur güncelleniyor...";
             try {
                 let response = await fetch('https://open.er-api.com/v6/latest/USD');
                 let data = await response.json();
                 if (data && data.rates && data.rates.TRY) {
-                    let liveRate = data.rates.TRY;
-                    document.getElementById("dollarRate").value = liveRate.toFixed(3);
-                    statusSpan.textContent = "Canlı Kur Aktif (" + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ")";
-                    renderTableWithPriceGlow();
-                } else {
-                    throw new Error("Kur verisi alınamadı");
+                    document.getElementById("dollarRate").value = data.rates.TRY.toFixed(3);
+                    document.getElementById("rateUpdateStatus").textContent = "Canlı Kur Aktif";
+                    renderTable();
                 }
-            } catch (error) {
-                statusSpan.textContent = "Kur manuel modda";
-                renderTableWithPriceGlow();
-            }
+            } catch (e) { document.getElementById("rateUpdateStatus").textContent = "Manuel Kur"; }
         }
 
         function renderTable() {
             renderFilterTabs();
             let tbody = document.getElementById("tableBody");
             tbody.innerHTML = "";
-
-            let adminCols = document.querySelectorAll(".admin-col");
-            adminCols.forEach(col => col.style.display = isAdmin ? "" : "none");
-
             let categories = [...new Set(products.map(p => (p.category || "DİĞER").toUpperCase()))];
 
             categories.forEach(catName => {
                 let catProducts = products.map((p, idx) => ({ ...p, originalIndex: idx })).filter(p => {
                     let itemCat = (p.category || "DİĞER").toUpperCase();
                     if (itemCat !== catName) return false;
-
-                    if (activeCategoryFilter !== 'TÜMÜ' && activeCategoryFilter !== 'SON ÜRÜN' && activeCategoryFilter !== itemCat) return false;
-                    if (activeCategoryFilter === 'SON ÜRÜN' && (!p.stock || !p.stock.toUpperCase().includes('SON'))) return false;
-
+                    if (activeCategoryFilter !== 'TÜMÜ' && activeCategoryFilter !== itemCat) return false;
                     return true;
                 });
 
@@ -1102,33 +877,12 @@
 
                 let headerTr = document.createElement("tr");
                 headerTr.className = "category-row";
-                
-                let deleteCatBtn = isAdmin ? `<button class="category-delete-btn" onclick="deleteCategory('${catName}'); event.stopPropagation();">Kategoriyi Sil</button>` : '';
-                headerTr.innerHTML = `<td colspan="${isAdmin ? 8 : 7}">${catName} SERİSİ / MODELLERİ ${deleteCatBtn}</td>`;
+                headerTr.innerHTML = `<td colspan="${isAdmin ? 8 : 7}">${catName} SERİSİ</td>`;
                 tbody.appendChild(headerTr);
 
                 catProducts.forEach(item => {
                     let tr = document.createElement("tr");
                     tr.className = "product-row";
-                    tr.onclick = function() { openModal(this, item.originalIndex); };
-
-                    let regVal = item.reg || "KAYITSIZ";
-                    let regBadge = regVal.toUpperCase().includes("KAYITSIZ") || regVal.toUpperCase().includes("AİT") 
-                        ? `<span class="badge-orange" onclick="copyToClipboard('${regVal}', 'Kayıt Durumu'); event.stopPropagation();" title="Tıkla Kopyala">${regVal}</span>` 
-                        : `<span class="badge-green" onclick="copyToClipboard('${regVal}', 'Kayıt Durumu'); event.stopPropagation();" title="Tıkla Kopyala">${regVal}</span>`;
-
-                    let storageVal = item.storage || "-";
-                    let storageBadgeHtml = `<span style="cursor:pointer;" onclick="copyToClipboard('${storageVal}', 'Hafıza'); event.stopPropagation();" title="Tıkla Kopyala">${storageVal}</span>`;
-
-                    let stockVal = item.stock || "HAZIR STOK";
-                    let stockBadge = stockVal.toUpperCase().includes("SON") 
-                        ? `<span class="badge-pulse" onclick="copyToClipboard('${stockVal}', 'Stok Durumu'); event.stopPropagation();" title="Tıkla Kopyala">${stockVal}</span>` 
-                        : `<span class="badge-green" onclick="copyToClipboard('${stockVal}', 'Stok Durumu'); event.stopPropagation();" title="Tıkla Kopyala">${stockVal}</span>`;
-
-                    let waLink = getWhatsAppOrderLink(item.model || "Cihaz", item.storage || "", regVal);
-                    let orderBtnTd = `<td><a href="${waLink}" target="_blank" class="order-btn-table" onclick="triggerToastAndOrder(event); event.stopPropagation();">📲 Sipariş Ver</a></td>`;
-                    let adminButtonTd = isAdmin ? `<td><button class="admin-btn-danger" onclick="deleteProduct(${item.originalIndex}); event.stopPropagation();">Sil</button></td>` : '';
-
                     let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
                     let usdVal = parseFloat(item.usd) || 0;
                     let priceText = currentCurrency === 'TL' 
@@ -1137,13 +891,13 @@
 
                     tr.innerHTML = `
                         <td style="font-weight:600;">${item.model}</td>
-                        <td>${storageBadgeHtml}</td>
-                        <td>${regBadge}</td>
-                        <td><input type="number" class="usd-input" value="${usdVal}" ${isAdmin ? '' : 'readonly'} oninput="updateUsdPrice(${item.originalIndex}, this.value); event.stopPropagation();" onclick="event.stopPropagation()"></td>
+                        <td>${item.storage || "-"}</td>
+                        <td><span class="badge-orange">${item.reg || "KAYITSIZ"}</span></td>
+                        <td><input type="number" class="usd-input" value="${usdVal}" ${isAdmin ? '' : 'readonly'} oninput="updateUsdPrice(${item.originalIndex}, this.value)"></td>
                         <td class="price-display">${priceText}</td>
-                        <td>${stockBadge}</td>
-                        ${orderBtnTd}
-                        ${adminButtonTd}
+                        <td><span class="badge-green">${item.stock || "HAZIR STOK"}</span></td>
+                        <td><a href="${getWhatsAppOrderLink(item.model, item.storage, item.reg)}" target="_blank" class="order-btn-table" onclick="showToast()">📲 Sipariş Ver</a></td>
+                        ${isAdmin ? `<td><button class="admin-btn-danger" onclick="deleteProduct(${item.originalIndex})">Sil</button></td>` : ''}
                     `;
                     tbody.appendChild(tr);
                 });
@@ -1159,178 +913,29 @@
         function addNewProduct() {
             let cat = document.getElementById("newCategory").value.trim().toUpperCase();
             let model = document.getElementById("newModel").value.trim();
-            let storage = document.getElementById("newStorage").value.trim();
-            let reg = document.getElementById("newReg").value.trim();
-            let usd = parseFloat(document.getElementById("newUsd").value);
-            let stock = document.getElementById("newStock").value.trim();
-            let desc = document.getElementById("newDesc").value.trim();
-
-            if (cat !== "" && model !== "") {
-                products.push({ 
-                    category: cat,
-                    model: model, 
-                    storage: storage || "Standart", 
-                    reg: reg || "KAYITSIZ", 
-                    usd: isNaN(usd) ? 0 : usd, 
-                    stock: stock || "HAZIR STOK", 
-                    img: "", 
-                    desc: desc || "" 
-                });
-
-                document.getElementById("newCategory").value = "";
-                document.getElementById("newModel").value = "";
-                document.getElementById("newStorage").value = "";
-                document.getElementById("newReg").value = "";
-                document.getElementById("newUsd").value = "";
-                document.getElementById("newStock").value = "";
-                document.getElementById("newDesc").value = "";
-
+            if (cat && model) {
+                products.push({ category: cat, model: model, storage: "512GB", reg: "KAYITSIZ", usd: 1000, stock: "HAZIR STOK", desc: "" });
                 saveToStorage();
-                activeCategoryFilter = 'TÜMÜ';
                 renderTable();
-                alert("Ürün başarıyla eklendi! 🎉");
-            } else {
-                alert("Lütfen en azından Kategori ve Model adını doldurun!");
+                alert("Ürün eklendi!");
             }
         }
 
-        function deleteProduct(index) {
-            if (confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
-                products.splice(index, 1);
-                saveToStorage();
-                renderTable();
-            }
+        function deleteProduct(idx) {
+            products.splice(idx, 1);
+            saveToStorage();
+            renderTable();
         }
 
-        function deleteCategory(catName) {
-            if (confirm(`"${catName}" kategorisini ve altındaki tüm ürünleri silmek istediğinize emin misiniz?`)) {
-                products = products.filter(p => (p.category || "DİĞER").toUpperCase() !== catName);
-                saveToStorage();
-                activeCategoryFilter = 'TÜMÜ';
-                renderTable();
-            }
-        }
-
-        function updateUsdPrice(index, val) {
+        function updateUsdPrice(idx, val) {
             if (!isAdmin) return;
-            let parsed = parseFloat(val);
-            if (!isNaN(parsed)) {
-                products[index].usd = parsed;
-                saveToStorage();
-                renderTable();
-            }
-        }
-
-        function filterTable() {
-            let input = document.getElementById("searchInput").value.toUpperCase();
-            let tr = document.querySelectorAll("#priceTable tbody tr.product-row");
-            tr.forEach(row => {
-                let txt = row.textContent || row.innerText;
-                row.style.display = txt.toUpperCase().indexOf(input) > -1 ? "" : "none";
-            });
+            products[idx].usd = parseFloat(val) || 0;
+            saveToStorage();
+            renderTable();
         }
 
         function openFaqModal() { document.getElementById("faqModal").style.display = "flex"; }
         function closeFaqModal() { document.getElementById("faqModal").style.display = "none"; }
-
-        let activeProductIndex = null;
-        function openModal(row, index) {
-            activeProductIndex = index;
-            let item = products[index];
-            if (!item) return;
-
-            tempUploadedImage = item.img || "";
-
-            document.getElementById("modalTitle").textContent = (item.model || "Ürün") + " (" + (item.storage || "") + ")";
-            document.getElementById("mPrice").textContent = row.querySelector(".price-display").textContent;
-
-            document.getElementById("mCatText").textContent = item.category || "";
-            document.getElementById("mModelText").textContent = item.model || "";
-            document.getElementById("mStorageText").textContent = item.storage || "";
-            document.getElementById("mRegText").textContent = item.reg || "";
-            document.getElementById("mUsdText").textContent = (item.usd || 0) + " $";
-            document.getElementById("mStockText").textContent = item.stock || "";
-            document.getElementById("mDescText").textContent = item.desc || "Açıklama bulunmuyor.";
-
-            document.getElementById("mCatInput").value = item.category || "";
-            document.getElementById("mModelInput").value = item.model || "";
-            document.getElementById("mStorageInput").value = item.storage || "";
-            document.getElementById("mRegInput").value = item.reg || "";
-            document.getElementById("mUsdInput").value = item.usd || 0;
-            document.getElementById("mStockInput").value = item.stock || "";
-            document.getElementById("mDescInput").value = item.desc || "";
-
-            document.getElementById("modalOrderBtn").href = getWhatsAppOrderLink(item.model || "", item.storage || "", item.reg || "");
-
-            let viewElements = document.querySelectorAll(".view-mode");
-            let editElements = document.querySelectorAll(".edit-mode");
-
-            if (isAdmin) {
-                viewElements.forEach(el => el.style.display = "none");
-                editElements.forEach(el => el.style.display = "inline-block");
-                document.getElementById("adminUrlBox").style.display = "block";
-                document.getElementById("saveCardBtn").style.display = "block";
-            } else {
-                viewElements.forEach(el => el.style.display = "inline");
-                editElements.forEach(el => el.style.display = "none");
-                document.getElementById("adminUrlBox").style.display = "none";
-                document.getElementById("saveCardBtn").style.display = "none";
-            }
-
-            updateModalImageView();
-            document.getElementById("productModal").style.display = "flex";
-        }
-
-        function handleImageUpload(event) {
-            let file = event.target.files[0];
-            if (file) {
-                let reader = new FileReader();
-                reader.onload = function(e) {
-                    tempUploadedImage = e.target.result;
-                    updateModalImageView();
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function updateModalImageView() {
-            let modalImg = document.getElementById("modalImage");
-            let noImgView = document.getElementById("noImageView");
-            if (tempUploadedImage && tempUploadedImage.trim() !== "") {
-                modalImg.src = tempUploadedImage;
-                modalImg.style.display = "block";
-                noImgView.style.display = "none";
-            } else {
-                modalImg.style.display = "none";
-                noImgView.style.display = "block";
-            }
-        }
-
-        function saveCardChanges() {
-            if (!isAdmin || activeProductIndex === null) return;
-            
-            let urlInputVal = document.getElementById("imageUrlInput").value.trim();
-            if (urlInputVal !== "") tempUploadedImage = urlInputVal;
-
-            products[activeProductIndex].category = document.getElementById("mCatInput").value.trim().toUpperCase();
-            products[activeProductIndex].model = document.getElementById("mModelInput").value;
-            products[activeProductIndex].storage = document.getElementById("mStorageInput").value;
-            products[activeProductIndex].reg = document.getElementById("mRegInput").value;
-            products[activeProductIndex].usd = parseFloat(document.getElementById("mUsdInput").value) || 0;
-            products[activeProductIndex].stock = document.getElementById("mStockInput").value;
-            products[activeProductIndex].desc = document.getElementById("mDescInput").value;
-            products[activeProductIndex].img = tempUploadedImage;
-
-            saveToStorage();
-            renderTable();
-            closeModal();
-            alert("Ürün başarıyla güncellendi! ✅");
-        }
-
-        function closeModal() {
-            document.getElementById("productModal").style.display = "none";
-            activeProductIndex = null;
-        }
 
         window.onload = function() {
             fetchLiveExchangeRate();

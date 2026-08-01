@@ -628,7 +628,7 @@
                 <input type="text" id="newStorage" placeholder="Hafıza (Örn: 256GB)">
                 <input type="text" id="newReg" placeholder="Kayıt Durumu (Örn: KAYITSIZ)">
                 <input type="number" id="newUsd" placeholder="Dolar Fiyatı ($)">
-                <input type="text" id="newStock" placeholder="Stok (Örn: HAZIR STOK veya SON 2 ÜRÜN)">
+                <input type="text" id="newStock" placeholder="Stok (Örn: HAZIR STOK)">
                 <input type="text" id="newDesc" placeholder="Cihaz Açıklaması">
             </div>
             <button class="admin-btn" onclick="addNewProduct()">Listeye Ürün Ekle</button>
@@ -867,7 +867,6 @@
             renderTable();
         }
 
-        // CANLI KUR ÇEKME FONKSİYONU
         async function fetchLiveExchangeRate() {
             let statusSpan = document.getElementById("rateUpdateStatus");
             statusSpan.textContent = "Kur güncelleniyor...";
@@ -968,10 +967,32 @@
             if (cat !== "") {
                 products.push({ category: cat });
             } else if (model !== "") {
-                products.push({ model, storage, reg, usd: isNaN(usd)?0:usd, stock: stock||"HAZIR STOK", img: "", desc });
+                products.push({ 
+                    model: model, 
+                    storage: storage || "Standart", 
+                    reg: reg || "KAYITSIZ", 
+                    usd: isNaN(usd) ? 0 : usd, 
+                    stock: stock || "HAZIR STOK", 
+                    img: "", 
+                    desc: desc || "" 
+                });
+            } else {
+                alert("Lütfen en azından bir Kategori veya Model adı girin!");
+                return;
             }
+
+            // Inputları temizle
+            document.getElementById("newCategory").value = "";
+            document.getElementById("newModel").value = "";
+            document.getElementById("newStorage").value = "";
+            document.getElementById("newReg").value = "";
+            document.getElementById("newUsd").value = "";
+            document.getElementById("newStock").value = "";
+            document.getElementById("newDesc").value = "";
+
             saveToStorage();
             renderTable();
+            alert("Başarıyla eklendi! 🎉");
         }
 
         function deleteProduct(index) {
@@ -1019,6 +1040,13 @@
             document.getElementById("mUsdText").textContent = item.usd + " $";
             document.getElementById("mStockText").textContent = item.stock;
             document.getElementById("mDescText").textContent = item.desc || "Açıklama bulunmuyor.";
+
+            document.getElementById("mModelInput").value = item.model;
+            document.getElementById("mStorageInput").value = item.storage;
+            document.getElementById("mRegInput").value = item.reg;
+            document.getElementById("mUsdInput").value = item.usd;
+            document.getElementById("mStockInput").value = item.stock;
+            document.getElementById("mDescInput").value = item.desc || "";
 
             document.getElementById("modalOrderBtn").href = getWhatsAppOrderLink(item.model, item.storage, item.reg);
 
@@ -1068,14 +1096,22 @@
 
         function saveCardChanges() {
             if (!isAdmin || activeProductIndex === null) return;
+            
             let urlInputVal = document.getElementById("imageUrlInput").value.trim();
             if (urlInputVal !== "") tempUploadedImage = urlInputVal;
 
+            products[activeProductIndex].model = document.getElementById("mModelInput").value;
+            products[activeProductIndex].storage = document.getElementById("mStorageInput").value;
+            products[activeProductIndex].reg = document.getElementById("mRegInput").value;
+            products[activeProductIndex].usd = parseFloat(document.getElementById("mUsdInput").value) || 0;
+            products[activeProductIndex].stock = document.getElementById("mStockInput").value;
+            products[activeProductIndex].desc = document.getElementById("mDescInput").value;
             products[activeProductIndex].img = tempUploadedImage;
+
             saveToStorage();
             renderTable();
             closeModal();
-            alert("Güncellendi!");
+            alert("Ürün başarıyla güncellendi! ✅");
         }
 
         function closeModal() {

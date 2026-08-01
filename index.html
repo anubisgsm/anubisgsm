@@ -27,11 +27,38 @@
             margin: 0;
             padding: 0;
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.08) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(131, 58, 180, 0.04) 0%, transparent 60%);
+                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(131, 58, 180, 0.06) 0%, transparent 60%);
             background-attachment: fixed;
             min-height: 100vh;
+            animation: backgroundPulse 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes backgroundPulse {
+            0% { filter: brightness(1); }
+            50% { filter: brightness(1.15); }
+            100% { filter: brightness(1); }
+        }
+
+        /* CANLI DUYURU BANDI */
+        .marquee-bar {
+            background: linear-gradient(90deg, #0284c7, var(--accent-gold), #0284c7);
+            background-size: 200% 100%;
+            animation: gradientMove 6s linear infinite;
+            color: #07090e;
+            font-weight: 800;
+            font-size: 13px;
+            padding: 8px 0;
+            text-align: center;
+            letter-spacing: 1px;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
 
         header {
@@ -169,6 +196,7 @@
             background: rgba(51, 65, 85, 0.9); 
             border-color: var(--primary-color);
             color: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-glow);
         }
 
         .container {
@@ -364,14 +392,16 @@
         .filter-tab:hover {
             border-color: var(--primary-color);
             color: white;
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 20px var(--primary-glow);
         }
         .filter-tab.active {
             background: linear-gradient(135deg, #0284c7, var(--primary-color));
             color: #07090e;
             border-color: var(--primary-color);
-            box-shadow: 0 0 20px var(--primary-glow);
+            box-shadow: 0 0 22px var(--primary-glow);
             font-weight: 800;
+            transform: translateY(-2px);
         }
 
         /* ÜST KONTROL ALANI */
@@ -451,10 +481,19 @@
         .product-row {
             cursor: pointer;
             transition: all 0.2s ease;
+            position: relative;
         }
         .product-row:hover {
-            background-color: rgba(56, 189, 248, 0.06);
+            background-color: rgba(56, 189, 248, 0.08);
             transform: scale(1.002);
+        }
+        /* Sol neon kenar çizgisi efekti */
+        .product-row:hover::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0; width: 4px;
+            background: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-glow);
         }
         .category-row {
             background-color: rgba(5, 8, 15, 0.95) !important;
@@ -474,7 +513,10 @@
             border-radius: 8px;
             font-size: 11px;
             font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
         }
+        .badge-green:hover { background: rgba(16, 185, 129, 0.3); }
         .badge-orange {
             background: rgba(245, 158, 11, 0.15);
             color: #fbbf24;
@@ -483,7 +525,10 @@
             border-radius: 8px;
             font-size: 11px;
             font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
         }
+        .badge-orange:hover { background: rgba(245, 158, 11, 0.3); }
         .badge-pulse {
             background: rgba(239, 68, 68, 0.2);
             color: #f87171;
@@ -494,6 +539,7 @@
             font-weight: 700;
             animation: pulse-animation 1.5s infinite;
             box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+            cursor: pointer;
         }
         @keyframes pulse-animation {
             0% { opacity: 1; transform: scale(1); }
@@ -521,7 +567,17 @@
             color: var(--primary-color);
             font-size: 15.5px;
             text-shadow: 0 0 10px var(--primary-glow);
+            transition: all 0.3s ease;
         }
+        .price-glow-anim {
+            animation: pricePulse 0.5s ease;
+        }
+        @keyframes pricePulse {
+            0% { transform: scale(1); color: var(--accent-gold); text-shadow: 0 0 15px var(--accent-gold-glow); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
         .order-btn-table {
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
@@ -569,6 +625,32 @@
             visibility: visible;
             opacity: 1;
             transform: translateX(-50%) translateY(0);
+        }
+
+        /* CANLI SOSYAL KANIT (CANLI SİPARİŞ BİLDİRİMİ) */
+        #liveNotification {
+            visibility: hidden;
+            position: fixed;
+            left: 30px;
+            bottom: 30px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--accent-gold);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 14px;
+            z-index: 998;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-width: 280px;
+            font-size: 12.5px;
+        }
+        #liveNotification.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* WHATSAPP SABİT BUTON */
@@ -674,13 +756,25 @@
             .header-right-area { align-items: center; width: 100%; }
             .controls-wrapper { flex-direction: column; }
             .search-box, .faq-open-btn { width: 100%; }
+            #liveNotification { display: none; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Canlı Duyuru Bandı -->
+    <div class="marquee-bar">
+        🚀 ANUBIS GSM Premium Teknoloji Marketi • En Güncel Fiyatlar ve Sınırlı Stok Fırsatları • Güvenilir Alışverişin Adresi ✨
+    </div>
+
     <!-- Toast Bildirim Kutusu -->
     <div id="toast">Sipariş mesajınız kopyalandı, WhatsApp'a yönlendiriliyorsunuz! 🚀</div>
+
+    <!-- Canlı Sosyal Kanıt Bildirimi -->
+    <div id="liveNotification">
+        <strong style="color:var(--accent-gold);">🔥 Canlı Hareketlilik</strong>
+        <p id="liveNotifText" style="margin:4px 0 0 0; color:var(--text-muted);"></p>
+    </div>
 
     <!-- WhatsApp Sabit Buton -->
     <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" title="WhatsApp ile İletişime Geç">
@@ -894,10 +988,47 @@
             showToast();
         }
 
+        function copyToClipboard(text, typeName) {
+            navigator.clipboard.writeText(text).then(() => {
+                let toast = document.getElementById("toast");
+                toast.textContent = `${typeName} panoya kopyalandı! 📋`;
+                toast.className = "show";
+                setTimeout(() => { 
+                    toast.className = toast.className.replace("show", ""); 
+                    toast.textContent = "Sipariş mesajınız kopyalandı, WhatsApp'a yönlendiriliyorsunuz! 🚀";
+                }, 2500);
+            });
+        }
+
+        // Sosyal Kanıt Sahte/Canlı Bildirim Döngüsü
+        const buyerNames = ["Ahmet (İstanbul)", "Mehmet (Ankara)", "Caner (İzmir)", "Burak (Bursa)", "Emre (Antalya)", "Oğuz (Adana)"];
+        const phoneModels = ["iPhone 16 Pro Max", "Samsung S25 Ultra", "Xiaomi 14 Ultra", "iPhone 16 Pro"];
+        function triggerLiveNotificationLoop() {
+            setTimeout(() => {
+                let randomBuyer = buyerNames[Math.floor(Math.random() * buyerNames.length)];
+                let randomPhone = phoneModels[Math.floor(Math.random() * phoneModels.length)];
+                let notifBox = document.getElementById("liveNotification");
+                document.getElementById("liveNotifText").textContent = `${randomBuyer} az önce ${randomPhone} sipariş verdi! 🎉`;
+                notifBox.className = "show";
+                setTimeout(() => {
+                    notifBox.className = "";
+                }, 4000);
+                triggerLiveNotificationLoop();
+            }, Math.floor(Math.random() * 15000) + 12000);
+        }
+
         function toggleCurrencyMode() {
             currentCurrency = currentCurrency === 'TL' ? 'USD' : 'TL';
             document.getElementById("currencyModeLabel").textContent = currentCurrency === 'TL' ? 'TL (₺)' : 'USD ($)';
+            renderTableWithPriceGlow();
+        }
+
+        function renderTableWithPriceGlow() {
             renderTable();
+            document.querySelectorAll('.price-display').forEach(el => {
+                el.classList.add('price-glow-anim');
+                setTimeout(() => el.classList.remove('price-glow-anim'), 500);
+            });
         }
 
         function toggleTheme() {
@@ -936,13 +1067,13 @@
                     let liveRate = data.rates.TRY;
                     document.getElementById("dollarRate").value = liveRate.toFixed(3);
                     statusSpan.textContent = "Canlı Kur Aktif (" + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ")";
-                    renderTable();
+                    renderTableWithPriceGlow();
                 } else {
                     throw new Error("Kur verisi alınamadı");
                 }
             } catch (error) {
                 statusSpan.textContent = "Kur manuel modda";
-                renderTable();
+                renderTableWithPriceGlow();
             }
         }
 
@@ -983,13 +1114,16 @@
 
                     let regVal = item.reg || "KAYITSIZ";
                     let regBadge = regVal.toUpperCase().includes("KAYITSIZ") || regVal.toUpperCase().includes("AİT") 
-                        ? `<span class="badge-orange">${regVal}</span>` 
-                        : `<span class="badge-green">${regVal}</span>`;
+                        ? `<span class="badge-orange" onclick="copyToClipboard('${regVal}', 'Kayıt Durumu'); event.stopPropagation();" title="Tıkla Kopyala">${regVal}</span>` 
+                        : `<span class="badge-green" onclick="copyToClipboard('${regVal}', 'Kayıt Durumu'); event.stopPropagation();" title="Tıkla Kopyala">${regVal}</span>`;
+
+                    let storageVal = item.storage || "-";
+                    let storageBadgeHtml = `<span style="cursor:pointer;" onclick="copyToClipboard('${storageVal}', 'Hafıza'); event.stopPropagation();" title="Tıkla Kopyala">${storageVal}</span>`;
 
                     let stockVal = item.stock || "HAZIR STOK";
                     let stockBadge = stockVal.toUpperCase().includes("SON") 
-                        ? `<span class="badge-pulse">${stockVal}</span>` 
-                        : `<span class="badge-green">${stockVal}</span>`;
+                        ? `<span class="badge-pulse" onclick="copyToClipboard('${stockVal}', 'Stok Durumu'); event.stopPropagation();" title="Tıkla Kopyala">${stockVal}</span>` 
+                        : `<span class="badge-green" onclick="copyToClipboard('${stockVal}', 'Stok Durumu'); event.stopPropagation();" title="Tıkla Kopyala">${stockVal}</span>`;
 
                     let waLink = getWhatsAppOrderLink(item.model || "Cihaz", item.storage || "", regVal);
                     let orderBtnTd = `<td><a href="${waLink}" target="_blank" class="order-btn-table" onclick="triggerToastAndOrder(event); event.stopPropagation();">📲 Sipariş Ver</a></td>`;
@@ -1003,7 +1137,7 @@
 
                     tr.innerHTML = `
                         <td style="font-weight:600;">${item.model}</td>
-                        <td>${item.storage || "-"}</td>
+                        <td>${storageBadgeHtml}</td>
                         <td>${regBadge}</td>
                         <td><input type="number" class="usd-input" value="${usdVal}" ${isAdmin ? '' : 'readonly'} oninput="updateUsdPrice(${item.originalIndex}, this.value); event.stopPropagation();" onclick="event.stopPropagation()"></td>
                         <td class="price-display">${priceText}</td>
@@ -1200,6 +1334,7 @@
 
         window.onload = function() {
             fetchLiveExchangeRate();
+            triggerLiveNotificationLoop();
         };
     </script>
 </body>

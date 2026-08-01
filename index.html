@@ -249,6 +249,7 @@
             transition: transform 0.2s;
         }
         .admin-btn:hover { transform: translateY(-1px); }
+        
         .admin-btn-danger {
             background: #ef4444;
             color: white;
@@ -261,6 +262,23 @@
             transition: background 0.2s;
         }
         .admin-btn-danger:hover { background: #dc2626; }
+
+        .category-delete-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: bold;
+            transition: all 0.2s;
+            float: right;
+        }
+        .category-delete-btn:hover {
+            background: #ef4444;
+            color: white;
+        }
 
         /* KUR VE BİLGİ BARI */
         .rate-container {
@@ -323,7 +341,7 @@
             box-shadow: 0 0 12px var(--primary-glow);
         }
 
-        /* KATEGORİ FİLTRE SEKMELERİ (DİNAMİK) */
+        /* KATEGORİ FİLTRE SEKMELERİ */
         .filter-tabs {
             display: flex;
             gap: 10px;
@@ -827,10 +845,10 @@
             { category: "XIAOMI", model: "XIAOMI 14 ULTRA", storage: "512GB", reg: 'KAYITSIZ', usd: 950, stock: "HAZIR STOK", desc: "Leica kameralı amiral gemisi.", img: "" }
         ];
 
-        let products = JSON.parse(localStorage.getItem("anubis_products_v3"));
+        let products = JSON.parse(localStorage.getItem("anubis_products_v4"));
         if (!products || products.length === 0) {
             products = defaultProducts;
-            localStorage.setItem("anubis_products_v3", JSON.stringify(defaultProducts));
+            localStorage.setItem("anubis_products_v4", JSON.stringify(defaultProducts));
         }
 
         let isAdmin = false;
@@ -858,7 +876,7 @@
         }
 
         function saveToStorage() {
-            localStorage.setItem("anubis_products_v3", JSON.stringify(products));
+            localStorage.setItem("anubis_products_v4", JSON.stringify(products));
         }
 
         function getWhatsAppOrderLink(model, storage, reg) {
@@ -953,7 +971,9 @@
 
                 let headerTr = document.createElement("tr");
                 headerTr.className = "category-row";
-                headerTr.innerHTML = `<td colspan="${isAdmin ? 8 : 7}">${catName} SERİSİ / MODELLERİ</td>`;
+                
+                let deleteCatBtn = isAdmin ? `<button class="category-delete-btn" onclick="deleteCategory('${catName}'); event.stopPropagation();">Kategoriyi Sil</button>` : '';
+                headerTr.innerHTML = `<td colspan="${isAdmin ? 8 : 7}">${catName} SERİSİ / MODELLERİ ${deleteCatBtn}</td>`;
                 tbody.appendChild(headerTr);
 
                 catProducts.forEach(item => {
@@ -1032,8 +1052,9 @@
                 document.getElementById("newDesc").value = "";
 
                 saveToStorage();
+                activeCategoryFilter = 'TÜMÜ';
                 renderTable();
-                alert("Ürün ve kategori başarıyla eklendi! 🎉");
+                alert("Ürün başarıyla eklendi! 🎉");
             } else {
                 alert("Lütfen en azından Kategori ve Model adını doldurun!");
             }
@@ -1043,6 +1064,15 @@
             if (confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
                 products.splice(index, 1);
                 saveToStorage();
+                renderTable();
+            }
+        }
+
+        function deleteCategory(catName) {
+            if (confirm(`"${catName}" kategorisini ve altındaki tüm ürünleri silmek istediğinize emin misiniz?`)) {
+                products = products.filter(p => (p.category || "DİĞER").toUpperCase() !== catName);
+                saveToStorage();
+                activeCategoryFilter = 'TÜMÜ';
                 renderTable();
             }
         }

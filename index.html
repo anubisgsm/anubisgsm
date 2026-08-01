@@ -6,15 +6,16 @@
     <title>ANUBIS GSM | Premium Teknoloji Marketi</title>
     <style>
         :root {
-            --bg-deep: #07090e;
-            --bg-card: #0f172a;
-            --bg-glass: rgba(15, 23, 42, 0.75);
+            --bg-deep: #05070a;
+            --bg-card: rgba(15, 23, 42, 0.7);
+            --bg-glass: rgba(15, 23, 42, 0.85);
             --primary-color: #38bdf8;
+            --primary-glow: rgba(56, 189, 248, 0.25);
             --accent-gold: #f59e0b;
             --accent-gold-glow: rgba(245, 158, 11, 0.4);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.08);
+            --border-color: rgba(255, 255, 255, 0.1);
             --whatsapp-color: #25d366;
             --instagram-color: #e1306c;
         }
@@ -26,18 +27,22 @@
             margin: 0;
             padding: 0;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(131, 58, 180, 0.04) 0%, transparent 60%);
             background-attachment: fixed;
+            min-height: 100vh;
         }
 
         header {
-            background: linear-gradient(135deg, #090d16 0%, #111b2e 100%);
+            background: linear-gradient(135deg, rgba(9, 13, 22, 0.9) 0%, rgba(17, 27, 46, 0.9) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             color: white;
-            padding: 30px 20px;
+            padding: 35px 20px;
             text-align: center;
             border-bottom: 2px solid var(--accent-gold);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             position: relative;
             overflow: hidden;
         }
@@ -74,15 +79,15 @@
             cursor: pointer;
             user-select: none;
             margin: 0 auto;
-            transition: transform 0.3s;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .logo-area:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
         }
         .logo-area img {
             height: 95px;
             width: auto;
-            filter: drop-shadow(0 0 20px var(--accent-gold-glow));
+            filter: drop-shadow(0 0 25px var(--accent-gold-glow));
         }
         header h1 {
             margin: 0;
@@ -90,7 +95,7 @@
             letter-spacing: 3px;
             color: var(--accent-gold);
             font-weight: 800;
-            text-shadow: 0 2px 15px var(--accent-gold-glow);
+            text-shadow: 0 2px 20px var(--accent-gold-glow);
             text-align: left;
         }
         header p.subtitle {
@@ -105,16 +110,17 @@
         header p.slogan {
             margin: 6px 0 0 0;
             font-size: 13.5px;
-            color: #38bdf8;
+            color: var(--primary-color);
             font-style: italic;
             letter-spacing: 0.5px;
             text-align: left;
+            text-shadow: 0 0 10px var(--primary-glow);
         }
 
         .header-right-area {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             align-items: flex-end;
         }
 
@@ -124,18 +130,18 @@
             gap: 8px;
             background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
             color: white;
-            padding: 10px 18px;
+            padding: 10px 20px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
             font-size: 14px;
-            box-shadow: 0 4px 15px rgba(225, 48, 108, 0.4);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 20px rgba(225, 48, 108, 0.4);
+            transition: all 0.3s ease;
             white-space: nowrap;
         }
         .instagram-badge:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(225, 48, 108, 0.6);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(225, 48, 108, 0.6);
         }
         .instagram-badge svg {
             width: 20px;
@@ -148,33 +154,44 @@
             gap: 8px;
         }
         .utility-btn {
-            background: #1e293b;
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(5px);
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 8px;
+            padding: 7px 14px;
+            border-radius: 10px;
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
         }
-        .utility-btn:hover { background: #334155; }
+        .utility-btn:hover { 
+            background: rgba(51, 65, 85, 0.9); 
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
 
         .container {
             max-width: 1250px;
-            margin: 30px auto;
+            margin: 35px auto;
             padding: 0 20px;
         }
 
         /* YÖNETİM PANELİ */
         .admin-panel {
             display: none;
-            background: var(--bg-card);
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
             border: 2px dashed var(--accent-gold);
             padding: 25px;
-            border-radius: 14px;
+            border-radius: 16px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .admin-panel h3 {
             margin-top: 0;
@@ -195,6 +212,7 @@
             cursor: pointer;
             font-size: 12px;
             font-weight: bold;
+            transition: background 0.2s;
         }
         .close-admin:hover { background: #dc2626; }
 
@@ -205,25 +223,32 @@
             margin-bottom: 15px;
         }
         .form-grid input {
-            padding: 10px 14px;
-            background: #07090e;
+            padding: 12px 14px;
+            background: rgba(7, 9, 14, 0.8);
             border: 1px solid var(--border-color);
             color: white;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 13px;
             outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .form-grid input:focus { border-color: var(--accent-gold); }
+        .form-grid input:focus { 
+            border-color: var(--accent-gold); 
+            box-shadow: 0 0 12px var(--accent-gold-glow);
+        }
         
         .admin-btn {
             background: linear-gradient(135deg, #059669, #10b981);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: transform 0.2s;
         }
+        .admin-btn:hover { transform: translateY(-1px); }
         .admin-btn-danger {
             background: #ef4444;
             color: white;
@@ -233,19 +258,22 @@
             cursor: pointer;
             font-size: 12px;
             font-weight: bold;
+            transition: background 0.2s;
         }
+        .admin-btn-danger:hover { background: #dc2626; }
 
         /* KUR VE BİLGİ BARI */
         .rate-container {
             background: var(--bg-card);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             padding: 18px 25px;
-            border-radius: 14px;
+            border-radius: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             flex-wrap: wrap;
             gap: 15px;
         }
@@ -262,12 +290,13 @@
             padding: 8px 12px;
             font-size: 16px;
             border: 2px solid var(--accent-gold);
-            border-radius: 8px;
+            border-radius: 10px;
             text-align: center;
             font-weight: bold;
-            background: #07090e;
+            background: rgba(7, 9, 14, 0.9);
             color: var(--accent-gold);
             outline: none;
+            box-shadow: 0 0 10px var(--accent-gold-glow);
         }
         .update-date {
             font-size: 13px;
@@ -278,43 +307,53 @@
             gap: 10px;
         }
         .refresh-rate-btn {
-            background: rgba(56, 189, 248, 0.1);
+            background: rgba(56, 189, 248, 0.15);
             color: var(--primary-color);
             border: 1px solid var(--primary-color);
-            padding: 5px 10px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-size: 11px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
         .refresh-rate-btn:hover {
             background: var(--primary-color);
             color: #07090e;
+            box-shadow: 0 0 12px var(--primary-glow);
         }
 
         /* KATEGORİ FİLTRE SEKMELERİ (DİNAMİK) */
         .filter-tabs {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
         }
         .filter-tab {
             background: var(--bg-card);
+            backdrop-filter: blur(10px);
             color: var(--text-muted);
             border: 1px solid var(--border-color);
-            padding: 10px 18px;
-            border-radius: 10px;
+            padding: 11px 20px;
+            border-radius: 12px;
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-        .filter-tab:hover, .filter-tab.active {
-            background: var(--primary-color);
+        .filter-tab:hover {
+            border-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .filter-tab.active {
+            background: linear-gradient(135deg, #0284c7, var(--primary-color));
             color: #07090e;
             border-color: var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-glow);
+            font-weight: 800;
         }
 
         /* ÜST KONTROL ALANI */
@@ -328,39 +367,48 @@
         .search-box {
             flex: 1;
             min-width: 250px;
-            padding: 15px 25px;
-            font-size: 16px;
+            padding: 16px 25px;
+            font-size: 15px;
             background: var(--bg-card);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             color: white;
-            border-radius: 12px;
+            border-radius: 14px;
             outline: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
         }
         .search-box:focus {
             border-color: var(--accent-gold);
-            box-shadow: 0 0 15px var(--accent-gold-glow);
+            box-shadow: 0 0 20px var(--accent-gold-glow);
         }
         .faq-open-btn {
             background: linear-gradient(135deg, #0284c7, #0ea5e9);
             color: white;
             border: none;
-            padding: 15px 25px;
+            padding: 16px 25px;
             font-size: 15px;
             font-weight: 700;
-            border-radius: 12px;
+            border-radius: 14px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
             white-space: nowrap;
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .faq-open-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.5);
         }
 
         /* TABLO ALANI */
         .table-wrapper {
             background: var(--bg-card);
-            border-radius: 14px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            backdrop-filter: blur(16px);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             overflow-x: auto;
             border: 1px solid var(--border-color);
         }
@@ -371,39 +419,41 @@
             font-size: 14px;
         }
         th, td {
-            padding: 16px 20px;
+            padding: 18px 20px;
             border-bottom: 1px solid var(--border-color);
         }
         th {
-            background-color: #090d16;
+            background-color: rgba(9, 13, 22, 0.95);
             color: var(--text-muted);
             text-transform: uppercase;
             font-size: 11px;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
             font-weight: 700;
         }
         .product-row {
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.2s ease;
         }
         .product-row:hover {
-            background-color: rgba(56, 189, 248, 0.04);
+            background-color: rgba(56, 189, 248, 0.06);
+            transform: scale(1.002);
         }
         .category-row {
-            background-color: #05080f !important;
+            background-color: rgba(5, 8, 15, 0.95) !important;
             color: var(--accent-gold);
             font-weight: 800;
             font-size: 15px;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             border-top: 2px solid var(--border-color);
             border-bottom: 2px solid var(--border-color);
+            text-shadow: 0 0 12px var(--accent-gold-glow);
         }
         .badge-green {
             background: rgba(16, 185, 129, 0.15);
             color: #34d399;
             border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 5px 10px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-size: 11px;
             font-weight: 700;
         }
@@ -411,83 +461,96 @@
             background: rgba(245, 158, 11, 0.15);
             color: #fbbf24;
             border: 1px solid rgba(245, 158, 11, 0.3);
-            padding: 5px 10px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-size: 11px;
             font-weight: 700;
         }
         .badge-pulse {
-            background: rgba(239, 68, 68, 0.15);
+            background: rgba(239, 68, 68, 0.2);
             color: #f87171;
             border: 1px solid rgba(239, 68, 68, 0.4);
-            padding: 5px 10px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-size: 11px;
             font-weight: 700;
             animation: pulse-animation 1.5s infinite;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
         }
         @keyframes pulse-animation {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.97); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         .usd-input {
             width: 85px;
-            padding: 6px;
+            padding: 7px;
             font-size: 14px;
             font-weight: bold;
-            background: #07090e;
+            background: rgba(7, 9, 14, 0.9);
             border: 1px solid var(--border-color);
             color: white;
-            border-radius: 6px;
+            border-radius: 8px;
             text-align: center;
             outline: none;
+            transition: border-color 0.2s;
         }
+        .usd-input:focus { border-color: var(--primary-color); }
+        
         .price-display {
             font-weight: 800;
-            color: #38bdf8;
-            font-size: 15px;
+            color: var(--primary-color);
+            font-size: 15.5px;
+            text-shadow: 0 0 10px var(--primary-glow);
         }
         .order-btn-table {
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
             border: none;
-            padding: 7px 12px;
-            border-radius: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             text-decoration: none;
             white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s;
+        }
+        .order-btn-table:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
         }
 
         /* TOAST BİLDİRİMİ */
         #toast {
             visibility: hidden;
-            min-width: 250px;
-            background-color: #10b981;
+            min-width: 270px;
+            background: linear-gradient(135deg, #059669, #10b981);
             color: white;
             text-align: center;
-            border-radius: 8px;
-            padding: 12px;
+            border-radius: 12px;
+            padding: 14px 20px;
             position: fixed;
             z-index: 2000;
             left: 50%;
             bottom: 30px;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(20px);
             font-size: 14px;
             font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: visibility 0.3s, opacity 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             opacity: 0;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         #toast.show {
             visibility: visible;
             opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
         /* WHATSAPP SABİT BUTON */
@@ -497,37 +560,49 @@
             right: 30px;
             background-color: var(--whatsapp-color);
             color: white;
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
             z-index: 999;
             text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
         }
-        .whatsapp-float svg { width: 35px; height: 35px; fill: white; }
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.7);
+        }
+        .whatsapp-float svg { width: 38px; height: 38px; fill: white; }
 
         /* MODAL ORTAK */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
             padding: 15px;
             box-sizing: border-box;
+            animation: fadeInModal 0.25s ease;
+        }
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .modal-card {
-            background: var(--bg-card);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
             width: 100%;
             max-width: 520px;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
             overflow: hidden;
             border: 1px solid var(--border-color);
             border-top: 4px solid var(--accent-gold);
@@ -536,34 +611,38 @@
             flex-direction: column;
         }
         .modal-header {
-            background: #090d16;
+            background: rgba(9, 13, 22, 0.95);
             color: var(--accent-gold);
-            padding: 18px 25px;
+            padding: 20px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
         }
-        .modal-header h3 { margin: 0; font-size: 18px; }
-        .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
+        .modal-header h3 { margin: 0; font-size: 18px; text-shadow: 0 0 10px var(--accent-gold-glow); }
+        .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; transition: color 0.2s; }
+        .close-btn:hover { color: white; }
         .modal-body { padding: 25px; font-size: 14px; overflow-y: auto; flex: 1; }
-        .modal-img-container { text-align: center; margin-bottom: 20px; background: #07090e; padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); }
-        .modal-img-container img { max-height: 180px; max-width: 100%; object-fit: contain; border-radius: 8px; margin-bottom: 8px; }
+        .modal-img-container { text-align: center; margin-bottom: 20px; background: rgba(7, 9, 14, 0.8); padding: 15px; border-radius: 14px; border: 1px solid var(--border-color); }
+        .modal-img-container img { max-height: 180px; max-width: 100%; object-fit: contain; border-radius: 10px; margin-bottom: 8px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)); }
         .input-group-box { display: none; margin-top: 10px; }
-        .input-group-box input[type="text"] { width: 100%; padding: 8px; font-size: 12px; background: #07090e; border: 1px solid var(--border-color); color: white; border-radius: 6px; margin-bottom: 8px; }
-        .file-upload-label { display: inline-block; background: linear-gradient(135deg, #0284c7, #0ea5e9); color: white; padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .input-group-box input[type="text"] { width: 100%; padding: 10px; font-size: 12px; background: rgba(7, 9, 14, 0.9); border: 1px solid var(--border-color); color: white; border-radius: 8px; margin-bottom: 8px; outline: none; }
+        .file-upload-label { display: inline-block; background: linear-gradient(135deg, #0284c7, #0ea5e9); color: white; padding: 9px 16px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3); transition: transform 0.2s; }
+        .file-upload-label:hover { transform: translateY(-1px); }
         .file-upload-label input { display: none; }
-        .modal-body p { margin: 10px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
-        .modal-edit-input { padding: 6px; font-size: 13px; background: #07090e; border: 1px solid var(--border-color); color: white; border-radius: 6px; width: 200px; }
-        .desc-box { margin-top: 20px; background: #07090e; padding: 15px; border-radius: 10px; border: 1px solid var(--border-color); }
-        .admin-save-card-btn { display: none; width: 100%; background: linear-gradient(135deg, #059669, #10b981); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        .modal-order-btn { display: block; width: 100%; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; text-align: center; text-decoration: none; }
+        .modal-body p { margin: 12px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .modal-edit-input { padding: 8px; font-size: 13px; background: rgba(7, 9, 14, 0.9); border: 1px solid var(--border-color); color: white; border-radius: 8px; width: 200px; outline: none; }
+        .desc-box { margin-top: 20px; background: rgba(7, 9, 14, 0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .admin-save-card-btn { display: none; width: 100%; background: linear-gradient(135deg, #059669, #10b981); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); transition: transform 0.2s; }
+        .admin-save-card-btn:hover { transform: translateY(-1px); }
+        .modal-order-btn { display: block; width: 100%; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 20px; text-align: center; text-decoration: none; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); transition: transform 0.2s; }
+        .modal-order-btn:hover { transform: translateY(-1px); }
 
         /* SSS MODAL */
         .faq-modal-card { max-width: 750px; }
-        .faq-section-title { color: var(--primary-color); margin-top: 25px; font-size: 16px; font-weight: 700; }
+        .faq-section-title { color: var(--primary-color); margin-top: 25px; font-size: 16px; font-weight: 700; text-shadow: 0 0 10px var(--primary-glow); }
         .faq-list { list-style: none; padding: 0; margin: 12px 0; }
-        .faq-list li { margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
+        .faq-list li { margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border-color); }
         .faq-question { font-weight: 700; color: white; display: block; margin-bottom: 6px; }
         .faq-answer { color: var(--text-muted); line-height: 1.6; margin: 0; font-size: 13.5px; }
 
@@ -619,7 +698,7 @@
     </header>
 
     <div class="container">
-        <!-- Yönetim Paneli (Kategori Serbest Yazılabilir) -->
+        <!-- Yönetim Paneli -->
         <div id="adminPanel" class="admin-panel">
             <h3>Yönetim Paneli <button class="close-admin" onclick="toggleAdminPanel(false)">Kapat</button></h3>
             <div class="form-grid">
@@ -647,9 +726,7 @@
         </div>
 
         <!-- Dinamik Filtreleme Sekmeleri -->
-        <div class="filter-tabs" id="filterTabsContainer">
-            <!-- JavaScript otomatik olarak ürünlerdeki kategorilere göre sekmeleri buraya dizecek -->
-        </div>
+        <div class="filter-tabs" id="filterTabsContainer"></div>
 
         <!-- Üst Arama ve SSS Butonu -->
         <div class="controls-wrapper">
@@ -727,13 +804,13 @@
                 <p><strong>Hafıza:</strong> <span id="mStorageText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mStorageInput" class="modal-edit-input edit-mode" style="display:none;"></p>
                 <p><strong>Kayıt Durumu:</strong> <span id="mRegText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mRegInput" class="modal-edit-input edit-mode" style="display:none;"></p>
                 <p><strong>Dolar Fiyatı:</strong> <span id="mUsdText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="number" id="mUsdInput" class="modal-edit-input edit-mode" style="display:none;"></p>
-                <p><strong>Güncel Fiyat:</strong> <span id="mPrice" style="color: #38bdf8; font-weight: 800; font-size: 16px;">-</span></p>
+                <p><strong>Güncel Fiyat:</strong> <span id="mPrice" style="color: var(--primary-color); font-weight: 800; font-size: 16px;">-</span></p>
                 <p><strong>Stok Durumu:</strong> <span id="mStockText" class="view-mode" style="color: white; font-weight: 600;">-</span><input type="text" id="mStockInput" class="modal-edit-input edit-mode" style="display:none;"></p>
                 
                 <div class="desc-box">
                     <strong style="color: var(--accent-gold);">Açıklama:</strong>
                     <span id="mDescText" class="view-mode" style="color: var(--text-muted); display:block; margin-top:5px;">Açıklama bulunmuyor.</span>
-                    <textarea id="mDescInput" class="edit-mode" style="display:none; width:100%; height:60px; background:#07090e; border:1px solid var(--border-color); color:white; border-radius:6px; margin-top:5px;"></textarea>
+                    <textarea id="mDescInput" class="edit-mode" style="display:none; width:100%; height:60px; background:rgba(7,9,14,0.9); border:1px solid var(--border-color); color:white; border-radius:8px; margin-top:5px; outline:none;"></textarea>
                 </div>
 
                 <a id="modalOrderBtn" href="#" target="_blank" class="modal-order-btn" onclick="triggerToastAndOrder(event)">📲 Bu Ürünü Hemen Sipariş Ver</a>
@@ -813,11 +890,11 @@
             let tabsContainer = document.getElementById("filterTabsContainer");
             let categories = [...new Set(products.map(p => (p.category || "DİĞER").toUpperCase()))];
 
-            let html = `<button class="filter-tab ${activeCategoryFilter === 'TÜMÜ' ? 'active' : ''}" onclick="filterByCategory('TÜMÜ', this)">Tüm Ürünler</button>`;
+            let html = `<button class="filter-tab ${activeCategoryFilter === 'TÜMÜ' ? 'active' : ''}" onclick="filterByCategory('TÜMÜ', this)">✨ Tüm Ürünler</button>`;
             
             categories.forEach(cat => {
                 let isActive = activeCategoryFilter === cat ? 'active' : '';
-                html += `<button class="filter-tab ${isActive}" onclick="filterByCategory('${cat}', this)">${cat}</button>`;
+                html += `<button class="filter-tab ${isActive}" onclick="filterByCategory('${cat}', this)">📱 ${cat}</button>`;
             });
 
             html += `<button class="filter-tab ${activeCategoryFilter === 'SON ÜRÜN' ? 'active' : ''}" onclick="filterByCategory('SON ÜRÜN', this)">🔥 Son Ürünler</button>`;

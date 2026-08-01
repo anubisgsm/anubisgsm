@@ -898,48 +898,62 @@
             let currentCatName = "";
 
             products.forEach((item, index) => {
+                // Eğer veri bozuksa veya sadece boş kategori girdisiyse atla
+                if (!item) return;
+
                 if (item.category) {
                     currentCatName = item.category;
-                    if (activeCategoryFilter === 'İPHONE' && !currentCatName.includes('İPHONE')) return;
-                    if (activeCategoryFilter === 'SAMSUNG' && !currentCatName.includes('SAMSUNG')) return;
-
-                    let tr = document.createElement("tr");
-                    tr.className = "category-row";
-                    tr.innerHTML = `<td colspan="${isAdmin ? 8 : 7}">${item.category}</td>`;
-                    tbody.appendChild(tr);
-                    return;
+                    return; // Kategorileri burada doğrudan basmıyoruz, ürün varsa başlığını göstereceğiz
                 }
 
-                if (activeCategoryFilter === 'İPHONE' && !currentCatName.includes('İPHONE')) return;
-                if (activeCategoryFilter === 'SAMSUNG' && !currentCatName.includes('SAMSUNG')) return;
-                if (activeCategoryFilter === 'SON ÜRÜN' && !item.stock.includes('SON')) return;
+                // Ürün düzeyinde filtre kontrolleri
+                let matchesCategory = true;
+                if (activeCategoryFilter === 'İPHONE' && !currentCatName.toUpperCase().includes('İPHONE')) matchesCategory = false;
+                if (activeCategoryFilter === 'SAMSUNG' && !currentCatName.toUpperCase().includes('SAMSUNG')) matchesCategory = false;
+                if (activeCategoryFilter === 'SON ÜRÜN' && (!item.stock || !item.stock.toUpperCase().includes('SON'))) matchesCategory = false;
+
+                if (!matchesCategory) return;
+
+                // Eğer bu kategori için henüz başlık basılmadıysa, ürün basılmadan önce kategori başlığını ekle
+                if (currentCatName && !tbody.dataset["cat_" + index]) {
+                    // Kontrol edelim: Bu kategoride listelenecek ürün var mı diye bakmaya gerek yok, başlığı atıyoruz
+                    let headerTr = document.createElement("tr");
+                    headerTr.className = "category-row";
+                    headerTr.innerHTML = `<td colspan="${isAdmin ? 8 : 7}">${currentCatName}</td>`;
+                    tbody.appendChild(headerTr);
+                    // Aynı kategori başlığının üst üste binmesini önlemek için işaretle
+                    tbody.dataset["cat_" + index] = "true";
+                }
 
                 let tr = document.createElement("tr");
                 tr.className = "product-row";
                 tr.onclick = function() { openModal(this, index); };
 
-                let regBadge = item.reg.includes("KAYITSIZ") || item.reg.includes("AİT") 
-                    ? `<span class="badge-orange">${item.reg}</span>` 
-                    : `<span class="badge-green">${item.reg}</span>`;
+                let regVal = item.reg || "KAYITSIZ";
+                let regBadge = regVal.toUpperCase().includes("KAYITSIZ") || regVal.toUpperCase().includes("AİT") 
+                    ? `<span class="badge-orange">${regVal}</span>` 
+                    : `<span class="badge-green">${regVal}</span>`;
 
-                let stockBadge = item.stock.includes("SON") 
-                    ? `<span class="badge-pulse">${item.stock}</span>` 
-                    : `<span class="badge-green">${item.stock}</span>`;
+                let stockVal = item.stock || "HAZIR STOK";
+                let stockBadge = stockVal.toUpperCase().includes("SON") 
+                    ? `<span class="badge-pulse">${stockVal}</span>` 
+                    : `<span class="badge-green">${stockVal}</span>`;
 
-                let waLink = getWhatsAppOrderLink(item.model, item.storage, item.reg);
+                let waLink = getWhatsAppOrderLink(item.model || "Cihaz", item.storage || "", regVal);
                 let orderBtnTd = `<td><a href="${waLink}" target="_blank" class="order-btn-table" onclick="triggerToastAndOrder(event); event.stopPropagation();">📲 Sipariş Ver</a></td>`;
                 let adminButtonTd = isAdmin ? `<td><button class="admin-btn-danger" onclick="deleteProduct(${index}); event.stopPropagation();">Sil</button></td>` : '';
 
                 let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
+                let usdVal = parseFloat(item.usd) || 0;
                 let priceText = currentCurrency === 'TL' 
-                    ? (item.usd * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺"
-                    : item.usd.toLocaleString() + " $";
+                    ? (usdVal * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺"
+                    : usdVal.toLocaleString() + " $";
 
                 tr.innerHTML = `
-                    <td style="font-weight:600;">${item.model}</td>
-                    <td>${item.storage}</td>
+                    <td style="font-weight:600;">${item.model || "İsimsiz Model"}</td>
+                    <td>${item.storage || "-"}</td>
                     <td>${regBadge}</td>
-                    <td><input type="number" class="usd-input" value="${item.usd}" ${isAdmin ? '' : 'readonly'} oninput="updateUsdPrice(${index}, this.value); event.stopPropagation();" onclick="event.stopPropagation()"></td>
+                    <td><input type="number" class="usd-input" value="${usdVal}" ${isAdmin ? '' : 'readonly'} oninput="updateUsdPrice(${index}, this.value); event.stopPropagation();" onclick="event.stopPropagation()"></td>
                     <td class="price-display">${priceText}</td>
                     <td>${stockBadge}</td>
                     ${orderBtnTd}
@@ -964,9 +978,12 @@
             let stock = document.getElementById("newStock").value.trim();
             let desc = document.getElementById("newDesc").value.trim();
 
-            if (cat !== "") {
-                products.push({ category: cat });
-            } else if (model !== "") {
+            // Eğer hem kategori hem model doluysa veya sadece model girildiyse ürünü ekle
+            if (model !== "") {
+                // Eğer yeni bir kategori ismi yazıldıysa önce kategori nesnesini ekle
+                if (cat !== "") {
+                    products.push({ category: cat });
+                }
                 products.push({ 
                     model: model, 
                     storage: storage || "Standart", 
@@ -976,8 +993,11 @@
                     img: "", 
                     desc: desc || "" 
                 });
+            } else if (cat !== "") {
+                // Sadece kategori adı girildiyse
+                products.push({ category: cat });
             } else {
-                alert("Lütfen en azından bir Kategori veya Model adı girin!");
+                alert("Lütfen en azından Model adını doldurun!");
                 return;
             }
 
@@ -1029,26 +1049,28 @@
         function openModal(row, index) {
             activeProductIndex = index;
             let item = products[index];
+            if (!item || item.category) return; // Kategori satırına tıklanırsa modal açma
+
             tempUploadedImage = item.img || "";
 
-            document.getElementById("modalTitle").textContent = item.model + " (" + item.storage + ")";
+            document.getElementById("modalTitle").textContent = (item.model || "Ürün") + " (" + (item.storage || "") + ")";
             document.getElementById("mPrice").textContent = row.querySelector(".price-display").textContent;
 
-            document.getElementById("mModelText").textContent = item.model;
-            document.getElementById("mStorageText").textContent = item.storage;
-            document.getElementById("mRegText").textContent = item.reg;
-            document.getElementById("mUsdText").textContent = item.usd + " $";
-            document.getElementById("mStockText").textContent = item.stock;
+            document.getElementById("mModelText").textContent = item.model || "";
+            document.getElementById("mStorageText").textContent = item.storage || "";
+            document.getElementById("mRegText").textContent = item.reg || "";
+            document.getElementById("mUsdText").textContent = (item.usd || 0) + " $";
+            document.getElementById("mStockText").textContent = item.stock || "";
             document.getElementById("mDescText").textContent = item.desc || "Açıklama bulunmuyor.";
 
-            document.getElementById("mModelInput").value = item.model;
-            document.getElementById("mStorageInput").value = item.storage;
-            document.getElementById("mRegInput").value = item.reg;
-            document.getElementById("mUsdInput").value = item.usd;
-            document.getElementById("mStockInput").value = item.stock;
+            document.getElementById("mModelInput").value = item.model || "";
+            document.getElementById("mStorageInput").value = item.storage || "";
+            document.getElementById("mRegInput").value = item.reg || "";
+            document.getElementById("mUsdInput").value = item.usd || 0;
+            document.getElementById("mStockInput").value = item.stock || "";
             document.getElementById("mDescInput").value = item.desc || "";
 
-            document.getElementById("modalOrderBtn").href = getWhatsAppOrderLink(item.model, item.storage, item.reg);
+            document.getElementById("modalOrderBtn").href = getWhatsAppOrderLink(item.model || "", item.storage || "", item.reg || "");
 
             let viewElements = document.querySelectorAll(".view-mode");
             let editElements = document.querySelectorAll(".edit-mode");

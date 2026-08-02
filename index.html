@@ -32,10 +32,9 @@
                 radial-gradient(circle at 50% 50%, rgba(131, 58, 180, 0.06) 0%, transparent 60%);
             background-attachment: fixed;
             min-height: 100vh;
-            padding-bottom: 70px; /* Mobil alt bar için boşluk */
+            padding-bottom: 70px;
         }
 
-        /* CANLI DUYURU BANDI */
         .marquee-bar {
             background: linear-gradient(90deg, #0284c7, var(--accent-gold), #0284c7);
             background-size: 200% 100%;
@@ -304,16 +303,15 @@
             font-weight: bold;
         }
 
-        /* YATAY KAYDIRILABİLİR MOBİL KATEGORİ HAPLARI */
         .filter-tabs { 
             display: flex; 
             gap: 8px; 
             margin-bottom: 20px; 
             overflow-x: auto; 
             padding-bottom: 5px; 
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
         }
-        .filter-tabs::-webkit-scrollbar { display: none; /* Chrome/Safari */ }
+        .filter-tabs::-webkit-scrollbar { display: none; }
         .filter-tab {
             background: var(--bg-card);
             backdrop-filter: blur(10px);
@@ -355,7 +353,6 @@
             border-radius: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; white-space: nowrap;
         }
 
-        /* 📱 MOBİL İÇİN AKILLI KART (GRID) SİSTEMİ & MASAYAÖZEL TABLO */
         .desktop-table-view { display: block; width: 100%; overflow-x: auto; }
         .mobile-card-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
 
@@ -371,7 +368,6 @@
             .search-box, .faq-open-btn { width: 100%; }
         }
 
-        /* TABLO STİLLERİ (Masaüstü için) */
         .table-wrapper {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -398,7 +394,6 @@
             border-top: 2px solid var(--border-color); border-bottom: 2px solid var(--border-color);
         }
 
-        /* MOBİL ÜRÜN KARTI STİLİ */
         .m-product-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -477,7 +472,6 @@
             align-items: center; gap: 4px; text-decoration: none; white-space: nowrap;
         }
 
-        /* 📲 MOBİL İÇİN SABİT ALT EYLEM ÇUBUĞU (BOTTOM BAR) */
         .mobile-bottom-bar {
             display: none;
             position: fixed;
@@ -514,7 +508,6 @@
         .btn-whatsapp-action { background: var(--whatsapp-color); color: white; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
         .btn-call-action { background: rgba(56, 189, 248, 0.15); color: var(--primary-color); border: 1px solid var(--primary-color); }
 
-        /* TOAST & BİLDİRİM */
         #toast {
             visibility: hidden; min-width: 250px;
             background: linear-gradient(135deg, #059669, #10b981); color: white; text-align: center;
@@ -533,7 +526,6 @@
         }
         .whatsapp-float svg { width: 32px; height: 32px; fill: white; }
 
-        /* MODAL VE DİĞER ORTAK ELEMANLAR */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(12px);
@@ -582,7 +574,6 @@
 
     <div id="toast">İşlem başarıyla gerçekleştirildi! 🚀</div>
 
-    <!-- HIZLI İLETİŞİM SABİT ALT BAR (Sadece Mobilde Görünür) -->
     <div class="mobile-bottom-bar">
         <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="bottom-action-btn btn-whatsapp-action">
             📲 WhatsApp Destek
@@ -628,7 +619,6 @@
     </header>
 
     <div class="container">
-        <!-- Yönetim Paneli -->
         <div id="adminPanel" class="admin-panel">
             <h3>Yönetim Paneli <button class="close-admin" onclick="toggleAdminPanel(false)">Kapat</button></h3>
             <div class="form-grid">
@@ -658,7 +648,6 @@
             </div>
         </div>
 
-        <!-- Yatay Kaydırılabilir Marka/Kategori Hapları -->
         <div class="filter-tabs" id="filterTabsContainer"></div>
 
         <div class="controls-wrapper">
@@ -666,7 +655,6 @@
             <button class="faq-open-btn" onclick="openFaqModal()">❓ Sıkça Sorulan Sorular</button>
         </div>
 
-        <!-- MASAÜSTÜ İÇİN KLASİK TABLO -->
         <div class="table-wrapper desktop-table-view">
             <table id="priceTable">
                 <thead>
@@ -685,11 +673,9 @@
             </table>
         </div>
 
-        <!-- MOBİL İÇİN AKILLI KART (GRID) GÖRÜNÜMÜ -->
         <div class="mobile-card-grid" id="mobileCardContainer"></div>
     </div>
 
-    <!-- ÜRÜN DETAY MODALI -->
     <div id="productDetailModal" class="modal-overlay" onclick="closeProductModal()">
         <div class="modal-card" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -733,7 +719,6 @@
         </div>
     </div>
 
-    <!-- İNDİRİM & KÜLTÜR YARIŞMASI MODALI -->
     <div id="quizModal" class="modal-overlay" onclick="closeQuizModal()">
         <div class="modal-card" style="max-width:500px;" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -766,7 +751,6 @@
         </div>
     </div>
 
-    <!-- SSS MODAL -->
     <div id="faqModal" class="modal-overlay" onclick="closeFaqModal()">
         <div class="modal-card" style="max-width:700px;" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -821,24 +805,34 @@
             }
         }
 
+        // KESİN ÇÖZÜM: Tek ve sabit MASTER depolama anahtarı
+        const MASTER_STORAGE_KEY = "anubis_master_products_2026";
+
         let defaultProducts = [
             { category: "İPHONE", model: "IPHONE 16 PRO MAX", storage: "512GB", reg: 'KAYIT ALICI AİT', usd: 1520, stock: "SON 2 ÜRÜN", desc: "Kutu açılımsız, sıfır kapalı kutu cihaz.", image: "" },
             { category: "SAMSUNG", model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Amiral gemisi S25 Ultra, en güçlü işlemci.", image: "" }
         ];
 
         let products = null;
-        const storageKeys = ["anubis_products_v5", "anubis_products_v4", "anubis_products_v3", "anubis_products", "anubis_gsm_products"];
-        for (let key of storageKeys) {
-            let savedData = localStorage.getItem(key);
-            if (savedData) {
-                try {
-                    let parsed = JSON.parse(savedData);
-                    if (Array.isArray(parsed) && parsed.length > 0) { products = parsed; break; }
-                } catch(e) {}
-            }
+        let savedData = localStorage.getItem(MASTER_STORAGE_KEY);
+
+        if (savedData) {
+            try {
+                let parsed = JSON.parse(savedData);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    products = parsed;
+                }
+            } catch(e) {}
         }
-        if (!products || products.length === 0) products = defaultProducts;
-        localStorage.setItem("anubis_products_v5", JSON.stringify(products));
+
+        if (!products || products.length === 0) {
+            products = defaultProducts;
+            localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products));
+        }
+
+        function saveToStorage() { 
+            localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products)); 
+        }
 
         let isAdmin = false;
         let currentCurrency = 'TL';
@@ -864,7 +858,6 @@
             }
         }
 
-        function saveToStorage() { localStorage.setItem("anubis_products_v5", JSON.stringify(products)); }
         function showToast(text = "İşlem başarılı!") {
             let toast = document.getElementById("toast");
             toast.textContent = text;
@@ -929,13 +922,11 @@
 
                 if (catProducts.length === 0) return;
 
-                // Masaüstü Kategori Satırı
                 let headerTr = document.createElement("tr");
                 headerTr.className = "category-row";
                 headerTr.innerHTML = `<td colspan="${isAdmin ? 8 : 7}">${catName} SERİSİ</td>`;
                 tbody.appendChild(headerTr);
 
-                // Mobilde Kategori Başlığı
                 let mCatTitle = document.createElement("div");
                 mCatTitle.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); font-weight: 800; font-size: 14px; letter-spacing: 1px; margin-top: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;";
                 mCatTitle.textContent = `${catName} SERİSİ`;
@@ -947,7 +938,6 @@
                         ? (usdVal * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺"
                         : usdVal.toLocaleString() + " $";
 
-                    // 1. Masaüstü Tablo Satırı
                     let tr = document.createElement("tr");
                     tr.className = "product-row";
                     tr.onclick = () => openProductModal(item);
@@ -963,7 +953,6 @@
                     `;
                     tbody.appendChild(tr);
 
-                    // 2. Mobil Kart Görünümü (Grid Item)
                     let card = document.createElement("div");
                     card.className = "m-product-card";
                     card.onclick = () => openProductModal(item);

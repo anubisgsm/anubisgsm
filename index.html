@@ -216,6 +216,37 @@
             background: #ef4444; color: white; border: none; padding: 5px 10px;
             border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold;
         }
+        
+        /* Akıllı Yapıştır Kutusu Stili */
+        .smart-paste-box {
+            background: rgba(56, 189, 248, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        .smart-paste-box label {
+            display: block;
+            color: var(--primary-color);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .smart-paste-textarea {
+            width: 100%;
+            background: rgba(7, 9, 14, 0.9);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            resize: vertical;
+            height: 60px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .smart-paste-textarea:focus { border-color: var(--primary-color); }
+
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -249,6 +280,16 @@
         .admin-btn-danger {
             background: #ef4444; color: white; border: none; padding: 5px 10px;
             border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold;
+        }
+        .admin-img-upload-btn {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: bold;
         }
 
         .rate-container {
@@ -333,7 +374,6 @@
             font-weight: 800;
         }
 
-        /* Yeni Eklenen Hızlı Alt Filtreler (Chip Filters) */
         .sub-filter-chips {
             display: flex;
             gap: 6px;
@@ -502,7 +542,6 @@
             align-items: center; gap: 4px; text-decoration: none; white-space: nowrap;
         }
 
-        /* Gelişmiş Mobil Alt Navigasyon Çubuğu */
         .mobile-bottom-bar {
             display: none;
             position: fixed;
@@ -558,7 +597,7 @@
         }
         .whatsapp-float svg { width: 28px; height: 28px; fill: white; }
         @media (max-width: 768px) {
-            .whatsapp-float { display: none; } /* Alt barda WhatsApp olduğu için mobilde gizlendi */
+            .whatsapp-float { display: none; }
         }
 
         .modal-overlay {
@@ -609,7 +648,6 @@
 
     <div id="toast">İşlem başarıyla gerçekleştirildi! 🚀</div>
 
-    <!-- Yeni Nesil Mobil Alt Navigasyon Çubuğu -->
     <div class="mobile-bottom-bar">
         <button class="nav-bar-item active" onclick="triggerHaptic(); filterByCategory('TÜMÜ', null); window.scrollTo({top: 0, behavior: 'smooth'});">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -667,6 +705,13 @@
     <div class="container">
         <div id="adminPanel" class="admin-panel">
             <h3>Yönetim Paneli <button class="close-admin" onclick="triggerHaptic(); toggleAdminPanel(false)">Kapat</button></h3>
+            
+            <!-- Akıllı Metin Yapıştır Kutusu -->
+            <div class="smart-paste-box">
+                <label>⚡ Akıllı Hızlı Yapıştır (Listeyi veya Metni Buraya Yapıştırın):</label>
+                <textarea id="smartPasteInput" class="smart-paste-textarea" placeholder="Örn: İPHONE 16 Pro Max 256GB Kayıtlı 1150$" oninput="parseSmartPaste(this.value)"></textarea>
+            </div>
+
             <div class="form-grid">
                 <input type="text" id="newCategory" placeholder="Kategori (Örn: İPHONE)">
                 <input type="text" id="newModel" placeholder="Model">
@@ -694,10 +739,8 @@
             </div>
         </div>
 
-        <!-- Üst Kategori Sekmeleri -->
         <div class="filter-tabs" id="filterTabsContainer"></div>
 
-        <!-- Hızlı Hafıza / Özellik Alt Filtre Çipleri -->
         <div class="sub-filter-chips" id="subFilterContainer">
             <div class="sub-chip active" onclick="triggerHaptic(); filterBySub('TÜMÜ', this)">Tüm Hafızalar</div>
             <div class="sub-chip" onclick="triggerHaptic(); filterBySub('128GB', this)">128GB</div>
@@ -716,6 +759,7 @@
             <table id="priceTable">
                 <thead>
                     <tr>
+                        <th>GÖRSEL</th>
                         <th>MODEL</th>
                         <th>HAFIZA</th>
                         <th>KAYIT DURUMU</th>
@@ -776,6 +820,24 @@
         </div>
     </div>
 
+    <!-- Resim Ekleme / Güncelleme Modalı -->
+    <div id="imageEditModal" class="modal-overlay" onclick="closeImageEditModal()">
+        <div class="modal-card" style="max-width:400px;" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>📷 Ürün Resmi Güncelle</h3>
+                <button class="close-btn" onclick="closeImageEditModal()">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <p id="imgEditTargetName" style="font-weight:700; margin-bottom:15px; color:var(--accent-gold);"></p>
+                <label class="file-upload-label" style="background:rgba(56,189,248,0.1); border:1px dashed var(--primary-color); padding:20px; border-radius:12px; display:block; margin-bottom:15px;">
+                    📂 Resim Seçmek İçin Tıklayın
+                    <input type="file" id="tableItemImageFile" accept="image/*" onchange="saveImageToProduct(this)">
+                </label>
+                <button class="admin-btn-danger" style="width:100%; padding:10px;" onclick="removeProductImage()">Resmi Kaldır</button>
+            </div>
+        </div>
+    </div>
+
     <div id="quizModal" class="modal-overlay" onclick="closeQuizModal()">
         <div class="modal-card" style="max-width:500px;" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -826,10 +888,9 @@
     </div>
 
     <script>
-        // Haptic Feedback (Dokunmatik Titreşim) Fonksiyonu
         function triggerHaptic() {
             if (window.navigator && window.navigator.vibrate) {
-                window.navigator.vibrate(30); // 30 milisaniye hafif dokunma hissi
+                window.navigator.vibrate(30);
             }
         }
 
@@ -903,6 +964,7 @@
         let activeSubFilter = 'TÜMÜ';
         let activeDetailItem = null;
         let tempUploadedImageBase64 = "";
+        let editingImageIndex = null;
 
         let logoClickCount = 0;
         let logoClickTimer = null;
@@ -972,6 +1034,43 @@
             } catch (e) { document.getElementById("rateUpdateStatus").textContent = "Manuel Kur"; }
         }
 
+        // Akıllı Yapıştır Metin Ayrıştırma Fonksiyonu
+        function parseSmartPaste(text) {
+            if (!text.trim()) return;
+            
+            // Fiyat tespiti ($ veya rakam sonu)
+            let usdMatch = text.match(/(\d+)\s*\$/) || text.match(/\$\s*(\d+)/) || text.match(/(\d{3,4})/);
+            let usdVal = usdMatch ? parseFloat(usdMatch[1] || usdMatch[0]) : "";
+
+            // Hafıza tespiti (örn: 128GB, 256 gb, 1TB vb.)
+            let storageMatch = text.match(/(\d+\s*(?:GB|TB))/i);
+            let storageVal = storageMatch ? storageMatch[1].toUpperCase().replace(/\s+/g, '') : "256GB";
+
+            // Kayıt durumu tespiti
+            let regVal = "KAYITSIZ";
+            let upperText = text.toUpperCase();
+            if (upperText.includes("KAYITLI")) regVal = "KAYITLI";
+            else if (upperText.includes("ALICI") || upperText.includes("AİT")) regVal = "KAYIT ALICI AİT";
+
+            // Kategori tespiti
+            let catVal = "İPHONE";
+            if (upperText.includes("SAMSUNG")) catVal = "SAMSUNG";
+            else if (upperText.includes("XIAOMI")) catVal = "XIAOMI";
+            else if (upperText.includes("HUAWEI")) catVal = "HUAWEI";
+
+            // Model adı (Fiyat ve gereksiz ekleri temizleyerek)
+            let cleanModel = text.replace(/(\d+\s*\$|\$\s*\d+|\d+\s*(?:GB|TB)|KAYITLI|KAYITSIZ|ALICI|AİT)/gi, "").trim();
+            cleanModel = cleanModel.replace(/\s+/g, ' ').toUpperCase();
+
+            // Form alanlarına doldur
+            if (catVal) document.getElementById("newCategory").value = catVal;
+            if (cleanModel) document.getElementById("newModel").value = cleanModel;
+            if (storageVal) document.getElementById("newStorage").value = storageVal;
+            if (regVal) document.getElementById("newReg").value = regVal;
+            if (usdVal) document.getElementById("newUsd").value = usdVal;
+            document.getElementById("newStock").value = "HAZIR STOK";
+        }
+
         function renderTable() {
             renderFilterTabs();
             let tbody = document.getElementById("tableBody");
@@ -989,7 +1088,6 @@
                     if (itemCat !== catName) return false;
                     if (activeCategoryFilter !== 'TÜMÜ' && activeCategoryFilter !== itemCat) return false;
                     
-                    // Alt Chip filtresi kontrolü (Hafıza veya Kayıt durumu eşleşmesi)
                     if (activeSubFilter !== 'TÜMÜ') {
                         let matchStorage = p.storage && p.storage.toUpperCase().includes(activeSubFilter);
                         let matchReg = p.reg && p.reg.toUpperCase().includes(activeSubFilter);
@@ -1003,7 +1101,7 @@
 
                 let headerTr = document.createElement("tr");
                 headerTr.className = "category-row";
-                headerTr.innerHTML = `<td colspan="${isAdmin ? 8 : 7}">${catName} SERİSİ</td>`;
+                headerTr.innerHTML = `<td colspan="${isAdmin ? 9 : 8}">${catName} SERİSİ</td>`;
                 tbody.appendChild(headerTr);
 
                 let mCatTitle = document.createElement("div");
@@ -1021,6 +1119,12 @@
                     tr.className = "product-row";
                     tr.onclick = () => { triggerHaptic(); openProductModal(item); };
                     tr.innerHTML = `
+                        <td>
+                            <div style="width:40px; height:40px; background:rgba(7,9,14,0.6); border-radius:6px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                                ${item.image ? `<img src="${item.image}" style="width:100%; height:100%; object-fit:contain;">` : `<span style="font-size:9px; color:var(--text-muted)">Yok</span>`}
+                            </div>
+                            ${isAdmin ? `<button class="admin-img-upload-btn" style="margin-top:4px;" onclick="event.stopPropagation(); openImageEditModal(${item.originalIndex})">Resim Ekle</button>` : ''}
+                        </td>
                         <td style="font-weight:600;">${item.model}</td>
                         <td>${item.storage || "-"}</td>
                         <td><span class="badge-orange">${item.reg || "KAYITSIZ"}</span></td>
@@ -1043,6 +1147,7 @@
                         <div class="m-card-img">
                             ${item.image ? `<img src="${item.image}" alt="${item.model}">` : `<span style="color:var(--text-muted); font-size:11px;">Görsel Yok</span>`}
                         </div>
+                        ${isAdmin ? `<button class="admin-img-upload-btn" onclick="event.stopPropagation(); openImageEditModal(${item.originalIndex})">📷 Resmi Düzenle / Ekle</button>` : ''}
                         <div class="m-card-details">
                             <div class="m-detail-box">
                                 <div class="m-detail-label">Hafıza</div>
@@ -1073,6 +1178,39 @@
                 let reader = new FileReader();
                 reader.onload = function(e) { tempUploadedImageBase64 = e.target.result; };
                 reader.readAsDataURL(file);
+            }
+        }
+
+        // Sonradan resim ekleme/düzenleme fonksiyonları
+        function openImageEditModal(idx) {
+            editingImageIndex = idx;
+            document.getElementById("imgEditTargetName").textContent = products[idx].model + " (" + (products[idx].storage || "") + ")";
+            document.getElementById("imageEditModal").style.display = "flex";
+        }
+        function closeImageEditModal() {
+            document.getElementById("imageEditModal").style.display = "none";
+            editingImageIndex = null;
+        }
+        function saveImageToProduct(input) {
+            if (input.files && input.files[0] && editingImageIndex !== null) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    products[editingImageIndex].image = e.target.result;
+                    saveToStorage();
+                    renderTable();
+                    closeImageEditModal();
+                    showToast("Ürün resmi başarıyla güncellendi! 📷");
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        function removeProductImage() {
+            if (editingImageIndex !== null) {
+                products[editingImageIndex].image = "";
+                saveToStorage();
+                renderTable();
+                closeImageEditModal();
+                showToast("Ürün resmi kaldırıldı.");
             }
         }
 
@@ -1122,6 +1260,9 @@
                 products.push({ category: cat, model: model, storage: storage, reg: reg, usd: usd, stock: stock, desc: desc, image: image });
                 saveToStorage();
                 renderTable();
+                
+                // Formu ve Smart Paste kutusunu temizle
+                document.getElementById("smartPasteInput").value = "";
                 document.getElementById("newCategory").value = "";
                 document.getElementById("newModel").value = "";
                 document.getElementById("newStorage").value = "";

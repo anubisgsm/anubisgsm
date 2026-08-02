@@ -858,11 +858,28 @@
             { category: "SAMSUNG", model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Amiral gemisi S25 Ultra, en güçlü işlemci.", image: "" }
         ];
 
-        let products = JSON.parse(localStorage.getItem("anubis_products_v5"));
+        // ESKİ VERİLERİN KAYBOLMAMASI İÇİN AKILLI KONTROL (KÖPRÜ)
+        let products = null;
+        const storageKeys = ["anubis_products_v5", "anubis_products_v4", "anubis_products_v3", "anubis_products", "anubis_gsm_products"];
+        
+        for (let key of storageKeys) {
+            let savedData = localStorage.getItem(key);
+            if (savedData) {
+                try {
+                    let parsed = JSON.parse(savedData);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        products = parsed;
+                        break;
+                    }
+                } catch(e) {}
+            }
+        }
+
         if (!products || products.length === 0) {
             products = defaultProducts;
-            localStorage.setItem("anubis_products_v5", JSON.stringify(defaultProducts));
         }
+        // En güncel anahtar altında sabitleyelim
+        localStorage.setItem("anubis_products_v5", JSON.stringify(products));
 
         let isAdmin = false;
         let currentCurrency = 'TL';
@@ -1111,6 +1128,7 @@
         window.onload = function() {
             fetchLiveExchangeRate();
             triggerLiveNotificationLoop();
+            renderTable();
         };
     </script>
 </body>

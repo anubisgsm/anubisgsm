@@ -1,27 +1,18 @@
-@@ -1,1001 +1,1340 @@
 <!DOCTYPE html>
 <html lang="tr" data-theme="dark">
-<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ANUBIS GSM - Fiyat Listesi</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <title>ANUBIS GSM | Premium Teknoloji Marketi</title>
     <style>
         :root {
             --bg-main: #070914;
             --bg-card: #0f172a;
             --bg-card-hover: #1e293b;
             --border-color: rgba(255, 255, 255, 0.08);
-            --bg-deep: #05070a;
-            --bg-card: rgba(15, 23, 42, 0.75);
-            --bg-glass: rgba(15, 23, 42, 0.9);
             --primary-color: #38bdf8;
             --primary-hover: #0ea5e9;
-            --primary-glow: rgba(56, 189, 248, 0.25);
-            --accent-gold: #f59e0b;
-            --accent-gold-glow: rgba(245, 158, 11, 0.4);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent-green: #22c55e;
@@ -31,27 +22,13 @@
             --radius-md: 12px;
             --radius-sm: 8px;
             --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --whatsapp-color: #25d366;
-            --instagram-color: #e1306c;
         }
 
         * {
             box-sizing: border-box;
-        body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-deep);
-            color: var(--text-main);
             margin: 0;
             padding: 0;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(131, 58, 180, 0.06) 0%, transparent 60%);
-            background-attachment: fixed;
-            min-height: 100vh;
-            padding-bottom: 90px;
         }
 
         body {
@@ -61,23 +38,6 @@
             padding: 20px;
             display: flex;
             justify-content: center;
-        .marquee-bar {
-            background: linear-gradient(90deg, #0284c7, var(--accent-gold), #0284c7);
-            background-size: 200% 100%;
-            animation: gradientMove 6s linear infinite;
-            color: #07090e;
-            font-weight: 800;
-            font-size: 13px;
-            padding: 8px 0;
-            text-align: center;
-            letter-spacing: 1px;
-            overflow: hidden;
-            white-space: nowrap;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-        }
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
         }
 
         .container {
@@ -86,22 +46,10 @@
             display: flex;
             flex-direction: column;
             gap: 24px;
-        header {
-            background: linear-gradient(135deg, rgba(9, 13, 22, 0.9) 0%, rgba(17, 27, 46, 0.9) 100%);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            color: white;
-            padding: 25px 20px;
-            text-align: center;
-            border-bottom: 2px solid var(--accent-gold);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            position: relative;
-            overflow: hidden;
         }
 
         /* Header */
         .header {
-        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -110,24 +58,14 @@
             padding: 16px 24px;
             border-radius: var(--radius-lg);
             backdrop-filter: blur(10px);
-            justify-content: space-between;
-            position: relative;
-            max-width: 1250px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-            gap: 20px;
         }
 
         .logo-area {
             display: flex;
             align-items: center;
             gap: 12px;
-            justify-content: center;
-            gap: 15px;
             cursor: pointer;
             user-select: none;
-            margin: 0 auto;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .logo-icon {
@@ -141,131 +79,47 @@
             font-weight: 800;
             font-size: 20px;
             color: #000;
-        .logo-area:hover { transform: scale(1.03); }
-        .logo-area img {
-            height: 80px;
-            width: auto;
-            filter: drop-shadow(0 0 25px var(--accent-gold-glow));
         }
 
         .logo-text h1 {
             font-size: 18px;
-        header h1 {
-            margin: 0;
-            font-size: 32px;
-            letter-spacing: 3px;
-            color: var(--accent-gold);
             font-weight: 800;
             letter-spacing: 0.5px;
-            text-shadow: 0 2px 20px var(--accent-gold-glow);
-            text-align: left;
         }
 
         .logo-text span {
             font-size: 12px;
-        header p.subtitle {
-            margin: 4px 0 0 0;
-            font-size: 13px;
             color: var(--text-muted);
             font-weight: 500;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-align: left;
-            font-weight: 600;
-        }
-        header p.slogan {
-            margin: 4px 0 0 0;
-            font-size: 12px;
-            color: var(--primary-color);
-            font-style: italic;
-            letter-spacing: 0.5px;
-            text-align: left;
-            text-shadow: 0 0 10px var(--primary-glow);
         }
 
         .header-actions {
-        .header-right-area {
             display: flex;
-            flex-direction: column;
             gap: 10px;
-            align-items: flex-end;
-        }
-
-        .instagram-badge {
-            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 13px;
-            box-shadow: 0 4px 20px rgba(225, 48, 108, 0.4);
-            transition: all 0.3s ease;
-            white-space: nowrap;
         }
-        .instagram-badge svg { width: 18px; height: 18px; fill: white; }
 
         .action-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
-        .top-tools-bar { display: flex; gap: 8px; }
-        .utility-btn {
-            background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(5px);
             color: var(--text-main);
             padding: 8px 14px;
             border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 10px;
-            font-size: 11.5px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .utility-btn:hover { 
-            background: rgba(51, 65, 85, 0.9); 
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .discount-pulse-btn {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #07090e;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-weight: 800;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
-            box-shadow: 0 0 20px var(--accent-gold-glow);
-            animation: discountGlow 2s infinite alternate;
-            display: inline-flex;
             align-items: center;
             gap: 6px;
-            text-decoration: none;
-        }
-        @keyframes discountGlow {
-            0% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
-            100% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.8); }
         }
 
         .action-btn:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: var(--primary-color);
-        .container {
-            max-width: 1250px;
-            margin: 25px auto;
-            padding: 0 15px;
         }
 
-        /* Yönetim Paneli (Modern Modal/Drawer Entegrasyonu) */
+        /* Yönetim Paneli */
         .admin-panel {
             display: none;
             background: var(--bg-card);
@@ -278,13 +132,6 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
-            background: var(--bg-glass);
-            backdrop-filter: blur(16px);
-            border: 2px dashed var(--accent-gold);
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
         .admin-title {
@@ -292,74 +139,25 @@
             font-weight: 700;
             margin-bottom: 16px;
             color: var(--primary-color);
-        .admin-panel h3 {
-            margin-top: 0;
-            color: var(--accent-gold);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 15px;
         }
-        .close-admin {
-            background: #ef4444; color: white; border: none; padding: 5px 10px;
-            border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold;
-        }
-        
-        /* Akıllı Yapıştır Kutusu Stili */
-        .smart-paste-box {
-            background: rgba(56, 189, 248, 0.05);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
-        .smart-paste-box label {
-            display: block;
-            color: var(--primary-color);
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-        .smart-paste-textarea {
-            width: 100%;
-            background: rgba(7, 9, 14, 0.9);
-            border: 1px solid var(--border-color);
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 12.5px;
-            resize: vertical;
-            height: 80px;
-            outline: none;
-            box-sizing: border-box;
-        }
-        .smart-paste-textarea:focus { border-color: var(--primary-color); }
 
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 12px;
             margin-bottom: 16px;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 10px;
-            margin-bottom: 12px;
         }
 
         .form-grid input, .form-grid select {
             background: var(--bg-main);
-        .form-grid input, .form-grid label.file-upload-label {
-            padding: 10px 12px;
-            background: rgba(7, 9, 14, 0.8);
             border: 1px solid var(--border-color);
             padding: 10px 14px;
             border-radius: var(--radius-sm);
             color: var(--text-main);
             font-size: 13px;
-            color: white;
-            border-radius: 10px;
-            font-size: 12.5px;
             outline: none;
         }
 
@@ -368,7 +166,6 @@
         }
 
         .color-picker-group {
-        .file-upload-label {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -389,15 +186,10 @@
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            justify-content: center;
-            gap: 6px;
             cursor: pointer;
             background: none;
-            color: var(--text-muted);
-            font-weight: 600;
         }
 
-        .form-grid input[type="file"] { display: none; }
         .admin-btn {
             background: var(--primary-color);
             color: #000;
@@ -408,35 +200,14 @@
             font-size: 13px;
             cursor: pointer;
             transition: var(--transition);
-            background: linear-gradient(135deg, #059669, #10b981);
-            color: white; border: none; padding: 10px 20px; border-radius: 10px;
-            font-weight: bold; cursor: pointer; width: 100%;
         }
 
         .admin-btn:hover {
             background: var(--primary-hover);
-        .admin-btn-danger {
-            background: #ef4444; color: white; border: none; padding: 5px 10px;
-            border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold;
-        }
-        .admin-img-upload-btn {
-            background: rgba(56, 189, 248, 0.15);
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 11px;
-            cursor: pointer;
-            font-weight: bold;
         }
 
         /* Kur ve Bilgi Kutusu */
         .rate-container {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
-            padding: 15px 20px;
-            border-radius: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -444,7 +215,6 @@
             border: 1px solid var(--border-color);
             padding: 14px 20px;
             border-radius: var(--radius-md);
-            margin-bottom: 20px;
             flex-wrap: wrap;
             gap: 12px;
         }
@@ -455,9 +225,6 @@
             gap: 10px;
             font-size: 13px;
             font-weight: 600;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--accent-gold);
         }
 
         .rate-input {
@@ -465,44 +232,28 @@
             background: var(--bg-main);
             border: 1px solid var(--border-color);
             color: var(--primary-color);
-            width: 100px;
             padding: 6px 10px;
             border-radius: var(--radius-sm);
             font-weight: 700;
-            font-size: 15px;
-            border: 2px solid var(--accent-gold);
-            border-radius: 8px;
             text-align: center;
-            font-weight: bold;
-            background: rgba(7, 9, 14, 0.9);
-            color: var(--accent-gold);
-            outline: none;
         }
 
         .update-date {
             font-size: 12px;
             color: var(--text-muted);
-            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 10px;
-            gap: 8px;
         }
 
         .refresh-rate-btn {
             background: none;
             border: none;
-            background: rgba(56, 189, 248, 0.15);
             color: var(--primary-color);
             font-size: 12px;
             font-weight: 700;
-            border: 1px solid var(--primary-color);
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 11px;
             cursor: pointer;
             text-decoration: underline;
-            font-weight: bold;
         }
 
         /* Filtre Sekmeleri */
@@ -511,67 +262,38 @@
             gap: 8px;
             overflow-x: auto;
             padding-bottom: 4px;
-        .filter-tabs { 
-            display: flex; 
-            gap: 8px; 
-            margin-bottom: 12px; 
-            overflow-x: auto; 
-            padding-bottom: 5px; 
-            scrollbar-width: none;
         }
 
-        .filter-tabs::-webkit-scrollbar { display: none; }
         .filter-tab {
             background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            color: var(--text-muted);
             border: 1px solid var(--border-color);
             padding: 8px 18px;
             border-radius: var(--radius-sm);
-            padding: 10px 18px;
-            border-radius: 12px;
             font-size: 13px;
             font-weight: 600;
-            font-weight: 700;
             cursor: pointer;
             white-space: nowrap;
             transition: var(--transition);
-            transition: all 0.2s ease;
         }
 
         .filter-tab.active, .filter-tab:hover {
             background: var(--primary-color);
             color: #000;
-        .filter-tab.active {
-            background: linear-gradient(135deg, #0284c7, var(--primary-color));
-            color: #07090e;
             border-color: var(--primary-color);
-            box-shadow: 0 0 15px var(--primary-glow);
-            font-weight: 800;
         }
 
         .sub-filter-chips {
             display: flex;
             gap: 6px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-            scrollbar-width: none;
         }
 
-        .sub-filter-chips::-webkit-scrollbar { display: none; }
         .sub-chip {
             background: rgba(255, 255, 255, 0.03);
-            background: rgba(30, 41, 59, 0.6);
-            color: var(--text-muted);
             border: 1px solid var(--border-color);
             padding: 4px 12px;
-            padding: 6px 14px;
             border-radius: 20px;
             font-size: 12px;
             color: var(--text-muted);
-            font-size: 11.5px;
-            font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
         }
@@ -580,47 +302,27 @@
             color: var(--text-main);
             border-color: var(--text-muted);
             background: rgba(255, 255, 255, 0.06);
-            white-space: nowrap;
-            transition: all 0.2s;
         }
 
         .controls-wrapper {
             display: flex;
             gap: 12px;
             align-items: center;
-        .sub-chip.active {
-            background: var(--accent-gold);
-            color: #07090e;
-            border-color: var(--accent-gold);
-            font-weight: 700;
-            box-shadow: 0 0 10px var(--accent-gold-glow);
         }
 
-        .controls-wrapper { display: flex; gap: 12px; margin-bottom: 20px; align-items: center; flex-wrap: wrap; }
         .search-box {
             flex: 1;
-            min-width: 220px;
-            padding: 14px 20px;
-            font-size: 14px;
             background: var(--bg-card);
-            backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             padding: 12px 18px;
             border-radius: var(--radius-md);
             color: var(--text-main);
             font-size: 14px;
-            color: white;
-            border-radius: 14px;
             outline: none;
         }
 
         .search-box:focus {
             border-color: var(--primary-color);
-        .search-box:focus { border-color: var(--accent-gold); box-shadow: 0 0 15px var(--accent-gold-glow); }
-        .faq-open-btn {
-            background: linear-gradient(135deg, #0284c7, #0ea5e9);
-            color: white; border: none; padding: 14px 20px; font-size: 14px; font-weight: 700;
-            border-radius: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; white-space: nowrap;
         }
 
         .faq-open-btn {
@@ -633,28 +335,11 @@
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
-        .desktop-table-view { display: block; width: 100%; overflow-x: auto; }
-        .mobile-card-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
-
-        @media (max-width: 768px) {
-            .desktop-table-view { display: none !important; }
-            .mobile-card-grid { display: grid !important; }
-            header { padding: 15px 10px; }
-            .header-content { flex-direction: column; text-align: center; gap: 12px; }
-            .logo-area img { height: 65px; }
-            header h1 { font-size: 24px; text-align: center; }
-            .header-right-area { align-items: center; width: 100%; }
-            .controls-wrapper { flex-direction: column; }
-            .search-box, .faq-open-btn { width: 100%; }
         }
 
-        /* Tablo Görünümü (Masaüstü) */
+        /* Tablo Görünümü */
         .desktop-table-view {
-        .table-wrapper {
             background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
             overflow: hidden;
@@ -671,13 +356,10 @@
             font-size: 13px;
         }
 
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; }
-        th, td { padding: 15px 18px; border-bottom: 1px solid var(--border-color); }
         th {
             background: rgba(255, 255, 255, 0.02);
             padding: 14px 16px;
             font-weight: 700;
-            background-color: rgba(9, 13, 22, 0.95);
             color: var(--text-muted);
             border-bottom: 1px solid var(--border-color);
         }
@@ -742,11 +424,8 @@
             padding: 4px 8px;
             border-radius: 4px;
             cursor: pointer;
-            text-transform: uppercase;
             font-size: 11px;
             font-weight: 600;
-            letter-spacing: 1.2px;
-            font-weight: 700;
         }
 
         .admin-inline-btn.delete { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
@@ -756,30 +435,18 @@
             display: none;
             grid-template-columns: 1fr;
             gap: 12px;
-        .product-row { cursor: pointer; transition: background-color 0.15s ease; }
-        .product-row:hover { background-color: rgba(56, 189, 248, 0.04); }
-        .category-row {
-            background-color: rgba(5, 8, 15, 0.95) !important;
-            color: var(--accent-gold); font-weight: 800; font-size: 14px; letter-spacing: 1.5px;
-            border-top: 2px solid var(--border-color); border-bottom: 2px solid var(--border-color);
         }
 
         .m-product-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
-            border-radius: 16px;
             padding: 16px;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.2s;
         }
 
-        .m-product-card:active { transform: scale(0.98); }
         .m-card-header {
             display: flex;
             justify-content: space-between;
@@ -789,7 +456,6 @@
         .m-card-title {
             font-size: 15px;
             font-weight: 700;
-            align-items: flex-start;
         }
 
         .m-card-body {
@@ -798,16 +464,11 @@
             align-items: center;
         }
 
-        .m-card-title { font-size: 16px; font-weight: 800; color: white; margin: 0; }
         .m-card-img {
             width: 60px;
             height: 60px;
             background: var(--bg-main);
             border-radius: var(--radius-sm);
-            width: 100%;
-            height: 140px;
-            background: rgba(7, 9, 14, 0.6);
-            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -816,54 +477,29 @@
             border: 1px solid var(--border-color);
         }
 
-        .m-card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .m-card-img img { width: 100%; height: 100%; object-fit: contain; }
         .m-card-details {
             flex: 1;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
             font-size: 12px;
-            font-size: 12.5px;
         }
 
         .m-detail-label { color: var(--text-muted); }
         .m-detail-val { font-weight: 700; }
 
-        .m-detail-box {
-            background: rgba(30, 41, 59, 0.4);
-            padding: 8px 10px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-        .m-detail-label { color: var(--text-muted); font-size: 10px; text-transform: uppercase; font-weight: 700; }
-        .m-detail-val { color: white; font-weight: 700; margin-top: 2px; }
         .m-card-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid var(--border-color);
-            margin-top: 4px;
             padding-top: 10px;
-            border-top: 1px solid var(--border-color);
         }
 
         .m-price {
             font-size: 18px;
             font-weight: 800;
             color: var(--primary-color);
-        .m-price { font-size: 18px; font-weight: 800; color: var(--primary-color); text-shadow: 0 0 10px var(--primary-glow); }
-        .m-order-btn {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white; border: none; padding: 10px 16px; border-radius: 10px;
-            font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none;
-            display: inline-flex; align-items: center; gap: 6px;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
         }
 
         .m-order-btn {
@@ -874,14 +510,7 @@
             font-weight: 700;
             font-size: 12px;
             text-decoration: none;
-        .badge-green { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; }
-        .badge-orange { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; }
-
-        .usd-input {
-            width: 75px; padding: 6px; font-size: 13px; font-weight: bold;
-            background: rgba(7, 9, 14, 0.9); border: 1px solid var(--border-color); color: white; border-radius: 8px; text-align: center; outline: none;
         }
-        .price-display { font-weight: 800; color: var(--primary-color); font-size: 14.5px; text-shadow: 0 0 10px var(--primary-glow); }
 
         /* Toast Bildirim */
         #toast {
@@ -901,37 +530,20 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             transition: visibility 0.3s, opacity 0.3s;
             opacity: 0;
-        .order-btn-table {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white; border: none; padding: 6px 12px; border-radius: 8px;
-            font-size: 11.5px; font-weight: 700; cursor: pointer; display: inline-flex;
-            align-items: center; gap: 4px; text-decoration: none; white-space: nowrap;
         }
         #toast.show { visibility: visible; opacity: 1; }
 
         /* Modal Ortak */
         .modal-overlay {
-        .mobile-bottom-bar {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.7);
             backdrop-filter: blur(5px);
             justify-content: center;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(9, 13, 22, 0.98);
-            backdrop-filter: blur(16px);
-            border-top: 1px solid var(--border-color);
-            padding: 8px 12px;
-            box-sizing: border-box;
-            z-index: 997;
-            justify-content: space-around;
             align-items: center;
             z-index: 999;
             padding: 20px;
-            box-shadow: 0 -10px 25px rgba(0,0,0,0.6);
         }
 
         .modal-card {
@@ -942,58 +554,26 @@
             max-width: 450px;
             overflow: hidden;
             animation: fadeIn 0.2s ease;
-        @media (max-width: 768px) {
-            .mobile-bottom-bar { display: flex; }
         }
 
         .modal-header {
             padding: 16px 20px;
             border-bottom: 1px solid var(--border-color);
-        .nav-bar-item {
             display: flex;
             justify-content: space-between;
-            flex-direction: column;
             align-items: center;
         }
 
         .close-btn {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 10.5px;
-            font-weight: 700;
-            gap: 3px;
             background: none;
             border: none;
             color: var(--text-muted);
             font-size: 20px;
             cursor: pointer;
-            transition: color 0.2s;
         }
-        .nav-bar-item.active, .nav-bar-item:hover { color: var(--primary-color); }
-        .nav-bar-item svg { width: 20px; height: 20px; fill: currentColor; }
-        .nav-bar-whatsapp { color: var(--whatsapp-color); }
 
         .modal-body {
             padding: 20px;
-        #toast {
-            visibility: hidden; min-width: 250px;
-            background: linear-gradient(135deg, #059669, #10b981); color: white; text-align: center;
-            border-radius: 12px; padding: 12px 18px; position: fixed; z-index: 2000;
-            left: 50%; bottom: 90px; transform: translateX(-50%) translateY(20px);
-            font-size: 13.5px; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); opacity: 0;
-        }
-        #toast.show { visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0); }
-
-        .whatsapp-float {
-            position: fixed; bottom: 85px; right: 20px; background-color: var(--whatsapp-color);
-            color: white; width: 50px; height: 50px; border-radius: 50%; display: flex;
-            align-items: center; justify-content: center; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
-            z-index: 996; text-decoration: none; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .whatsapp-float svg { width: 28px; height: 28px; fill: white; }
-        @media (max-width: 768px) {
-            .whatsapp-float { display: none; }
         }
 
         @media (max-width: 768px) {
@@ -1001,44 +581,7 @@
             .mobile-card-grid { display: grid; }
             body { padding: 10px; }
             .header { padding: 12px 16px; }
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(12px);
-            justify-content: center; align-items: center; z-index: 2500; padding: 15px; box-sizing: border-box;
         }
-        .modal-card {
-            background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(7, 11, 20, 0.98));
-            backdrop-filter: blur(25px); width: 100%;
-            max-width: 540px; border-radius: 22px; box-shadow: 0 30px 70px rgba(0,0,0,0.8);
-            overflow: hidden; border: 1px solid rgba(56, 189, 248, 0.3); border-top: 4px solid var(--primary-color);
-        }
-        .modal-header {
-            background: rgba(9, 13, 22, 0.95); color: var(--primary-color); padding: 18px 25px;
-            display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);
-        }
-        .modal-header h3 { margin: 0; font-size: 18px; font-weight: 800; }
-        .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
-        .modal-body { padding: 25px; font-size: 14px; color: var(--text-main); }
-
-        .glorious-card-content { display: flex; flex-direction: column; gap: 16px; }
-        .glorious-img-container {
-            width: 100%; height: 180px; background: rgba(7, 9, 14, 0.8);
-            border-radius: 12px; border: 1px solid var(--border-color);
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
-        }
-        .glorious-img-container img { width: 100%; height: 100%; object-fit: contain; }
-        .glorious-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .glorious-info-box { background: rgba(30, 41, 59, 0.4); border: 1px solid var(--border-color); padding: 12px; border-radius: 12px; }
-        .glorious-info-title { font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
-        .glorious-info-value { font-size: 15px; font-weight: 800; color: white; margin-top: 3px; }
-        .glorious-price-box { background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(2, 132, 199, 0.2)); border: 2px solid var(--primary-color); border-radius: 14px; padding: 16px; text-align: center; }
-        .glorious-actions { display: flex; gap: 10px; }
-        .glorious-btn-primary { flex: 1; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 14px; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .glorious-btn-secondary { background: rgba(30, 41, 59, 0.8); color: var(--text-main); border: 1px solid var(--border-color); padding: 14px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; }
-
-        .quiz-step { display: none; }
-        .quiz-step.active { display: block; }
-        .quiz-option-btn { display: block; width: 100%; background: rgba(30, 41, 59, 0.8); border: 1px solid var(--border-color); color: white; padding: 12px; border-radius: 10px; margin-bottom: 8px; text-align: left; font-weight: 600; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -1050,86 +593,22 @@
             <div class="logo-area" onclick="handleLogoClick()">
                 <div class="logo-icon">A</div>
                 <div class="logo-text">
-    <div class="marquee-bar">
-        🚀 ANUBIS GSM Premium Teknoloji Marketi • En Güncel Fiyatlar ve Sınırlı Stok Fırsatları • Güvenilir Alışverişin Adresi ✨
-    </div>
-
-    <div id="toast">İşlem başarıyla gerçekleştirildi! 🚀</div>
-
-    <div class="mobile-bottom-bar">
-        <button class="nav-bar-item active" onclick="triggerHaptic(); filterByCategory('TÜMÜ', null); window.scrollTo({top: 0, behavior: 'smooth'});">
-            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            Ana Sayfa
-        </button>
-        <button class="nav-bar-item" onclick="triggerHaptic(); document.getElementById('searchInput').focus();">
-            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            Arama
-        </button>
-        <button class="nav-bar-item" onclick="triggerHaptic(); openQuizModal();">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-            İndirim
-        </button>
-        <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="nav-bar-item nav-bar-whatsapp" onclick="triggerHaptic()">
-            <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/></svg>
-            WhatsApp
-        </a>
-    </div>
-
-    <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" title="WhatsApp ile İletişime Geç">
-        <svg viewBox="0 0 24 24">
-            <path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/>
-        </svg>
-    </a>
-
-    <header>
-        <div class="header-content">
-            <div class="logo-area" onclick="triggerHaptic(); handleLogoClick()" title="ANUBIS GSM">
-                <img src="logo.png" alt="ANUBIS GSM Logo" onerror="this.style.display='none'">
-                <div>
                     <h1>ANUBIS GSM</h1>
                     <span>Özel Fiyat Listesi</span>
-                    <p class="subtitle">Premium Teknoloji Marketi</p>
-                    <p class="slogan">"Cüzdanınızı ağlatmayan, yüzünüzü güldüren teknoloji adresi 🚀"</p>
                 </div>
             </div>
             <div class="header-actions">
                 <button class="action-btn" onclick="triggerHaptic(); openQuizModal()">🎁 Çark / Kupon</button>
                 <button class="action-btn" id="adminToggleBtn" onclick="triggerHaptic(); toggleAdminPanel()" style="display:none;">⚙️ Yönetim</button>
-
-            <div class="header-right-area">
-                <button class="discount-pulse-btn" onclick="triggerHaptic(); openQuizModal()">
-                    🎯 200 TL İndirim Kazan!
-                </button>
-                <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge" onclick="triggerHaptic()">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
-                    @anubisgsm
-                </a>
-                <div class="top-tools-bar">
-                    <button class="utility-btn" onclick="triggerHaptic(); toggleCurrencyMode()">Para Birimi: <span id="currencyModeLabel">TL (₺)</span></button>
-                    <button class="utility-btn" onclick="triggerHaptic(); toggleTheme()">Tema Değiştir</button>
-                </div>
             </div>
         </header>
-        </div>
-    </header>
 
-        <!-- Yönetim Paneli (Açılır/Kapanır ve Pratik Entegrasyon) -->
+        <!-- Yönetim Paneli -->
         <div class="admin-panel" id="adminPanel">
             <div class="admin-title">
                 <span>⚙️ Hızlı Ürün & Entegrasyon Paneli (Aktif)</span>
                 <button class="action-btn" style="padding:4px 8px; font-size:11px;" onclick="toggleAdminPanel(false)">Kapat</button>
-    <div class="container">
-        <div id="adminPanel" class="admin-panel">
-            <h3>Yönetim Paneli <button class="close-admin" onclick="triggerHaptic(); toggleAdminPanel(false)">Kapat</button></h3>
-            
-            <!-- Akıllı Metin Yapıştır Kutusu -->
-            <div class="smart-paste-box">
-                <label>⚡ Akıllı Hızlı Yapıştır (Toplu Fiyat Listesini Buraya Yapıştırın):</label>
-                <textarea id="smartPasteInput" class="smart-paste-textarea" placeholder="Örn:&#10;İPHONE 16 Pro Max 256GB Kayıtlı 1150$&#10;SAMSUNG S25 Ultra 12/512GB Kayıtsız 1200$" oninput="parseSmartPaste(this.value)"></textarea>
             </div>
-
             <div class="form-grid">
                 <input type="text" id="newCategory" placeholder="Kategori (Örn: İPHONE)">
                 <input type="text" id="newModel" placeholder="Model Adı (Örn: 16 Pro Max)">
@@ -1142,20 +621,8 @@
                     <input type="color" id="newColorHex" value="#38bdf8">
                     <input type="text" id="newColorName" placeholder="Renk Adı" style="border:none; background:transparent; width:70px; color:var(--text-main); font-size:12px;">
                 </div>
-                <input type="text" id="newCategory" placeholder="Kategori (Örn: APPLE)">
-                <input type="text" id="newModel" placeholder="Model">
-                <input type="text" id="newStorage" placeholder="Hafıza">
-                <input type="text" id="newReg" placeholder="Kayıt Durumu">
-                <input type="number" id="newUsd" placeholder="Dolar ($)">
-                <input type="text" id="newStock" placeholder="Stok">
-                <input type="text" id="newDesc" placeholder="Açıklama">
-                <label class="file-upload-label" for="newImageFile">
-                    📷 <span id="fileNameLabel">Resim Seç</span>
-                </label>
-                <input type="file" id="newImageFile" accept="image/*" onchange="handleFileSelect(this)">
             </div>
             <button class="admin-btn" onclick="triggerHaptic(); addNewProduct()">➕ Listeye Yeni Ürün Ekle</button>
-            <button class="admin-btn" onclick="triggerHaptic(); addNewProduct()">Listeye Ürün Ekle</button>
         </div>
 
         <!-- Kur ve Bilgi Kutusu -->
@@ -1163,14 +630,10 @@
             <div class="rate-box">
                 <span>Dolar Kuru (USD/TRY):</span>
                 <input type="number" id="usdRateInput" class="rate-input" value="43.169" step="0.001" oninput="updateUsdRate(this.value)">
-                <span>KUR (USD/TRY):</span>
-                <input type="number" id="dollarRate" class="rate-input" value="43.169" step="0.001" oninput="renderTable()">
             </div>
             <div class="update-date">
                 <span>Son Güncelleme: <b id="lastUpdateText">2.08.2026 21:19</b></span>
                 <button class="refresh-rate-btn" onclick="triggerHaptic(); fetchLiveExchangeRate()">Canlı Kur Çek</button>
-                <span id="rateUpdateStatus">Kur Canlı Çekiliyor...</span>
-                <button class="refresh-rate-btn" onclick="triggerHaptic(); fetchLiveExchangeRate()">Güncelle</button>
             </div>
         </div>
 
@@ -1180,27 +643,17 @@
             <div class="filter-tab" onclick="triggerHaptic(); filterByCategory('İPHONE', this)">İPHONE</div>
             <div class="filter-tab" onclick="triggerHaptic(); filterByCategory('SAMSUNG', this)">SAMSUNG</div>
         </div>
-        <div class="filter-tabs" id="filterTabsContainer"></div>
 
         <div class="sub-filter-chips" id="subFilterChips">
             <div class="sub-chip active" onclick="triggerHaptic(); filterBySub('TÜMÜ', this)">Tümü</div>
             <div class="sub-chip" onclick="triggerHaptic(); filterBySub('Kayıtlı', this)">Kayıtlı</div>
             <div class="sub-chip" onclick="triggerHaptic(); filterBySub('Kayıtsız', this)">Kayıtsız</div>
-        <div class="sub-filter-chips" id="subFilterContainer">
-            <div class="sub-chip active" onclick="triggerHaptic(); filterBySub('TÜMÜ', this)">Tüm Hafızalar</div>
-            <div class="sub-chip" onclick="triggerHaptic(); filterBySub('128GB', this)">128GB</div>
-            <div class="sub-chip" onclick="triggerHaptic(); filterBySub('256GB', this)">256GB</div>
-            <div class="sub-chip" onclick="triggerHaptic(); filterBySub('512GB', this)">512GB</div>
-            <div class="sub-chip" onclick="triggerHaptic(); filterBySub('KAYITSIZ', this)">Kayıtsız</div>
-            <div class="sub-chip" onclick="triggerHaptic(); filterBySub('KAYITLI', this)">Kayıtlı</div>
         </div>
 
         <!-- Arama ve SSS -->
         <div class="controls-wrapper">
             <input type="text" id="searchInput" class="search-box" placeholder="🔍 Model, hafıza, renk veya durum ara..." oninput="handleSearch(this.value)">
             <button class="faq-open-btn" onclick="triggerHaptic(); openFaqModal()">❓ SSS</button>
-            <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara..." onkeyup="filterTable()">
-            <button class="faq-open-btn" onclick="triggerHaptic(); openFaqModal()">❓ Sıkça Sorulan Sorular</button>
         </div>
 
         <!-- Masaüstü Tablo -->
@@ -1225,135 +678,39 @@
                     </tbody>
                 </table>
             </div>
-        <div class="table-wrapper desktop-table-view">
-            <table id="priceTable">
-                <thead>
-                    <tr>
-                        <th>GÖRSEL</th>
-                        <th>MODEL</th>
-                        <th>HAFIZA</th>
-                        <th>KAYIT DURUMU</th>
-                        <th>DOLAR ($)</th>
-                        <th>FİYAT</th>
-                        <th>STOK DURUMU</th>
-                        <th>SİPARİŞ</th>
-                        <th class="admin-col">İŞLEM</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
         </div>
 
         <!-- Mobil Kartlar -->
         <div class="mobile-card-grid" id="productCardGrid">
             <!-- Dinamik -->
         </div>
-        <div class="mobile-card-grid" id="mobileCardContainer"></div>
-    </div>
 
-    <div id="productDetailModal" class="modal-overlay" onclick="closeProductModal()">
-        <div class="modal-card" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h3 id="modalProductTitle">Ürün Detayı</h3>
-                <button class="close-btn" onclick="closeProductModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="glorious-card-content">
-                    <div class="glorious-img-container" id="modalImgContainer">
-                        <span style="color:var(--text-muted); font-size:13px;">Görsel Bulunmuyor</span>
-                    </div>
-                    <p id="modalProductDesc" style="color:var(--text-muted); margin:0; font-size:13.5px; line-height:1.4;"></p>
-                    <div class="glorious-info-grid">
-                        <div class="glorious-info-box">
-                            <span class="glorious-info-title">Hafıza</span>
-                            <span class="glorious-info-value" id="modalProductStorage">-</span>
-                        </div>
-                        <div class="glorious-info-box">
-                            <span class="glorious-info-title">Kayıt</span>
-                            <span class="glorious-info-value" id="modalProductReg" style="color:var(--accent-gold);">-</span>
-                        </div>
-                        <div class="glorious-info-box">
-                            <span class="glorious-info-title">Dolar</span>
-                            <span class="glorious-info-value" id="modalProductUsd">-</span>
-                        </div>
-                        <div class="glorious-info-box">
-                            <span class="glorious-info-title">Stok</span>
-                            <span class="glorious-info-value" id="modalProductStock" style="color:#34d399;">-</span>
-                        </div>
-                    </div>
-                    <div class="glorious-price-box">
-                        <span style="font-size:11px; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Güncel Tutar</span>
-                        <div id="modalProductPrice" style="font-size:26px; font-weight:800; color:var(--primary-color); margin-top:4px;">0.00 ₺</div>
-                    </div>
-                    <div class="glorious-actions">
-                        <button class="glorious-btn-secondary" onclick="triggerHaptic(); copyModalDetails()">📋 Kopyala</button>
-                        <a href="#" id="modalWhatsAppBtn" target="_blank" class="glorious-btn-primary" onclick="triggerHaptic()">📲 WhatsApp Sipariş</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Modallar -->
     <div class="modal-overlay" id="faqModal">
         <div class="modal-card">
-    <!-- Resim Ekleme / Güncelleme Modalı -->
-    <div id="imageEditModal" class="modal-overlay" onclick="closeImageEditModal()">
-        <div class="modal-card" style="max-width:400px;" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <h3>Sık Sorulan Sorular</h3>
                 <button class="close-btn" onclick="closeFaqModal()">&times;</button>
-                <h3>📷 Ürün Resmi Güncelle</h3>
-                <button class="close-btn" onclick="closeImageEditModal()">&times;</button>
             </div>
             <div class="modal-body" style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
                 <p><b>S: Cihazlar garantili mi?</b><br>Cevap: Tüm cihazlarımız orijinal ve garantilidir.</p>
                 <p><b>S: Fiyatlar güncel mi?</b><br>Cevap: Anlık USD kuruna göre otomatik hesaplanır.</p>
-            <div class="modal-body" style="text-align:center;">
-                <p id="imgEditTargetName" style="font-weight:700; margin-bottom:15px; color:var(--accent-gold);"></p>
-                <label class="file-upload-label" style="background:rgba(56,189,248,0.1); border:1px dashed var(--primary-color); padding:20px; border-radius:12px; display:block; margin-bottom:15px;">
-                    📂 Resim Seçmek İçin Tıklayın
-                    <input type="file" id="tableItemImageFile" accept="image/*" onchange="saveImageToProduct(this)">
-                </label>
-                <button class="admin-btn-danger" style="width:100%; padding:10px;" onclick="removeProductImage()">Resmi Kaldır</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="quizModal">
         <div class="modal-card">
-    <div id="quizModal" class="modal-overlay" onclick="closeQuizModal()">
-        <div class="modal-card" style="max-width:500px;" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <h3>İndirim Çarkı</h3>
-                <h3>🎯 200 TL İndirim Kampanyası</h3>
                 <button class="close-btn" onclick="closeQuizModal()">&times;</button>
             </div>
             <div class="modal-body" style="text-align:center;">
                 <p style="font-weight:700; margin-bottom:15px;">Tebrikler! 200 TL İndirim Kazandınız 🎉</p>
                 <div style="background:rgba(56,189,248,0.1); border:1px dashed var(--primary-color); padding:12px; border-radius:8px; font-weight:800; color:var(--primary-color); margin-bottom:15px;">
                     ANUBIS200
-            <div class="modal-body">
-                <div id="quizStep1" class="quiz-step active">
-                    <p style="color:var(--text-muted); text-align:center; line-height:1.5; font-size:13.5px;">
-                        İndirim kuponu için Instagram sayfamızı takip etmelisin! ✨
-                    </p>
-                    <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge" style="display:flex; justify-content:center; margin:15px 0;" onclick="triggerHaptic()">
-                        Instagram'da Takip Et (@anubisgsm)
-                    </a>
-                    <button class="admin-btn" onclick="triggerHaptic(); goToQuizStep2()">Takip Ettim, Soruyu Getir 🚀</button>
-                </div>
-                <div id="quizStep2" class="quiz-step">
-                    <p id="quizQuestionText" style="font-weight:700; color:white; font-size:14px; margin-bottom:12px;"></p>
-                    <div id="quizOptionsContainer"></div>
-                </div>
-                <div id="quizStep3" class="quiz-step" style="text-align:center;">
-                    <div style="font-size:40px; margin-bottom:8px;">🎉</div>
-                    <h3 style="color:var(--accent-gold); margin-bottom:8px;">Tebrikler, Doğru Cevap!</h3>
-                    <div style="background:rgba(7,9,14,0.9); border:2px dashed var(--accent-gold); padding:12px; border-radius:10px; font-size:18px; font-weight:800; color:var(--accent-gold); margin:12px 0;">
-                        ANUBIS200TR
-                    </div>
-                    <a href="#" id="whatsappCouponBtn" target="_blank" class="glorious-btn-primary" onclick="triggerHaptic()">📲 Kuponla WhatsApp'tan Sipariş Ver</a>
                 </div>
                 <button class="admin-btn" onclick="closeQuizModal(); showToast('Kupon Kopyalandı!')">Kuponu Kopyala</button>
             </div>
@@ -1362,23 +719,12 @@
 
     <div class="modal-overlay" id="detailModal">
         <div class="modal-card">
-    <div id="faqModal" class="modal-overlay" onclick="closeFaqModal()">
-        <div class="modal-card" style="max-width:700px;" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <h3 id="modalProductName">Ürün Detayı</h3>
                 <button class="close-btn" onclick="closeDetailModal()">&times;</button>
-                <h3>❓ Sıkça Sorulan Sorular</h3>
-                <button class="close-btn" onclick="closeFaqModal()">&times;</button>
             </div>
             <div class="modal-body" id="modalProductContent">
                 <!-- Dinamik -->
-            <div class="modal-body">
-                <ul style="list-style:none; padding:0; margin:0;">
-                    <li style="margin-bottom:15px; border-bottom:1px solid var(--border-color); padding-bottom:12px;">
-                        <span style="font-weight:700; color:white; display:block; margin-bottom:4px;">• Satılan telefonlar kayıtlı mı?</span>
-                        <p style="color:var(--text-muted); margin:0; font-size:13px;">Cihazlarımızın çoğu yurt dışı ve kayıtsızdır ancak ilanlarda belirtilen modellerde farklılık gösterebilir.</p>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>
@@ -1386,80 +732,30 @@
     <div id="toast">Bildirim mesajı</div>
 
     <script>
-        // Başlangıç Ürün Veritabanı
-        let products = [
+        // Ürün Veritabanı (Tarayıcıda kayıtlı varsa oradan yüklenir, yoksa varsayılan başlar)
+        let defaultProducts = [
             { id: 1, category: "İPHONE", model: "İPHONE 16 PRO MAX", details: "512GB", colorName: "Çöl Titanyum", colorHex: "#d4b996", status: "Kayıtlı", usd: 1450, img: "📱" },
             { id: 2, category: "SAMSUNG", model: "SAMSUNG S25 ULTRA", details: "12/512GB", colorName: "Titanyum Gri", colorHex: "#808080", status: "Kayıtsız", usd: 1200, img: "📱" }
-        function triggerHaptic() {
-            if (window.navigator && window.navigator.vibrate) {
-                window.navigator.vibrate(30);
-            }
-        }
-
-        const generalKnowledgeQuestions = [
-            { q: "Türkiye'nin başkenti neresidir?", options: ["İstanbul", "Ankara", "İzmir", "Bursa"], answer: 1 },
-            { q: "Periyodik tablonun ilk elementi hangisidir?", options: ["Helyum", "Hidrojen", "Oksijen", "Karbon"], answer: 1 },
-            { q: "Mona Lisa tablosu hangi ünlü ressama aittir?", options: ["Pablo Picasso", "Vincent van Gogh", "Leonardo da Vinci", "Michelangelo"], answer: 2 },
-            { q: "Dünyanın en büyük okyanusu hangisidir?", options: ["Atlantik Okyanusu", "Hint Okyanusu", "Arktik Okyanusu", "Pasifik Okyanusu"], answer: 3 }
         ];
 
+        let products = JSON.parse(localStorage.getItem('anubis_products')) || defaultProducts;
         let currentUsdRate = 43.169;
         let currentFilterCategory = 'TÜMÜ';
         let currentFilterSub = 'TÜMÜ';
         let searchQuery = '';
         let isAdminOpen = false;
-        let currentActiveQuestion = null;
-        function openQuizModal() { document.getElementById("quizModal").style.display = "flex"; showQuizStep(1); }
-        function closeQuizModal() { document.getElementById("quizModal").style.display = "none"; }
-        function showQuizStep(stepNum) {
-            document.querySelectorAll(".quiz-step").forEach(el => el.classList.remove("active"));
-            document.getElementById("quizStep" + stepNum).classList.add("active");
-        }
-        function goToQuizStep2() {
-            showQuizStep(2);
-            let randomIndex = Math.floor(Math.random() * generalKnowledgeQuestions.length);
-            currentActiveQuestion = generalKnowledgeQuestions[randomIndex];
-            document.getElementById("quizQuestionText").textContent = `Soru: ${currentActiveQuestion.q}`;
-            let optionsHtml = "";
-            currentActiveQuestion.options.forEach((opt, idx) => {
-                optionsHtml += `<button class="quiz-option-btn" onclick="triggerHaptic(); checkQuizAnswer(${idx})">${String.fromCharCode(65 + idx)}) ${opt}</button>`;
-            });
-            document.getElementById("quizOptionsContainer").innerHTML = optionsHtml;
-        }
-        function checkQuizAnswer(selectedIndex) {
-            if (selectedIndex === currentActiveQuestion.answer) {
-                showQuizStep(3);
-                let waText = "Merhaba, genel kültür sorusunu bildim ve 200 TL indirim hakkı kazandım. (Kupon: ANUBIS200TR)";
-                document.getElementById("whatsappCouponBtn").href = "https://wa.me/905000000000?text=" + encodeURIComponent(waText);
-            } else {
-                alert("Yanlış cevap! Tekrar deneyebilirsin.");
-                goToQuizStep2();
-            }
-        }
 
         window.onload = function() {
             renderProducts();
             updateLastUpdate();
         };
-        const MASTER_STORAGE_KEY = "anubis_master_products_2026";
+
+        function saveProductsToStorage() {
+            localStorage.setItem('anubis_products', JSON.stringify(products));
+        }
 
         function triggerHaptic() {
             if (navigator.vibrate) navigator.vibrate(15);
-        let defaultProducts = [
-            { category: "APPLE", model: "IPHONE 16 PRO MAX", storage: "512GB", reg: 'KAYIT ALICI AİT', usd: 1520, stock: "SON 2 ÜRÜN", desc: "Kutu açılımsız, sıfır kapalı kutu cihaz.", image: "" },
-            { category: "SAMSUNG", model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Amiral gemisi S25 Ultra, en güçlü işlemci.", image: "" }
-        ];
-
-        let products = null;
-        let savedData = localStorage.getItem(MASTER_STORAGE_KEY);
-
-        if (savedData) {
-            try {
-                let parsed = JSON.parse(savedData);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    products = parsed;
-                }
-            } catch(e) {}
         }
 
         function showToast(msg) {
@@ -1467,48 +763,21 @@
             toast.innerText = msg;
             toast.className = "show";
             setTimeout(() => { toast.className = ""; }, 3000);
-        if (!products || products.length === 0) {
-            products = defaultProducts;
-            localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products));
         }
 
         function updateLastUpdate() {
             const now = new Date();
             document.getElementById('lastUpdateText').innerText = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        function saveToStorage() { 
-            localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products)); 
         }
 
         // Logo 5 tıklama ile Pratik Gizli Yönetim Paneli Açma
         let logoClicks = 0;
         let logoTimer = null;
-        let isAdmin = false;
-        let currentCurrency = 'TL';
-        let activeCategoryFilter = 'TÜMÜ';
-        let activeSubFilter = 'TÜMÜ';
-        let activeDetailItem = null;
-        let tempUploadedImageBase64 = "";
-        let editingImageIndex = null;
-
-        let logoClickCount = 0;
-        let logoClickTimer = null;
         function handleLogoClick() {
             logoClicks++;
             if (logoClicks === 5) {
                 toggleAdminPanel();
                 logoClicks = 0;
-            logoClickCount++;
-            clearTimeout(logoClickTimer);
-            logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 1000);
-            if (logoClickCount >= 4) {
-                logoClickCount = 0;
-                let pass = prompt("Yönetim Şifresi:");
-                if (pass === "anubis2026") {
-                    isAdmin = true;
-                    toggleAdminPanel(true);
-                    renderTable();
-                    alert("Yönetim Paneli Aktif Edildi!");
-                }
             }
             clearTimeout(logoTimer);
             logoTimer = setTimeout(() => { logoClicks = 0; }, 1000);
@@ -1521,22 +790,12 @@
             document.getElementById('thActions').style.display = isAdminOpen ? 'table-cell' : 'none';
             renderProducts();
             if(isAdminOpen) showToast("Yönetim Modu Aktif 🔓");
-        function showToast(text = "İşlem başarılı!") {
-            let toast = document.getElementById("toast");
-            toast.textContent = text;
-            toast.className = "show";
-            setTimeout(() => { toast.className = ""; }, 3000);
         }
 
         function updateUsdRate(val) {
             currentUsdRate = parseFloat(val) || 0;
             renderProducts();
-        function toggleCurrencyMode() {
-            currentCurrency = currentCurrency === 'TL' ? 'USD' : 'TL';
-            document.getElementById("currencyModeLabel").textContent = currentCurrency === 'TL' ? 'TL (₺)' : 'USD ($)';
-            renderTable();
         }
-        function toggleTheme() { alert("Tema modu aktif!"); }
 
         function fetchLiveExchangeRate() {
             setTimeout(() => {
@@ -1547,120 +806,12 @@
                 showToast("Güncel Kur Çekildi: 43.169 TL 🚀");
             }, 400);
         }
-        function renderFilterTabs() {
-            let tabsContainer = document.getElementById("filterTabsContainer");
-            let categories = [...new Set(products.map(p => (p.category || "DİĞER").toUpperCase()))];
-            let html = `<button class="filter-tab ${activeCategoryFilter === 'TÜMÜ' ? 'active' : ''}" onclick="triggerHaptic(); filterByCategory('TÜMÜ', this)">✨ Tüm Ürünler</button>`;
-            categories.forEach(cat => {
-                html += `<button class="filter-tab ${activeCategoryFilter === cat ? 'active' : ''}" onclick="triggerHaptic(); filterByCategory('${cat}', this)">📱 ${cat}</button>`;
-            });
-            tabsContainer.innerHTML = html;
-        }
-
-        function filterByCategory(cat, btnElement) {
-            document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
-            if (btnElement) btnElement.classList.add('active');
-            activeCategoryFilter = cat;
-            renderTable();
-        }
-
-        function filterBySub(subVal, btnElement) {
-            document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active'));
-            if (btnElement) btnElement.classList.add('active');
-            activeSubFilter = subVal;
-            renderTable();
-        }
-
-        async function fetchLiveExchangeRate() {
-            try {
-                let response = await fetch('https://open.er-api.com/v6/latest/USD');
-                let data = await response.json();
-                if (data && data.rates && data.rates.TRY) {
-                    document.getElementById("dollarRate").value = data.rates.TRY.toFixed(3);
-                    document.getElementById("rateUpdateStatus").textContent = "Canlı Kur Aktif";
-                    renderTable();
-                }
-            } catch (e) { document.getElementById("rateUpdateStatus").textContent = "Manuel Kur"; }
-        }
-
-        // Güncellenmiş Akıllı Hızlı Yapıştır Ayrıştırma Mantığı (Toplu & Tekli Destekli)
-        function parseSmartPaste(rawText) {
-            if (!rawText.trim()) return;
-
-            const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-            let currentBrand = "APPLE";
-            let addedCount = 0;
-
-            lines.forEach(line => {
-                const upperLine = line.toLocaleUpperCase('tr-TR');
-
-                // Bilgilendirme veya geçersiz satırları atla
-                if (upperLine.includes("İLETİŞİM") || upperLine.includes("ÜCRETSİZ KARGO") || upperLine.includes("ÖNEMLİ") || upperLine.includes("HAVALE") || upperLine.includes("RİSK")) {
-                    return;
-                }
-
-                // Kategori tespiti (Başlık niteliğindeki satırlar)
-                if (upperLine.includes("İPHONE") || upperLine.includes("APPLE")) currentBrand = "APPLE";
-                else if (upperLine.includes("SAMSUNG") || upperLine.includes("S26") || upperLine.includes("S25") || upperLine.includes("S24")) currentBrand = "SAMSUNG";
-                else if (upperLine.includes("REDMAGIC") || upperLine.includes("REDMAGİC")) currentBrand = "REDMAGIC";
-                else if (upperLine.includes("HUAWEI")) currentBrand = "HUAWEI";
-                else if (upperLine.includes("GOOGLE")) currentBrand = "GOOGLE";
-                else if (upperLine.includes("XIAOMI") || upperLine.includes("XİAOMİ") || upperLine.includes("NOTE") || upperLine.includes("REDMI") || upperLine.includes("POCO")) currentBrand = "XIAOMI/POCO";
-                else if (upperLine.includes("ONEPLUS")) currentBrand = "ONEPLUS";
-
-                // Fiyat içeren satırları işle ($ işareti veya sayısal değer)
-                if (line.includes("$") || /\d+\s*\$/.test(line)) {
-                    // Fiyat tespiti
-                    let usdMatch = line.match(/(\d+)\s*\$/) || line.match(/\$\s*(\d+)/);
-                    let usdVal = usdMatch ? parseFloat(usdMatch[1] || usdMatch[2] || usdMatch[0]) : 1000;
-
-                    // Hafıza tespiti (örn: 128GB, 256GB, 512GB, 1TB)
-                    let storageMatch = line.match(/(\d+\s*(?:GB|TB))/i);
-                    let storageVal = storageMatch ? storageMatch[1].toUpperCase().replace(/\s+/g, '') : "256GB";
-
-                    // Kayıt durumu tespiti
-                    let regVal = "KAYITSIZ";
-                    if (upperLine.includes("KAYITLI")) regVal = "KAYITLI";
-                    else if (upperLine.includes("ALICI") || upperLine.includes("AİT") || upperLine.includes("1 NO")) regVal = "KAYIT ALICI AİT";
-
-                    // Model adı temizleme (fiyatı, sembolleri ve varyantları ayıkla)
-                    let cleanModel = line.replace(/(\d+\s*\$|\$\s*[\d.]+|\d+\s*(?:GB|TB)|KAYITLI|KAYITSIZ|ALICI|AİT)/gi, "").trim();
-                    cleanModel = cleanModel.replace(/[:\-–—]/g, '').trim().toUpperCase();
-
-                    if (cleanModel.length > 2) {
-                        products.push({
-                            category: currentBrand,
-                            model: cleanModel,
-                            storage: storageVal,
-                            reg: regVal,
-                            usd: usdVal,
-                            stock: "HAZIR STOK",
-                            desc: "Hızlı yapıştır ile eklendi.",
-                            image: ""
-                        });
-                        addedCount++;
-                    }
-                }
-            });
 
         function filterByCategory(cat, el) {
             currentFilterCategory = cat;
             document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
             if(el) el.classList.add('active');
             renderProducts();
-            if (addedCount > 0) {
-                saveToStorage();
-                renderTable();
-                document.getElementById("smartPasteInput").value = "";
-                showToast(`Başarıyla ${addedCount} ürün eklendi! 🚀`);
-            } else {
-                // Tekil satır ise manuel form alanlarına doldurmayı dene
-                let usdMatch = rawText.match(/(\d+)\s*\$/);
-                if (usdMatch) document.getElementById("newUsd").value = usdMatch[1];
-                let storageMatch = rawText.match(/(\d+\s*(?:GB|TB))/i);
-                if (storageMatch) document.getElementById("newStorage").value = storageMatch[1].toUpperCase();
-                document.getElementById("newModel").value = rawText.replace(/[\$\d]/g, '').trim().toUpperCase();
-            }
         }
 
         function filterBySub(sub, el) {
@@ -1669,37 +820,17 @@
             if(el) el.classList.add('active');
             renderProducts();
         }
-        function renderTable() {
-            renderFilterTabs();
-            let tbody = document.getElementById("tableBody");
-            let cardGrid = document.getElementById("mobileCardContainer");
-            tbody.innerHTML = "";
-            cardGrid.innerHTML = "";
 
         function handleSearch(val) {
             searchQuery = val.toLowerCase();
             renderProducts();
         }
-            let categories = [...new Set(products.map(p => (p.category || "DİĞER").toUpperCase()))];
-            let searchFilter = document.getElementById("searchInput").value.toLowerCase();
-            let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
 
         function renderProducts() {
             const tableBody = document.getElementById('productTableBody');
             const cardGrid = document.getElementById('productCardGrid');
             tableBody.innerHTML = '';
             cardGrid.innerHTML = '';
-            categories.forEach(catName => {
-                let catProducts = products.map((p, idx) => ({ ...p, originalIndex: idx })).filter(p => {
-                    let itemCat = (p.category || "DİĞER").toUpperCase();
-                    if (itemCat !== catName) return false;
-                    if (activeCategoryFilter !== 'TÜMÜ' && activeCategoryFilter !== itemCat) return false;
-                    
-                    if (activeSubFilter !== 'TÜMÜ') {
-                        let matchStorage = p.storage && p.storage.toUpperCase().includes(activeSubFilter);
-                        let matchReg = p.reg && p.reg.toUpperCase().includes(activeSubFilter);
-                        if (!matchStorage && !matchReg) return false;
-                    }
 
             let filtered = products.filter(p => {
                 let matchCat = (currentFilterCategory === 'TÜMÜ' || p.category === currentFilterCategory);
@@ -1707,11 +838,8 @@
                 let matchSearch = (p.model.toLowerCase().includes(searchQuery) || p.details.toLowerCase().includes(searchQuery) || (p.colorName && p.colorName.toLowerCase().includes(searchQuery)));
                 return matchCat && matchSub && matchSearch;
             });
-                    return p.model.toLowerCase().includes(searchFilter) || (p.storage && p.storage.toLowerCase().includes(searchFilter));
-                });
 
             let categories = [...new Set(filtered.map(p => p.category))];
-                if (catProducts.length === 0) return;
 
             categories.forEach(cat => {
                 let catRow = document.createElement('tr');
@@ -1721,9 +849,12 @@
                 tableBody.appendChild(catRow);
 
                 filtered.filter(p => p.category === cat).forEach(p => {
-                    let priceTry = (p.usd * currentUsdRate).toLocaleString('tr-TR', {maximumFractionDigits: 0});
+                    let priceTryNum = p.usd * currentUsdRate;
+                    let priceTryStr = priceTryNum.toLocaleString('tr-TR', {maximumFractionDigits: 0});
                     let statusBadge = p.status === 'Kayıtlı' ? '<span class="badge-green">Kayıtlı</span>' : '<span class="badge-orange">Kayıtsız</span>';
                     let colorDisplay = p.colorHex ? `<span class="color-dot" style="background:${p.colorHex}"></span> ${p.colorName || ''}` : '-';
+
+                    let waText = encodeURIComponent(`Merhaba, ${p.model} (${p.details}) - ${priceTryStr} ₺ ($${p.usd}) hakkında bilgi almak istiyorum.`);
 
                     // Masaüstü Satır
                     let row = document.createElement('tr');
@@ -1731,34 +862,11 @@
                     row.onclick = () => openDetailModal(p);
                     
                     let adminTd = isAdminOpen ? `
-                let headerTr = document.createElement("tr");
-                headerTr.className = "category-row";
-                headerTr.innerHTML = `<td colspan="${isAdmin ? 9 : 8}">${catName} SERİSİ</td>`;
-                tbody.appendChild(headerTr);
-
-                let mCatTitle = document.createElement("div");
-                mCatTitle.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); font-weight: 800; font-size: 14px; letter-spacing: 1px; margin-top: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;";
-                mCatTitle.textContent = `${catName} SERİSİ`;
-                cardGrid.appendChild(mCatTitle);
-
-                catProducts.forEach(item => {
-                    let usdVal = parseFloat(item.usd) || 0;
-                    let priceText = currentCurrency === 'TL' 
-                        ? (usdVal * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺"
-                        : usdVal.toLocaleString() + " $";
-
-                    let tr = document.createElement("tr");
-                    tr.className = "product-row";
-                    tr.onclick = () => { triggerHaptic(); openProductModal(item); };
-                    tr.innerHTML = `
                         <td>
                             <div class="admin-row-actions">
                                 <button class="admin-inline-btn" onclick="event.stopPropagation(); editProduct(${p.id})">Düzenle</button>
                                 <button class="admin-inline-btn delete" onclick="event.stopPropagation(); deleteProduct(${p.id})">Sil</button>
-                            <div style="width:40px; height:40px; background:rgba(7,9,14,0.6); border-radius:6px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
-                                ${item.image ? `<img src="${item.image}" style="width:100%; height:100%; object-fit:contain;">` : `<span style="font-size:9px; color:var(--text-muted)">Yok</span>`}
                             </div>
-                            ${isAdmin ? `<button class="admin-img-upload-btn" style="margin-top:4px;" onclick="event.stopPropagation(); openImageEditModal(${item.originalIndex})">Resim Ekle</button>` : ''}
                         </td>
                     ` : '';
 
@@ -1769,17 +877,9 @@
                         <td>${colorDisplay}</td>
                         <td>${statusBadge}</td>
                         <td><b>$${p.usd}</b></td>
-                        <td style="color:var(--primary-color); font-weight:800;">${priceTry} ₺</td>
+                        <td style="color:var(--primary-color); font-weight:800;">${priceTryStr} ₺</td>
                         ${adminTd}
-                        <td><a href="https://wa.me/905000000000?text=Merhaba,%20${encodeURIComponent(p.model + ' ' + p.details)}%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="order-btn-table" onclick="event.stopPropagation()">Sipariş</a></td>
-                        <td style="font-weight:600;">${item.model}</td>
-                        <td>${item.storage || "-"}</td>
-                        <td><span class="badge-orange">${item.reg || "KAYITSIZ"}</span></td>
-                        <td><input type="number" class="usd-input" value="${usdVal}" ${isAdmin ? '' : 'readonly'} onclick="event.stopPropagation()" oninput="updateUsdPrice(${item.originalIndex}, this.value)"></td>
-                        <td class="price-display">${priceText}</td>
-                        <td><span class="badge-green">${item.stock || "HAZIR STOK"}</span></td>
-                        <td><a href="https://wa.me/905000000000?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
-                        ${isAdmin ? `<td><button class="admin-btn-danger" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Sil</button></td>` : ''}
+                        <td><a href="https://wa.me/905000000000?text=${waText}" target="_blank" class="order-btn-table" onclick="event.stopPropagation()">Sipariş</a></td>
                     `;
                     tableBody.appendChild(row);
 
@@ -1794,20 +894,11 @@
                             <button class="admin-inline-btn delete" style="flex:1;" onclick="event.stopPropagation(); deleteProduct(${p.id})">Sil</button>
                         </div>
                     ` : '';
-                    tbody.appendChild(tr);
 
-                    let card = document.createElement("div");
-                    card.className = "m-product-card";
-                    card.onclick = () => { triggerHaptic(); openProductModal(item); };
                     card.innerHTML = `
                         <div class="m-card-header">
                             <h3 class="m-card-title">${p.model}</h3>
                             ${statusBadge}
-                            <h4 class="m-card-title">${item.model}</h4>
-                            <span class="badge-green">${item.stock || "HAZIR STOK"}</span>
-                        </div>
-                        <div class="m-card-img">
-                            ${item.image ? `<img src="${item.image}" alt="${item.model}">` : `<span style="color:var(--text-muted); font-size:11px;">Görsel Yok</span>`}
                         </div>
                         <div class="m-card-body">
                             <div class="m-card-img" style="font-size:24px;">${p.img || '📱'}</div>
@@ -1815,25 +906,13 @@
                                 <div class="m-detail-label">Hafıza:</div><div class="m-detail-val">${p.details}</div>
                                 <div class="m-detail-label">Renk:</div><div class="m-detail-val">${colorDisplay}</div>
                                 <div class="m-detail-label">USD Fiyat:</div><div class="m-detail-val">$${p.usd}</div>
-                        ${isAdmin ? `<button class="admin-img-upload-btn" onclick="event.stopPropagation(); openImageEditModal(${item.originalIndex})">📷 Resmi Düzenle / Ekle</button>` : ''}
-                        <div class="m-card-details">
-                            <div class="m-detail-box">
-                                <div class="m-detail-label">Hafıza</div>
-                                <div class="m-detail-val">${item.storage || "-"}</div>
-                            </div>
-                            <div class="m-detail-box">
-                                <div class="m-detail-label">Kayıt</div>
-                                <div class="m-detail-val" style="color:var(--accent-gold); font-size:11px;">${item.reg || "KAYITSIZ"}</div>
                             </div>
                         </div>
                         ${adminCardActions}
                         <div class="m-card-footer">
-                            <div class="m-price">${priceTry} ₺</div>
-                            <a href="https://wa.me/905000000000?text=Merhaba,%20${encodeURIComponent(p.model + ' ' + p.details)}%20siparişi." target="_blank" class="m-order-btn" onclick="event.stopPropagation()">Sipariş Ver</a>
-                            <div class="m-price">${priceText}</div>
-                            <a href="https://wa.me/905000000000?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp açılıyor...');">📲 Sipariş Ver</a>
+                            <div class="m-price">${priceTryStr} ₺</div>
+                            <a href="https://wa.me/905000000000?text=${waText}" target="_blank" class="m-order-btn" onclick="event.stopPropagation()">Sipariş Ver</a>
                         </div>
-                        ${isAdmin ? `<button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Ürünü Sil</button>` : ''}
                     `;
                     cardGrid.appendChild(card);
                 });
@@ -1853,17 +932,7 @@
             if (!model) {
                 showToast("Lütfen model adı giriniz!");
                 return;
-        function filterTable() { renderTable(); }
-
-        function handleFileSelect(input) {
-            if (input.files && input.files[0]) {
-                let file = input.files[0];
-                document.getElementById("fileNameLabel").textContent = file.name;
-                let reader = new FileReader();
-                reader.onload = function(e) { tempUploadedImageBase64 = e.target.result; };
-                reader.readAsDataURL(file);
             }
-        }
 
             products.push({
                 id: Date.now(),
@@ -1876,79 +945,24 @@
                 colorHex: colorHex,
                 colorName: colorName
             });
-        function openImageEditModal(idx) {
-            editingImageIndex = idx;
-            document.getElementById("imgEditTargetName").textContent = products[idx].model + " (" + (products[idx].storage || "") + ")";
-            document.getElementById("imageEditModal").style.display = "flex";
-        }
-        function closeImageEditModal() {
-            document.getElementById("imageEditModal").style.display = "none";
-            editingImageIndex = null;
-        }
-        function saveImageToProduct(input) {
-            if (input.files && input.files[0] && editingImageIndex !== null) {
-                let reader = new FileReader();
-                reader.onload = function(e) {
-                    products[editingImageIndex].image = e.target.result;
-                    saveToStorage();
-                    renderTable();
-                    closeImageEditModal();
-                    showToast("Ürün resmi başarıyla güncellendi! 📷");
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        function removeProductImage() {
-            if (editingImageIndex !== null) {
-                products[editingImageIndex].image = "";
-                saveToStorage();
-                renderTable();
-                closeImageEditModal();
-                showToast("Ürün resmi kaldırıldı.");
-            }
-        }
 
-        function openProductModal(item) {
-            activeDetailItem = item;
-            document.getElementById("modalProductTitle").textContent = item.model;
-            document.getElementById("modalProductDesc").textContent = item.desc || "ANUBIS GSM güvencesiyle yüksek kaliteli teknoloji ürünü.";
-            document.getElementById("modalProductStorage").textContent = item.storage || "-";
-            document.getElementById("modalProductReg").textContent = item.reg || "KAYITSIZ";
-            document.getElementById("modalProductUsd").textContent = (parseFloat(item.usd) || 0).toLocaleString() + " $";
-            document.getElementById("modalProductStock").textContent = item.stock || "HAZIR STOK";
-
+            saveProductsToStorage();
             renderProducts();
-            showToast("Ürün başarıyla eklendi! ✨");
-            let imgContainer = document.getElementById("modalImgContainer");
-            imgContainer.innerHTML = item.image ? `<img src="${item.image}" alt="${item.model}">` : `<span style="color:var(--text-muted); font-size:13px;">Görsel Bulunmuyor</span>`;
+            showToast("Ürün eklendi ve kaydedildi! ✨");
 
-            // Formu temizle
             document.getElementById('newModel').value = '';
             document.getElementById('newDetails').value = '';
             document.getElementById('newUsd').value = '';
             document.getElementById('newColorName').value = '';
-            let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
-            let calculatedTl = ((parseFloat(item.usd) || 0) * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺";
-            document.getElementById("modalProductPrice").textContent = calculatedTl;
-
-            let waText = `Merhaba, ${item.model} (${item.storage} - ${item.reg}) modelini inceledim ve sipariş vermek istiyorum. Fiyat: ${calculatedTl}`;
-            document.getElementById("modalWhatsAppBtn").href = `https://wa.me/905000000000?text=` + encodeURIComponent(waText);
-            document.getElementById("productDetailModal").style.display = "flex";
         }
 
         function deleteProduct(id) {
             if(confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
                 products = products.filter(p => p.id !== id);
+                saveProductsToStorage();
                 renderProducts();
                 showToast("Ürün silindi.");
             }
-        function closeProductModal() { document.getElementById("productDetailModal").style.display = "none"; }
-        function copyModalDetails() {
-            if (!activeDetailItem) return;
-            let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
-            let calculatedTl = ((parseFloat(activeDetailItem.usd) || 0) * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺";
-            let textToCopy = `Ürün: ${activeDetailItem.model}\nHafıza: ${activeDetailItem.storage}\nKayıt: ${activeDetailItem.reg}\nFiyat: ${calculatedTl} (${activeDetailItem.usd}$)\nStok: ${activeDetailItem.stock}`;
-            navigator.clipboard.writeText(textToCopy).then(() => showToast("Ürün bilgileri panoya kopyalandı! 📋"));
         }
 
         function editProduct(id) {
@@ -1959,45 +973,9 @@
                 p.model = newModel;
                 let newUsd = prompt("USD Fiyatı düzenle:", p.usd);
                 if(newUsd !== null) p.usd = parseFloat(newUsd) || p.usd;
+                saveProductsToStorage();
                 renderProducts();
                 showToast("Ürün güncellendi.");
-        function toggleAdminPanel(show) { document.getElementById("adminPanel").style.display = show ? "block" : "none"; isAdmin = show; renderTable(); }
-
-        function addNewProduct() {
-            let cat = document.getElementById("newCategory").value.trim().toUpperCase();
-            let model = document.getElementById("newModel").value.trim();
-            let storage = document.getElementById("newStorage").value.trim() || "512GB";
-            let reg = document.getElementById("newReg").value.trim().toUpperCase() || "KAYITSIZ";
-            let usd = parseFloat(document.getElementById("newUsd").value) || 1000;
-            let stock = document.getElementById("newStock").value.trim().toUpperCase() || "HAZIR STOK";
-            let desc = document.getElementById("newDesc").value.trim();
-            let image = tempUploadedImageBase64;
-
-            if (cat && model) {
-                products.push({ category: cat, model: model, storage: storage, reg: reg, usd: usd, stock: stock, desc: desc, image: image });
-                saveToStorage();
-                renderTable();
-                
-                document.getElementById("smartPasteInput").value = "";
-                document.getElementById("newCategory").value = "";
-                document.getElementById("newModel").value = "";
-                document.getElementById("newStorage").value = "";
-                document.getElementById("newReg").value = "";
-                document.getElementById("newUsd").value = "";
-                document.getElementById("newStock").value = "";
-                document.getElementById("newDesc").value = "";
-                document.getElementById("newImageFile").value = "";
-                document.getElementById("fileNameLabel").textContent = "Resim Seç";
-                tempUploadedImageBase64 = "";
-                alert("Ürün başarıyla eklendi!");
-            } else { alert("Lütfen Kategori ve Model alanlarını doldurun."); }
-        }
-
-        function deleteProduct(idx) {
-            if (confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
-                products.splice(idx, 1);
-                saveToStorage();
-                renderTable();
             }
         }
 
@@ -2008,33 +986,22 @@
         function closeQuizModal() { document.getElementById('quizModal').style.display = 'none'; }
 
         function openDetailModal(p) {
-            let priceTry = (p.usd * currentUsdRate).toLocaleString('tr-TR', {maximumFractionDigits: 0});
+            let priceTryStr = (p.usd * currentUsdRate).toLocaleString('tr-TR', {maximumFractionDigits: 0});
+            let waText = encodeURIComponent(`Merhaba, ${p.model} (${p.details}) - ${priceTryStr} ₺ ($${p.usd}) siparişi vermek istiyorum.`);
+
             document.getElementById('modalProductName').innerText = p.model;
             document.getElementById('modalProductContent').innerHTML = `
                 <div style="display:flex; flex-direction:column; gap:14px; text-align:center;">
                     <div style="font-size:48px;">${p.img || '📱'}</div>
                     <div style="font-size:14px; color:var(--text-muted);"><b>Kategori:</b> ${p.category} | <b>Hafıza:</b> ${p.details}</div>
                     <div style="font-size:14px; color:var(--text-muted);"><b>Durum:</b> ${p.status} | <b>Renk:</b> ${p.colorName || 'Belirtilmemiş'}</div>
-                    <div style="font-size:22px; font-weight:800; color:var(--primary-color);">${priceTry} ₺ <span style="font-size:14px; color:var(--text-muted);">($${p.usd})</span></div>
-                    <a href="https://wa.me/905000000000?text=Merhaba,%20${encodeURIComponent(p.model + ' ' + p.details)}%20siparişi%20vermek%20istiyorum." target="_blank" class="admin-btn" style="text-decoration:none; display:block; padding:12px;">WhatsApp ile Hemen Sipariş Ver</a>
+                    <div style="font-size:22px; font-weight:800; color:var(--primary-color);">${priceTryStr} ₺ <span style="font-size:14px; color:var(--text-muted);">($${p.usd})</span></div>
+                    <a href="https://wa.me/905000000000?text=${waText}" target="_blank" class="admin-btn" style="text-decoration:none; display:block; padding:12px;">WhatsApp ile Hemen Sipariş Ver</a>
                 </div>
             `;
             document.getElementById('detailModal').style.display = 'flex';
-        function updateUsdPrice(idx, val) {
-            if (!isAdmin) return;
-            products[idx].usd = parseFloat(val) || 0;
-            saveToStorage();
-            renderTable();
         }
         function closeDetailModal() { document.getElementById('detailModal').style.display = 'none'; }
-
-        function openFaqModal() { document.getElementById("faqModal").style.display = "flex"; }
-        function closeFaqModal() { document.getElementById("faqModal").style.display = "none"; }
-
-        window.onload = function() {
-            fetchLiveExchangeRate();
-            renderTable();
-        };
     </script>
 </body>
 </html>

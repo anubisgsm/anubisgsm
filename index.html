@@ -32,7 +32,7 @@
                 radial-gradient(circle at 50% 50%, rgba(131, 58, 180, 0.06) 0%, transparent 60%);
             background-attachment: fixed;
             min-height: 100vh;
-            padding-bottom: 70px;
+            padding-bottom: 90px;
         }
 
         .marquee-bar {
@@ -306,7 +306,7 @@
         .filter-tabs { 
             display: flex; 
             gap: 8px; 
-            margin-bottom: 20px; 
+            margin-bottom: 12px; 
             overflow-x: auto; 
             padding-bottom: 5px; 
             scrollbar-width: none;
@@ -331,6 +331,36 @@
             border-color: var(--primary-color);
             box-shadow: 0 0 15px var(--primary-glow);
             font-weight: 800;
+        }
+
+        /* Yeni Eklenen Hızlı Alt Filtreler (Chip Filters) */
+        .sub-filter-chips {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none;
+        }
+        .sub-filter-chips::-webkit-scrollbar { display: none; }
+        .sub-chip {
+            background: rgba(30, 41, 59, 0.6);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .sub-chip.active {
+            background: var(--accent-gold);
+            color: #07090e;
+            border-color: var(--accent-gold);
+            font-weight: 700;
+            box-shadow: 0 0 10px var(--accent-gold-glow);
         }
 
         .controls-wrapper { display: flex; gap: 12px; margin-bottom: 20px; align-items: center; flex-wrap: wrap; }
@@ -472,59 +502,64 @@
             align-items: center; gap: 4px; text-decoration: none; white-space: nowrap;
         }
 
+        /* Gelişmiş Mobil Alt Navigasyon Çubuğu */
         .mobile-bottom-bar {
             display: none;
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(9, 13, 22, 0.95);
+            background: rgba(9, 13, 22, 0.98);
             backdrop-filter: blur(16px);
             border-top: 1px solid var(--border-color);
-            padding: 10px 15px;
+            padding: 8px 12px;
             box-sizing: border-box;
             z-index: 997;
-            justify-content: space-between;
-            gap: 10px;
+            justify-content: space-around;
+            align-items: center;
             box-shadow: 0 -10px 25px rgba(0,0,0,0.6);
         }
         @media (max-width: 768px) {
             .mobile-bottom-bar { display: flex; }
         }
-        .bottom-action-btn {
-            flex: 1;
-            padding: 12px;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 13px;
+        .nav-bar-item {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
+            color: var(--text-muted);
             text-decoration: none;
+            font-size: 10.5px;
+            font-weight: 700;
+            gap: 3px;
+            background: none;
             border: none;
             cursor: pointer;
+            transition: color 0.2s;
         }
-        .btn-whatsapp-action { background: var(--whatsapp-color); color: white; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
-        .btn-call-action { background: rgba(56, 189, 248, 0.15); color: var(--primary-color); border: 1px solid var(--primary-color); }
+        .nav-bar-item.active, .nav-bar-item:hover { color: var(--primary-color); }
+        .nav-bar-item svg { width: 20px; height: 20px; fill: currentColor; }
+        .nav-bar-whatsapp { color: var(--whatsapp-color); }
 
         #toast {
             visibility: hidden; min-width: 250px;
             background: linear-gradient(135deg, #059669, #10b981); color: white; text-align: center;
             border-radius: 12px; padding: 12px 18px; position: fixed; z-index: 2000;
-            left: 50%; bottom: 80px; transform: translateX(-50%) translateY(20px);
+            left: 50%; bottom: 90px; transform: translateX(-50%) translateY(20px);
             font-size: 13.5px; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); opacity: 0;
         }
         #toast.show { visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0); }
 
         .whatsapp-float {
-            position: fixed; bottom: 80px; right: 20px; background-color: var(--whatsapp-color);
-            color: white; width: 55px; height: 55px; border-radius: 50%; display: flex;
+            position: fixed; bottom: 85px; right: 20px; background-color: var(--whatsapp-color);
+            color: white; width: 50px; height: 50px; border-radius: 50%; display: flex;
             align-items: center; justify-content: center; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
             z-index: 996; text-decoration: none; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .whatsapp-float svg { width: 32px; height: 32px; fill: white; }
+        .whatsapp-float svg { width: 28px; height: 28px; fill: white; }
+        @media (max-width: 768px) {
+            .whatsapp-float { display: none; } /* Alt barda WhatsApp olduğu için mobilde gizlendi */
+        }
 
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -574,12 +609,23 @@
 
     <div id="toast">İşlem başarıyla gerçekleştirildi! 🚀</div>
 
+    <!-- Yeni Nesil Mobil Alt Navigasyon Çubuğu -->
     <div class="mobile-bottom-bar">
-        <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="bottom-action-btn btn-whatsapp-action">
-            📲 WhatsApp Destek
-        </a>
-        <a href="tel:05000000000" class="bottom-action-btn btn-call-action">
-            📞 Hemen Ara
+        <button class="nav-bar-item active" onclick="triggerHaptic(); filterByCategory('TÜMÜ', null); window.scrollTo({top: 0, behavior: 'smooth'});">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            Ana Sayfa
+        </button>
+        <button class="nav-bar-item" onclick="triggerHaptic(); document.getElementById('searchInput').focus();">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            Arama
+        </button>
+        <button class="nav-bar-item" onclick="triggerHaptic(); openQuizModal();">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            İndirim
+        </button>
+        <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="nav-bar-item nav-bar-whatsapp" onclick="triggerHaptic()">
+            <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/></svg>
+            WhatsApp
         </a>
     </div>
 
@@ -591,7 +637,7 @@
 
     <header>
         <div class="header-content">
-            <div class="logo-area" onclick="handleLogoClick()" title="ANUBIS GSM">
+            <div class="logo-area" onclick="triggerHaptic(); handleLogoClick()" title="ANUBIS GSM">
                 <img src="logo.png" alt="ANUBIS GSM Logo" onerror="this.style.display='none'">
                 <div>
                     <h1>ANUBIS GSM</h1>
@@ -601,18 +647,18 @@
             </div>
 
             <div class="header-right-area">
-                <button class="discount-pulse-btn" onclick="openQuizModal()">
+                <button class="discount-pulse-btn" onclick="triggerHaptic(); openQuizModal()">
                     🎯 200 TL İndirim Kazan!
                 </button>
-                <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge">
+                <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge" onclick="triggerHaptic()">
                     <svg viewBox="0 0 24 24">
                         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                     </svg>
                     @anubisgsm
                 </a>
                 <div class="top-tools-bar">
-                    <button class="utility-btn" onclick="toggleCurrencyMode()">Para Birimi: <span id="currencyModeLabel">TL (₺)</span></button>
-                    <button class="utility-btn" onclick="toggleTheme()">Tema Değiştir</button>
+                    <button class="utility-btn" onclick="triggerHaptic(); toggleCurrencyMode()">Para Birimi: <span id="currencyModeLabel">TL (₺)</span></button>
+                    <button class="utility-btn" onclick="triggerHaptic(); toggleTheme()">Tema Değiştir</button>
                 </div>
             </div>
         </div>
@@ -620,7 +666,7 @@
 
     <div class="container">
         <div id="adminPanel" class="admin-panel">
-            <h3>Yönetim Paneli <button class="close-admin" onclick="toggleAdminPanel(false)">Kapat</button></h3>
+            <h3>Yönetim Paneli <button class="close-admin" onclick="triggerHaptic(); toggleAdminPanel(false)">Kapat</button></h3>
             <div class="form-grid">
                 <input type="text" id="newCategory" placeholder="Kategori (Örn: İPHONE)">
                 <input type="text" id="newModel" placeholder="Model">
@@ -634,7 +680,7 @@
                 </label>
                 <input type="file" id="newImageFile" accept="image/*" onchange="handleFileSelect(this)">
             </div>
-            <button class="admin-btn" onclick="addNewProduct()">Listeye Ürün Ekle</button>
+            <button class="admin-btn" onclick="triggerHaptic(); addNewProduct()">Listeye Ürün Ekle</button>
         </div>
 
         <div class="rate-container">
@@ -644,15 +690,26 @@
             </div>
             <div class="update-date">
                 <span id="rateUpdateStatus">Kur Canlı Çekiliyor...</span>
-                <button class="refresh-rate-btn" onclick="fetchLiveExchangeRate()">Güncelle</button>
+                <button class="refresh-rate-btn" onclick="triggerHaptic(); fetchLiveExchangeRate()">Güncelle</button>
             </div>
         </div>
 
+        <!-- Üst Kategori Sekmeleri -->
         <div class="filter-tabs" id="filterTabsContainer"></div>
+
+        <!-- Hızlı Hafıza / Özellik Alt Filtre Çipleri -->
+        <div class="sub-filter-chips" id="subFilterContainer">
+            <div class="sub-chip active" onclick="triggerHaptic(); filterBySub('TÜMÜ', this)">Tüm Hafızalar</div>
+            <div class="sub-chip" onclick="triggerHaptic(); filterBySub('128GB', this)">128GB</div>
+            <div class="sub-chip" onclick="triggerHaptic(); filterBySub('256GB', this)">256GB</div>
+            <div class="sub-chip" onclick="triggerHaptic(); filterBySub('512GB', this)">512GB</div>
+            <div class="sub-chip" onclick="triggerHaptic(); filterBySub('KAYITSIZ', this)">Kayıtsız</div>
+            <div class="sub-chip" onclick="triggerHaptic(); filterBySub('KAYITLI', this)">Kayıtlı</div>
+        </div>
 
         <div class="controls-wrapper">
             <input type="text" id="searchInput" class="search-box" placeholder="Cihaz veya model ara..." onkeyup="filterTable()">
-            <button class="faq-open-btn" onclick="openFaqModal()">❓ Sıkça Sorulan Sorular</button>
+            <button class="faq-open-btn" onclick="triggerHaptic(); openFaqModal()">❓ Sıkça Sorulan Sorular</button>
         </div>
 
         <div class="table-wrapper desktop-table-view">
@@ -711,8 +768,8 @@
                         <div id="modalProductPrice" style="font-size:26px; font-weight:800; color:var(--primary-color); margin-top:4px;">0.00 ₺</div>
                     </div>
                     <div class="glorious-actions">
-                        <button class="glorious-btn-secondary" onclick="copyModalDetails()">📋 Kopyala</button>
-                        <a href="#" id="modalWhatsAppBtn" target="_blank" class="glorious-btn-primary">📲 WhatsApp Sipariş</a>
+                        <button class="glorious-btn-secondary" onclick="triggerHaptic(); copyModalDetails()">📋 Kopyala</button>
+                        <a href="#" id="modalWhatsAppBtn" target="_blank" class="glorious-btn-primary" onclick="triggerHaptic()">📲 WhatsApp Sipariş</a>
                     </div>
                 </div>
             </div>
@@ -730,10 +787,10 @@
                     <p style="color:var(--text-muted); text-align:center; line-height:1.5; font-size:13.5px;">
                         İndirim kuponu için Instagram sayfamızı takip etmelisin! ✨
                     </p>
-                    <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge" style="display:flex; justify-content:center; margin:15px 0;">
+                    <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge" style="display:flex; justify-content:center; margin:15px 0;" onclick="triggerHaptic()">
                         Instagram'da Takip Et (@anubisgsm)
                     </a>
-                    <button class="admin-btn" onclick="goToQuizStep2()">Takip Ettim, Soruyu Getir 🚀</button>
+                    <button class="admin-btn" onclick="triggerHaptic(); goToQuizStep2()">Takip Ettim, Soruyu Getir 🚀</button>
                 </div>
                 <div id="quizStep2" class="quiz-step">
                     <p id="quizQuestionText" style="font-weight:700; color:white; font-size:14px; margin-bottom:12px;"></p>
@@ -745,7 +802,7 @@
                     <div style="background:rgba(7,9,14,0.9); border:2px dashed var(--accent-gold); padding:12px; border-radius:10px; font-size:18px; font-weight:800; color:var(--accent-gold); margin:12px 0;">
                         ANUBIS200TR
                     </div>
-                    <a href="#" id="whatsappCouponBtn" target="_blank" class="glorious-btn-primary">📲 Kuponla WhatsApp'tan Sipariş Ver</a>
+                    <a href="#" id="whatsappCouponBtn" target="_blank" class="glorious-btn-primary" onclick="triggerHaptic()">📲 Kuponla WhatsApp'tan Sipariş Ver</a>
                 </div>
             </div>
         </div>
@@ -769,6 +826,13 @@
     </div>
 
     <script>
+        // Haptic Feedback (Dokunmatik Titreşim) Fonksiyonu
+        function triggerHaptic() {
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(30); // 30 milisaniye hafif dokunma hissi
+            }
+        }
+
         const generalKnowledgeQuestions = [
             { q: "Türkiye'nin başkenti neresidir?", options: ["İstanbul", "Ankara", "İzmir", "Bursa"], answer: 1 },
             { q: "Periyodik tablonun ilk elementi hangisidir?", options: ["Helyum", "Hidrojen", "Oksijen", "Karbon"], answer: 1 },
@@ -790,7 +854,7 @@
             document.getElementById("quizQuestionText").textContent = `Soru: ${currentActiveQuestion.q}`;
             let optionsHtml = "";
             currentActiveQuestion.options.forEach((opt, idx) => {
-                optionsHtml += `<button class="quiz-option-btn" onclick="checkQuizAnswer(${idx})">${String.fromCharCode(65 + idx)}) ${opt}</button>`;
+                optionsHtml += `<button class="quiz-option-btn" onclick="triggerHaptic(); checkQuizAnswer(${idx})">${String.fromCharCode(65 + idx)}) ${opt}</button>`;
             });
             document.getElementById("quizOptionsContainer").innerHTML = optionsHtml;
         }
@@ -805,7 +869,6 @@
             }
         }
 
-        // KESİN ÇÖZÜM: Tek ve sabit MASTER depolama anahtarı
         const MASTER_STORAGE_KEY = "anubis_master_products_2026";
 
         let defaultProducts = [
@@ -837,6 +900,7 @@
         let isAdmin = false;
         let currentCurrency = 'TL';
         let activeCategoryFilter = 'TÜMÜ';
+        let activeSubFilter = 'TÜMÜ';
         let activeDetailItem = null;
         let tempUploadedImageBase64 = "";
 
@@ -875,9 +939,9 @@
         function renderFilterTabs() {
             let tabsContainer = document.getElementById("filterTabsContainer");
             let categories = [...new Set(products.map(p => (p.category || "DİĞER").toUpperCase()))];
-            let html = `<button class="filter-tab ${activeCategoryFilter === 'TÜMÜ' ? 'active' : ''}" onclick="filterByCategory('TÜMÜ', this)">✨ Tüm Ürünler</button>`;
+            let html = `<button class="filter-tab ${activeCategoryFilter === 'TÜMÜ' ? 'active' : ''}" onclick="triggerHaptic(); filterByCategory('TÜMÜ', this)">✨ Tüm Ürünler</button>`;
             categories.forEach(cat => {
-                html += `<button class="filter-tab ${activeCategoryFilter === cat ? 'active' : ''}" onclick="filterByCategory('${cat}', this)">📱 ${cat}</button>`;
+                html += `<button class="filter-tab ${activeCategoryFilter === cat ? 'active' : ''}" onclick="triggerHaptic(); filterByCategory('${cat}', this)">📱 ${cat}</button>`;
             });
             tabsContainer.innerHTML = html;
         }
@@ -886,6 +950,13 @@
             document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
             if (btnElement) btnElement.classList.add('active');
             activeCategoryFilter = cat;
+            renderTable();
+        }
+
+        function filterBySub(subVal, btnElement) {
+            document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+            activeSubFilter = subVal;
             renderTable();
         }
 
@@ -917,6 +988,14 @@
                     let itemCat = (p.category || "DİĞER").toUpperCase();
                     if (itemCat !== catName) return false;
                     if (activeCategoryFilter !== 'TÜMÜ' && activeCategoryFilter !== itemCat) return false;
+                    
+                    // Alt Chip filtresi kontrolü (Hafıza veya Kayıt durumu eşleşmesi)
+                    if (activeSubFilter !== 'TÜMÜ') {
+                        let matchStorage = p.storage && p.storage.toUpperCase().includes(activeSubFilter);
+                        let matchReg = p.reg && p.reg.toUpperCase().includes(activeSubFilter);
+                        if (!matchStorage && !matchReg) return false;
+                    }
+
                     return p.model.toLowerCase().includes(searchFilter) || (p.storage && p.storage.toLowerCase().includes(searchFilter));
                 });
 
@@ -940,7 +1019,7 @@
 
                     let tr = document.createElement("tr");
                     tr.className = "product-row";
-                    tr.onclick = () => openProductModal(item);
+                    tr.onclick = () => { triggerHaptic(); openProductModal(item); };
                     tr.innerHTML = `
                         <td style="font-weight:600;">${item.model}</td>
                         <td>${item.storage || "-"}</td>
@@ -948,14 +1027,14 @@
                         <td><input type="number" class="usd-input" value="${usdVal}" ${isAdmin ? '' : 'readonly'} onclick="event.stopPropagation()" oninput="updateUsdPrice(${item.originalIndex}, this.value)"></td>
                         <td class="price-display">${priceText}</td>
                         <td><span class="badge-green">${item.stock || "HAZIR STOK"}</span></td>
-                        <td><a href="https://wa.me/905000000000?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
-                        ${isAdmin ? `<td><button class="admin-btn-danger" onclick="event.stopPropagation(); deleteProduct(${item.originalIndex})">Sil</button></td>` : ''}
+                        <td><a href="https://wa.me/905000000000?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
+                        ${isAdmin ? `<td><button class="admin-btn-danger" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Sil</button></td>` : ''}
                     `;
                     tbody.appendChild(tr);
 
                     let card = document.createElement("div");
                     card.className = "m-product-card";
-                    card.onclick = () => openProductModal(item);
+                    card.onclick = () => { triggerHaptic(); openProductModal(item); };
                     card.innerHTML = `
                         <div class="m-card-header">
                             <h4 class="m-card-title">${item.model}</h4>
@@ -976,9 +1055,9 @@
                         </div>
                         <div class="m-card-footer">
                             <div class="m-price">${priceText}</div>
-                            <a href="https://wa.me/905000000000?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation(); showToast('WhatsApp açılıyor...');">📲 Sipariş Ver</a>
+                            <a href="https://wa.me/905000000000?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp açılıyor...');">📲 Sipariş Ver</a>
                         </div>
-                        ${isAdmin ? `<button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation(); deleteProduct(${item.originalIndex})">Ürünü Sil</button>` : ''}
+                        ${isAdmin ? `<button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Ürünü Sil</button>` : ''}
                     `;
                     cardGrid.appendChild(card);
                 });

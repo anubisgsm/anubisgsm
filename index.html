@@ -229,7 +229,7 @@
             gap: 12px;
             margin-bottom: 15px;
         }
-        .form-grid input, .form-grid label.file-upload-label {
+        .form-grid input {
             padding: 12px 14px;
             background: rgba(7, 9, 14, 0.8);
             border: 1px solid var(--border-color);
@@ -238,23 +238,6 @@
             font-size: 13px;
             outline: none;
         }
-        .file-upload-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            cursor: pointer;
-            color: var(--text-muted);
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-        .file-upload-label:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-            background: rgba(56, 189, 248, 0.05);
-        }
-        .form-grid input[type="file"] { display: none; }
-
         .admin-btn {
             background: linear-gradient(135deg, #059669, #10b981);
             color: white; border: none; padding: 12px 24px; border-radius: 10px;
@@ -368,7 +351,7 @@
             box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
         }
 
-        /* TABLO ALANI */
+        /* TABLO ALANI - Sadeleştirilmiş Hover Efekti */
         .table-wrapper {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -485,31 +468,6 @@
 
         /* GÖRKEMLİ ÜRÜN KARTI İÇERİK STİLLERİ */
         .glorious-card-content { display: flex; flex-direction: column; gap: 20px; }
-        
-        .glorious-img-container {
-            width: 100%;
-            height: 200px;
-            background: rgba(7, 9, 14, 0.8);
-            border-radius: 14px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-        .glorious-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.2));
-        }
-        .glorious-img-placeholder {
-            color: var(--text-muted);
-            font-size: 13px;
-            font-weight: 600;
-        }
-
         .glorious-info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -658,10 +616,6 @@
                 <input type="number" id="newUsd" placeholder="Dolar Fiyatı ($)">
                 <input type="text" id="newStock" placeholder="Stok (Örn: HAZIR STOK)">
                 <input type="text" id="newDesc" placeholder="Cihaz Açıklaması">
-                <label class="file-upload-label" for="newImageFile">
-                    📷 <span id="fileNameLabel">Bilgisayardan Resim Seç</span>
-                </label>
-                <input type="file" id="newImageFile" accept="image/*" onchange="handleFileSelect(this)">
             </div>
             <button class="admin-btn" onclick="addNewProduct()">Listeye Ürün Ekle</button>
         </div>
@@ -712,12 +666,6 @@
             </div>
             <div class="modal-body">
                 <div class="glorious-card-content">
-                    
-                    <!-- Görsel Alanı -->
-                    <div class="glorious-img-container" id="modalImgContainer">
-                        <span class="glorious-img-placeholder">Görsel Bulunmuyor</span>
-                    </div>
-
                     <p id="modalProductDesc" style="color:var(--text-muted); margin:0; font-size:14px; line-height:1.5;"></p>
                     
                     <div class="glorious-info-grid">
@@ -854,38 +802,20 @@
         }
 
         let defaultProducts = [
-            { category: "İPHONE", model: "IPHONE 16 PRO MAX", storage: "512GB", reg: 'KAYIT ALICI AİT', usd: 1520, stock: "SON 2 ÜRÜN", desc: "Kutu açılımsız, sıfır kapalı kutu cihaz.", image: "" },
-            { category: "SAMSUNG", model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Amiral gemisi S25 Ultra, en güçlü işlemci.", image: "" }
+            { category: "İPHONE", model: "IPHONE 16 PRO MAX", storage: "512GB", reg: 'KAYIT ALICI AİT', usd: 1520, stock: "SON 2 ÜRÜN", desc: "Kutu açılımsız, sıfır kapalı kutu cihaz." },
+            { category: "SAMSUNG", model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Amiral gemisi S25 Ultra, en güçlü işlemci." }
         ];
 
-        // ESKİ VERİLERİN KAYBOLMAMASI İÇİN AKILLI KONTROL (KÖPRÜ)
-        let products = null;
-        const storageKeys = ["anubis_products_v5", "anubis_products_v4", "anubis_products_v3", "anubis_products", "anubis_gsm_products"];
-        
-        for (let key of storageKeys) {
-            let savedData = localStorage.getItem(key);
-            if (savedData) {
-                try {
-                    let parsed = JSON.parse(savedData);
-                    if (Array.isArray(parsed) && parsed.length > 0) {
-                        products = parsed;
-                        break;
-                    }
-                } catch(e) {}
-            }
-        }
-
+        let products = JSON.parse(localStorage.getItem("anubis_products_v4"));
         if (!products || products.length === 0) {
             products = defaultProducts;
+            localStorage.setItem("anubis_products_v4", JSON.stringify(defaultProducts));
         }
-        // En güncel anahtar altında sabitleyelim
-        localStorage.setItem("anubis_products_v5", JSON.stringify(products));
 
         let isAdmin = false;
         let currentCurrency = 'TL';
         let activeCategoryFilter = 'TÜMÜ';
         let activeDetailItem = null;
-        let tempUploadedImageBase64 = "";
 
         let logoClickCount = 0;
         let logoClickTimer = null;
@@ -905,7 +835,7 @@
             }
         }
 
-        function saveToStorage() { localStorage.setItem("anubis_products_v5", JSON.stringify(products)); }
+        function saveToStorage() { localStorage.setItem("anubis_products_v4", JSON.stringify(products)); }
         function showToast(text = "Sipariş mesajınız kopyalandı!") {
             let toast = document.getElementById("toast");
             toast.textContent = text;
@@ -1014,19 +944,6 @@
 
         function filterTable() { renderTable(); }
 
-        /* DOSYA YÜKLEME İŞLEMİ */
-        function handleFileSelect(input) {
-            if (input.files && input.files[0]) {
-                let file = input.files[0];
-                document.getElementById("fileNameLabel").textContent = file.name;
-                let reader = new FileReader();
-                reader.onload = function(e) {
-                    tempUploadedImageBase64 = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
         /* GÖRKEMLİ KART AÇMA FONKSİYONLARI */
         function openProductModal(item) {
             activeDetailItem = item;
@@ -1036,13 +953,6 @@
             document.getElementById("modalProductReg").textContent = item.reg || "KAYITSIZ";
             document.getElementById("modalProductUsd").textContent = (parseFloat(item.usd) || 0).toLocaleString() + " $";
             document.getElementById("modalProductStock").textContent = item.stock || "HAZIR STOK";
-
-            let imgContainer = document.getElementById("modalImgContainer");
-            if (item.image) {
-                imgContainer.innerHTML = `<img src="${item.image}" alt="${item.model}">`;
-            } else {
-                imgContainer.innerHTML = `<span class="glorious-img-placeholder">Görsel Bulunmuyor</span>`;
-            }
 
             let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
             let calculatedTl = ((parseFloat(item.usd) || 0) * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺";
@@ -1082,26 +992,12 @@
             let usd = parseFloat(document.getElementById("newUsd").value) || 1000;
             let stock = document.getElementById("newStock").value.trim().toUpperCase() || "HAZIR STOK";
             let desc = document.getElementById("newDesc").value.trim();
-            let image = tempUploadedImageBase64;
 
             if (cat && model) {
-                products.push({ category: cat, model: model, storage: storage, reg: reg, usd: usd, stock: stock, desc: desc, image: image });
+                products.push({ category: cat, model: model, storage: storage, reg: reg, usd: usd, stock: stock, desc: desc });
                 saveToStorage();
                 renderTable();
-                
-                // Formu sıfırla
-                document.getElementById("newCategory").value = "";
-                document.getElementById("newModel").value = "";
-                document.getElementById("newStorage").value = "";
-                document.getElementById("newReg").value = "";
-                document.getElementById("newUsd").value = "";
-                document.getElementById("newStock").value = "";
-                document.getElementById("newDesc").value = "";
-                document.getElementById("newImageFile").value = "";
-                document.getElementById("fileNameLabel").textContent = "Bilgisayardan Resim Seç";
-                tempUploadedImageBase64 = "";
-
-                alert("Ürün başarıyla ve resmiyle birlikte eklendi!");
+                alert("Ürün başarıyla eklendi!");
             } else {
                 alert("Lütfen en az Kategori ve Model alanlarını doldurun.");
             }
@@ -1128,7 +1024,6 @@
         window.onload = function() {
             fetchLiveExchangeRate();
             triggerLiveNotificationLoop();
-            renderTable();
         };
     </script>
 </body>

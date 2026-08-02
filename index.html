@@ -241,7 +241,7 @@
             border-radius: 8px;
             font-size: 12.5px;
             resize: vertical;
-            height: 60px;
+            height: 80px;
             outline: none;
             box-sizing: border-box;
         }
@@ -708,12 +708,12 @@
             
             <!-- Akıllı Metin Yapıştır Kutusu -->
             <div class="smart-paste-box">
-                <label>⚡ Akıllı Hızlı Yapıştır (Listeyi veya Metni Buraya Yapıştırın):</label>
-                <textarea id="smartPasteInput" class="smart-paste-textarea" placeholder="Örn: İPHONE 16 Pro Max 256GB Kayıtlı 1150$" oninput="parseSmartPaste(this.value)"></textarea>
+                <label>⚡ Akıllı Hızlı Yapıştır (Toplu Fiyat Listesini Buraya Yapıştırın):</label>
+                <textarea id="smartPasteInput" class="smart-paste-textarea" placeholder="Örn:&#10;İPHONE 16 Pro Max 256GB Kayıtlı 1150$&#10;SAMSUNG S25 Ultra 12/512GB Kayıtsız 1200$" oninput="parseSmartPaste(this.value)"></textarea>
             </div>
 
             <div class="form-grid">
-                <input type="text" id="newCategory" placeholder="Kategori (Örn: İPHONE)">
+                <input type="text" id="newCategory" placeholder="Kategori (Örn: APPLE)">
                 <input type="text" id="newModel" placeholder="Model">
                 <input type="text" id="newStorage" placeholder="Hafıza">
                 <input type="text" id="newReg" placeholder="Kayıt Durumu">
@@ -933,7 +933,7 @@
         const MASTER_STORAGE_KEY = "anubis_master_products_2026";
 
         let defaultProducts = [
-            { category: "İPHONE", model: "IPHONE 16 PRO MAX", storage: "512GB", reg: 'KAYIT ALICI AİT', usd: 1520, stock: "SON 2 ÜRÜN", desc: "Kutu açılımsız, sıfır kapalı kutu cihaz.", image: "" },
+            { category: "APPLE", model: "IPHONE 16 PRO MAX", storage: "512GB", reg: 'KAYIT ALICI AİT', usd: 1520, stock: "SON 2 ÜRÜN", desc: "Kutu açılımsız, sıfır kapalı kutu cihaz.", image: "" },
             { category: "SAMSUNG", model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Amiral gemisi S25 Ultra, en güçlü işlemci.", image: "" }
         ];
 
@@ -1034,41 +1034,79 @@
             } catch (e) { document.getElementById("rateUpdateStatus").textContent = "Manuel Kur"; }
         }
 
-        // Akıllı Yapıştır Metin Ayrıştırma Fonksiyonu
-        function parseSmartPaste(text) {
-            if (!text.trim()) return;
-            
-            // Fiyat tespiti ($ veya rakam sonu)
-            let usdMatch = text.match(/(\d+)\s*\$/) || text.match(/\$\s*(\d+)/) || text.match(/(\d{3,4})/);
-            let usdVal = usdMatch ? parseFloat(usdMatch[1] || usdMatch[0]) : "";
+        // Güncellenmiş Akıllı Hızlı Yapıştır Ayrıştırma Mantığı (Toplu & Tekli Destekli)
+        function parseSmartPaste(rawText) {
+            if (!rawText.trim()) return;
 
-            // Hafıza tespiti (örn: 128GB, 256 gb, 1TB vb.)
-            let storageMatch = text.match(/(\d+\s*(?:GB|TB))/i);
-            let storageVal = storageMatch ? storageMatch[1].toUpperCase().replace(/\s+/g, '') : "256GB";
+            const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            let currentBrand = "APPLE";
+            let addedCount = 0;
 
-            // Kayıt durumu tespiti
-            let regVal = "KAYITSIZ";
-            let upperText = text.toUpperCase();
-            if (upperText.includes("KAYITLI")) regVal = "KAYITLI";
-            else if (upperText.includes("ALICI") || upperText.includes("AİT")) regVal = "KAYIT ALICI AİT";
+            lines.forEach(line => {
+                const upperLine = line.toLocaleUpperCase('tr-TR');
 
-            // Kategori tespiti
-            let catVal = "İPHONE";
-            if (upperText.includes("SAMSUNG")) catVal = "SAMSUNG";
-            else if (upperText.includes("XIAOMI")) catVal = "XIAOMI";
-            else if (upperText.includes("HUAWEI")) catVal = "HUAWEI";
+                // Bilgilendirme veya geçersiz satırları atla
+                if (upperLine.includes("İLETİŞİM") || upperLine.includes("ÜCRETSİZ KARGO") || upperLine.includes("ÖNEMLİ") || upperLine.includes("HAVALE") || upperLine.includes("RİSK")) {
+                    return;
+                }
 
-            // Model adı (Fiyat ve gereksiz ekleri temizleyerek)
-            let cleanModel = text.replace(/(\d+\s*\$|\$\s*\d+|\d+\s*(?:GB|TB)|KAYITLI|KAYITSIZ|ALICI|AİT)/gi, "").trim();
-            cleanModel = cleanModel.replace(/\s+/g, ' ').toUpperCase();
+                // Kategori tespiti (Başlık niteliğindeki satırlar)
+                if (upperLine.includes("İPHONE") || upperLine.includes("APPLE")) currentBrand = "APPLE";
+                else if (upperLine.includes("SAMSUNG") || upperLine.includes("S26") || upperLine.includes("S25") || upperLine.includes("S24")) currentBrand = "SAMSUNG";
+                else if (upperLine.includes("REDMAGIC") || upperLine.includes("REDMAGİC")) currentBrand = "REDMAGIC";
+                else if (upperLine.includes("HUAWEI")) currentBrand = "HUAWEI";
+                else if (upperLine.includes("GOOGLE")) currentBrand = "GOOGLE";
+                else if (upperLine.includes("XIAOMI") || upperLine.includes("XİAOMİ") || upperLine.includes("NOTE") || upperLine.includes("REDMI") || upperLine.includes("POCO")) currentBrand = "XIAOMI/POCO";
+                else if (upperLine.includes("ONEPLUS")) currentBrand = "ONEPLUS";
 
-            // Form alanlarına doldur
-            if (catVal) document.getElementById("newCategory").value = catVal;
-            if (cleanModel) document.getElementById("newModel").value = cleanModel;
-            if (storageVal) document.getElementById("newStorage").value = storageVal;
-            if (regVal) document.getElementById("newReg").value = regVal;
-            if (usdVal) document.getElementById("newUsd").value = usdVal;
-            document.getElementById("newStock").value = "HAZIR STOK";
+                // Fiyat içeren satırları işle ($ işareti veya sayısal değer)
+                if (line.includes("$") || /\d+\s*\$/.test(line)) {
+                    // Fiyat tespiti
+                    let usdMatch = line.match(/(\d+)\s*\$/) || line.match(/\$\s*(\d+)/);
+                    let usdVal = usdMatch ? parseFloat(usdMatch[1] || usdMatch[2] || usdMatch[0]) : 1000;
+
+                    // Hafıza tespiti (örn: 128GB, 256GB, 512GB, 1TB)
+                    let storageMatch = line.match(/(\d+\s*(?:GB|TB))/i);
+                    let storageVal = storageMatch ? storageMatch[1].toUpperCase().replace(/\s+/g, '') : "256GB";
+
+                    // Kayıt durumu tespiti
+                    let regVal = "KAYITSIZ";
+                    if (upperLine.includes("KAYITLI")) regVal = "KAYITLI";
+                    else if (upperLine.includes("ALICI") || upperLine.includes("AİT") || upperLine.includes("1 NO")) regVal = "KAYIT ALICI AİT";
+
+                    // Model adı temizleme (fiyatı, sembolleri ve varyantları ayıkla)
+                    let cleanModel = line.replace(/(\d+\s*\$|\$\s*[\d.]+|\d+\s*(?:GB|TB)|KAYITLI|KAYITSIZ|ALICI|AİT)/gi, "").trim();
+                    cleanModel = cleanModel.replace(/[:\-–—]/g, '').trim().toUpperCase();
+
+                    if (cleanModel.length > 2) {
+                        products.push({
+                            category: currentBrand,
+                            model: cleanModel,
+                            storage: storageVal,
+                            reg: regVal,
+                            usd: usdVal,
+                            stock: "HAZIR STOK",
+                            desc: "Hızlı yapıştır ile eklendi.",
+                            image: ""
+                        });
+                        addedCount++;
+                    }
+                }
+            });
+
+            if (addedCount > 0) {
+                saveToStorage();
+                renderTable();
+                document.getElementById("smartPasteInput").value = "";
+                showToast(`Başarıyla ${addedCount} ürün eklendi! 🚀`);
+            } else {
+                // Tekil satır ise manuel form alanlarına doldurmayı dene
+                let usdMatch = rawText.match(/(\d+)\s*\$/);
+                if (usdMatch) document.getElementById("newUsd").value = usdMatch[1];
+                let storageMatch = rawText.match(/(\d+\s*(?:GB|TB))/i);
+                if (storageMatch) document.getElementById("newStorage").value = storageMatch[1].toUpperCase();
+                document.getElementById("newModel").value = rawText.replace(/[\$\d]/g, '').trim().toUpperCase();
+            }
         }
 
         function renderTable() {
@@ -1181,7 +1219,6 @@
             }
         }
 
-        // Sonradan resim ekleme/düzenleme fonksiyonları
         function openImageEditModal(idx) {
             editingImageIndex = idx;
             document.getElementById("imgEditTargetName").textContent = products[idx].model + " (" + (products[idx].storage || "") + ")";
@@ -1261,7 +1298,6 @@
                 saveToStorage();
                 renderTable();
                 
-                // Formu ve Smart Paste kutusunu temizle
                 document.getElementById("smartPasteInput").value = "";
                 document.getElementById("newCategory").value = "";
                 document.getElementById("newModel").value = "";

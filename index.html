@@ -217,7 +217,6 @@
             border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold;
         }
         
-        /* Akıllı Yapıştır Kutusu Stili */
         .smart-paste-box {
             background: rgba(56, 189, 248, 0.05);
             border: 1px solid rgba(56, 189, 248, 0.3);
@@ -253,7 +252,7 @@
             gap: 10px;
             margin-bottom: 12px;
         }
-        .form-grid input, .form-grid label.file-upload-label {
+        .form-grid input, .form-grid select, .form-grid label.file-upload-label {
             padding: 10px 12px;
             background: rgba(7, 9, 14, 0.8);
             border: 1px solid var(--border-color);
@@ -261,6 +260,10 @@
             border-radius: 10px;
             font-size: 12.5px;
             outline: none;
+        }
+        .form-grid select option {
+            background: #07090e;
+            color: white;
         }
         .file-upload-label {
             display: flex;
@@ -661,13 +664,13 @@
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
             İndirim
         </button>
-        <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="nav-bar-item nav-bar-whatsapp" onclick="triggerHaptic()">
+        <a href="https://wa.me/905345513747?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="nav-bar-item nav-bar-whatsapp" onclick="triggerHaptic()">
             <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/></svg>
             WhatsApp
         </a>
     </div>
 
-    <a href="https://wa.me/905000000000?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" title="WhatsApp ile İletişime Geç">
+    <a href="https://wa.me/905345513747?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" title="WhatsApp ile İletişime Geç">
         <svg viewBox="0 0 24 24">
             <path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/>
         </svg>
@@ -706,14 +709,19 @@
         <div id="adminPanel" class="admin-panel">
             <h3>Yönetim Paneli <button class="close-admin" onclick="triggerHaptic(); toggleAdminPanel(false)">Kapat</button></h3>
             
-            <!-- Akıllı Metin Yapıştır Kutusu -->
             <div class="smart-paste-box">
                 <label>⚡ Akıllı Hızlı Yapıştır (Listeyi veya Metni Buraya Yapıştırın):</label>
                 <textarea id="smartPasteInput" class="smart-paste-textarea" placeholder="Örn: İPHONE 16 Pro Max 256GB Kayıtlı 1150$" oninput="parseSmartPaste(this.value)"></textarea>
             </div>
 
             <div class="form-grid">
-                <input type="text" id="newCategory" placeholder="Kategori (Örn: İPHONE)">
+                <select id="newCategory">
+                    <option value="İPHONE">İPHONE</option>
+                    <option value="SAMSUNG">SAMSUNG</option>
+                    <option value="XIAOMI">XIAOMI</option>
+                    <option value="HUAWEI">HUAWEI</option>
+                    <option value="DİĞER">DİĞER</option>
+                </select>
                 <input type="text" id="newModel" placeholder="Model">
                 <input type="text" id="newStorage" placeholder="Hafıza">
                 <input type="text" id="newReg" placeholder="Kayıt Durumu">
@@ -820,7 +828,6 @@
         </div>
     </div>
 
-    <!-- Resim Ekleme / Güncelleme Modalı -->
     <div id="imageEditModal" class="modal-overlay" onclick="closeImageEditModal()">
         <div class="modal-card" style="max-width:400px;" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -923,7 +930,7 @@
             if (selectedIndex === currentActiveQuestion.answer) {
                 showQuizStep(3);
                 let waText = "Merhaba, genel kültür sorusunu bildim ve 200 TL indirim hakkı kazandım. (Kupon: ANUBIS200TR)";
-                document.getElementById("whatsappCouponBtn").href = "https://wa.me/905000000000?text=" + encodeURIComponent(waText);
+                document.getElementById("whatsappCouponBtn").href = "https://wa.me/905345513747?text=" + encodeURIComponent(waText);
             } else {
                 alert("Yanlış cevap! Tekrar deneyebilirsin.");
                 goToQuizStep2();
@@ -1034,35 +1041,28 @@
             } catch (e) { document.getElementById("rateUpdateStatus").textContent = "Manuel Kur"; }
         }
 
-        // Akıllı Yapıştır Metin Ayrıştırma Fonksiyonu
         function parseSmartPaste(text) {
             if (!text.trim()) return;
             
-            // Fiyat tespiti ($ veya rakam sonu)
             let usdMatch = text.match(/(\d+)\s*\$/) || text.match(/\$\s*(\d+)/) || text.match(/(\d{3,4})/);
             let usdVal = usdMatch ? parseFloat(usdMatch[1] || usdMatch[0]) : "";
 
-            // Hafıza tespiti (örn: 128GB, 256 gb, 1TB vb.)
             let storageMatch = text.match(/(\d+\s*(?:GB|TB))/i);
             let storageVal = storageMatch ? storageMatch[1].toUpperCase().replace(/\s+/g, '') : "256GB";
 
-            // Kayıt durumu tespiti
             let regVal = "KAYITSIZ";
             let upperText = text.toUpperCase();
             if (upperText.includes("KAYITLI")) regVal = "KAYITLI";
             else if (upperText.includes("ALICI") || upperText.includes("AİT")) regVal = "KAYIT ALICI AİT";
 
-            // Kategori tespiti
             let catVal = "İPHONE";
             if (upperText.includes("SAMSUNG")) catVal = "SAMSUNG";
             else if (upperText.includes("XIAOMI")) catVal = "XIAOMI";
             else if (upperText.includes("HUAWEI")) catVal = "HUAWEI";
 
-            // Model adı (Fiyat ve gereksiz ekleri temizleyerek)
             let cleanModel = text.replace(/(\d+\s*\$|\$\s*\d+|\d+\s*(?:GB|TB)|KAYITLI|KAYITSIZ|ALICI|AİT)/gi, "").trim();
             cleanModel = cleanModel.replace(/\s+/g, ' ').toUpperCase();
 
-            // Form alanlarına doldur
             if (catVal) document.getElementById("newCategory").value = catVal;
             if (cleanModel) document.getElementById("newModel").value = cleanModel;
             if (storageVal) document.getElementById("newStorage").value = storageVal;
@@ -1131,7 +1131,7 @@
                         <td><input type="number" class="usd-input" value="${usdVal}" ${isAdmin ? '' : 'readonly'} onclick="event.stopPropagation()" oninput="updateUsdPrice(${item.originalIndex}, this.value)"></td>
                         <td class="price-display">${priceText}</td>
                         <td><span class="badge-green">${item.stock || "HAZIR STOK"}</span></td>
-                        <td><a href="https://wa.me/905000000000?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
+                        <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
                         ${isAdmin ? `<td><button class="admin-btn-danger" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Sil</button></td>` : ''}
                     `;
                     tbody.appendChild(tr);
@@ -1160,7 +1160,7 @@
                         </div>
                         <div class="m-card-footer">
                             <div class="m-price">${priceText}</div>
-                            <a href="https://wa.me/905000000000?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp açılıyor...');">📲 Sipariş Ver</a>
+                            <a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp açılıyor...');">📲 Sipariş Ver</a>
                         </div>
                         ${isAdmin ? `<button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Ürünü Sil</button>` : ''}
                     `;
@@ -1181,7 +1181,6 @@
             }
         }
 
-        // Sonradan resim ekleme/düzenleme fonksiyonları
         function openImageEditModal(idx) {
             editingImageIndex = idx;
             document.getElementById("imgEditTargetName").textContent = products[idx].model + " (" + (products[idx].storage || "") + ")";
@@ -1231,7 +1230,7 @@
             document.getElementById("modalProductPrice").textContent = calculatedTl;
 
             let waText = `Merhaba, ${item.model} (${item.storage} - ${item.reg}) modelini inceledim ve sipariş vermek istiyorum. Fiyat: ${calculatedTl}`;
-            document.getElementById("modalWhatsAppBtn").href = `https://wa.me/905000000000?text=` + encodeURIComponent(waText);
+            document.getElementById("modalWhatsAppBtn").href = `https://wa.me/905345513747?text=` + encodeURIComponent(waText);
             document.getElementById("productDetailModal").style.display = "flex";
         }
 
@@ -1261,9 +1260,7 @@
                 saveToStorage();
                 renderTable();
                 
-                // Formu ve Smart Paste kutusunu temizle
                 document.getElementById("smartPasteInput").value = "";
-                document.getElementById("newCategory").value = "";
                 document.getElementById("newModel").value = "";
                 document.getElementById("newStorage").value = "";
                 document.getElementById("newReg").value = "";
@@ -1273,7 +1270,7 @@
                 document.getElementById("newImageFile").value = "";
                 document.getElementById("fileNameLabel").textContent = "Resim Seç";
                 tempUploadedImageBase64 = "";
-                alert("Ürün başarıyla eklendi!");
+                showToast("Ürün başarıyla eklendi! 🚀");
             } else { alert("Lütfen Kategori ve Model alanlarını doldurun."); }
         }
 
@@ -1282,6 +1279,7 @@
                 products.splice(idx, 1);
                 saveToStorage();
                 renderTable();
+                showToast("Ürün sistemden silindi.");
             }
         }
 

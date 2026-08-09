@@ -1059,7 +1059,6 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products));
         }
 
-        // Eski ürün kayıtlarını yeni alış/satış alanlarına uyumlu hale getir.
         products.forEach(p => {
             if (p.saleUsd === undefined || p.saleUsd === null || p.saleUsd === '') p.saleUsd = Number(p.usd) || 0;
             if (p.costUsd === undefined || p.costUsd === null || p.costUsd === '') p.costUsd = 0;
@@ -1076,6 +1075,16 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         function saveToStorage() { 
             localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products)); 
         }
+
+        // Cihazlar/sekme arası anlık güncellemeleri tetikleyen dinleyici
+        window.addEventListener('storage', (e) => {
+            if (e.key === MASTER_STORAGE_KEY && e.newValue) {
+                try {
+                    products = JSON.parse(e.newValue);
+                    renderTable();
+                } catch(err) {}
+            }
+        });
 
         let isAdmin = false;
         let currentCurrency = 'TL';
@@ -1156,7 +1165,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         }
 
         const brandCategories = [
-            { name: "İPHONE", keys: ["IPHONE", "IPHONE"] },
+            { name: "İPHONE", keys: ["IPHONE", "İPHONE"] },
             { name: "SAMSUNG", keys: ["SAMSUNG"] },
             { name: "REDMI", keys: ["REDMI"] },
             { name: "XIAOMI", keys: ["XIAOMI"] },
@@ -1182,7 +1191,6 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 .replace(/Ü/g, "U").replace(/Ö/g, "O").replace(/Ç/g, "C");
         }
 
-        // Eski ürünlerde marka kategorisini otomatik düzelt.
         products.forEach(p => {
             let modelNorm = normalizeBrandText(p.model || "");
             if (modelNorm.includes("REDMI")) p.category = "REDMI";
@@ -1281,7 +1289,6 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             let costVal = labeledCost ? parseFloat(labeledCost[1].replace(',', '.')) : (slashPrices ? parseFloat(slashPrices[1].replace(',', '.')) : 0);
             let usdVal = labeledSale ? parseFloat(labeledSale[1].replace(',', '.')) : (slashPrices ? parseFloat(slashPrices[2].replace(',', '.')) : (dollarMatches.length ? dollarMatches[dollarMatches.length - 1] : (trailingPrice ? parseFloat(trailingPrice[1]) : 0)));
 
-            // "12/256", "256GB", "1TB" gibi ifadelerden en anlamlı hafızayı yakala.
             let slashStorage = text.match(/\b\d+\s*\/\s*(\d+)\s*(?:GB|TB)?\b/i);
             let storageMatch = text.match(/(\d+\s*(?:GB|TB))/i);
             let storageVal = storageMatch ? storageMatch[1].toUpperCase().replace(/\s+/g, '') :
@@ -1635,12 +1642,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             if (!products[idx]) return;
             let query = encodeURIComponent(`${products[idx].model} ${products[idx].storage || ""} telefon resmi`);
             window.open(`https://www.google.com/search?tbm=isch&q=${query}`, "_blank", "noopener");
-            showToast("İnternet görsel araması açıldı. Otomatik içe aktarma için API bağlantısı kurulabilir.");
-        }
-
-        async function findInternetImageForEditing() {
-            if (editingImageIndex === null || !products[editingImageIndex]) return;
-            openImageSearch(editingImageIndex);
+            showToast("İnternet görsel araması açıldı.");
         }
 
         function openProductModal(item) {
@@ -1715,14 +1717,6 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 renderTable();
                 showToast("Ürün sistemden silindi.");
             }
-        }
-
-        function updateUsdPrice(idx, val) {
-            if (!isAdmin) return;
-            products[idx].usd = parseFloat(val) || 0;
-            products[idx].saleUsd = products[idx].usd;
-            saveToStorage();
-            renderTable();
         }
 
         function openFaqModal() { document.getElementById("faqModal").style.display = "flex"; }

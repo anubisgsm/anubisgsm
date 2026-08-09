@@ -687,6 +687,7 @@
         .quiz-step.active { display: block; }
         .quiz-option-btn { display: block; width: 100%; background: rgba(30, 41, 59, 0.8); border: 1px solid var(--border-color); color: white; padding: 12px; border-radius: 10px; margin-bottom: 8px; text-align: left; font-weight: 600; cursor: pointer; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -753,6 +754,11 @@
     <div class="container">
         <div id="adminPanel" class="admin-panel">
             <h3>Yönetim Paneli <button class="close-admin" onclick="triggerHaptic(); toggleAdminPanel(false)">Kapat</button></h3>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+                <span id="cloudSyncStatus" style="font-size:12px;color:var(--text-muted);">☁️ Ortak veri hazırlanıyor...</span>
+                <button type="button" class="admin-tool-btn" onclick="triggerHaptic(); migrateLocalProductsToCloud()">☁️ PC Ürünlerini Buluta Aktar</button>
+                <button type="button" class="admin-tool-btn" onclick="triggerHaptic(); loadProductsFromCloud(true)">🔄 Buluttan Yenile</button>
+            </div>
             
             <div class="smart-paste-box">
                 <label>⚡ Akıllı Hızlı Yapıştır — Tek ürün veya birden fazla satır yapıştırabilirsin.</label>
@@ -1031,6 +1037,14 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
         const MASTER_STORAGE_KEY = "anubis_master_products_2026";
         const CATEGORY_STORAGE_KEY = "anubis_categories_2026";
+        const SUPABASE_URL = "https://fwzzgmqqjyibqnyeuaub.supabase.co";
+        const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_QRImAzhyw4qXAG-xDN43MQ_Vtd_uK7J";
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+        const CLOUD_TABLE = "products";
+        let cloudReady = false;
+        let cloudLoading = false;
+        let cloudSyncTimer = null;
+        let isAdmin = false;
 
         const DEFAULT_CATEGORIES = [
             "İPHONE", "SAMSUNG", "XIAOMI", "REDMI", "ONEPLUS", "REDMAGIC", "GOOGLE",
@@ -1038,55 +1052,200 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         ];
 
         let defaultProducts = [
-            { category: "İPHONE", model: "IPHONE 16 PRO MAX", storage: "512GB", reg: 'KAYIT ALICI AİT', usd: 1520, stock: "SON 2 ÜRÜN", desc: "Kutu açılımsız, sıfır kapalı kutu cihaz.", image: "" },
-            { category: "SAMSUNG", model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, stock: "HAZIR STOK", desc: "Amiral gemisi S25 Ultra, en güçlü işlemci.", image: "" }
+            { id: "default-iphone-16-pro-max", category: "İPHONE", model: "IPHONE 16 PRO MAX", storage: "512GB", reg: 'KAYIT ALICI AİT', usd: 1520, saleUsd: 1520, costUsd: 0, stock: "SON 2 ÜRÜN", desc: "Kutu açılımsız, sıfır kapalı kutu cihaz.", image: "" },
+            { id: "default-samsung-s25-ultra", category: "SAMSUNG", model: "SAMSUNG S25 ULTRA", storage: "12/512GB", reg: 'KAYITSIZ', usd: 1200, saleUsd: 1200, costUsd: 0, stock: "HAZIR STOK", desc: "Amiral gemisi S25 Ultra, en güçlü işlemci.", image: "" }
         ];
+
+        function makeProductId() {
+            return 'p_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 9);
+        }
+
+        function normalizeProduct(p) {
+            const sale = Number(p.saleUsd ?? p.usd) || 0;
+            return {
+                id: p.id || makeProductId(),
+                category: String(p.category || 'DİĞER').toUpperCase(),
+                model: String(p.model || '').trim(),
+                storage: String(p.storage || ''),
+                reg: String(p.reg || 'KAYITSIZ').toUpperCase(),
+                usd: sale,
+                saleUsd: sale,
+                costUsd: Number(p.costUsd) || 0,
+                stock: String(p.stock || 'HAZIR STOK'),
+                desc: String(p.desc || ''),
+                image: String(p.image || ''),
+                imageSource: p.imageSource || '',
+                imageTitle: p.imageTitle || ''
+            };
+        }
 
         let products = null;
         let savedData = localStorage.getItem(MASTER_STORAGE_KEY);
-
         if (savedData) {
             try {
-                let parsed = JSON.parse(savedData);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    products = parsed;
-                }
+                const parsed = JSON.parse(savedData);
+                if (Array.isArray(parsed) && parsed.length > 0) products = parsed.map(normalizeProduct);
             } catch(e) {}
         }
-
         if (!products || products.length === 0) {
-            products = defaultProducts;
+            products = defaultProducts.map(normalizeProduct);
             localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products));
         }
 
         products.forEach(p => {
             if (p.saleUsd === undefined || p.saleUsd === null || p.saleUsd === '') p.saleUsd = Number(p.usd) || 0;
             if (p.costUsd === undefined || p.costUsd === null || p.costUsd === '') p.costUsd = 0;
+            if (!p.id) p.id = makeProductId();
         });
-        saveToStorage();
 
         let savedCategories = [];
         try { savedCategories = JSON.parse(localStorage.getItem(CATEGORY_STORAGE_KEY) || "[]"); } catch(e) { savedCategories = []; }
         let categoryOrder = Array.isArray(savedCategories) && savedCategories.length ? savedCategories : [...DEFAULT_CATEGORIES];
         [...new Set(products.map(p => (p.category || "DİĞER").toUpperCase()))].forEach(cat => { if (!categoryOrder.includes(cat)) categoryOrder.push(cat); });
+
         function saveCategoryOrder() { localStorage.setItem(CATEGORY_STORAGE_KEY, JSON.stringify(categoryOrder)); }
         saveCategoryOrder();
 
-        function saveToStorage() { 
-            localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products)); 
+        function setCloudStatus(text, ok = false) {
+            const el = document.getElementById('cloudSyncStatus');
+            if (!el) return;
+            el.textContent = text;
+            el.style.color = ok ? '#34d399' : 'var(--text-muted)';
         }
 
-        // Cihazlar/sekme arası anlık güncellemeleri tetikleyen dinleyici
-        window.addEventListener('storage', (e) => {
-            if (e.key === MASTER_STORAGE_KEY && e.newValue) {
-                try {
-                    products = JSON.parse(e.newValue);
-                    renderTable();
-                } catch(err) {}
-            }
-        });
+        function toCloudRow(p) {
+            return {
+                id: p.id || makeProductId(),
+                category: p.category || 'DİĞER',
+                model: p.model || '',
+                storage: p.storage || '',
+                reg: p.reg || 'KAYITSIZ',
+                usd: Number(p.saleUsd ?? p.usd) || 0,
+                sale_usd: Number(p.saleUsd ?? p.usd) || 0,
+                cost_usd: Number(p.costUsd) || 0,
+                stock: p.stock || 'HAZIR STOK',
+                description: p.desc || '',
+                image: p.image || '',
+                created_at: p.created_at || undefined
+            };
+        }
 
-        let isAdmin = false;
+        function fromCloudRow(r) {
+            return normalizeProduct({
+                id: r.id, category: r.category, model: r.model, storage: r.storage, reg: r.reg,
+                usd: r.sale_usd ?? r.usd, saleUsd: r.sale_usd ?? r.usd, costUsd: r.cost_usd,
+                stock: r.stock, desc: r.description, image: r.image
+            });
+        }
+
+        function saveToStorage() {
+            products = products.map(normalizeProduct);
+            localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products));
+            scheduleCloudSync();
+        }
+
+        function scheduleCloudSync() {
+            if (!cloudReady || !isAdmin) return;
+            clearTimeout(cloudSyncTimer);
+            cloudSyncTimer = setTimeout(() => syncProductsToCloud(), 300);
+        }
+
+        async function loadProductsFromCloud(showMessage = false) {
+            if (cloudLoading) return;
+            cloudLoading = true;
+            setCloudStatus('☁️ Ortak ürün listesi yükleniyor...');
+            try {
+                const { data, error } = await supabaseClient.from(CLOUD_TABLE).select('*').order('created_at', { ascending: true });
+                if (error) throw error;
+                cloudReady = true;
+                if (Array.isArray(data) && data.length > 0) {
+                    products = data.map(fromCloudRow);
+                    localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products));
+                    products.forEach(p => { if (!categoryOrder.includes(p.category)) categoryOrder.push(p.category); });
+                    saveCategoryOrder();
+                    renderCategoryManager();
+                    renderTable();
+                    setCloudStatus('🟢 Ortak veri aktif • ' + products.length + ' ürün', true);
+                    if (showMessage) showToast('Ortak ürün listesi güncellendi! ☁️');
+                } else {
+                    setCloudStatus('🟡 Ortak liste boş • PC ürünlerini aktar');
+                    if (showMessage) showToast('Bulutta henüz ürün bulunmuyor.');
+                }
+            } catch (err) {
+                cloudReady = false;
+                setCloudStatus('🔴 Ortak veri bağlantısı kurulamadı');
+                console.error('Supabase yükleme hatası:', err);
+                if (showMessage) alert('Ortak ürün listesi alınamadı: ' + (err.message || err));
+            } finally {
+                cloudLoading = false;
+            }
+        }
+
+        async function syncProductsToCloud() {
+            if (!cloudReady || !isAdmin) return;
+            products = products.map(normalizeProduct);
+            setCloudStatus('🟡 Ortak listeye kaydediliyor...');
+            try {
+                const rows = products.map(toCloudRow);
+                const { data: existing, error: existingError } = await supabaseClient.from(CLOUD_TABLE).select('id');
+                if (existingError) throw existingError;
+                const keepIds = new Set(rows.map(r => r.id));
+                const removeIds = (existing || []).map(r => r.id).filter(id => !keepIds.has(id));
+                if (removeIds.length) {
+                    const { error } = await supabaseClient.from(CLOUD_TABLE).delete().in('id', removeIds);
+                    if (error) throw error;
+                }
+                if (rows.length) {
+                    const { error } = await supabaseClient.from(CLOUD_TABLE).upsert(rows, { onConflict: 'id' });
+                    if (error) throw error;
+                }
+                localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products));
+                setCloudStatus('🟢 Senkronize • ' + products.length + ' ürün', true);
+            } catch (err) {
+                setCloudStatus('🔴 Ortak listeye kaydedilemedi');
+                console.error('Supabase kaydetme hatası:', err);
+                alert('Ürün ortak listeye kaydedilemedi: ' + (err.message || err));
+            }
+        }
+
+        async function migrateLocalProductsToCloud() {
+            if (!isAdmin) { alert('Önce yönetim panelini aç.'); return; }
+            if (!products.length) { alert('Aktarılacak ürün bulunamadı.'); return; }
+            try {
+                const { data, error } = await supabaseClient.from(CLOUD_TABLE).select('id');
+                if (error) throw error;
+                if (data && data.length > 0) {
+                    if (!confirm("Bulutta zaten " + data.length + " ürün var. PC'deki mevcut listeyle değiştirmek istiyor musun?")) return;
+                } else if (!confirm("PC'deki " + products.length + " ürünü ortak online listeye aktaralım mı?")) return;
+                cloudReady = true;
+                await syncProductsToCloud();
+                showToast("PC'deki ürünler tüm cihazlar için ortak listeye aktarıldı! ☁️");
+            } catch (err) {
+                alert('Bulut aktarımı başarısız: ' + (err.message || err));
+            }
+        }
+
+        // Sayfa açıkken diğer cihazlarda yapılan değişiklikleri 5 saniyede bir kontrol eder.
+        setInterval(async () => {
+            if (document.hidden || cloudLoading) return;
+            try {
+                const { data, error } = await supabaseClient.from(CLOUD_TABLE).select('*').order('created_at', { ascending: true });
+                if (error || !Array.isArray(data) || data.length === 0) return;
+                const remote = data.map(fromCloudRow);
+                const localSignature = JSON.stringify(products);
+                const remoteSignature = JSON.stringify(remote);
+                if (localSignature !== remoteSignature) {
+                    products = remote;
+                    localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products));
+                    products.forEach(p => { if (!categoryOrder.includes(p.category)) categoryOrder.push(p.category); });
+                    saveCategoryOrder();
+                    renderCategoryManager();
+                    renderTable();
+                    setCloudStatus('🟢 Yeni veriler geldi • ' + products.length + ' ürün', true);
+                }
+            } catch(e) {}
+        }, 5000);
+
         let currentCurrency = 'TL';
         let activeCategoryFilter = 'TÜMÜ';
         let activeSubFilter = 'TÜMÜ';
@@ -1350,6 +1509,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 if (!item.usd) { missingPrice++; return; }
 
                 products.push({
+                    id: makeProductId(),
                     category: item.category,
                     model: item.model,
                     storage: item.storage,
@@ -1434,6 +1594,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                     if (!Array.isArray(incomingProducts)) throw new Error('Geçersiz yedek');
                     if (!confirm(`${incomingProducts.length} ürün geri yüklenecek. Mevcut ürün listesinin üzerine yazılsın mı?`)) { input.value=''; return; }
                     products = incomingProducts.map(p => ({
+                        id: p.id || makeProductId(),
                         category: normalizeBrandText(p.category || 'DİĞER'), model: String(p.model || ''),
                         storage: p.storage || '256GB', reg: p.reg || 'KAYITSIZ',
                         usd: Number(p.saleUsd ?? p.usd) || 0, saleUsd: Number(p.saleUsd ?? p.usd) || 0,
@@ -1675,7 +1836,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             navigator.clipboard.writeText(textToCopy).then(() => showToast("Ürün bilgileri panoya kopyalandı! 📋"));
         }
 
-        function toggleAdminPanel(show) { document.getElementById("adminPanel").style.display = show ? "block" : "none"; isAdmin = show; if (show) renderCategoryManager(); renderTable(); }
+        function toggleAdminPanel(show) { document.getElementById("adminPanel").style.display = show ? "block" : "none"; isAdmin = show; if (show) { renderCategoryManager(); setCloudStatus(cloudReady ? '🟢 Ortak veri aktif • ' + products.length + ' ürün' : '🟡 Ortak veri hazırlanıyor...', cloudReady); } renderTable(); }
 
         function addNewProduct() {
             let cat = normalizeBrandText(document.getElementById("newCategory").value).trim();
@@ -1690,7 +1851,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
             if (cat && model) {
                 if (!usd) { alert("Lütfen dolar fiyatını girin veya akıllı yapıştırmada fiyatı belirtin."); return; }
-                products.push({ category: cat, model: model, storage: storage, reg: reg, usd: usd, saleUsd: usd, costUsd: costUsd, stock: stock, desc: desc, image: image });
+                products.push({ id: makeProductId(), category: cat, model: model, storage: storage, reg: reg, usd: usd, saleUsd: usd, costUsd: costUsd, stock: stock, desc: desc, image: image });
                 localStorage.setItem("anubis_last_usd", usd);
                 saveToStorage();
                 renderTable();
@@ -1722,8 +1883,11 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         function openFaqModal() { document.getElementById("faqModal").style.display = "flex"; }
         function closeFaqModal() { document.getElementById("faqModal").style.display = "none"; }
 
-        window.onload = function() {
+        window.onload = async function() {
             fetchLiveExchangeRate();
+            renderCategoryManager();
+            renderTable();
+            await loadProductsFromCloud(false);
             renderCategoryManager();
             renderTable();
         };

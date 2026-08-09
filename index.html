@@ -382,6 +382,46 @@
             font-weight: 800;
         }
 
+        .category-manager {
+            margin: 14px 0 18px;
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            background: rgba(7, 9, 14, 0.42);
+        }
+        .category-manager-title {
+            display:flex; align-items:center; justify-content:space-between; gap:10px;
+            color:var(--text-main); font-weight:800; font-size:13px; margin-bottom:10px;
+        }
+        .category-manager-list { display:flex; flex-wrap:wrap; gap:7px; }
+        .category-manager-item {
+            display:flex; align-items:center; gap:6px; padding:7px 9px; border-radius:10px;
+            background:rgba(30,41,59,.65); border:1px solid var(--border-color); cursor:grab; user-select:none;
+        }
+        .category-manager-item.dragging { opacity:.45; border-color:var(--accent-gold); }
+        .category-manager-item .cat-drag { color:var(--text-muted); font-size:12px; }
+        .category-manager-item .cat-name { font-weight:700; font-size:11px; }
+        .category-manager-item button {
+            border:0; background:transparent; color:#ef4444; cursor:pointer; font-weight:900; padding:0 2px;
+        }
+        .category-add-row { display:flex; gap:7px; margin-top:10px; }
+        .category-add-row input { flex:1; min-width:140px; }
+        .category-add-row button { border:0; border-radius:9px; padding:8px 12px; font-weight:800; cursor:pointer; background:var(--accent-gold); color:#07090e; }
+        .admin-category-select { width:100%; padding:6px 7px; font-size:11px; border-radius:7px; }
+        .image-auto-btn { margin-top:4px; background:rgba(56,189,248,.12); color:var(--primary-color); border:1px solid var(--primary-color); border-radius:6px; padding:3px 7px; font-size:10px; cursor:pointer; font-weight:700; }
+        .admin-tools-row { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 14px; }
+        .admin-tool-btn { border:1px solid var(--border-color); background:rgba(30,41,59,.7); color:var(--text-main); border-radius:9px; padding:9px 12px; font-size:11px; font-weight:800; cursor:pointer; }
+        .admin-tool-btn:hover { border-color:var(--primary-color); color:var(--primary-color); }
+        .profit-positive { color:#34d399; font-weight:800; }
+        .profit-negative { color:#fb7185; font-weight:800; }
+        .image-search-modal .modal-card { max-width:850px; width:94%; }
+        .image-search-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; }
+        .image-search-item { border:1px solid var(--border-color); background:rgba(7,9,14,.7); border-radius:10px; padding:8px; cursor:pointer; transition:.15s; }
+        .image-search-item:hover { border-color:var(--primary-color); transform:translateY(-2px); }
+        .image-search-item img { width:100%; height:125px; object-fit:contain; border-radius:7px; background:#fff; }
+        .image-search-item small { display:block; color:var(--text-muted); margin-top:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .backup-note { color:var(--text-muted); font-size:10.5px; margin-top:4px; }
+
         .sub-filter-chips {
             display: flex;
             gap: 6px;
@@ -724,6 +764,18 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 </div>
             </div>
 
+            <div class="category-manager">
+                <div class="category-manager-title">
+                    <span>🗂️ Kategori Yönetimi</span>
+                    <span style="color:var(--text-muted);font-size:11px;">Sürükle-bırak ile sırala • ürünleri kategoriye taşı</span>
+                </div>
+                <div id="categoryManagerList" class="category-manager-list"></div>
+                <div class="category-add-row">
+                    <input type="text" id="newCategoryName" placeholder="Yeni kategori (örn. INFINIX)">
+                    <button type="button" onclick="triggerHaptic(); addCategoryFromManager()">+ Kategori Ekle</button>
+                </div>
+            </div>
+
             <div class="form-grid">
                 <select id="newCategory">
                     <option value="İPHONE">İPHONE</option>
@@ -745,7 +797,8 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 <input type="text" id="newModel" placeholder="Model">
                 <input type="text" id="newStorage" placeholder="Hafıza">
                 <input type="text" id="newReg" placeholder="Kayıt Durumu">
-                <input type="number" id="newUsd" placeholder="Dolar ($)" step="1">
+                <input type="number" id="newCostUsd" placeholder="Alış ($)" step="1">
+                <input type="number" id="newUsd" placeholder="Satış ($)" step="1">
                 <input type="text" id="newStock" placeholder="Stok">
                 <input type="text" id="newDesc" placeholder="Açıklama">
                 <label class="file-upload-label" for="newImageFile">
@@ -753,6 +806,12 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 </label>
                 <input type="file" id="newImageFile" accept="image/*" onchange="handleFileSelect(this)">
             </div>
+            <div class="admin-tools-row">
+                <button type="button" class="admin-tool-btn" onclick="triggerHaptic(); exportBackup()">⬇️ Yedeği İndir</button>
+                <button type="button" class="admin-tool-btn" onclick="triggerHaptic(); document.getElementById('backupFileInput').click()">⬆️ Yedekten Geri Yükle</button>
+                <input type="file" id="backupFileInput" accept="application/json,.json" style="display:none" onchange="importBackup(this)">
+            </div>
+            <div class="backup-note">Yedek; ürünleri, kategorileri ve son kur ayarını tek JSON dosyasında saklar.</div>
             <button class="admin-btn" onclick="triggerHaptic(); addNewProduct()">Listeye Ürün Ekle</button>
         </div>
 
@@ -786,7 +845,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         <div class="table-wrapper desktop-table-view">
             <table id="priceTable">
                 <thead>
-                    <tr>
+                    <tr id="tableHeaderRow">
                         <th>GÖRSEL</th>
                         <th>MODEL</th>
                         <th>HAFIZA</th>
@@ -803,6 +862,19 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         </div>
 
         <div class="mobile-card-grid" id="mobileCardContainer"></div>
+    </div>
+
+    <div id="imageSearchModal" class="modal-overlay image-search-modal" onclick="closeImageSearchModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>🌐 İnternetten Görsel Seç — <span id="imageSearchTitle"></span></h3>
+                <button class="close-admin" onclick="closeImageSearchModal()">Kapat</button>
+            </div>
+            <div class="modal-body">
+                <div id="imageSearchGrid" class="image-search-grid"></div>
+                <div style="margin-top:12px;color:var(--text-muted);font-size:11px;">Otomatik arama Openverse açık lisanslı görsellerini kullanır; sonuç bulunamazsa Google Görseller alternatifi açılabilir.</div>
+            </div>
+        </div>
     </div>
 
     <div id="productDetailModal" class="modal-overlay" onclick="closeProductModal()">
@@ -958,6 +1030,12 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         }
 
         const MASTER_STORAGE_KEY = "anubis_master_products_2026";
+        const CATEGORY_STORAGE_KEY = "anubis_categories_2026";
+
+        const DEFAULT_CATEGORIES = [
+            "İPHONE", "SAMSUNG", "XIAOMI", "REDMI", "ONEPLUS", "REDMAGIC", "GOOGLE",
+            "OPPO", "REALME", "HONOR", "MOTOROLA", "VIVO", "NOTHING", "ASUS", "INFINIX", "TECNO", "POCO", "HUAWEI", "DİĞER"
+        ];
 
         let defaultProducts = [
             { category: "İPHONE", model: "IPHONE 16 PRO MAX", storage: "512GB", reg: 'KAYIT ALICI AİT', usd: 1520, stock: "SON 2 ÜRÜN", desc: "Kutu açılımsız, sıfır kapalı kutu cihaz.", image: "" },
@@ -980,6 +1058,20 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             products = defaultProducts;
             localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products));
         }
+
+        // Eski ürün kayıtlarını yeni alış/satış alanlarına uyumlu hale getir.
+        products.forEach(p => {
+            if (p.saleUsd === undefined || p.saleUsd === null || p.saleUsd === '') p.saleUsd = Number(p.usd) || 0;
+            if (p.costUsd === undefined || p.costUsd === null || p.costUsd === '') p.costUsd = 0;
+        });
+        saveToStorage();
+
+        let savedCategories = [];
+        try { savedCategories = JSON.parse(localStorage.getItem(CATEGORY_STORAGE_KEY) || "[]"); } catch(e) { savedCategories = []; }
+        let categoryOrder = Array.isArray(savedCategories) && savedCategories.length ? savedCategories : [...DEFAULT_CATEGORIES];
+        [...new Set(products.map(p => (p.category || "DİĞER").toUpperCase()))].forEach(cat => { if (!categoryOrder.includes(cat)) categoryOrder.push(cat); });
+        function saveCategoryOrder() { localStorage.setItem(CATEGORY_STORAGE_KEY, JSON.stringify(categoryOrder)); }
+        saveCategoryOrder();
 
         function saveToStorage() { 
             localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products)); 
@@ -1027,7 +1119,9 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
         function renderFilterTabs() {
             let tabsContainer = document.getElementById("filterTabsContainer");
-            let categories = [...new Set(products.map(p => (p.category || "DİĞER").toUpperCase()))];
+            let used = new Set(products.map(p => (p.category || "DİĞER").toUpperCase()));
+            let categories = categoryOrder.filter(cat => used.has(cat));
+            [...used].forEach(cat => { if (!categories.includes(cat)) categories.push(cat); });
             let html = `<button class="filter-tab ${activeCategoryFilter === 'TÜMÜ' ? 'active' : ''}" onclick="triggerHaptic(); filterByCategory('TÜMÜ', this)">✨ Tüm Ürünler</button>`;
             categories.forEach(cat => {
                 html += `<button class="filter-tab ${activeCategoryFilter === cat ? 'active' : ''}" onclick="triggerHaptic(); filterByCategory('${cat}', this)">📱 ${cat}</button>`;
@@ -1062,25 +1156,45 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         }
 
         const brandCategories = [
-            { name: "İPHONE", keys: ["IPHONE", "İPHONE"] },
+            { name: "İPHONE", keys: ["IPHONE", "IPHONE"] },
             { name: "SAMSUNG", keys: ["SAMSUNG"] },
-            { name: "XIAOMI", keys: ["XIAOMI", "REDMI"] },
-            { name: "HUAWEI", keys: ["HUAWEI"] },
+            { name: "REDMI", keys: ["REDMI"] },
+            { name: "XIAOMI", keys: ["XIAOMI"] },
             { name: "ONEPLUS", keys: ["ONEPLUS", "ONE PLUS"] },
             { name: "REDMAGIC", keys: ["REDMAGIC", "RED MAGIC"] },
             { name: "GOOGLE", keys: ["GOOGLE", "PIXEL"] },
             { name: "OPPO", keys: ["OPPO"] },
-            { name: "REALME", keys: ["REALME"] },
+            { name: "REALME", keys: ["REALME", "REAL ME"] },
             { name: "HONOR", keys: ["HONOR"] },
             { name: "MOTOROLA", keys: ["MOTOROLA", "MOTO"] },
             { name: "VIVO", keys: ["VIVO"] },
             { name: "NOTHING", keys: ["NOTHING"] },
-            { name: "ASUS", keys: ["ASUS", "ROG"] }
+            { name: "ASUS", keys: ["ASUS", "ROG"] },
+            { name: "INFINIX", keys: ["INFINIX"] },
+            { name: "TECNO", keys: ["TECNO"] },
+            { name: "POCO", keys: ["POCO"] },
+            { name: "HUAWEI", keys: ["HUAWEI"] }
         ];
 
+        function normalizeBrandText(text) {
+            return (text || "").toLocaleUpperCase("tr-TR")
+                .replace(/[İI]/g, "I").replace(/Ş/g, "S").replace(/Ğ/g, "G")
+                .replace(/Ü/g, "U").replace(/Ö/g, "O").replace(/Ç/g, "C");
+        }
+
+        // Eski ürünlerde marka kategorisini otomatik düzelt.
+        products.forEach(p => {
+            let modelNorm = normalizeBrandText(p.model || "");
+            if (modelNorm.includes("REDMI")) p.category = "REDMI";
+            else if (modelNorm.includes("INFINIX")) p.category = "INFINIX";
+            else if (modelNorm.includes("TECNO")) p.category = "TECNO";
+            else if (modelNorm.includes("POCO")) p.category = "POCO";
+        });
+        saveToStorage();
+
         function detectCategory(text) {
-            let upperText = text.toUpperCase();
-            let found = brandCategories.find(brand => brand.keys.some(key => upperText.includes(key)));
+            let upperText = normalizeBrandText(text);
+            let found = brandCategories.find(brand => brand.keys.some(key => upperText.includes(normalizeBrandText(key))));
             return found ? found.name : "DİĞER";
         }
 
@@ -1095,10 +1209,77 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             select.value = category;
         }
 
+        function renderCategoryManager() {
+            let list = document.getElementById("categoryManagerList");
+            if (!list) return;
+            list.innerHTML = categoryOrder.map((cat, idx) => `
+                <div class="category-manager-item" draggable="true" data-cat="${cat}" data-index="${idx}"
+                     ondragstart="categoryDragStart(event)" ondragover="categoryDragOver(event)" ondrop="categoryDrop(event)">
+                    <span class="cat-drag">☷</span><span class="cat-name">${cat}</span>
+                    <button type="button" title="Kategori sil" onclick="event.stopPropagation(); removeCategoryFromManager('${cat.replace(/'/g, "\\'")}')">×</button>
+                </div>`).join("");
+        }
+
+        let draggedCategoryIndex = null;
+        function categoryDragStart(e) {
+            draggedCategoryIndex = Number(e.currentTarget.dataset.index);
+            e.currentTarget.classList.add("dragging");
+            e.dataTransfer.effectAllowed = "move";
+        }
+        function categoryDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = "move"; }
+        function categoryDrop(e) {
+            e.preventDefault();
+            let targetIndex = Number(e.currentTarget.dataset.index);
+            if (draggedCategoryIndex === null || draggedCategoryIndex === targetIndex) return;
+            let moved = categoryOrder.splice(draggedCategoryIndex, 1)[0];
+            categoryOrder.splice(targetIndex, 0, moved);
+            draggedCategoryIndex = null;
+            saveCategoryOrder();
+            renderCategoryManager();
+            renderTable();
+        }
+
+        function addCategoryFromManager() {
+            let input = document.getElementById("newCategoryName");
+            let cat = normalizeBrandText(input.value).trim();
+            if (!cat) return;
+            if (!categoryOrder.includes(cat)) categoryOrder.push(cat);
+            ensureCategoryOption(cat);
+            saveCategoryOrder();
+            renderCategoryManager();
+            renderFilterTabs();
+            input.value = "";
+            showToast(`${cat} kategorisi eklendi.`);
+        }
+
+        function removeCategoryFromManager(cat) {
+            if (cat === "DİĞER") { alert("DİĞER kategorisi silinemez."); return; }
+            let hasProducts = products.some(p => (p.category || "DİĞER").toUpperCase() === cat);
+            if (hasProducts) { alert(`${cat} kategorisinde ürünler var. Önce ürünleri başka kategoriye taşı.`); return; }
+            categoryOrder = categoryOrder.filter(c => c !== cat);
+            saveCategoryOrder();
+            renderCategoryManager();
+            renderFilterTabs();
+        }
+
+        function moveProductCategory(idx, category) {
+            if (!isAdmin || !products[idx]) return;
+            products[idx].category = category;
+            if (!categoryOrder.includes(category)) { categoryOrder.push(category); saveCategoryOrder(); }
+            saveToStorage();
+            renderTable();
+            showToast(`Ürün ${category} kategorisine taşındı.`);
+        }
+
         function parseProductLine(text) {
             let upperText = text.toUpperCase();
-            let usdMatch = text.match(/(\d+(?:[.,]\d+)?)\s*\$/) || text.match(/\$\s*(\d+(?:[.,]\d+)?)/);
-            let usdVal = usdMatch ? parseFloat(usdMatch[1].replace(',', '.')) : 0;
+            let labeledCost = text.match(/(?:ALIŞ|MALIYET|MALİYET)\s*[:=]?\s*(\d+(?:[.,]\d+)?)\s*\$?/i);
+            let labeledSale = text.match(/(?:SATIŞ|SATIS)\s*[:=]?\s*(\d+(?:[.,]\d+)?)\s*\$?/i);
+            let dollarMatches = [...text.matchAll(/(\d+(?:[.,]\d+)?)\s*\$/g)].map(m => parseFloat(m[1].replace(',', '.')));
+            let slashPrices = text.match(/(\d+(?:[.,]\d+)?)\s*\$?\s*(?:\/|->|→)\s*(\d+(?:[.,]\d+)?)\s*\$?/);
+            let trailingPrice = text.match(/(?:^|\s)(\d{3,5})(?:\s*)$/);
+            let costVal = labeledCost ? parseFloat(labeledCost[1].replace(',', '.')) : (slashPrices ? parseFloat(slashPrices[1].replace(',', '.')) : 0);
+            let usdVal = labeledSale ? parseFloat(labeledSale[1].replace(',', '.')) : (slashPrices ? parseFloat(slashPrices[2].replace(',', '.')) : (dollarMatches.length ? dollarMatches[dollarMatches.length - 1] : (trailingPrice ? parseFloat(trailingPrice[1]) : 0)));
 
             // "12/256", "256GB", "1TB" gibi ifadelerden en anlamlı hafızayı yakala.
             let slashStorage = text.match(/\b\d+\s*\/\s*(\d+)\s*(?:GB|TB)?\b/i);
@@ -1112,7 +1293,10 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
             let catVal = detectCategory(text);
             let cleanModel = text
+                .replace(/(?:ALIŞ|MALIYET|MALİYET|SATIŞ|SATIS)\s*[:=]?\s*\d+(?:[.,]\d+)?\s*\$?/gi, "")
+                .replace(/\d+(?:[.,]\d+)?\s*\$\s*(?:\/|->|→)\s*\d+(?:[.,]\d+)?\s*\$?/gi, "")
                 .replace(/(\d+(?:[.,]\d+)?\s*\$|\$\s*\d+(?:[.,]\d+)?)/gi, "")
+                .replace(/\s+\d{3,5}\s*$/, "")
                 .replace(/\b\d+\s*\/\s*\d+\b/gi, "")
                 .replace(/\d+\s*(?:GB|TB)/gi, "")
                 .replace(/KAYITLI|KAYITSIZ|ALICI|AİT/gi, "")
@@ -1120,7 +1304,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 .trim()
                 .toUpperCase();
 
-            return { category: catVal, model: cleanModel, storage: storageVal, reg: regVal, usd: usdVal };
+            return { category: catVal, model: cleanModel, storage: storageVal, reg: regVal, usd: usdVal, costUsd: costVal };
         }
 
         function parseSmartPaste(text) {
@@ -1133,6 +1317,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             if (item.model) document.getElementById("newModel").value = item.model;
             if (item.storage) document.getElementById("newStorage").value = item.storage;
             if (item.reg) document.getElementById("newReg").value = item.reg;
+            if (item.costUsd) document.getElementById("newCostUsd").value = item.costUsd;
             if (item.usd) document.getElementById("newUsd").value = item.usd;
             document.getElementById("newStock").value = "HAZIR STOK";
 
@@ -1163,6 +1348,8 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                     storage: item.storage,
                     reg: item.reg,
                     usd: item.usd,
+                    saleUsd: item.usd,
+                    costUsd: item.costUsd || 0,
                     stock: "HAZIR STOK",
                     desc: "",
                     image: ""
@@ -1185,14 +1372,128 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             }
         }
 
+        function getSaleUsd(item) { return Number(item.saleUsd ?? item.usd) || 0; }
+        function getCostUsd(item) { return Number(item.costUsd) || 0; }
+        function getProfitUsd(item) { return getSaleUsd(item) - getCostUsd(item); }
+
+        function updateCostPrice(idx, val) {
+            if (!isAdmin || !products[idx]) return;
+            products[idx].costUsd = parseFloat(val) || 0;
+            saveToStorage();
+            renderTable();
+        }
+        function updateSalePrice(idx, val) {
+            if (!isAdmin || !products[idx]) return;
+            products[idx].saleUsd = parseFloat(val) || 0;
+            products[idx].usd = products[idx].saleUsd;
+            saveToStorage();
+            renderTable();
+        }
+
+        function updateTableAdminHeader() {
+            const row = document.getElementById('tableHeaderRow');
+            if (!row) return;
+            row.innerHTML = `
+                <th>GÖRSEL</th><th>MODEL</th><th>HAFIZA</th><th>KAYIT DURUMU</th>
+                <th>DOLAR ($)</th><th>FİYAT</th><th>STOK DURUMU</th><th>SİPARİŞ</th>
+                ${isAdmin ? '<th>ALIŞ $</th><th>SATIŞ $</th><th>KÂR $</th>' : ''}
+                ${isAdmin ? '<th>İŞLEM</th>' : ''}`;
+        }
+
+        function exportBackup() {
+            const payload = {
+                app: 'AnubisGSM', version: 2, exportedAt: new Date().toISOString(),
+                products, categoryOrder,
+                dollarRate: document.getElementById('dollarRate')?.value || '',
+                currency: currentCurrency
+            };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `anubisgsm-yedek-${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+            showToast('Yedek dosyası indirildi! 💾');
+        }
+
+        function importBackup(input) {
+            const file = input.files?.[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    const incomingProducts = Array.isArray(data) ? data : data.products;
+                    if (!Array.isArray(incomingProducts)) throw new Error('Geçersiz yedek');
+                    if (!confirm(`${incomingProducts.length} ürün geri yüklenecek. Mevcut ürün listesinin üzerine yazılsın mı?`)) { input.value=''; return; }
+                    products = incomingProducts.map(p => ({
+                        category: normalizeBrandText(p.category || 'DİĞER'), model: String(p.model || ''),
+                        storage: p.storage || '256GB', reg: p.reg || 'KAYITSIZ',
+                        usd: Number(p.saleUsd ?? p.usd) || 0, saleUsd: Number(p.saleUsd ?? p.usd) || 0,
+                        costUsd: Number(p.costUsd) || 0, stock: p.stock || 'HAZIR STOK', desc: p.desc || '', image: p.image || ''
+                    }));
+                    categoryOrder = Array.isArray(data.categoryOrder) && data.categoryOrder.length ? data.categoryOrder.map(normalizeBrandText) : [...DEFAULT_CATEGORIES];
+                    products.forEach(p => { if (!categoryOrder.includes(p.category)) categoryOrder.push(p.category); });
+                    saveCategoryOrder(); saveToStorage();
+                    if (data.dollarRate) document.getElementById('dollarRate').value = data.dollarRate;
+                    renderCategoryManager(); renderTable();
+                    showToast('Yedek başarıyla geri yüklendi! 🔄');
+                } catch(err) { alert('Yedek dosyası okunamadı. Geçerli bir AnubisGSM JSON yedeği seç.'); }
+                input.value='';
+            };
+            reader.readAsText(file);
+        }
+
+        function openImageSearchModal(idx) {
+            if (!products[idx]) return;
+            const modal = document.getElementById('imageSearchModal');
+            modal.dataset.index = idx;
+            document.getElementById('imageSearchTitle').textContent = products[idx].model;
+            document.getElementById('imageSearchGrid').innerHTML = '<div style="color:var(--text-muted)">Görseller aranıyor...</div>';
+            modal.style.display = 'flex';
+            searchInternetImages(idx);
+        }
+        function closeImageSearchModal() { document.getElementById('imageSearchModal').style.display = 'none'; }
+        async function searchInternetImages(idx) {
+            const item = products[idx];
+            const grid = document.getElementById('imageSearchGrid');
+            const q = encodeURIComponent(`${item.model} ${item.storage || ''} smartphone`);
+            try {
+                const response = await fetch(`https://api.openverse.org/v1/images/?q=${q}&page_size=12`);
+                if (!response.ok) throw new Error('Openverse');
+                const data = await response.json();
+                const results = (data.results || []).filter(x => x.thumbnail || x.url).slice(0,12);
+                if (!results.length) throw new Error('Sonuç yok');
+                grid.innerHTML = results.map((r,i) => {
+                    const src = r.thumbnail || r.url;
+                    const full = r.url || src;
+                    const title = String(r.title || 'Görsel').replace(/"/g,'&quot;');
+                    return `<div class="image-search-item" onclick="useInternetImage(${idx}, ${JSON.stringify(full)}, ${JSON.stringify(title)})"><img src="${src}" loading="lazy" onerror="this.parentElement.style.display='none'"><small>${title}</small></div>`;
+                }).join('');
+            } catch(e) {
+                grid.innerHTML = `<div style="grid-column:1/-1;color:var(--text-muted);line-height:1.6">Otomatik açık lisanslı sonuç bulunamadı.<br><button class="admin-tool-btn" onclick="openImageSearch(${idx})">Google Görseller'de Ara</button></div>`;
+            }
+        }
+        function useInternetImage(idx, url, title) {
+            if (!products[idx]) return;
+            products[idx].image = url;
+            products[idx].imageSource = 'Openverse';
+            products[idx].imageTitle = title || '';
+            saveToStorage(); renderTable(); closeImageSearchModal();
+            showToast('İnternet görseli ürüne eklendi! 🌐📷');
+        }
+
         function renderTable() {
             renderFilterTabs();
+            updateTableAdminHeader();
             let tbody = document.getElementById("tableBody");
             let cardGrid = document.getElementById("mobileCardContainer");
             tbody.innerHTML = "";
             cardGrid.innerHTML = "";
 
-            let categories = [...new Set(products.map(p => (p.category || "DİĞER").toUpperCase()))];
+            let usedCategories = new Set(products.map(p => (p.category || "DİĞER").toUpperCase()));
+            let categories = categoryOrder.filter(cat => usedCategories.has(cat));
+            [...usedCategories].forEach(cat => { if (!categories.includes(cat)) categories.push(cat); });
             let searchFilter = document.getElementById("searchInput").value.toLowerCase();
             let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
 
@@ -1215,7 +1516,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
                 let headerTr = document.createElement("tr");
                 headerTr.className = "category-row";
-                headerTr.innerHTML = `<td colspan="${isAdmin ? 9 : 8}">${catName} SERİSİ</td>`;
+                headerTr.innerHTML = `<td colspan="${isAdmin ? 12 : 8}">${catName} SERİSİ</td>`;
                 tbody.appendChild(headerTr);
 
                 let mCatTitle = document.createElement("div");
@@ -1224,7 +1525,9 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 cardGrid.appendChild(mCatTitle);
 
                 catProducts.forEach(item => {
-                    let usdVal = parseFloat(item.usd) || 0;
+                    let usdVal = getSaleUsd(item);
+                    let costVal = getCostUsd(item);
+                    let profitVal = getProfitUsd(item);
                     let priceText = currentCurrency === 'TL' 
                         ? (usdVal * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺"
                         : usdVal.toLocaleString() + " $";
@@ -1237,15 +1540,16 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                             <div style="width:40px; height:40px; background:rgba(7,9,14,0.6); border-radius:6px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
                                 ${item.image ? `<img src="${item.image}" style="width:100%; height:100%; object-fit:contain;">` : `<span style="font-size:9px; color:var(--text-muted)">Yok</span>`}
                             </div>
-                            ${isAdmin ? `<button class="admin-img-upload-btn" style="margin-top:4px;" onclick="event.stopPropagation(); openImageEditModal(${item.originalIndex})">Resim Ekle</button>` : ''}
+                            ${isAdmin ? `<button class="admin-img-upload-btn" style="margin-top:4px;" onclick="event.stopPropagation(); openImageEditModal(${item.originalIndex})">Resim Ekle</button><button class="image-auto-btn" onclick="event.stopPropagation(); openImageSearchModal(${item.originalIndex})">🌐 Görsel Ara</button>` : ''}
                         </td>
-                        <td style="font-weight:600;">${item.model}</td>
+                        <td style="font-weight:600;">${item.model}${isAdmin ? `<select class="admin-category-select" onclick="event.stopPropagation()" onchange="moveProductCategory(${item.originalIndex}, this.value)">${categoryOrder.map(c => `<option value="${c}" ${c === (item.category || 'DİĞER').toUpperCase() ? 'selected' : ''}>${c}</option>`).join('')}</select>` : ''}</td>
                         <td>${item.storage || "-"}</td>
                         <td><span class="badge-orange">${item.reg || "KAYITSIZ"}</span></td>
-                        <td><input type="number" class="usd-input" value="${usdVal}" ${isAdmin ? '' : 'readonly'} onclick="event.stopPropagation()" oninput="updateUsdPrice(${item.originalIndex}, this.value)"></td>
+                        <td><span style="font-weight:800;">${usdVal.toLocaleString('tr-TR')} $</span></td>
                         <td class="price-display">${priceText}</td>
                         <td><span class="badge-green">${item.stock || "HAZIR STOK"}</span></td>
                         <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
+                        ${isAdmin ? `<td><input type="number" class="usd-input" value="${costVal}" min="0" step="1" onclick="event.stopPropagation()" oninput="updateCostPrice(${item.originalIndex}, this.value)"></td><td><input type="number" class="usd-input" value="${usdVal}" min="0" step="1" onclick="event.stopPropagation()" oninput="updateSalePrice(${item.originalIndex}, this.value)"></td><td class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal.toLocaleString('tr-TR')} $</td>` : ''}
                         ${isAdmin ? `<td><button class="admin-btn-danger" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Sil</button></td>` : ''}
                     `;
                     tbody.appendChild(tr);
@@ -1276,7 +1580,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                             <div class="m-price">${priceText}</div>
                             <a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp açılıyor...');">📲 Sipariş Ver</a>
                         </div>
-                        ${isAdmin ? `<button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Ürünü Sil</button>` : ''}
+                        ${isAdmin ? `<div style="font-size:11px;color:var(--text-muted);margin-top:5px;">Alış: <b>${costVal}$</b> • Satış: <b>${usdVal}$</b> • Kâr: <b class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal}$</b></div><button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Ürünü Sil</button>` : ''}
                     `;
                     cardGrid.appendChild(card);
                 });
@@ -1327,6 +1631,18 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             }
         }
 
+        function openImageSearch(idx) {
+            if (!products[idx]) return;
+            let query = encodeURIComponent(`${products[idx].model} ${products[idx].storage || ""} telefon resmi`);
+            window.open(`https://www.google.com/search?tbm=isch&q=${query}`, "_blank", "noopener");
+            showToast("İnternet görsel araması açıldı. Otomatik içe aktarma için API bağlantısı kurulabilir.");
+        }
+
+        async function findInternetImageForEditing() {
+            if (editingImageIndex === null || !products[editingImageIndex]) return;
+            openImageSearch(editingImageIndex);
+        }
+
         function openProductModal(item) {
             activeDetailItem = item;
             document.getElementById("modalProductTitle").textContent = item.model;
@@ -1357,21 +1673,22 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             navigator.clipboard.writeText(textToCopy).then(() => showToast("Ürün bilgileri panoya kopyalandı! 📋"));
         }
 
-        function toggleAdminPanel(show) { document.getElementById("adminPanel").style.display = show ? "block" : "none"; isAdmin = show; renderTable(); }
+        function toggleAdminPanel(show) { document.getElementById("adminPanel").style.display = show ? "block" : "none"; isAdmin = show; if (show) renderCategoryManager(); renderTable(); }
 
         function addNewProduct() {
-            let cat = document.getElementById("newCategory").value.trim().toUpperCase();
+            let cat = normalizeBrandText(document.getElementById("newCategory").value).trim();
             let model = document.getElementById("newModel").value.trim();
             let storage = document.getElementById("newStorage").value.trim() || "512GB";
             let reg = document.getElementById("newReg").value.trim().toUpperCase() || "KAYITSIZ";
             let usd = parseFloat(document.getElementById("newUsd").value) || 0;
+            let costUsd = parseFloat(document.getElementById("newCostUsd").value) || 0;
             let stock = document.getElementById("newStock").value.trim().toUpperCase() || "HAZIR STOK";
             let desc = document.getElementById("newDesc").value.trim();
             let image = tempUploadedImageBase64;
 
             if (cat && model) {
                 if (!usd) { alert("Lütfen dolar fiyatını girin veya akıllı yapıştırmada fiyatı belirtin."); return; }
-                products.push({ category: cat, model: model, storage: storage, reg: reg, usd: usd, stock: stock, desc: desc, image: image });
+                products.push({ category: cat, model: model, storage: storage, reg: reg, usd: usd, saleUsd: usd, costUsd: costUsd, stock: stock, desc: desc, image: image });
                 localStorage.setItem("anubis_last_usd", usd);
                 saveToStorage();
                 renderTable();
@@ -1380,6 +1697,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 document.getElementById("newModel").value = "";
                 document.getElementById("newStorage").value = "";
                 document.getElementById("newReg").value = "";
+                document.getElementById("newCostUsd").value = "";
                 document.getElementById("newUsd").value = "";
                 document.getElementById("newStock").value = "";
                 document.getElementById("newDesc").value = "";
@@ -1402,6 +1720,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         function updateUsdPrice(idx, val) {
             if (!isAdmin) return;
             products[idx].usd = parseFloat(val) || 0;
+            products[idx].saleUsd = products[idx].usd;
             saveToStorage();
             renderTable();
         }
@@ -1411,6 +1730,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
         window.onload = function() {
             fetchLiveExchangeRate();
+            renderCategoryManager();
             renderTable();
         };
     </script>

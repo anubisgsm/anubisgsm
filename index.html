@@ -246,6 +246,11 @@
         }
         .smart-paste-textarea:focus { border-color: var(--primary-color); }
 
+        .smart-paste-actions { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:8px; flex-wrap:wrap; }
+        .smart-paste-actions span { color:var(--text-muted); font-size:11px; font-weight:600; }
+        .quick-fill-btn { background:linear-gradient(135deg,#0284c7,#0ea5e9); color:white; border:none; padding:9px 14px; border-radius:9px; font-size:11.5px; font-weight:800; cursor:pointer; }
+        .quick-fill-btn:hover { box-shadow:0 0 15px var(--primary-glow); transform:translateY(-1px); }
+
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -710,8 +715,13 @@
             <h3>Yönetim Paneli <button class="close-admin" onclick="triggerHaptic(); toggleAdminPanel(false)">Kapat</button></h3>
             
             <div class="smart-paste-box">
-                <label>⚡ Akıllı Hızlı Yapıştır (Listeyi veya Metni Buraya Yapıştırın):</label>
-                <textarea id="smartPasteInput" class="smart-paste-textarea" placeholder="Örn: İPHONE 16 Pro Max 256GB Kayıtlı 1150$" oninput="parseSmartPaste(this.value)"></textarea>
+                <label>⚡ Akıllı Hızlı Yapıştır — Tek ürün veya birden fazla satır yapıştırabilirsin.</label>
+                <textarea id="smartPasteInput" class="smart-paste-textarea" placeholder="Örn: ONEPLUS 15. 12/256 FASON KUTU 🟣 256GB KAYITSIZ 620$
+SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"></textarea>
+                <div class="smart-paste-actions">
+                    <span id="smartPasteHint">💡 Marka, hafıza, kayıt ve dolar otomatik okunur.</span>
+                    <button type="button" class="quick-fill-btn" onclick="triggerHaptic(); addBulkProducts()">📦 Yapıştırılanların Hepsini Ekle</button>
+                </div>
             </div>
 
             <div class="form-grid">
@@ -720,12 +730,22 @@
                     <option value="SAMSUNG">SAMSUNG</option>
                     <option value="XIAOMI">XIAOMI</option>
                     <option value="HUAWEI">HUAWEI</option>
+                    <option value="ONEPLUS">ONEPLUS</option>
+                    <option value="REDMAGIC">REDMAGIC</option>
+                    <option value="GOOGLE">GOOGLE</option>
+                    <option value="OPPO">OPPO</option>
+                    <option value="REALME">REALME</option>
+                    <option value="HONOR">HONOR</option>
+                    <option value="MOTOROLA">MOTOROLA</option>
+                    <option value="VIVO">VIVO</option>
+                    <option value="NOTHING">NOTHING</option>
+                    <option value="ASUS">ASUS</option>
                     <option value="DİĞER">DİĞER</option>
                 </select>
                 <input type="text" id="newModel" placeholder="Model">
                 <input type="text" id="newStorage" placeholder="Hafıza">
                 <input type="text" id="newReg" placeholder="Kayıt Durumu">
-                <input type="number" id="newUsd" placeholder="Dolar ($)">
+                <input type="number" id="newUsd" placeholder="Dolar ($)" step="1">
                 <input type="text" id="newStock" placeholder="Stok">
                 <input type="text" id="newDesc" placeholder="Açıklama">
                 <label class="file-upload-label" for="newImageFile">
@@ -1041,34 +1061,128 @@
             } catch (e) { document.getElementById("rateUpdateStatus").textContent = "Manuel Kur"; }
         }
 
-        function parseSmartPaste(text) {
-            if (!text.trim()) return;
-            
-            let usdMatch = text.match(/(\d+)\s*\$/) || text.match(/\$\s*(\d+)/) || text.match(/(\d{3,4})/);
-            let usdVal = usdMatch ? parseFloat(usdMatch[1] || usdMatch[0]) : "";
+        const brandCategories = [
+            { name: "İPHONE", keys: ["IPHONE", "İPHONE"] },
+            { name: "SAMSUNG", keys: ["SAMSUNG"] },
+            { name: "XIAOMI", keys: ["XIAOMI", "REDMI"] },
+            { name: "HUAWEI", keys: ["HUAWEI"] },
+            { name: "ONEPLUS", keys: ["ONEPLUS", "ONE PLUS"] },
+            { name: "REDMAGIC", keys: ["REDMAGIC", "RED MAGIC"] },
+            { name: "GOOGLE", keys: ["GOOGLE", "PIXEL"] },
+            { name: "OPPO", keys: ["OPPO"] },
+            { name: "REALME", keys: ["REALME"] },
+            { name: "HONOR", keys: ["HONOR"] },
+            { name: "MOTOROLA", keys: ["MOTOROLA", "MOTO"] },
+            { name: "VIVO", keys: ["VIVO"] },
+            { name: "NOTHING", keys: ["NOTHING"] },
+            { name: "ASUS", keys: ["ASUS", "ROG"] }
+        ];
 
+        function detectCategory(text) {
+            let upperText = text.toUpperCase();
+            let found = brandCategories.find(brand => brand.keys.some(key => upperText.includes(key)));
+            return found ? found.name : "DİĞER";
+        }
+
+        function ensureCategoryOption(category) {
+            let select = document.getElementById("newCategory");
+            if (![...select.options].some(o => o.value === category)) {
+                let option = document.createElement("option");
+                option.value = category;
+                option.textContent = category;
+                select.appendChild(option);
+            }
+            select.value = category;
+        }
+
+        function parseProductLine(text) {
+            let upperText = text.toUpperCase();
+            let usdMatch = text.match(/(\d+(?:[.,]\d+)?)\s*\$/) || text.match(/\$\s*(\d+(?:[.,]\d+)?)/);
+            let usdVal = usdMatch ? parseFloat(usdMatch[1].replace(',', '.')) : 0;
+
+            // "12/256", "256GB", "1TB" gibi ifadelerden en anlamlı hafızayı yakala.
+            let slashStorage = text.match(/\b\d+\s*\/\s*(\d+)\s*(?:GB|TB)?\b/i);
             let storageMatch = text.match(/(\d+\s*(?:GB|TB))/i);
-            let storageVal = storageMatch ? storageMatch[1].toUpperCase().replace(/\s+/g, '') : "256GB";
+            let storageVal = storageMatch ? storageMatch[1].toUpperCase().replace(/\s+/g, '') :
+                (slashStorage ? slashStorage[1] + "GB" : "256GB");
 
             let regVal = "KAYITSIZ";
-            let upperText = text.toUpperCase();
             if (upperText.includes("KAYITLI")) regVal = "KAYITLI";
             else if (upperText.includes("ALICI") || upperText.includes("AİT")) regVal = "KAYIT ALICI AİT";
 
-            let catVal = "İPHONE";
-            if (upperText.includes("SAMSUNG")) catVal = "SAMSUNG";
-            else if (upperText.includes("XIAOMI")) catVal = "XIAOMI";
-            else if (upperText.includes("HUAWEI")) catVal = "HUAWEI";
+            let catVal = detectCategory(text);
+            let cleanModel = text
+                .replace(/(\d+(?:[.,]\d+)?\s*\$|\$\s*\d+(?:[.,]\d+)?)/gi, "")
+                .replace(/\b\d+\s*\/\s*\d+\b/gi, "")
+                .replace(/\d+\s*(?:GB|TB)/gi, "")
+                .replace(/KAYITLI|KAYITSIZ|ALICI|AİT/gi, "")
+                .replace(/\s+/g, ' ')
+                .trim()
+                .toUpperCase();
 
-            let cleanModel = text.replace(/(\d+\s*\$|\$\s*\d+|\d+\s*(?:GB|TB)|KAYITLI|KAYITSIZ|ALICI|AİT)/gi, "").trim();
-            cleanModel = cleanModel.replace(/\s+/g, ' ').toUpperCase();
+            return { category: catVal, model: cleanModel, storage: storageVal, reg: regVal, usd: usdVal };
+        }
 
-            if (catVal) document.getElementById("newCategory").value = catVal;
-            if (cleanModel) document.getElementById("newModel").value = cleanModel;
-            if (storageVal) document.getElementById("newStorage").value = storageVal;
-            if (regVal) document.getElementById("newReg").value = regVal;
-            if (usdVal) document.getElementById("newUsd").value = usdVal;
+        function parseSmartPaste(text) {
+            if (!text.trim()) return;
+            let firstLine = text.split(/\r?\n/).find(line => line.trim());
+            if (!firstLine) return;
+            let item = parseProductLine(firstLine);
+
+            ensureCategoryOption(item.category);
+            if (item.model) document.getElementById("newModel").value = item.model;
+            if (item.storage) document.getElementById("newStorage").value = item.storage;
+            if (item.reg) document.getElementById("newReg").value = item.reg;
+            if (item.usd) document.getElementById("newUsd").value = item.usd;
             document.getElementById("newStock").value = "HAZIR STOK";
+
+            let lines = text.split(/\r?\n/).filter(line => line.trim());
+            document.getElementById("smartPasteHint").textContent = lines.length > 1
+                ? `📦 ${lines.length} ürün bulundu — “Yapıştırılanların Hepsini Ekle” ile tek seferde ekleyebilirsin.`
+                : `✅ ${item.category} otomatik seçildi${item.usd ? ` • ${item.usd}$ bulundu` : " • Dolar bilgisi bekleniyor"}`;
+        }
+
+        function addBulkProducts() {
+            let text = document.getElementById("smartPasteInput").value.trim();
+            if (!text) { alert("Önce ürün listesini yapıştır."); return; }
+
+            let lines = text.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+            let lastUsd = parseFloat(localStorage.getItem("anubis_last_usd")) || 0;
+            let added = 0;
+            let missingPrice = 0;
+
+            lines.forEach(line => {
+                let item = parseProductLine(line);
+                if (!item.model) return;
+                if (!item.usd && lastUsd > 0) item.usd = lastUsd;
+                if (!item.usd) { missingPrice++; return; }
+
+                products.push({
+                    category: item.category,
+                    model: item.model,
+                    storage: item.storage,
+                    reg: item.reg,
+                    usd: item.usd,
+                    stock: "HAZIR STOK",
+                    desc: "",
+                    image: ""
+                });
+                lastUsd = item.usd;
+                added++;
+            });
+
+            if (added > 0) {
+                localStorage.setItem("anubis_last_usd", lastUsd);
+                saveToStorage();
+                renderTable();
+            }
+
+            if (missingPrice > 0) {
+                document.getElementById("newUsd").value = lastUsd || "";
+                showToast(`${added} ürün eklendi. ${missingPrice} ürünün dolar fiyatı bulunamadı.`);
+            } else {
+                showToast(`${added} ürün tek seferde eklendi! 🚀`);
+            }
         }
 
         function renderTable() {
@@ -1250,13 +1364,15 @@
             let model = document.getElementById("newModel").value.trim();
             let storage = document.getElementById("newStorage").value.trim() || "512GB";
             let reg = document.getElementById("newReg").value.trim().toUpperCase() || "KAYITSIZ";
-            let usd = parseFloat(document.getElementById("newUsd").value) || 1000;
+            let usd = parseFloat(document.getElementById("newUsd").value) || 0;
             let stock = document.getElementById("newStock").value.trim().toUpperCase() || "HAZIR STOK";
             let desc = document.getElementById("newDesc").value.trim();
             let image = tempUploadedImageBase64;
 
             if (cat && model) {
+                if (!usd) { alert("Lütfen dolar fiyatını girin veya akıllı yapıştırmada fiyatı belirtin."); return; }
                 products.push({ category: cat, model: model, storage: storage, reg: reg, usd: usd, stock: stock, desc: desc, image: image });
+                localStorage.setItem("anubis_last_usd", usd);
                 saveToStorage();
                 renderTable();
                 

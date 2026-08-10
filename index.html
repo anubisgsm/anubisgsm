@@ -602,6 +602,9 @@
         }
         .inline-price-input {
             font-variant-numeric: tabular-nums;
+            -webkit-user-select: text;
+            user-select: text;
+            -webkit-tap-highlight-color: transparent;
             -webkit-appearance: none;
             appearance: none;
             caret-color: #d4af37;
@@ -1833,36 +1836,38 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         function prepareInlinePrice(input) {
             if (!input) return;
             input.dataset.beforeEdit = input.value;
-            // İlk dokunuşta eski değeri seç: 915'i silmek için tek tek backspace gerekmiyor.
+            input.dataset.draftValue = input.value;
+            input.dataset.dirty = '0';
+
+            // İlk dokunuşta eski değerin tamamını seç.
+            // Böylece 915'i tek tek silmek yerine direkt 900 yazabilirsin.
+            try { input.select(); } catch (_) {}
             requestAnimationFrame(() => {
                 try { input.select(); } catch (_) {}
             });
         }
 
+        function selectInlinePrice(input) {
+            if (!input) return;
+            // Zaten odaktaysa ikinci dokunuşta da tüm değeri seç.
+            if (document.activeElement === input) {
+                try { input.select(); } catch (_) {}
+            }
+        }
+
         function updateInlinePrice(idx, type, val, input) {
             if (!isAdmin || !products[idx]) return;
 
+            // KRİTİK: Kullanıcı yazarken ürünü/state'i değiştirme, kaydetme veya renderTable()
+            // çağırma. Böylece her rakamda sayfa yeniden çizilip ekranın kayması engellenir.
             const clean = sanitizeInlinePrice(val);
-            if (input && input.value !== clean) input.value = clean;
-
-            const num = parseFloat(clean) || 0;
-            if (type === 'cost') {
-                products[idx].costUsd = num;
-            } else {
-                products[idx].saleUsd = num;
-                products[idx].usd = num;
+            if (input && input.value !== clean) {
+                input.value = clean;
             }
-
-            // Veriyi hemen kaydet; tabloyu yeniden çizme.
-            products[idx] = normalizeProduct(products[idx]);
-            localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products));
-            scheduleCloudSync();
-
-            // Kârı/fiyatı ekranda güncellemek için kullanıcı alanı bıraktıktan sonra tek render.
-            clearTimeout(inlinePriceRenderTimer);
-            inlinePriceRenderTimer = setTimeout(() => {
-                if (document.activeElement !== input) renderTable();
-            }, 700);
+            if (input) {
+                input.dataset.draftValue = clean;
+                input.dataset.dirty = '1';
+            }
         }
 
         function finishInlinePrice(input) {
@@ -1870,20 +1875,27 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             const idx = Number(input.dataset.index);
             if (Number.isNaN(idx) || !products[idx]) return;
 
+            const clean = sanitizeInlinePrice(input.value);
             const type = input.dataset.priceType;
-            const num = parseFloat(sanitizeInlinePrice(input.value)) || 0;
+            const num = parseFloat(clean) || 0;
+
             if (type === 'cost') {
                 products[idx].costUsd = num;
             } else {
                 products[idx].saleUsd = num;
                 products[idx].usd = num;
             }
+
             products[idx] = normalizeProduct(products[idx]);
             localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products));
             scheduleCloudSync();
 
+            input.dataset.dirty = '0';
+            input.dataset.draftValue = clean;
+
+            // Tek bir render: sadece düzenleme tamamlandıktan sonra.
             clearTimeout(inlinePriceRenderTimer);
-            inlinePriceRenderTimer = setTimeout(() => renderTable(), 120);
+            inlinePriceRenderTimer = setTimeout(() => renderTable(), 80);
         }
 
         function handleInlinePriceKey(event, input) {
@@ -2236,7 +2248,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                         <td class="price-display">${priceText}</td>
                         <td><span class="badge-green">${item.stock || "HAZIR STOK"}</span></td>
                         <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
-                        ${isAdmin ? `<td><input type="text" inputmode="decimal" autocomplete="off" enterkeyhint="next" class="usd-input inline-price-input" value="${costVal}" data-price-type="cost" data-index="${item.originalIndex}" onclick="event.stopPropagation()" onfocus="prepareInlinePrice(this)" oninput="updateInlinePrice(${item.originalIndex}, 'cost', this.value, this)" onblur="finishInlinePrice(this)" onkeydown="handleInlinePriceKey(event, this)"></td><td><input type="text" inputmode="decimal" autocomplete="off" enterkeyhint="done" class="usd-input inline-price-input" value="${usdVal}" data-price-type="sale" data-index="${item.originalIndex}" onclick="event.stopPropagation()" onfocus="prepareInlinePrice(this)" oninput="updateInlinePrice(${item.originalIndex}, 'sale', this.value, this)" onblur="finishInlinePrice(this)" onkeydown="handleInlinePriceKey(event, this)"></td><td class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal.toLocaleString('tr-TR')} $</td>` : ''}
+                        ${isAdmin ? `<td><input type="text" inputmode="decimal" autocomplete="off" enterkeyhint="next" class="usd-input inline-price-input" value="${costVal}" data-price-type="cost" data-index="${item.originalIndex}" onclick="event.stopPropagation(); selectInlinePrice(this)" onfocus="prepareInlinePrice(this)" oninput="updateInlinePrice(${item.originalIndex}, 'cost', this.value, this)" onblur="finishInlinePrice(this)" onkeydown="handleInlinePriceKey(event, this)"></td><td><input type="text" inputmode="decimal" autocomplete="off" enterkeyhint="done" class="usd-input inline-price-input" value="${usdVal}" data-price-type="sale" data-index="${item.originalIndex}" onclick="event.stopPropagation(); selectInlinePrice(this)" onfocus="prepareInlinePrice(this)" oninput="updateInlinePrice(${item.originalIndex}, 'sale', this.value, this)" onblur="finishInlinePrice(this)" onkeydown="handleInlinePriceKey(event, this)"></td><td class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal.toLocaleString('tr-TR')} $</td>` : ''}
                         ${isAdmin ? `<td><button class="admin-btn-danger" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Sil</button></td>` : ''}
                     `;
                     tbody.appendChild(tr);

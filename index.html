@@ -2740,8 +2740,8 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
 
 /* ================= V12 CUSTOMER FILTERS ================= */
-let customerOnlyStock = false;
-let customerSortMode = 'recommended';
+var customerOnlyStock = false;
+var customerSortMode = 'recommended';
 
 function customerHasStock(p) {
     const s = String(p.stock || '').toUpperCase();
@@ -2782,6 +2782,7 @@ function clearCustomerSearch() {
 }
 
 function customerSortProducts(list) {
+    if (!customerSortMode) customerSortMode = 'recommended';
     if (customerSortMode === 'priceAsc') {
         return list.sort((a,b) => getSaleUsd(a) - getSaleUsd(b));
     }

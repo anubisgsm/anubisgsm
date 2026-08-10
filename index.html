@@ -414,6 +414,25 @@
         .admin-tool-btn:hover { border-color:var(--primary-color); color:var(--primary-color); }
         .profit-positive { color:#34d399; font-weight:800; }
         .profit-negative { color:#fb7185; font-weight:800; }
+        .image-search-actions {
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+            margin-bottom:12px;
+            align-items:center;
+        }
+        .image-upload-inline {
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            cursor:pointer;
+        }
+        .image-search-source {
+            display:block;
+            margin-top:4px;
+            font-size:9px;
+            color:var(--text-muted);
+        }
         .image-search-modal .modal-card { max-width:850px; width:94%; }
         .image-search-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; }
         .image-search-item { border:1px solid var(--border-color); background:rgba(7,9,14,.7); border-radius:10px; padding:8px; cursor:pointer; transition:.15s; }
@@ -1030,8 +1049,16 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 <button class="close-admin" onclick="closeImageSearchModal()">Kapat</button>
             </div>
             <div class="modal-body">
+                <div class="image-search-actions">
+                    <label class="admin-tool-btn image-upload-inline">
+                        📁 PNG / JPG Yükle
+                        <input id="imageSearchFileInput" type="file" accept="image/png,image/jpeg,image/webp" style="display:none" onchange="uploadImageFromSearch(event)">
+                    </label>
+                    <button class="admin-tool-btn" type="button" onclick="retryImageSearch()">🔄 Tekrar Ara</button>
+                    <button class="admin-tool-btn" type="button" onclick="openImageSearch(Number(document.getElementById('imageSearchModal').dataset.index))">🔎 Google Görseller</button>
+                </div>
                 <div id="imageSearchGrid" class="image-search-grid"></div>
-                <div style="margin-top:12px;color:var(--text-muted);font-size:11px;">Otomatik arama Openverse açık lisanslı görsellerini kullanır; sonuç bulunamazsa Google Görseller alternatifi açılabilir.</div>
+                <div style="margin-top:12px;color:var(--text-muted);font-size:11px;">Önce açık lisanslı otomatik sonuçlar aranır. Bulunamazsa Wikimedia Commons denenir. İstersen mevcut modelin PNG/JPG görselini de doğrudan buradan yükleyebilirsin.</div>
             </div>
         </div>
     </div>
@@ -1951,33 +1978,152 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             searchInternetImages(idx);
         }
         function closeImageSearchModal() { document.getElementById('imageSearchModal').style.display = 'none'; }
+        async function fetchOpenverseImages(query) {
+            const url = `https://api.openverse.org/v1/images/?q=${encodeURIComponent(query)}&page_size=12`;
+            const response = await fetch(url, { method: 'GET', mode: 'cors', cache: 'no-store' });
+            if (!response.ok) throw new Error(`Openverse ${response.status}`);
+            const data = await response.json();
+            return (data.results || [])
+                .filter(x => x && (x.thumbnail || x.url))
+                .map(x => ({
+                    src: x.thumbnail || x.url,
+                    full: x.url || x.thumbnail,
+                    title: x.title || 'Görsel',
+                    source: 'Openverse',
+                    license: x.license || ''
+                }));
+        }
+
+        async function fetchWikimediaImages(query) {
+            const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url|mime|extmetadata&iiurlwidth=420&format=json&origin=*`;
+            const response = await fetch(url, { method: 'GET', mode: 'cors', cache: 'no-store' });
+            if (!response.ok) throw new Error(`Wikimedia ${response.status}`);
+            const data = await response.json();
+            const pages = Object.values(data.query?.pages || {});
+            return pages.map(p => {
+                const info = p.imageinfo?.[0] || {};
+                const meta = info.extmetadata || {};
+                return {
+                    src: info.thumburl || info.url,
+                    full: info.url || info.thumburl,
+                    title: p.title ? p.title.replace(/^File:/, '') : 'Wikimedia görseli',
+                    source: 'Wikimedia Commons',
+                    license: meta.LicenseShortName?.value || ''
+                };
+            }).filter(x => x.src);
+        }
+
+        function renderImageSearchResults(idx, results) {
+            const grid = document.getElementById('imageSearchGrid');
+            if (!results.length) {
+                grid.innerHTML = `<div style="grid-column:1/-1;color:var(--text-muted);line-height:1.6">
+                    Bu model için otomatik görsel bulunamadı.<br>
+                    <small>PNG/JPG dosyan varsa üstteki <b>PNG / JPG Yükle</b> butonundan doğrudan ekleyebilirsin.</small>
+                </div>`;
+                return;
+            }
+            grid.innerHTML = results.slice(0, 18).map((r, i) => `
+                <div class="image-search-item" onclick="useInternetImage(${idx}, ${JSON.stringify(r.full)}, ${JSON.stringify(r.title)}, ${JSON.stringify(r.source)})">
+                    <img src="${r.src}" loading="lazy" alt="${String(r.title).replace(/"/g,'&quot;')}"
+                         onerror="this.parentElement.style.display='none'">
+                    <small>${String(r.title).slice(0, 55)}</small>
+                    <span class="image-search-source">${r.source}${r.license ? ' • ' + r.license : ''}</span>
+                </div>
+            `).join('');
+        }
+
         async function searchInternetImages(idx) {
             const item = products[idx];
             const grid = document.getElementById('imageSearchGrid');
-            const q = encodeURIComponent(`${item.model} ${item.storage || ''} smartphone`);
-            try {
-                const response = await fetch(`https://api.openverse.org/v1/images/?q=${q}&page_size=12`);
-                if (!response.ok) throw new Error('Openverse');
-                const data = await response.json();
-                const results = (data.results || []).filter(x => x.thumbnail || x.url).slice(0,12);
-                if (!results.length) throw new Error('Sonuç yok');
-                grid.innerHTML = results.map((r,i) => {
-                    const src = r.thumbnail || r.url;
-                    const full = r.url || src;
-                    const title = String(r.title || 'Görsel').replace(/"/g,'&quot;');
-                    return `<div class="image-search-item" onclick="useInternetImage(${idx}, ${JSON.stringify(full)}, ${JSON.stringify(title)})"><img src="${src}" loading="lazy" onerror="this.parentElement.style.display='none'"><small>${title}</small></div>`;
-                }).join('');
-            } catch(e) {
-                grid.innerHTML = `<div style="grid-column:1/-1;color:var(--text-muted);line-height:1.6">Otomatik açık lisanslı sonuç bulunamadı.<br><button class="admin-tool-btn" onclick="openImageSearch(${idx})">Google Görseller'de Ara</button></div>`;
+            if (!item) return;
+
+            const model = String(item.model || '').trim();
+            const storage = String(item.storage || '').trim();
+            grid.innerHTML = '<div style="grid-column:1/-1;color:var(--text-muted)">Görseller aranıyor…</div>';
+
+            // Çok dar tek sorgu yerine birkaç daha isabetli sorgu kullanıyoruz.
+            const queries = [
+                `"${model}"`,
+                `${model} phone`,
+                `${model} ${storage}`
+            ];
+
+            const unique = new Map();
+
+            // Openverse: önce model adı, sonra daha gevşek sorgular.
+            for (const q of queries) {
+                try {
+                    const results = await fetchOpenverseImages(q);
+                    for (const r of results) {
+                        const key = r.full || r.src;
+                        if (key && !unique.has(key)) unique.set(key, r);
+                    }
+                    if (unique.size >= 12) break;
+                } catch (_) {}
+            }
+
+            // Açık lisanslı Openverse'de ürün fotoğrafı yoksa Wikimedia Commons'a geç.
+            if (unique.size < 6) {
+                try {
+                    const wm = await fetchWikimediaImages(`${model} smartphone`);
+                    for (const r of wm) {
+                        const key = r.full || r.src;
+                        if (key && !unique.has(key)) unique.set(key, r);
+                    }
+                } catch (_) {}
+            }
+
+            const results = [...unique.values()].slice(0, 18);
+            if (results.length) {
+                renderImageSearchResults(idx, results);
+            } else {
+                grid.innerHTML = `<div style="grid-column:1/-1;color:var(--text-muted);line-height:1.7">
+                    Otomatik açık lisanslı görsel bulunamadı.<br>
+                    <small>Bu, telefon modelinin açık lisanslı kataloglarda bulunmadığı anlamına gelebilir.</small>
+                </div>`;
             }
         }
-        function useInternetImage(idx, url, title) {
+
+        function retryImageSearch() {
+            const modal = document.getElementById('imageSearchModal');
+            const idx = Number(modal.dataset.index);
+            if (!Number.isNaN(idx)) searchInternetImages(idx);
+        }
+
+        function uploadImageFromSearch(event) {
+            const input = event.target;
+            const idx = Number(document.getElementById('imageSearchModal').dataset.index);
+            const file = input.files?.[0];
+            if (!file || Number.isNaN(idx) || !products[idx]) return;
+
+            if (!/^image\/(png|jpeg|webp)$/.test(file.type)) {
+                alert('Lütfen PNG, JPG veya WEBP görsel seç.');
+                input.value = '';
+                return;
+            }
+
+            // Mevcut "Resim Ekle" sistemimizle aynı şekilde veri URL'si olarak kaydedilir.
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                products[idx].image = e.target.result;
+                products[idx].imageSource = 'Yüklenen dosya';
+                products[idx].imageTitle = file.name;
+                saveToStorage();
+                renderTable();
+                closeImageSearchModal();
+                showToast(`${products[idx].model} görseli eklendi! 📷`);
+            };
+            reader.readAsDataURL(file);
+            input.value = '';
+        }
+
+        function useInternetImage(idx, url, title, source) {
             if (!products[idx]) return;
             products[idx].image = url;
-            products[idx].imageSource = 'Openverse';
+            products[idx].imageSource = source || 'İnternet';
             products[idx].imageTitle = title || '';
             saveToStorage(); renderTable(); closeImageSearchModal();
-            showToast('İnternet görseli ürüne eklendi! 🌐📷');
+            showToast(`${products[idx].model} görseli eklendi! 🌐📷`);
         }
 
         function saveFavorites() {

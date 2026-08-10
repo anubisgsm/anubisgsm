@@ -839,7 +839,109 @@
             .nav-bar-item { min-width:64px; font-size:9.5px; }
             .nav-bar-item svg { width:19px; height:19px; }
         }
-    </style>
+    
+        .quick-price-edit-btn {
+            width:100%;
+            min-width:130px;
+            border:1px solid rgba(212,175,55,.45);
+            background:rgba(212,175,55,.10);
+            color:#f3c34f;
+            border-radius:9px;
+            padding:9px 10px;
+            font-weight:900;
+            font-size:11px;
+            cursor:pointer;
+        }
+        .quick-price-edit-btn:hover { background:rgba(212,175,55,.20); }
+        .quick-price-modal {
+            position:fixed;
+            inset:0;
+            z-index:99999;
+            display:none;
+            align-items:center;
+            justify-content:center;
+            padding:16px;
+            background:rgba(0,0,0,.72);
+            backdrop-filter:blur(5px);
+        }
+        .quick-price-modal.show { display:flex; }
+        .quick-price-box {
+            width:min(440px, 100%);
+            background:#0d1422;
+            border:1px solid rgba(212,175,55,.45);
+            border-radius:18px;
+            padding:20px;
+            box-shadow:0 25px 80px rgba(0,0,0,.6);
+        }
+        .quick-price-box h3 {
+            margin:0 0 5px;
+            color:#f3c34f;
+            font-size:19px;
+        }
+        .quick-price-model {
+            color:#aab5c7;
+            font-size:12px;
+            margin-bottom:18px;
+        }
+        .quick-price-fields {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:10px;
+        }
+        .quick-price-fields label {
+            color:#9da9bc;
+            font-size:11px;
+            font-weight:800;
+        }
+        .quick-price-fields input {
+            display:block;
+            width:100%;
+            box-sizing:border-box;
+            margin-top:6px;
+            padding:14px 12px;
+            border-radius:10px;
+            border:1px solid #2a374d;
+            background:#060b13;
+            color:#fff;
+            font-size:20px;
+            font-weight:900;
+            outline:none;
+            text-align:center;
+        }
+        .quick-price-fields input:focus {
+            border-color:#d4af37;
+            box-shadow:0 0 0 3px rgba(212,175,55,.12);
+        }
+        .quick-price-summary {
+            margin-top:12px;
+            padding:10px;
+            border-radius:9px;
+            background:rgba(16,185,129,.08);
+            text-align:center;
+            font-weight:900;
+            color:#34d399;
+        }
+        .quick-price-modal-actions {
+            display:grid;
+            grid-template-columns:1fr 1.5fr;
+            gap:9px;
+            margin-top:15px;
+        }
+        .quick-price-modal-actions button {
+            border:0;
+            border-radius:10px;
+            padding:13px;
+            font-weight:900;
+            cursor:pointer;
+        }
+        .quick-price-cancel { background:#202b3d; color:#dbe3f0; }
+        .quick-price-save { background:#10b981; color:#04130d; }
+        @media(max-width:700px) {
+            .quick-price-fields { grid-template-columns:1fr; }
+            .quick-price-box { padding:17px; }
+        }
+
+</style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -1956,7 +2058,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             row.innerHTML = `
                 <th>GÖRSEL</th><th>MODEL</th><th>HAFIZA</th><th>KAYIT DURUMU</th>
                 <th>DOLAR ($)</th><th>FİYAT</th><th>STOK DURUMU</th><th>SİPARİŞ</th>
-                ${isAdmin ? '<th>ALIŞ $</th><th>SATIŞ $</th><th>KÂR $</th>' : ''}
+                ${isAdmin ? '<th colspan="2">FİYAT DÜZENLE</th><th>KÂR $</th>' : ''}
                 ${isAdmin ? '<th>İŞLEM</th>' : ''}`;
         }
 
@@ -2278,7 +2380,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                         <td class="price-display">${priceText}</td>
                         <td><span class="badge-green">${item.stock || "HAZIR STOK"}</span></td>
                         <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
-                        ${isAdmin ? `<td><input type="text" inputmode="decimal" autocomplete="off" enterkeyhint="next" class="usd-input inline-price-input" value="${costVal}" data-price-type="cost" data-index="${item.originalIndex}" onpointerdown="beginInlinePriceMouse(this, event)" onclick="event.stopPropagation()" onfocus="prepareInlinePrice(this)" oninput="updateInlinePrice(${item.originalIndex}, 'cost', this.value, this)" onblur="finishInlinePrice(this)" onkeydown="handleInlinePriceKey(event, this)"></td><td><input type="text" inputmode="decimal" autocomplete="off" enterkeyhint="done" class="usd-input inline-price-input" value="${usdVal}" data-price-type="sale" data-index="${item.originalIndex}" onpointerdown="beginInlinePriceMouse(this, event)" onclick="event.stopPropagation()" onfocus="prepareInlinePrice(this)" oninput="updateInlinePrice(${item.originalIndex}, 'sale', this.value, this)" onblur="finishInlinePrice(this)" onkeydown="handleInlinePriceKey(event, this)"></td><td class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal.toLocaleString('tr-TR')} $</td>` : ''}
+                        ${isAdmin ? `<td colspan="2"><button class="quick-price-edit-btn" onclick="event.stopPropagation(); openQuickPriceEditor(${item.originalIndex})">✏️ Fiyat Düzenle</button></td><td class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal.toLocaleString('tr-TR')} $</td>` : ''}
                         ${isAdmin ? `<td><button class="admin-btn-danger" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Sil</button></td>` : ''}
                     `;
                     tbody.appendChild(tr);
@@ -2465,6 +2567,110 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         };
     
         setupPriceInputs();
+
+        let quickPriceIndexV11 = null;
+
+        function openQuickPriceEditor(idx) {
+            if (!isAdmin || !products[idx]) return;
+            quickPriceIndexV11 = idx;
+            const p = products[idx];
+
+            document.getElementById('quickPriceModelV11').textContent =
+                `${p.model || 'Ürün'} — ${p.storage || ''}`;
+
+            document.getElementById('quickCostV11').value =
+                Number(p.costUsd ?? 0) || 0;
+            document.getElementById('quickSaleV11').value =
+                Number(p.saleUsd ?? p.usd ?? 0) || 0;
+
+            const modal = document.getElementById('quickPriceModalV11');
+            modal.classList.add('show');
+
+            updateQuickProfitV11();
+
+            // Açılır açılmaz satış fiyatını seç.
+            requestAnimationFrame(() => {
+                const input = document.getElementById('quickSaleV11');
+                input.focus();
+                input.select();
+            });
+        }
+
+        function closeQuickPriceEditor() {
+            quickPriceIndexV11 = null;
+            document.getElementById('quickPriceModalV11')?.classList.remove('show');
+        }
+
+        function updateQuickProfitV11() {
+            const cost = parseFloat(document.getElementById('quickCostV11')?.value) || 0;
+            const sale = parseFloat(document.getElementById('quickSaleV11')?.value) || 0;
+            const el = document.getElementById('quickProfitV11');
+            if (el) {
+                el.textContent = `Kâr: ${(sale - cost).toLocaleString('tr-TR')} $`;
+                el.style.color = sale >= cost ? '#34d399' : '#ff6575';
+            }
+        }
+
+        function saveQuickPriceEditor() {
+            const idx = quickPriceIndexV11;
+            if (!isAdmin || idx === null || !products[idx]) return;
+
+            const cost = parseFloat(String(document.getElementById('quickCostV11').value).replace(',', '.')) || 0;
+            const sale = parseFloat(String(document.getElementById('quickSaleV11').value).replace(',', '.')) || 0;
+
+            products[idx].costUsd = cost;
+            products[idx].saleUsd = sale;
+            products[idx].usd = sale;
+            products[idx] = normalizeProduct(products[idx]);
+
+            localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(products));
+            closeQuickPriceEditor();
+
+            // Sadece Kaydet'e basıldığında tek render + tek senkronizasyon.
+            renderTable();
+            scheduleCloudSync();
+            showToast(`${products[idx].model} fiyatı güncellendi! 💾`);
+        }
+
+        document.addEventListener('input', (e) => {
+            if (e.target?.id === 'quickCostV11' || e.target?.id === 'quickSaleV11') {
+                updateQuickProfitV11();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.target?.id === 'quickCostV11' || e.target?.id === 'quickSaleV11') {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    saveQuickPriceEditor();
+                } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    closeQuickPriceEditor();
+                }
+            }
+        });
+
 </script>
+
+    <div id="quickPriceModalV11" class="quick-price-modal" onclick="if(event.target===this) closeQuickPriceEditor()">
+        <div class="quick-price-box" onclick="event.stopPropagation()">
+            <h3>✏️ Fiyat Düzenle</h3>
+            <div id="quickPriceModelV11" class="quick-price-model"></div>
+            <div class="quick-price-fields">
+                <label>ALIŞ ($)
+                    <input id="quickCostV11" type="text" inputmode="decimal" autocomplete="off">
+                </label>
+                <label>SATIŞ ($)
+                    <input id="quickSaleV11" type="text" inputmode="decimal" autocomplete="off">
+                </label>
+            </div>
+            <div id="quickProfitV11" class="quick-price-summary"></div>
+            <div class="quick-price-modal-actions">
+                <button class="quick-price-cancel" onclick="closeQuickPriceEditor()">İptal</button>
+                <button class="quick-price-save" onclick="saveQuickPriceEditor()">💾 Kaydet</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

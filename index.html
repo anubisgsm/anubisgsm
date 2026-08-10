@@ -1404,6 +1404,16 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         let activeCategoryFilter = 'TÜMÜ';
         let activeSubFilter = 'TÜMÜ';
         let activeDetailItem = null;
+
+        // Müşteri tarafı favoriler: her cihazda kendi tarayıcısında tutulur.
+        let favoriteProductIds = new Set();
+        try {
+            const savedFavorites = JSON.parse(localStorage.getItem('anubis_favorites_2026') || '[]');
+            if (Array.isArray(savedFavorites)) favoriteProductIds = new Set(savedFavorites);
+        } catch (e) {
+            favoriteProductIds = new Set();
+        }
+        let showOnlyFavorites = false;
         let tempUploadedImageBase64 = "";
         let editingImageIndex = null;
 

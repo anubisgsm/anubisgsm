@@ -1202,6 +1202,48 @@
     }
 }
 
+
+/* V14: premium black-gold touches + deal badges */
+.m-product-card{transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+@media(min-width:769px){.m-product-card:hover{transform:translateY(-3px);border-color:rgba(212,175,55,.42)!important;box-shadow:0 14px 34px rgba(0,0,0,.3),0 0 0 1px rgba(212,175,55,.06)}}
+.v14-old-price{color:#7f8ba0;text-decoration:line-through;font-size:10px;font-weight:700}
+.v14-current-price{color:#f3cf63;font-size:23px;line-height:1.05;font-weight:950}
+.v14-badge-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.v14-discount-badge,.v14-opportunity-badge{display:inline-flex;align-items:center;padding:4px 7px;border-radius:7px;font-size:9px;font-weight:950}
+.v14-discount-badge{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.28);color:#42e0aa}
+.v14-opportunity-badge{background:linear-gradient(135deg,rgba(212,175,55,.18),rgba(180,110,20,.12));border:1px solid rgba(212,175,55,.38);color:#f5ce61}
+.v14-deal-card{border-color:rgba(212,175,55,.34)!important}
+@media(max-width:768px){.m-product-card{position:relative;overflow:hidden}.m-product-card:after{content:"";position:absolute;top:0;right:-55px;width:130px;height:130px;background:radial-gradient(circle,rgba(212,175,55,.07),transparent 68%);pointer-events:none}.v14-current-price{font-size:22px}}
+
+
+/* ===== V15 PRODUCT EDITOR ===== */
+.product-edit-btn{width:100%;border:1px solid rgba(56,189,248,.35);background:rgba(14,165,233,.10);color:#67d8ff;border-radius:9px;padding:9px 10px;font-weight:900;font-size:11px;cursor:pointer}
+.product-edit-btn:hover{background:rgba(14,165,233,.18);border-color:#38bdf8}
+.product-edit-modal{position:fixed;inset:0;z-index:100000;display:none;align-items:center;justify-content:center;padding:14px;background:rgba(0,0,0,.76);backdrop-filter:blur(6px)}
+.product-edit-modal.show{display:flex}
+.product-edit-box{width:min(620px,100%);max-height:min(92vh,820px);overflow:auto;background:linear-gradient(145deg,#101827,#080d16);border:1px solid rgba(212,175,55,.42);border-radius:20px;padding:20px;box-shadow:0 30px 100px rgba(0,0,0,.7)}
+.product-edit-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:15px}
+.product-edit-head h3{margin:0;color:#f3c34f;font-size:19px}
+.product-edit-sub{margin-top:4px;color:#8995a9;font-size:11px}
+.product-edit-close{border:1px solid #29364a;background:#151e2d;color:#cbd5e1;border-radius:9px;padding:7px 10px;cursor:pointer;font-weight:800}
+.product-edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.product-edit-field label{display:block;color:#9da9bc;font-size:10px;font-weight:900;margin-bottom:5px}
+.product-edit-field input,.product-edit-field select,.product-edit-field textarea{width:100%;box-sizing:border-box;border:1px solid #29364a;background:#050a12;color:#fff;border-radius:10px;padding:11px 10px;font-size:13px;font-weight:750;outline:none}
+.product-edit-field textarea{min-height:72px;resize:vertical}
+.product-edit-field input:focus,.product-edit-field select:focus,.product-edit-field textarea:focus{border-color:#d4af37;box-shadow:0 0 0 3px rgba(212,175,55,.10)}
+.product-edit-full{grid-column:1/-1}
+.product-edit-presets{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.product-edit-preset{border:1px solid #29364a;background:#111b2a;color:#b9c5d6;border-radius:7px;padding:6px 8px;font-size:9px;font-weight:850;cursor:pointer}
+.product-edit-preset:hover{border-color:#d4af37;color:#f3c34f}
+.product-edit-image{display:flex;align-items:center;gap:10px;padding:10px;border:1px dashed #334155;border-radius:11px;background:rgba(2,6,23,.45)}
+.product-edit-image img{width:58px;height:58px;object-fit:contain;border-radius:8px;background:#060b13}
+.product-edit-image span{font-size:10px;color:#8793a7}
+.product-edit-actions{display:grid;grid-template-columns:1fr 1.5fr;gap:9px;margin-top:15px}
+.product-edit-actions button{border:0;border-radius:10px;padding:13px;font-weight:950;cursor:pointer}
+.product-edit-cancel{background:#202b3d;color:#dbe3f0}
+.product-edit-save{background:#10b981;color:#04130d}
+@media(max-width:700px){.product-edit-box{padding:15px;border-radius:17px}.product-edit-grid{grid-template-columns:1fr}.product-edit-full{grid-column:auto}.product-edit-actions{position:sticky;bottom:0;background:#0b111c;padding-top:8px}}
+
 </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -2658,7 +2700,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                         <td class="price-display">${priceText}</td>
                         <td><span class="badge-green">${item.stock || "HAZIR STOK"}</span></td>
                         <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
-                        ${isAdmin ? `<td colspan="2"><button class="quick-price-edit-btn" onclick="event.stopPropagation(); openQuickPriceEditor(${item.originalIndex})">✏️ Fiyat Düzenle</button></td><td class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal.toLocaleString('tr-TR')} $</td>` : ''}
+                        ${isAdmin ? `<td colspan="2"><button class="quick-price-edit-btn" onclick="event.stopPropagation(); openQuickPriceEditor(${item.originalIndex})">✏️ Fiyat Düzenle</button><button class="product-edit-btn" style="margin-top:5px" onclick="event.stopPropagation(); openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button></td><td class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal.toLocaleString('tr-TR')} $</td>` : ''}
                         ${isAdmin ? `<td><button class="admin-btn-danger" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Sil</button></td>` : ''}
                     `;
                     tbody.appendChild(tr);
@@ -2698,7 +2740,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                             </div>
                             <a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp açılıyor...');">📲 WhatsApp'tan Sor</a>
                         </div>
-                        ${isAdmin ? `<div style="font-size:11px;color:var(--text-muted);margin-top:5px;">Alış: <b>${costVal}$</b> • Satış: <b>${usdVal}$</b> • Kâr: <b class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal}$</b></div><button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Ürünü Sil</button>` : ''}
+                        ${isAdmin ? `<div style="font-size:11px;color:var(--text-muted);margin-top:5px;">Alış: <b>${costVal}$</b> • Satış: <b>${usdVal}$</b> • Kâr: <b class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal}$</b></div><button class="product-edit-btn" style="margin-top:7px;" onclick="event.stopPropagation(); openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button><button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Ürünü Sil</button>` : ''}
                     `;
                     cardGrid.appendChild(card);
                 });
@@ -3026,6 +3068,146 @@ renderTable = function() {
     v12UpdateCount();
 };
 
+
+/* V14 PRICE DROP + DEAL */
+const V14_HISTORY_KEY='anubisgsm_price_history_v14';
+function v14Num(v){const n=Number(String(v??'').replace(',','.'));return Number.isFinite(n)?n:0}
+function v14Key(p,i){return String(p?.id??`${p?.model||''}|${p?.storage||''}|${i}`)}
+function v14Usd(p){return v14Num(p?.saleUsd??p?.usd??0)}
+function v14History(){try{return JSON.parse(localStorage.getItem(V14_HISTORY_KEY)||'{}')}catch(e){return{}}}
+function v14RecordAll(){
+ if(!Array.isArray(products))return;
+ const h=v14History(), now=Date.now();
+ products.forEach((p,i)=>{
+   const key=v14Key(p,i), cur=v14Usd(p); if(!cur)return;
+   const old=v14Num(h[key]?.price);
+   if(!old) h[key]={price:cur,updatedAt:now};
+   else if(cur<old) h[key]={price:cur,previousPrice:old,updatedAt:now};
+   else if(cur>old) h[key]={price:cur,updatedAt:now};
+ });
+ localStorage.setItem(V14_HISTORY_KEY,JSON.stringify(h));
+}
+function v14Info(p,i){
+ const cur=v14Usd(p), h=v14History()[v14Key(p,i)]||{}, old=v14Num(h.previousPrice);
+ if(old>cur&&cur>0)return{old,discount:(old-cur)/old*100,drop:true};
+ return{old:0,discount:0,drop:false};
+}
+function v14Deal(p,i){
+ const b=String(p?.badge||'').toLocaleUpperCase('tr-TR');
+ return !!(p?.isHot||p?.isDeal||p?.featured||b==='FIRSAT'||b==='ÖNE ÇIKAN'||v14Info(p,i).drop);
+}
+function v14Enhance(){
+ const cards=document.querySelectorAll('.m-product-card');
+ if(!Array.isArray(products)||!cards.length)return;
+ cards.forEach(card=>{
+   const i=Number(card.dataset.index);
+   if(!Number.isInteger(i)||!products[i])return;
+   const p=products[i], info=v14Info(p,i), deal=v14Deal(p,i);
+   card.classList.toggle('v14-deal-card',deal);
+   let row=card.querySelector('.v14-badge-row');
+   if(!row){row=document.createElement('div');row.className='v14-badge-row';const head=card.querySelector('.m-card-header');if(head)head.insertAdjacentElement('afterend',row);else card.prepend(row)}
+   row.innerHTML=(deal?'<span class="v14-opportunity-badge">🔥 FIRSAT</span>':'')+
+     (info.drop?`<span class="v14-discount-badge">↓ %${info.discount.toFixed(0)} İNDİRİM</span>`:'');
+   const price=card.querySelector('.m-price');
+   if(price&&typeof currentRate!=='undefined'){
+     const cur=v14Usd(p)*v14Num(currentRate), old=info.old*v14Num(currentRate);
+     price.innerHTML=info.drop
+       ? `<span class="v14-old-price">${old.toLocaleString('tr-TR',{maximumFractionDigits:2})} ₺</span><br><span class="v14-current-price">${cur.toLocaleString('tr-TR',{maximumFractionDigits:2})} ₺</span>`
+       : (cur?cur.toLocaleString('tr-TR',{maximumFractionDigits:2})+' ₺':'Fiyat sorunuz');
+   }
+ });
+}
+const v14RenderBase=renderTable;
+renderTable=function(){v14RecordAll();v14RenderBase();setTimeout(v14Enhance,0)};
+setTimeout(()=>{v14RecordAll();v14Enhance()},1000);
+
+
+/* ================= V15 PRODUCT EDITOR ================= */
+let v15EditIndex = null;
+
+function v15Esc(value){
+    return String(value ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function openProductEditor(idx){
+    if(!isAdmin || !products[idx]) return;
+    v15EditIndex = idx;
+    const p = products[idx];
+    const modal = document.getElementById('productEditModalV15');
+    if(!modal) return;
+
+    document.getElementById('editProductTitleV15').textContent = p.model || 'Ürün Düzenle';
+    const categorySelect = document.getElementById('editCategoryV15');
+    categorySelect.innerHTML = categoryOrder.map(c => `<option value="${v15Esc(c)}">${v15Esc(c)}</option>`).join('');
+    if (![...categorySelect.options].some(o => o.value === (p.category || 'DİĞER'))) {
+        categorySelect.insertAdjacentHTML('beforeend', `<option value="${v15Esc(p.category || 'DİĞER')}">${v15Esc(p.category || 'DİĞER')}</option>`);
+    }
+    categorySelect.value = p.category || 'DİĞER';
+    document.getElementById('editModelV15').value = p.model || '';
+    document.getElementById('editStorageV15').value = p.storage || '';
+    document.getElementById('editRegV15').value = p.reg || 'KAYITSIZ';
+    document.getElementById('editCostV15').value = Number(p.costUsd || 0) || '';
+    document.getElementById('editSaleV15').value = Number(p.saleUsd ?? p.usd ?? 0) || '';
+    document.getElementById('editStockV15').value = p.stock || 'HAZIR STOK';
+    document.getElementById('editDescV15').value = p.desc || '';
+    const img = document.getElementById('editImageV15');
+    const imgText = document.getElementById('editImageTextV15');
+    if(p.image){ img.src=p.image; img.style.display='block'; imgText.textContent='Mevcut ürün görseli'; }
+    else { img.removeAttribute('src'); img.style.display='none'; imgText.textContent='Bu üründe görsel yok'; }
+    modal.classList.add('show');
+    requestAnimationFrame(()=>document.getElementById('editStorageV15')?.focus({preventScroll:true}));
+}
+
+function closeProductEditor(){
+    v15EditIndex = null;
+    document.getElementById('productEditModalV15')?.classList.remove('show');
+}
+
+function v15Set(id,value){
+    const el=document.getElementById(id); if(el) el.value=value;
+}
+function v15SetStorage(value){ v15Set('editStorageV15',value); }
+function v15SetReg(value){ v15Set('editRegV15',value); }
+
+function saveProductEditor(){
+    const idx=v15EditIndex;
+    if(!isAdmin || idx===null || !products[idx]) return;
+    const model=document.getElementById('editModelV15').value.trim();
+    const category=normalizeBrandText(document.getElementById('editCategoryV15').value).trim() || 'DİĞER';
+    if(!model){ alert('Model adı boş bırakılamaz.'); return; }
+    const cost=parseFloat(String(document.getElementById('editCostV15').value||'0').replace(',','.'))||0;
+    const sale=parseFloat(String(document.getElementById('editSaleV15').value||'0').replace(',','.'))||0;
+    const old=products[idx];
+    products[idx]=normalizeProduct({
+        ...old,
+        category,
+        model,
+        storage:document.getElementById('editStorageV15').value.trim() || '512GB',
+        reg:document.getElementById('editRegV15').value.trim().toUpperCase() || 'KAYITSIZ',
+        costUsd:cost,
+        saleUsd:sale,
+        usd:sale,
+        stock:document.getElementById('editStockV15').value.trim().toUpperCase() || 'HAZIR STOK',
+        desc:document.getElementById('editDescV15').value.trim()
+    });
+    if(!categoryOrder.includes(category)){ categoryOrder.push(category); saveCategoryOrder(); }
+    localStorage.setItem(MASTER_STORAGE_KEY,JSON.stringify(products));
+    closeProductEditor();
+    renderCategoryManager();
+    renderTable();
+    scheduleCloudSync();
+    showToast(`${products[idx].model} güncellendi! 💾`);
+}
+
+document.addEventListener('keydown',(e)=>{
+    if(e.key==='Escape' && document.getElementById('productEditModalV15')?.classList.contains('show')){
+        e.preventDefault(); closeProductEditor();
+    }
+    if(e.ctrlKey && e.key==='Enter' && document.getElementById('productEditModalV15')?.classList.contains('show')){
+        e.preventDefault(); saveProductEditor();
+    }
+});
+
 </script>
 
     <div id="quickPriceModalV11" class="quick-price-modal" onclick="if(event.target===this) closeQuickPriceEditor()">
@@ -3048,5 +3230,83 @@ renderTable = function() {
         </div>
     </div>
 
+
+    <div id="productEditModalV15" class="product-edit-modal" onclick="if(event.target===this) closeProductEditor()">
+        <div class="product-edit-box" onclick="event.stopPropagation()">
+            <div class="product-edit-head">
+                <div>
+                    <h3>⚙️ Ürünü Düzenle</h3>
+                    <div id="editProductTitleV15" class="product-edit-sub">Ürün</div>
+                </div>
+                <button class="product-edit-close" onclick="closeProductEditor()">Kapat</button>
+            </div>
+
+            <div class="product-edit-grid">
+                <div class="product-edit-field">
+                    <label>KATEGORİ</label>
+                    <select id="editCategoryV15"></select>
+                </div>
+                <div class="product-edit-field">
+                    <label>MODEL</label>
+                    <input id="editModelV15" type="text" autocomplete="off">
+                </div>
+
+                <div class="product-edit-field">
+                    <label>HAFIZA</label>
+                    <input id="editStorageV15" type="text" autocomplete="off" placeholder="256GB">
+                    <div class="product-edit-presets">
+                        <button type="button" class="product-edit-preset" onclick="v15SetStorage('128GB')">128GB</button>
+                        <button type="button" class="product-edit-preset" onclick="v15SetStorage('256GB')">256GB</button>
+                        <button type="button" class="product-edit-preset" onclick="v15SetStorage('512GB')">512GB</button>
+                        <button type="button" class="product-edit-preset" onclick="v15SetStorage('1TB')">1TB</button>
+                        <button type="button" class="product-edit-preset" onclick="v15SetStorage('12/256GB')">12/256GB</button>
+                        <button type="button" class="product-edit-preset" onclick="v15SetStorage('12/512GB')">12/512GB</button>
+                    </div>
+                </div>
+
+                <div class="product-edit-field">
+                    <label>KAYIT DURUMU</label>
+                    <input id="editRegV15" type="text" autocomplete="off" placeholder="KAYITSIZ">
+                    <div class="product-edit-presets">
+                        <button type="button" class="product-edit-preset" onclick="v15SetReg('KAYITSIZ')">KAYITSIZ</button>
+                        <button type="button" class="product-edit-preset" onclick="v15SetReg('KAYITLI')">KAYITLI</button>
+                        <button type="button" class="product-edit-preset" onclick="v15SetReg('KAYIT ALICI AİT')">KAYIT ALICI AİT</button>
+                    </div>
+                </div>
+
+                <div class="product-edit-field">
+                    <label>ALIŞ ($)</label>
+                    <input id="editCostV15" type="text" inputmode="decimal" autocomplete="off">
+                </div>
+                <div class="product-edit-field">
+                    <label>SATIŞ ($)</label>
+                    <input id="editSaleV15" type="text" inputmode="decimal" autocomplete="off">
+                </div>
+                <div class="product-edit-field">
+                    <label>STOK DURUMU</label>
+                    <input id="editStockV15" type="text" autocomplete="off" placeholder="HAZIR STOK">
+                </div>
+                <div class="product-edit-field">
+                    <label>AÇIKLAMA</label>
+                    <input id="editDescV15" type="text" autocomplete="off">
+                </div>
+
+                <div class="product-edit-field product-edit-full">
+                    <label>ÜRÜN GÖRSELİ</label>
+                    <div class="product-edit-image">
+                        <img id="editImageV15" alt="Ürün görseli" style="display:none">
+                        <span id="editImageTextV15">Görsel bilgisi</span>
+                        <button type="button" class="admin-tool-btn" style="margin-left:auto" onclick="const idx=v15EditIndex; closeProductEditor(); if(idx!==null) openImageEditModal(idx)">📷 Görseli Düzenle</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-edit-actions">
+                <button class="product-edit-cancel" onclick="closeProductEditor()">İptal</button>
+                <button class="product-edit-save" onclick="saveProductEditor()">💾 Değişiklikleri Kaydet</button>
+            </div>
+            <div style="text-align:center;color:#66758b;font-size:9px;margin-top:8px">Ctrl + Enter ile kaydedebilirsin.</div>
+        </div>
+    </div>
 </body>
 </html>

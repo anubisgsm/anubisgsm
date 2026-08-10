@@ -1003,6 +1003,205 @@
     .v12-filter-btn, .v12-sort { flex:1; min-height:40px; font-size:11px; padding:0 8px; }
 }
 
+
+/* =========================================================
+   V13 — PREMIUM MOBILE CUSTOMER CARDS
+   Sadece mobil müşteri görünümünü iyileştirir.
+   V11/V12 veri, Supabase ve fiyat düzenleme mantığına dokunmaz.
+   ========================================================= */
+@media (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .mobile-card-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        margin-top: 10px;
+    }
+
+    .m-product-card {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px !important;
+        gap: 10px !important;
+        border-radius: 18px !important;
+        border: 1px solid rgba(148,163,184,.16) !important;
+        background:
+            radial-gradient(circle at 85% 0%, rgba(56,189,248,.07), transparent 32%),
+            linear-gradient(145deg, rgba(15,23,42,.96), rgba(8,13,22,.98)) !important;
+        box-shadow: 0 10px 28px rgba(0,0,0,.28) !important;
+    }
+
+    .m-product-card:active {
+        transform: scale(.985);
+    }
+
+    .m-card-header {
+        min-height: 39px;
+        gap: 8px;
+        align-items: center !important;
+    }
+
+    .m-card-title {
+        font-size: 16px !important;
+        line-height: 1.2 !important;
+        letter-spacing: .1px;
+        max-width: calc(100% - 85px);
+    }
+
+    .m-card-header .badge-green {
+        white-space: nowrap;
+        font-size: 9px;
+        padding: 4px 6px;
+    }
+
+    .favorite-btn {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        border-radius: 11px !important;
+        font-size: 21px !important;
+    }
+
+    .m-card-img {
+        height: 185px !important;
+        border-radius: 14px !important;
+        border: 1px solid rgba(255,255,255,.07);
+        background:
+            radial-gradient(circle, rgba(255,255,255,.045), transparent 62%),
+            rgba(3,7,13,.75) !important;
+    }
+
+    .m-card-img img {
+        width: 90% !important;
+        height: 90% !important;
+        object-fit: contain !important;
+        filter: drop-shadow(0 12px 18px rgba(0,0,0,.35));
+    }
+
+    .m-card-details {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 7px !important;
+    }
+
+    .m-detail-box {
+        min-height: 45px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 7px 10px !important;
+        border-radius: 10px !important;
+        background: rgba(30,41,59,.28) !important;
+    }
+
+    .m-detail-label {
+        font-size: 9px !important;
+        letter-spacing: .5px;
+    }
+
+    .m-detail-val {
+        font-size: 12px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .m-card-footer {
+        display: block !important;
+        margin-top: 0 !important;
+        padding-top: 11px !important;
+    }
+
+    .mobile-price-row {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .m-price {
+        font-size: 23px !important;
+        line-height: 1.05;
+        font-weight: 900 !important;
+        letter-spacing: -.3px;
+    }
+
+    .m-price-usd {
+        color: #8190a6 !important;
+        font-size: 10px !important;
+        margin-top: 4px;
+    }
+
+    .m-stock-dot {
+        max-width: 105px;
+        padding: 6px 8px;
+        border-radius: 9px;
+        background: rgba(16,185,129,.10);
+        border: 1px solid rgba(16,185,129,.22);
+        color: #43e0a8;
+        font-size: 9px;
+        font-weight: 900;
+        text-align: center;
+        line-height: 1.1;
+    }
+
+    .m-order-btn {
+        width: 100% !important;
+        box-sizing: border-box;
+        min-height: 45px;
+        justify-content: center !important;
+        border-radius: 11px !important;
+        font-size: 13px !important;
+        font-weight: 900 !important;
+    }
+
+    /* Kategori başlıklarını telefonda daha belirgin yap */
+    .mobile-card-grid > div[style*="accent-gold"] {
+        margin-top: 13px !important;
+        margin-bottom: 1px;
+        padding: 10px 3px 7px !important;
+        font-size: 13px !important;
+        letter-spacing: 1.1px !important;
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        background: rgba(5,7,10,.94);
+        backdrop-filter: blur(8px);
+    }
+
+    .mobile-results-count,
+    .mobile-fav-empty {
+        border-radius: 13px;
+        background: rgba(15,23,42,.65);
+        border: 1px solid rgba(148,163,184,.12);
+        padding: 12px !important;
+    }
+}
+
+/* Çok küçük telefonlar */
+@media (max-width: 380px) {
+    .m-product-card {
+        padding: 11px !important;
+    }
+
+    .m-card-img {
+        height: 155px !important;
+    }
+
+    .m-price {
+        font-size: 20px !important;
+    }
+
+    .m-card-title {
+        font-size: 14px !important;
+    }
+}
+
 </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>

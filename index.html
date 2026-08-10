@@ -942,40 +942,26 @@
         }
 
 
-/* ===== V12 Müşteri hızlı filtre / sıralama ===== */
-.customer-quick-tools {
+/* ===== V12 CUSTOMER TOOLS ===== */
+.v12-tools {
     display:flex;
-    gap:7px;
+    gap:8px;
     align-items:center;
-    margin-top:8px;
-    overflow-x:auto;
-    scrollbar-width:none;
+    flex-wrap:wrap;
+    width:100%;
 }
-.customer-quick-tools::-webkit-scrollbar { display:none; }
-.customer-tool-btn, .customer-sort-select {
-    flex:none;
-    border:1px solid var(--border-color);
-    background:rgba(15,23,42,.88);
-    color:#b8c4d8;
-    border-radius:10px;
-    min-height:38px;
-    padding:8px 11px;
-    font-size:11px;
-    font-weight:800;
-    cursor:pointer;
-}
-.customer-tool-btn.active {
-    color:#fff;
-    border-color:#20b987;
-    background:rgba(16,185,129,.14);
-}
-.customer-sort-select { outline:none; }
-.customer-search-wrap {
+.v12-search-wrap {
     position:relative;
     flex:1;
+    min-width:220px;
 }
-.customer-search-wrap .search-box { padding-right:42px; }
-.customer-clear-search {
+.v12-search-wrap .search-box {
+    width:100%;
+    box-sizing:border-box;
+    padding-right:42px;
+}
+.v12-clear {
+    display:none;
     position:absolute;
     right:9px;
     top:50%;
@@ -984,28 +970,37 @@
     height:28px;
     border:0;
     border-radius:50%;
-    background:rgba(148,163,184,.13);
-    color:#aeb9ca;
+    background:rgba(148,163,184,.15);
+    color:#cbd5e1;
+    font-size:18px;
     cursor:pointer;
-    display:none;
 }
-.customer-result-summary {
-    margin:7px 2px 10px;
+.v12-filter-btn, .v12-sort {
+    min-height:44px;
+    border:1px solid var(--border-color);
+    background:var(--bg-card);
+    color:#aebbd0;
+    border-radius:12px;
+    padding:0 13px;
+    font-weight:800;
+    cursor:pointer;
+}
+.v12-filter-btn.active {
+    background:rgba(16,185,129,.15);
+    border-color:#10b981;
+    color:#55e5b0;
+}
+.v12-result-count {
+    width:100%;
     color:var(--text-muted);
-    font-size:10.5px;
+    font-size:11px;
     font-weight:700;
+    margin-top:-7px;
 }
 @media (max-width:768px) {
-    .customer-quick-tools {
-        margin-top:7px;
-        padding-bottom:2px;
-    }
-    .customer-tool-btn, .customer-sort-select {
-        min-height:36px;
-        padding:7px 10px;
-        font-size:10px;
-    }
-    .customer-result-summary { margin-bottom:8px; }
+    .v12-tools { gap:7px; }
+    .v12-search-wrap { min-width:100%; }
+    .v12-filter-btn, .v12-sort { flex:1; min-height:40px; font-size:11px; padding:0 8px; }
 }
 
 </style>
@@ -1190,22 +1185,22 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         </div>
 
         <div class="controls-wrapper">
-            <div class="customer-search-wrap">
-                <input type="text" id="searchInput" class="search-box" placeholder="🔎 Cihaz veya model ara..." oninput="v12CustomerSearchChanged()">
-                <button id="customerClearSearch" class="customer-clear-search" type="button" onclick="clearCustomerSearch()">×</button>
+            <div class="v12-search-wrap">
+                <input type="text" id="searchInput" class="search-box" placeholder="🔎 Cihaz veya model ara..." oninput="v12SearchChanged()">
+                <button id="v12ClearSearch" class="v12-clear" type="button" onclick="v12ClearSearch()">×</button>
             </div>
             <button class="faq-open-btn" onclick="triggerHaptic(); openFaqModal()">❓ Sıkça Sorulan Sorular</button>
-            <div class="customer-quick-tools">
-                <button id="customerStockBtn" class="customer-tool-btn" type="button" onclick="toggleCustomerStock()">📦 Sadece stokta</button>
-                <button id="customerFavBtn" class="customer-tool-btn" type="button" onclick="toggleCustomerFavorites()">❤️ Favoriler</button>
-                <select id="customerSortSelect" class="customer-sort-select" onchange="changeCustomerSort(this.value)">
+            <div class="v12-tools">
+                <button id="v12StockBtn" class="v12-filter-btn" type="button" onclick="v12ToggleStock()">📦 Sadece stokta</button>
+                <button id="v12FavBtn" class="v12-filter-btn" type="button" onclick="v12ToggleFav()">❤️ Favoriler</button>
+                <select id="v12Sort" class="v12-sort" onchange="v12SetSort(this.value)">
                     <option value="recommended">⭐ Önerilen</option>
-                    <option value="priceAsc">💰 Fiyat: Düşük → Yüksek</option>
-                    <option value="priceDesc">💰 Fiyat: Yüksek → Düşük</option>
+                    <option value="priceAsc">💰 Ucuzdan pahalıya</option>
+                    <option value="priceDesc">💰 Pahalıdan ucuza</option>
                     <option value="nameAsc">🔤 A → Z</option>
                 </select>
+                <div id="v12ResultCount" class="v12-result-count"></div>
             </div>
-            <div id="customerResultSummary" class="customer-result-summary"></div>
         </div>
 
         <div class="table-wrapper desktop-table-view">
@@ -2420,13 +2415,14 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                         if (!matchStorage && !matchReg) return false;
                     }
                     if (showOnlyFavorites && !favoriteProductIds.has(p.id)) return false;
-                    if (customerOnlyStock && !customerHasStock(p)) return false;
+                    if (v12OnlyStock && !v12HasStock(p)) return false;
 
                     return p.model.toLowerCase().includes(searchFilter) || (p.storage && p.storage.toLowerCase().includes(searchFilter));
                 });
-                catProducts = customerSortProducts(catProducts);
 
                 if (catProducts.length === 0) return;
+
+                catProducts = v12SortProducts(catProducts);
 
                 let headerTr = document.createElement("tr");
                 headerTr.className = "category-row";
@@ -2726,12 +2722,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     saveQuickPriceEditor();
-                } else if (e.key 
-        document.addEventListener('DOMContentLoaded', () => {
-            const s = document.getElementById('searchInput');
-            if (s) s.addEventListener('input', v12CustomerSearchChanged);
-        });
-=== 'Escape') {
+                } else if (e.key === 'Escape') {
                     e.preventDefault();
                     closeQuickPriceEditor();
                 }
@@ -2739,85 +2730,101 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         });
 
 
-/* ================= V12 CUSTOMER FILTERS ================= */
-var customerOnlyStock = false;
-var customerSortMode = 'recommended';
+/* ================= V12 CUSTOMER FEATURES ================= */
+let v12OnlyStock = false;
+let v12SortMode = 'recommended';
 
-function customerHasStock(p) {
-    const s = String(p.stock || '').toUpperCase();
+function v12HasStock(p) {
+    const s = String(p.stock || '').trim().toLocaleUpperCase('tr-TR');
     if (!s) return true;
-    return !/(TÜKENDİ|YOK|BİTTİ|STOK YOK|SOLD)/.test(s);
+    return !/(TÜKENDİ|STOK YOK|YOK|BİTTİ)/.test(s);
 }
 
-function toggleCustomerStock() {
-    customerOnlyStock = !customerOnlyStock;
-    document.getElementById('customerStockBtn')?.classList.toggle('active', customerOnlyStock);
-    renderTable();
+function v12GetUsd(p) {
+    if (typeof getSaleUsd === 'function') return Number(getSaleUsd(p)) || 0;
+    return Number(p.saleUsd ?? p.usd) || 0;
 }
 
-function toggleCustomerFavorites() {
-    toggleFavoritesView();
-    document.getElementById('customerFavBtn')?.classList.toggle('active', showOnlyFavorites);
-}
-
-function changeCustomerSort(value) {
-    customerSortMode = value || 'recommended';
-    renderTable();
-}
-
-function v12CustomerSearchChanged() {
-    const input = document.getElementById('searchInput');
-    const clear = document.getElementById('customerClearSearch');
-    if (clear) clear.style.display = input?.value ? 'block' : 'none';
-    filterTable();
-}
-
-function clearCustomerSearch() {
-    const input = document.getElementById('searchInput');
-    if (!input) return;
-    input.value = '';
-    document.getElementById('customerClearSearch')?.style.setProperty('display','none');
-    input.focus();
-    filterTable();
-}
-
-function customerSortProducts(list) {
-    if (!customerSortMode) customerSortMode = 'recommended';
-    if (customerSortMode === 'priceAsc') {
-        return list.sort((a,b) => getSaleUsd(a) - getSaleUsd(b));
+function v12SortProducts(list) {
+    if (v12SortMode === 'priceAsc') {
+        return [...list].sort((a,b) => v12GetUsd(a) - v12GetUsd(b));
     }
-    if (customerSortMode === 'priceDesc') {
-        return list.sort((a,b) => getSaleUsd(b) - getSaleUsd(a));
+    if (v12SortMode === 'priceDesc') {
+        return [...list].sort((a,b) => v12GetUsd(b) - v12GetUsd(a));
     }
-    if (customerSortMode === 'nameAsc') {
-        return list.sort((a,b) => String(a.model||'').localeCompare(String(b.model||''), 'tr'));
+    if (v12SortMode === 'nameAsc') {
+        return [...list].sort((a,b) =>
+            String(a.model || '').localeCompare(String(b.model || ''), 'tr')
+        );
     }
     return list;
 }
 
-const v12RenderTableBase = renderTable;
+function v12ToggleStock() {
+    v12OnlyStock = !v12OnlyStock;
+    document.getElementById('v12StockBtn')?.classList.toggle('active', v12OnlyStock);
+    renderTable();
+}
+
+function v12ToggleFav() {
+    // V11'in zaten çalışan favori sistemini kullanıyoruz.
+    toggleFavoritesView();
+    document.getElementById('v12FavBtn')?.classList.toggle('active', showOnlyFavorites);
+}
+
+function v12SetSort(value) {
+    v12SortMode = value || 'recommended';
+    renderTable();
+}
+
+function v12SearchChanged() {
+    const input = document.getElementById('searchInput');
+    const clear = document.getElementById('v12ClearSearch');
+    if (clear) clear.style.display = input && input.value ? 'block' : 'none';
+    renderTable();
+}
+
+function v12ClearSearch() {
+    const input = document.getElementById('searchInput');
+    if (!input) return;
+    input.value = '';
+    const clear = document.getElementById('v12ClearSearch');
+    if (clear) clear.style.display = 'none';
+    renderTable();
+    input.focus();
+}
+
+function v12UpdateCount() {
+    const el = document.getElementById('v12ResultCount');
+    if (!el || !Array.isArray(products)) return;
+    const search = String(document.getElementById('searchInput')?.value || '')
+        .toLocaleLowerCase('tr-TR').trim();
+
+    let count = 0;
+    products.forEach(p => {
+        if (v12OnlyStock && !v12HasStock(p)) return;
+        if (showOnlyFavorites && !favoriteProductIds.has(p.id)) return;
+
+        const hay = `${p.model || ''} ${p.storage || ''} ${p.category || ''}`
+            .toLocaleLowerCase('tr-TR');
+        if (search && !hay.includes(search)) return;
+        count++;
+    });
+    el.textContent = `${count} ürün`;
+}
+
+/* renderTable'i değiştirmiyoruz; sadece sayaç güncelleniyor. */
+const v12OriginalFilterTable = filterTable;
+filterTable = function() {
+    v12OriginalFilterTable();
+    v12UpdateCount();
+};
+
+/* Mevcut renderTable fonksiyonunu güvenli biçimde sarıyoruz. */
+const v12OriginalRenderTable = renderTable;
 renderTable = function() {
-    // V11'in çizimini bozmadan önce filtre/sıralama değişkenlerini uygularız.
-    v12RenderTableBase();
-
-    const summary = document.getElementById('customerResultSummary');
-    if (summary) {
-        const search = String(document.getElementById('searchInput')?.value || '').trim();
-        let count = products.filter((p) => {
-            if (customerOnlyStock && !customerHasStock(p)) return false;
-            if (showOnlyFavorites && !favoriteProductIds.has(p.id)) return false;
-            if (search) {
-                const hay = `${p.model||''} ${p.storage||''} ${p.category||''}`.toLocaleLowerCase('tr-TR');
-                if (!hay.includes(search.toLocaleLowerCase('tr-TR'))) return false;
-            }
-            return true;
-        }).length;
-        summary.textContent = `${count} ürün gösteriliyor`;
-    }
-
-    // V11 render'ının ürettiği mobil/desktop listeyi sıralamak için
-    // DOM'u değil, görünür ürünlerin sırasını bir sonraki render öncesinde
-    // geçici olarak değiştirmiyoruz. Sıralama aşağıdaki yardımcı ile ayrıca uygulanıyor.
+    v12OriginalRenderTable();
+    v12UpdateCount();
 };
 
 </script>

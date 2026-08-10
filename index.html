@@ -601,6 +601,8 @@
             background: rgba(7, 9, 14, 0.9); border: 1px solid var(--border-color); color: white; border-radius: 8px; text-align: center; outline: none;
         }
         .inline-price-input {
+            box-sizing: border-box;
+            height: 34px;
             font-variant-numeric: tabular-nums;
             -webkit-user-select: text;
             user-select: text;
@@ -1851,37 +1853,38 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             input.dataset.beforeEdit = input.value;
             input.dataset.draftValue = input.value;
             input.dataset.dirty = '0';
-
-            // Eski değerin tamamını tek seferde seç.
-            try { input.select(); } catch (_) {}
-            requestAnimationFrame(() => {
-                if (document.activeElement === input) {
-                    try { input.select(); } catch (_) {}
-                }
-            });
         }
 
         function selectInlinePrice(input) {
             if (!input) return;
-            // Zaten odaktaysa ikinci dokunuşta da tüm değeri seç.
-            if (document.activeElement === input) {
+            // Sadece ilk tıklamada tüm değeri seç. Focus olduktan sonra tekrar
+            // select() çağırmıyoruz; böylece 1 yazınca seçim tekrar aktif kalmaz.
+            if (document.activeElement === input && input.dataset.hasEdited !== '1') {
                 try { input.select(); } catch (_) {}
+                input.dataset.hasEdited = '1';
+            }
+        }
+
+        function beginInlinePriceMouse(input, event) {
+            if (!input) return;
+            event.stopPropagation();
+            if (document.activeElement !== input) {
+                event.preventDefault();
+                input.focus({ preventScroll: true });
+                try { input.select(); } catch (_) {}
+                input.dataset.hasEdited = '1';
             }
         }
 
         function updateInlinePrice(idx, type, val, input) {
-            if (!isAdmin || !products[idx]) return;
+            if (!isAdmin || !products[idx] || !input) return;
 
-            // KRİTİK: Kullanıcı yazarken ürünü/state'i değiştirme, kaydetme veya renderTable()
-            // çağırma. Böylece her rakamda sayfa yeniden çizilip ekranın kayması engellenir.
-            const clean = sanitizeInlinePrice(val);
-            if (input && input.value !== clean) {
-                input.value = clean;
-            }
-            if (input) {
-                input.dataset.draftValue = clean;
-                input.dataset.dirty = '1';
-            }
+            // Yazarken input.value'ya ASLA tekrar değer basma.
+            // Önceki sürümdeki "sanitize + input.value =" işlemi bazı tarayıcılarda
+            // caret/seçim durumunu bozabiliyordu.
+            input.dataset.draftValue = String(val ?? '');
+            input.dataset.dirty = '1';
+            input.dataset.hasEdited = '1';
         }
 
         function finishInlinePrice(input) {
@@ -1906,6 +1909,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
             input.dataset.dirty = '0';
             input.dataset.draftValue = clean;
+            input.dataset.hasEdited = '0';
 
             // Önce düzenlemeyi bitir, sonra tabloyu tek sefer çiz.
             inlinePriceEditing = false;
@@ -2274,7 +2278,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                         <td class="price-display">${priceText}</td>
                         <td><span class="badge-green">${item.stock || "HAZIR STOK"}</span></td>
                         <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
-                        ${isAdmin ? `<td><input type="text" inputmode="decimal" autocomplete="off" enterkeyhint="next" class="usd-input inline-price-input" value="${costVal}" data-price-type="cost" data-index="${item.originalIndex}" onpointerdown="event.stopPropagation()" onclick="event.stopPropagation(); selectInlinePrice(this)" onfocus="prepareInlinePrice(this)" oninput="updateInlinePrice(${item.originalIndex}, 'cost', this.value, this)" onblur="finishInlinePrice(this)" onkeydown="handleInlinePriceKey(event, this)"></td><td><input type="text" inputmode="decimal" autocomplete="off" enterkeyhint="done" class="usd-input inline-price-input" value="${usdVal}" data-price-type="sale" data-index="${item.originalIndex}" onpointerdown="event.stopPropagation()" onclick="event.stopPropagation(); selectInlinePrice(this)" onfocus="prepareInlinePrice(this)" oninput="updateInlinePrice(${item.originalIndex}, 'sale', this.value, this)" onblur="finishInlinePrice(this)" onkeydown="handleInlinePriceKey(event, this)"></td><td class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal.toLocaleString('tr-TR')} $</td>` : ''}
+                        ${isAdmin ? `<td><input type="text" inputmode="decimal" autocomplete="off" enterkeyhint="next" class="usd-input inline-price-input" value="${costVal}" data-price-type="cost" data-index="${item.originalIndex}" onpointerdown="beginInlinePriceMouse(this, event)" onclick="event.stopPropagation()" onfocus="prepareInlinePrice(this)" oninput="updateInlinePrice(${item.originalIndex}, 'cost', this.value, this)" onblur="finishInlinePrice(this)" onkeydown="handleInlinePriceKey(event, this)"></td><td><input type="text" inputmode="decimal" autocomplete="off" enterkeyhint="done" class="usd-input inline-price-input" value="${usdVal}" data-price-type="sale" data-index="${item.originalIndex}" onpointerdown="beginInlinePriceMouse(this, event)" onclick="event.stopPropagation()" onfocus="prepareInlinePrice(this)" oninput="updateInlinePrice(${item.originalIndex}, 'sale', this.value, this)" onblur="finishInlinePrice(this)" onkeydown="handleInlinePriceKey(event, this)"></td><td class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal.toLocaleString('tr-TR')} $</td>` : ''}
                         ${isAdmin ? `<td><button class="admin-btn-danger" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Sil</button></td>` : ''}
                     `;
                     tbody.appendChild(tr);

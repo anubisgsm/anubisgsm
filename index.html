@@ -1726,6 +1726,239 @@
         }
 </style>
 
+
+<style id="anubis-header-no-overlap">
+/* ANUBIS GSM — header spacing / no-overlap refinement */
+header .header-content {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    gap: 28px !important;
+}
+header .logo-area {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    justify-content: flex-start !important;
+}
+header .logo-area > div {
+    min-width: 0 !important;
+}
+header .logo-area h1,
+header .logo-area .subtitle {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+header .header-right-area {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 305px !important;
+    max-width: 360px !important;
+}
+header .header-right-area .discount-pulse-btn,
+header .header-right-area .instagram-badge {
+    max-width: 100% !important;
+}
+
+@media (max-width: 900px) and (min-width: 769px) {
+    header { padding-left: 14px !important; padding-right: 14px !important; }
+    header .header-content { gap: 18px !important; }
+    header .header-right-area { min-width: 270px !important; }
+    header .logo-area img { width: 76px !important; height: 76px !important; }
+    header h1 { font-size: 27px !important; }
+    header p.subtitle { font-size: 11px !important; }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 10px 10px 12px !important;
+    }
+    header .header-content {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 10px !important;
+        width: 100% !important;
+    }
+    header .logo-area {
+        width: 100% !important;
+        min-width: 0 !important;
+        display: flex !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        margin: 0 !important;
+        gap: 10px !important;
+    }
+    header .logo-area > div {
+        min-width: 0 !important;
+        flex: 1 1 auto !important;
+    }
+    header .logo-area img {
+        flex: 0 0 auto !important;
+    }
+    header h1 {
+        max-width: 100% !important;
+    }
+    header p.subtitle {
+        max-width: 100% !important;
+    }
+    header .header-right-area {
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 7px !important;
+        align-items: stretch !important;
+    }
+    header .discount-pulse-btn,
+    header .instagram-badge {
+        width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+    }
+    header .top-tools-bar {
+        grid-column: 1 / -1 !important;
+        width: 100% !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 7px !important;
+        margin: 0 !important;
+    }
+    header .utility-btn {
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 420px) {
+    header .header-content { gap: 8px !important; }
+    header .logo-area { gap: 8px !important; }
+    header h1 { font-size: 18px !important; letter-spacing: 1.25px !important; }
+    header p.subtitle { font-size: 7.5px !important; letter-spacing: .75px !important; }
+    header .header-right-area { gap: 6px !important; }
+    header .discount-pulse-btn,
+    header .instagram-badge { font-size: 9px !important; padding: 8px 6px !important; }
+}
+
+@media (max-width: 340px) {
+    header .header-right-area {
+        grid-template-columns: 1fr !important;
+    }
+    header .top-tools-bar {
+        grid-column: auto !important;
+        grid-template-columns: 1fr 1fr !important;
+    }
+    header h1 { font-size: 16px !important; }
+}
+</style>
+
+
+<style id="anubis-mobile-header-final">
+/* Final mobile header: brand stays clear, actions move to their own row. */
+@media (max-width: 768px) {
+  header { padding: 10px 10px 12px !important; }
+  header .header-content {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 9px !important;
+    width: 100% !important;
+    align-items: stretch !important;
+  }
+  header .logo-area {
+    display: flex !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    justify-content: flex-start !important;
+    gap: 9px !important;
+  }
+  header .logo-area img {
+    width: 54px !important;
+    height: 54px !important;
+    flex: 0 0 54px !important;
+  }
+  header .logo-area > div {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    overflow: hidden !important;
+  }
+  header h1 {
+    font-size: 20px !important;
+    line-height: 1.05 !important;
+    letter-spacing: 1.35px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  header p.subtitle {
+    display: block !important;
+    margin-top: 4px !important;
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+    letter-spacing: .8px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  header p.slogan { display: none !important; }
+
+  /* All four actions get their own row, so they can never cover the brand. */
+  header .header-right-area {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    align-items: stretch !important;
+  }
+  header .discount-pulse-btn,
+  header .instagram-badge,
+  header .top-tools-bar,
+  header .utility-btn {
+    min-width: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  header .discount-pulse-btn,
+  header .instagram-badge {
+    min-height: 36px !important;
+    padding: 6px 4px !important;
+    border-radius: 10px !important;
+    font-size: 8.5px !important;
+    line-height: 1.05 !important;
+    justify-content: center !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+  header .instagram-badge { gap: 3px !important; }
+  header .instagram-badge svg { width: 13px !important; height: 13px !important; flex: 0 0 13px !important; }
+  header .top-tools-bar {
+    display: contents !important;
+  }
+  header .utility-btn {
+    min-height: 36px !important;
+    padding: 5px 3px !important;
+    border-radius: 10px !important;
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+    white-space: normal !important;
+  }
+}
+
+@media (max-width: 380px) {
+  header .logo-area img { width: 50px !important; height: 50px !important; flex-basis: 50px !important; }
+  header h1 { font-size: 18px !important; letter-spacing: 1.1px !important; }
+  header p.subtitle { font-size: 7.2px !important; letter-spacing: .55px !important; }
+  header .header-right-area { gap: 4px !important; }
+  header .discount-pulse-btn,
+  header .instagram-badge,
+  header .utility-btn { font-size: 7.5px !important; padding-left: 2px !important; padding-right: 2px !important; }
+}
+</style>
+
 </head>
 <body>
 

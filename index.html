@@ -1244,8 +1244,488 @@
 .product-edit-save{background:#10b981;color:#04130d}
 @media(max-width:700px){.product-edit-box{padding:15px;border-radius:17px}.product-edit-grid{grid-template-columns:1fr}.product-edit-full{grid-column:auto}.product-edit-actions{position:sticky;bottom:0;background:#0b111c;padding-top:8px}}
 
+
+
+        /* =========================================================
+           ANUBIS GSM — FINAL MOBILE RESPONSIVE PATCH
+           ========================================================= */
+        *, *::before, *::after { box-sizing: border-box; }
+        html { width:100%; max-width:100%; overflow-x:hidden; }
+        body { width:100%; max-width:100%; overflow-x:hidden; }
+
+        @media (max-width: 768px) {
+            header { padding: 14px 10px 16px !important; }
+            .header-content { width:100%; gap:12px !important; }
+            .logo-area { width:100%; gap:9px !important; margin:0 !important; }
+            .logo-area img { height:54px !important; max-width:62px; object-fit:contain; }
+            header h1 { font-size:22px !important; letter-spacing:1.5px !important; line-height:1.05; white-space:nowrap; }
+            header p.subtitle { font-size:9px !important; letter-spacing:1px !important; line-height:1.2; }
+            header p.slogan { font-size:8.5px !important; letter-spacing:0 !important; line-height:1.25; max-width:250px; }
+            .header-right-area { width:100% !important; align-items:stretch !important; gap:8px !important; }
+            .discount-pulse-btn, .instagram-badge { width:100%; justify-content:center; min-height:40px; padding:9px 12px !important; font-size:12px !important; }
+            .top-tools-bar { width:100%; display:grid !important; grid-template-columns:1fr 1fr; gap:7px !important; }
+            .utility-btn { width:100%; min-height:38px; padding:7px 8px !important; font-size:10px !important; }
+
+            .container { width:100%; max-width:100%; margin:10px auto !important; padding:0 10px !important; }
+            .admin-panel { padding:13px !important; border-radius:14px !important; overflow:hidden; }
+            .admin-panel > div { max-width:100%; }
+            .category-manager-list, .category-add-row { max-width:100%; }
+            .category-add-row { flex-direction:column; }
+            .category-add-row input, .category-add-row button { width:100%; min-height:42px; box-sizing:border-box; }
+
+            .rate-container { width:100%; box-sizing:border-box; }
+            .rate-box { min-width:0; flex-wrap:wrap; }
+            .rate-input { max-width:100%; }
+            .filter-tabs, .sub-filter-chips { width:100%; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+            .filter-tab, .sub-chip { flex:0 0 auto; }
+
+            .controls-wrapper { width:auto !important; max-width:none; }
+            .v12-search-wrap { width:100%; min-width:0 !important; position:relative; }
+            .v12-search-wrap .search-box { width:100% !important; padding-right:38px !important; }
+            .v12-tools { width:100%; min-width:0; display:grid !important; grid-template-columns:1fr 1fr; gap:7px !important; }
+            .v12-filter-btn, .v12-sort { width:100%; min-width:0 !important; }
+            .v12-result-count { grid-column:1 / -1; }
+
+            .m-card-header { width:100%; min-width:0; }
+            .m-card-title { min-width:0; overflow:hidden; text-overflow:ellipsis; }
+            .m-card-img { width:100%; max-width:100%; }
+            .m-card-details { width:100%; }
+            .m-detail-box { min-width:0; overflow:hidden; }
+            .m-detail-val { min-width:0; }
+            .m-card-footer, .mobile-price-row { width:100%; min-width:0; }
+            .m-price-wrap { min-width:0; }
+            .m-price { overflow-wrap:anywhere; }
+
+            .modal-overlay { padding:8px !important; align-items:center; }
+            .modal-card { width:100% !important; max-width:100% !important; max-height:calc(100dvh - 16px); border-radius:17px !important; }
+            .modal-header { padding:13px 15px !important; }
+            .modal-header h3 { font-size:15px !important; }
+            .close-btn { font-size:27px !important; min-width:36px; min-height:36px; }
+            .modal-body { padding:13px !important; font-size:13px !important; }
+            #faqModal .modal-body { max-height:calc(100dvh - 78px) !important; -webkit-overflow-scrolling:touch; }
+            #faqModal .modal-body > div > div { padding:12px !important; }
+            #faqModal p { font-size:12px !important; line-height:1.55 !important; overflow-wrap:anywhere; }
+            #faqModal span, #faqModal h4 { overflow-wrap:anywhere; }
+
+            .mobile-bottom-bar { padding-left:5px !important; padding-right:5px !important; }
+            .nav-bar-item { min-width:0 !important; flex:1 1 0; padding:2px 3px; }
+            .nav-bar-item svg { width:18px !important; height:18px !important; }
+            .nav-bar-item { font-size:9px !important; }
+            body { padding-bottom:82px !important; }
+        }
+
+        @media (max-width: 420px) {
+            header h1 { font-size:19px !important; }
+            header p.subtitle { font-size:8px !important; }
+            header p.slogan { font-size:7.8px !important; max-width:210px; }
+            .logo-area img { height:48px !important; max-width:55px; }
+            .mobile-welcome { padding:13px !important; }
+            .mobile-welcome h2 { font-size:18px !important; }
+            .m-card-img { height:160px !important; }
+            .m-card-details { grid-template-columns:1fr 1fr !important; }
+            .m-detail-val { font-size:11px !important; }
+            .m-price { font-size:20px !important; }
+        }
+
+        @media (max-width: 340px) {
+            .top-tools-bar { grid-template-columns:1fr !important; }
+            .logo-area { gap:6px !important; }
+            header h1 { font-size:17px !important; }
+            header p.slogan { display:none; }
+            .m-card-img { height:145px !important; }
+        }
+
 </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style id="anubis-logo-theme">
+    :root {
+        --bg-deep: #09070d;
+        --bg-card: rgba(27, 18, 35, 0.82);
+        --bg-glass: rgba(18, 12, 25, 0.94);
+        --primary-color: #19c7b5;
+        --primary-glow: rgba(25, 199, 181, 0.25);
+        --accent-gold: #f4c20d;
+        --accent-gold-glow: rgba(244, 194, 13, 0.42);
+        --text-main: #fffdf7;
+        --text-muted: #c9bdcf;
+        --border-color: rgba(244, 194, 13, 0.18);
+    }
+
+    body {
+        background-color: var(--bg-deep);
+        background-image:
+            radial-gradient(circle at 15% 12%, rgba(25, 199, 181, 0.14) 0%, transparent 38%),
+            radial-gradient(circle at 86% 18%, rgba(244, 194, 13, 0.13) 0%, transparent 35%),
+            radial-gradient(circle at 50% 88%, rgba(68, 35, 79, 0.18) 0%, transparent 48%);
+    }
+
+    .marquee-bar {
+        background: linear-gradient(90deg, #27142f, #f4c20d, #19c7b5, #f4c20d, #27142f);
+        background-size: 220% 100%;
+        color: #160d1b;
+    }
+
+    header {
+        background: linear-gradient(135deg, rgba(13, 8, 18, 0.97), rgba(40, 20, 48, 0.94));
+        border-bottom-color: var(--accent-gold);
+    }
+
+    .logo-area img {
+        height: 92px;
+        width: 92px;
+        object-fit: cover;
+        border-radius: 50%;
+        background: #fff;
+        border: 3px solid var(--accent-gold);
+        box-shadow: 0 0 0 5px rgba(25, 199, 181, 0.10), 0 0 28px var(--accent-gold-glow);
+        filter: none;
+    }
+
+    header h1 {
+        color: var(--accent-gold);
+        text-shadow: 0 2px 22px var(--accent-gold-glow);
+    }
+
+    header p.slogan {
+        color: var(--primary-color);
+        text-shadow: 0 0 12px var(--primary-glow);
+    }
+
+    .table-wrapper, .modal-card, .m-product-card, .mobile-welcome, .v14-deal-card, .glorious-card-content {
+        border-color: rgba(244, 194, 13, 0.18);
+    }
+
+    .filter-tab.active, .category.active, .faq-open-btn, .discount-pulse-btn,
+    .glorious-btn-primary, .m-order-btn, .order-btn-table, .v12-filter-btn.active {
+        border-color: var(--accent-gold);
+    }
+
+    .filter-tab.active, .category.active, .v12-filter-btn.active {
+        background: linear-gradient(135deg, rgba(244, 194, 13, 0.22), rgba(25, 199, 181, 0.12));
+        color: var(--accent-gold);
+    }
+
+    .search-box:focus-within {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .faq-open-btn, .glorious-btn-primary {
+        background: linear-gradient(135deg, #f4c20d, #d99d00);
+        color: #211023;
+    }
+
+    .utility-btn:hover, .admin-tool-btn:hover, .refresh-rate-btn:hover,
+    .quick-fill-btn:hover, .image-auto-btn:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    .mobile-bottom-bar {
+        border-top-color: rgba(244, 194, 13, 0.22);
+        background: rgba(12, 7, 17, 0.96);
+    }
+
+    .nav-bar-item.active { color: var(--accent-gold); }
+    .nav-bar-item:hover { color: var(--primary-color); }
+
+    @media (max-width: 768px) {
+        .logo-area img {
+            height: 62px !important;
+            width: 62px !important;
+            max-width: 62px !important;
+            border-width: 2px;
+            box-shadow: 0 0 0 3px rgba(25, 199, 181, 0.10), 0 0 18px var(--accent-gold-glow);
+        }
+    }
+
+    @media (max-width: 420px) {
+        .logo-area img {
+            height: 54px !important;
+            width: 54px !important;
+            max-width: 54px !important;
+        }
+    }
+
+
+        /* =========================================================
+           ANUBIS GSM — MOBILE HEADER & NAV PREMIUM REDESIGN
+           Logo palette: gold + deep purple + turquoise
+           ========================================================= */
+        :root {
+            --anubis-gold: #f4c20d;
+            --anubis-gold-soft: rgba(244,194,13,.16);
+            --anubis-purple: #2b1630;
+            --anubis-purple-deep: #100914;
+            --anubis-turquoise: #19c7b5;
+            --anubis-turquoise-soft: rgba(25,199,181,.14);
+        }
+
+        @media (max-width: 768px) {
+            /* Compact, premium mobile header */
+            .marquee-bar {
+                font-size: 9px !important;
+                letter-spacing: .45px !important;
+                padding: 6px 8px !important;
+                background: linear-gradient(90deg, #201025, #4a253e, #201025) !important;
+                color: #ffe37a !important;
+                box-shadow: 0 1px 12px rgba(0,0,0,.35) !important;
+            }
+
+            header {
+                padding: 10px 10px 11px !important;
+                background:
+                    radial-gradient(circle at 12% 50%, rgba(244,194,13,.10), transparent 32%),
+                    radial-gradient(circle at 88% 20%, rgba(25,199,181,.09), transparent 30%),
+                    linear-gradient(145deg, #0d0912 0%, #17101d 55%, #0c1115 100%) !important;
+                border-bottom: 1px solid rgba(244,194,13,.55) !important;
+                box-shadow: 0 10px 28px rgba(0,0,0,.55) !important;
+            }
+
+            .header-content {
+                display: grid !important;
+                grid-template-columns: minmax(0,1fr) auto !important;
+                gap: 9px !important;
+                width: 100% !important;
+                align-items: center !important;
+            }
+
+            .logo-area {
+                width: auto !important;
+                min-width: 0 !important;
+                justify-content: flex-start !important;
+                gap: 10px !important;
+                margin: 0 !important;
+                padding: 2px 0 !important;
+            }
+
+            .logo-area img {
+                flex: 0 0 auto !important;
+                width: 58px !important;
+                height: 58px !important;
+                max-width: 58px !important;
+                object-fit: cover !important;
+                border: 2px solid rgba(244,194,13,.9) !important;
+                border-radius: 50% !important;
+                background: #fff !important;
+                padding: 1px !important;
+                filter: none !important;
+                box-shadow: 0 0 0 3px rgba(244,194,13,.08), 0 0 18px rgba(244,194,13,.22) !important;
+            }
+
+            .logo-area > div {
+                min-width: 0 !important;
+                overflow: hidden !important;
+            }
+
+            header h1 {
+                font-size: 20px !important;
+                line-height: 1 !important;
+                letter-spacing: 1.7px !important;
+                color: #f7cb2e !important;
+                text-shadow: 0 0 16px rgba(244,194,13,.18) !important;
+                white-space: nowrap !important;
+            }
+
+            header p.subtitle {
+                margin-top: 4px !important;
+                font-size: 8px !important;
+                line-height: 1.15 !important;
+                letter-spacing: 1.05px !important;
+                color: #d6cfe0 !important;
+                white-space: nowrap !important;
+            }
+
+            header p.slogan {
+                display: none !important;
+            }
+
+            /* Right side: two compact action buttons instead of a tall stack */
+            .header-right-area {
+                width: auto !important;
+                min-width: 88px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 6px !important;
+            }
+
+            .discount-pulse-btn,
+            .instagram-badge {
+                width: auto !important;
+                min-width: 88px !important;
+                min-height: 34px !important;
+                justify-content: center !important;
+                padding: 7px 8px !important;
+                border-radius: 11px !important;
+                font-size: 9px !important;
+                line-height: 1.05 !important;
+                gap: 5px !important;
+                white-space: nowrap !important;
+            }
+
+            .discount-pulse-btn {
+                background: linear-gradient(135deg, #f8d34f, #e3a900) !important;
+                box-shadow: 0 5px 18px rgba(244,194,13,.18) !important;
+                animation: none !important;
+            }
+
+            .instagram-badge {
+                background: linear-gradient(135deg, #32153f, #55204e) !important;
+                border: 1px solid rgba(244,194,13,.22) !important;
+                box-shadow: none !important;
+            }
+            .instagram-badge svg { width: 14px !important; height: 14px !important; }
+
+            .top-tools-bar {
+                grid-column: 1 / -1 !important;
+                width: 100% !important;
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 6px !important;
+                padding-top: 1px !important;
+            }
+
+            .utility-btn {
+                width: 100% !important;
+                min-height: 34px !important;
+                padding: 6px 8px !important;
+                border-radius: 10px !important;
+                border: 1px solid rgba(255,255,255,.08) !important;
+                background: rgba(255,255,255,.045) !important;
+                color: #e9e3ee !important;
+                font-size: 9.5px !important;
+            }
+            .utility-btn:first-child { border-color: rgba(244,194,13,.18) !important; }
+            .utility-btn:last-child { border-color: rgba(25,199,181,.16) !important; }
+
+            /* Mobile welcome becomes a clean brand strip */
+            .mobile-welcome {
+                margin: 8px 10px 0 !important;
+                padding: 12px 13px !important;
+                border: 1px solid rgba(244,194,13,.13) !important;
+                border-radius: 15px !important;
+                background: linear-gradient(135deg, rgba(43,22,48,.72), rgba(12,22,24,.68)) !important;
+                box-shadow: 0 8px 22px rgba(0,0,0,.20) !important;
+            }
+            .mobile-welcome h2 { margin-bottom: 4px !important; }
+            .mobile-welcome h2 span { color: var(--anubis-gold) !important; }
+            .mobile-trust-row {
+                display: flex !important;
+                gap: 6px !important;
+                overflow-x: auto !important;
+                padding-bottom: 2px !important;
+                scrollbar-width: none !important;
+            }
+            .mobile-trust-row::-webkit-scrollbar { display:none !important; }
+            .mobile-trust-chip {
+                flex: 0 0 auto !important;
+                border-color: rgba(25,199,181,.18) !important;
+                background: rgba(25,199,181,.055) !important;
+            }
+
+            /* Premium bottom navigation */
+            body { padding-bottom: 76px !important; }
+            .mobile-bottom-bar {
+                left: 7px !important;
+                right: 7px !important;
+                bottom: 7px !important;
+                width: auto !important;
+                height: 62px !important;
+                padding: 5px 6px !important;
+                border: 1px solid rgba(244,194,13,.20) !important;
+                border-radius: 18px !important;
+                background: rgba(15,9,20,.94) !important;
+                backdrop-filter: blur(20px) saturate(1.2) !important;
+                -webkit-backdrop-filter: blur(20px) saturate(1.2) !important;
+                box-shadow: 0 10px 35px rgba(0,0,0,.60), 0 0 0 1px rgba(255,255,255,.025) inset !important;
+                justify-content: space-around !important;
+                gap: 3px !important;
+            }
+
+            .nav-bar-item {
+                position: relative !important;
+                min-width: 0 !important;
+                height: 52px !important;
+                flex: 1 1 0 !important;
+                justify-content: center !important;
+                padding: 5px 2px !important;
+                border-radius: 13px !important;
+                color: #918796 !important;
+                font-size: 9px !important;
+                font-weight: 800 !important;
+                letter-spacing: .1px !important;
+                gap: 3px !important;
+            }
+
+            .nav-bar-item svg {
+                width: 20px !important;
+                height: 20px !important;
+                transition: transform .2s ease !important;
+            }
+
+            .nav-bar-item.active {
+                color: var(--anubis-gold) !important;
+                background: linear-gradient(180deg, rgba(244,194,13,.13), rgba(244,194,13,.045)) !important;
+                box-shadow: inset 0 0 0 1px rgba(244,194,13,.10) !important;
+            }
+            .nav-bar-item.active::after {
+                content: '' !important;
+                position: absolute !important;
+                bottom: 3px !important;
+                left: 50% !important;
+                width: 18px !important;
+                height: 2px !important;
+                transform: translateX(-50%) !important;
+                border-radius: 10px !important;
+                background: var(--anubis-gold) !important;
+                box-shadow: 0 0 8px rgba(244,194,13,.55) !important;
+            }
+            .nav-bar-item:hover { color: var(--anubis-turquoise) !important; }
+            .nav-bar-item:active svg { transform: scale(.9) !important; }
+            .nav-bar-whatsapp {
+                color: #25d366 !important;
+                background: rgba(37,211,102,.045) !important;
+            }
+
+            /* Give the WhatsApp item a clearer action treatment */
+            .nav-bar-whatsapp::before {
+                content: '' !important;
+                position: absolute !important;
+                top: 7px !important;
+                right: calc(50% - 15px) !important;
+                width: 5px !important;
+                height: 5px !important;
+                border-radius: 50% !important;
+                background: #25d366 !important;
+                box-shadow: 0 0 7px rgba(37,211,102,.65) !important;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .logo-area img {
+                width: 52px !important;
+                height: 52px !important;
+                max-width: 52px !important;
+            }
+            header h1 { font-size: 18px !important; letter-spacing: 1.45px !important; }
+            header p.subtitle { font-size: 7.3px !important; letter-spacing: .85px !important; }
+            .header-right-area { min-width: 82px !important; }
+            .discount-pulse-btn, .instagram-badge { min-width: 82px !important; font-size: 8.5px !important; }
+            .mobile-bottom-bar { left: 5px !important; right: 5px !important; bottom: 5px !important; }
+        }
+
+        @media (max-width: 340px) {
+            .logo-area img { width: 48px !important; height: 48px !important; max-width: 48px !important; }
+            header h1 { font-size: 16px !important; }
+            .header-right-area { min-width: 76px !important; }
+            .discount-pulse-btn, .instagram-badge { min-width: 76px !important; font-size: 8px !important; }
+            .nav-bar-item { font-size: 8px !important; }
+            .nav-bar-item svg { width: 18px !important; height: 18px !important; }
+        }
+</style>
+
 </head>
 <body>
 
@@ -1586,17 +2066,66 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 <h3>❓ Sıkça Sorulan Sorular</h3>
                 <button class="close-btn" onclick="closeFaqModal()">&times;</button>
             </div>
-            <div class="modal-body">
-                <ul style="list-style:none; padding:0; margin:0;">
-                    <li style="margin-bottom:15px; border-bottom:1px solid var(--border-color); padding-bottom:12px;">
-                        <span style="font-weight:700; color:white; display:block; margin-bottom:4px;">• Satılan telefonlar kayıtlı mı?</span>
-                        <p style="color:var(--text-muted); margin:0; font-size:13px;">Cihazlarımızın çoğu yurt dışı ve kayıtsızdır ancak ilanlarda belirtilen modellerde farklılık gösterebilir.</p>
-                    </li>
-                </ul>
+            <div class="modal-body" style="max-height:75vh; overflow-y:auto;">
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
+                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Satılan telefonlar kayıtlı mı?</span>
+                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Hayır, tüm cihazlar yurt dışı ve kayıtsızdır. Ancak "Kayıtlı" olarak belirtilen modeller kayıtlı şekilde gönderilir.</p>
+                    </div>
+                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
+                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 IMEI kaydı yapıyor musunuz?</span>
+                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Evet, modele göre Dirençle, CPID ya da Server (Samsung) kaydı yapılabilir. Kayıt yöntemi ve ücreti ürün açıklamasında belirtilir. Dilerseniz kendi IMEI’nizi verebilirsiniz.</p>
+                    </div>
+                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
+                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Atılan IMEI’lerin garantisi var mı?</span>
+                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Atılan IMEI’ler garanti kapsamında değildir. Klona düşme/kopyalanma durumunda sorun uygun fiyatla uzaktan bağlantı yoluyla çözülebilir.</p>
+                    </div>
+                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
+                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Telefonlar orijinal mi?</span>
+                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Evet. Tüm cihazlarımız %100 orijinal, sıfır ve kullanılmamış ürünlerdir.</p>
+                    </div>
+                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
+                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 iPhone Değişim Cihazı Nedir?</span>
+                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Apple’ın garanti kapsamında arızalı cihazlar karşılığında verdiği yenilenmiş, sıfır ve kapalı kutulu cihazlardır.</p>
+                    </div>
+                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
+                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Şarj cihazı orijinal mi?</span>
+                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Kutu içeriğinde şarj cihazı varsa orijinal olarak, yoksa Xiaomi marka adaptörle gönderilir.</p>
+                    </div>
+                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
+                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Siparişim ne zaman kargoya verilir?</span>
+                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">EFT ödemesi mesai saatleri içinde yapıldıysa genellikle aynı gün kargoya verilir. Kargo alımı olmazsa gönderim ertesi güne kalabilir.</p>
+                    </div>
+                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
+                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Garanti var mı?</span>
+                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Cihazlarımız aksi belirtilmedikçe garanti kapsamında değildir. İlk kullanımda sorun yaşanırsa, video kayıtlı teslimatla ilk gün değişim sağlanır.</p>
+                    </div>
+                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
+                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Kargoda risk olursa ne olur?</span>
+                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Çalınma, kaybolma, el konulması gibi durumlar alıcı sorumluluğundadır. Teslim alırken mutlaka video ile kutu açılışı yapılmalıdır.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top:18px; padding:16px; border:1px solid var(--accent-gold); border-radius:14px; background:rgba(245,158,11,.055); box-shadow:0 0 18px rgba(245,158,11,.08);">
+                    <h4 style="font-size:16px; color:white; margin:0 0 14px;">📌 Kayıt Yöntemleri</h4>
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <div style="padding:12px; border-radius:10px; background:rgba(0,0,0,.16);">
+                            <span style="font-weight:700; color:white; display:block; margin-bottom:5px;">• Server Kaydı</span>
+                            <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Samsung cihazlara yazılımsal IMEI işlemi uygulanır. Hurda Samsung cihaz IMEI’si gereklidir. Kayıt sonrası oluşabilecek sorunların sorumluluğu kullanıcıya aittir.</p>
+                        </div>
+                        <div style="padding:12px; border-radius:10px; background:rgba(0,0,0,.16);">
+                            <span style="font-weight:700; color:white; display:block; margin-bottom:5px;">• Direnç Kaydı</span>
+                            <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Anakart üzerindeki direnç çipine işlem uygulanarak yapılan fiziksel kayıt yöntemidir.</p>
+                        </div>
+                        <div style="padding:12px; border-radius:10px; background:rgba(0,0,0,.16);">
+                            <span style="font-weight:700; color:white; display:block; margin-bottom:5px;">• CPID Kaydı</span>
+                            <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Xiaomi cihazlarda uygulanan tek SIM destekli yazılımsal kayıt yöntemidir. Uzaktan yapılır, cihaz sıfırlanır. Sadece 1 adet şahsi IMEI girilebilir.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
     <script>
         function triggerHaptic() {
             if (window.navigator && window.navigator.vibrate) {

@@ -2740,19 +2740,42 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
         let logoClickCount = 0;
         let logoClickTimer = null;
-        function handleLogoClick() {
+        async function handleLogoClick() {
             logoClickCount++;
             clearTimeout(logoClickTimer);
             logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 1000);
-            if (logoClickCount >= 4) {
-                logoClickCount = 0;
-                let pass = prompt("Yönetim Şifresi:");
-                if (pass === "anubis2026") {
-                    isAdmin = true;
-                    toggleAdminPanel(true);
-                    renderTable();
-                    alert("Yönetim Paneli Aktif Edildi!");
+            if (logoClickCount < 4) return;
+            logoClickCount = 0;
+
+            const email = prompt("Admin e-posta adresi:");
+            if (!email) return;
+            const password = prompt("Admin şifresi:");
+            if (!password) return;
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email: email.trim(), password });
+                if (error) throw error;
+                if (!data?.user) throw new Error("Supabase kullanıcı oturumu oluşturulamadı.");
+
+                const { data: profile, error: profileError } = await supabaseClient
+                    .from('profiles')
+                    .select('role, display_name')
+                    .eq('id', data.user.id)
+                    .maybeSingle();
+                if (profileError) throw profileError;
+                if (profile?.role !== 'admin') {
+                    await supabaseClient.auth.signOut();
+                    throw new Error("Bu hesap admin yetkisine sahip değil.");
                 }
+
+                isAdmin = true;
+                toggleAdminPanel(true);
+                renderTable();
+                await loadProductsFromCloud(false);
+                showToast("Yönetim paneli aktif • Supabase admin oturumu açıldı ✅");
+            } catch (err) {
+                isAdmin = false;
+                alert("Admin girişi başarısız: " + (err.message || err));
             }
         }
 

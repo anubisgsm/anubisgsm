@@ -3646,7 +3646,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                             ${isAdmin ? `<select class="admin-category-select" onclick="event.stopPropagation()" onchange="moveProductCategory(${item.originalIndex}, this.value)">${categoryOrder.map(c => `<option value="${c}" ${c === (item.category || 'DİĞER').toUpperCase() ? 'selected' : ''}>${c}</option>`).join('')}</select>` : ''}
                         </td>
                         <td>${item.storage || "-"}</td>
-                        <td class="registration-status-cell">${isAdmin ? `<button type="button" class="main-reg-toggle ${isRegistrationEnabled(item) ? 'registered' : 'unregistered'}" onclick="toggleProductRegistrationFromMain(${item.originalIndex}, event)">${isRegistrationEnabled(item) ? '🟢 Kayıt Oluyor' : '🔴 Kayıt Olmuyor'}</button>` : `<span class="customer-reg-placeholder">${isRegistrationEnabled(item) ? 'Kayıt oluyor' : 'Kayıt olmuyor'}</span>`}</td>
+                        <td class="registration-status-cell">${isAdmin ? `<button type="button" class="main-reg-toggle ${isRegistrationEnabled(item) ? 'registered' : 'unregistered'}" onclick="toggleProductRegistrationFromMain(${item.originalIndex}, event)">${isRegistrationEnabled(item) ? '🟢 Kayıt Oluyor' : '🔴 Kayıt Olmuyor'}</button>` : `<span class="customer-reg-placeholder ${isRegistrationEnabled(item) ? 'reg-yes' : 'reg-no'}">${isRegistrationEnabled(item) ? '🟢 Kayıt Oluyor' : '🔴 Kayıt Olmuyor'}</span>`}</td>
                         <td>${registrationPriceStack(item, rate)}</td>
                         <td class="price-display">${registrationTlStack(item, rate)}</td>
                         <td><span class="badge-green">${item.stock || "HAZIR STOK"}</span></td>
@@ -3664,7 +3664,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                         <div class="m-card-header">
                             <div style="min-width:0;display:flex;flex-direction:column;gap:6px;">
                                 <h4 class="m-card-title">${item.model}</h4>
-                                ${isAdmin ? `<button type="button" class="main-reg-toggle ${isRegistrationEnabled(item) ? 'registered' : 'unregistered'} main-reg-toggle-mobile" onclick="toggleProductRegistrationFromMain(${item.originalIndex}, event)">${isRegistrationEnabled(item) ? '🟢 Kayıt Oluyor' : '🔴 Kayıt Olmuyor'}</button>` : ''}
+                                ${isAdmin ? `<button type="button" class="main-reg-toggle ${isRegistrationEnabled(item) ? 'registered' : 'unregistered'} main-reg-toggle-mobile" onclick="toggleProductRegistrationFromMain(${item.originalIndex}, event)">${isRegistrationEnabled(item) ? '🟢 Kayıt Oluyor' : '🔴 Kayıt Olmuyor'}</button>` : `<span class="customer-reg-placeholder ${isRegistrationEnabled(item) ? 'reg-yes' : 'reg-no'} main-reg-toggle-mobile">${isRegistrationEnabled(item) ? '🟢 Kayıt Oluyor' : '🔴 Kayıt Olmuyor'}</span>`}
                             </div>
                             <div style="display:flex;align-items:center;gap:7px;">
                                 <span class="badge-green">${item.stock || "HAZIR STOK"}</span>
@@ -3679,10 +3679,6 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                             <div class="m-detail-box">
                                 <div class="m-detail-label">Hafıza</div>
                                 <div class="m-detail-val">${item.storage || "-"}</div>
-                            </div>
-                            <div class="m-detail-box">
-                                <div class="m-detail-label">Kayıt</div>
-                                <div class="m-detail-val" style="color:var(--accent-gold); font-size:11px;">${item.reg || "KAYITSIZ"}</div>
                             </div>
                         </div>
                         <div class="m-card-footer">
@@ -4644,7 +4640,7 @@ window.addEventListener('beforeunload',()=>{if(anubisChatChannel)supabaseClient.
 
   window.selectProductRegistration=function(type){if(!activeDetailItem)return;if(type==='registered'&&!isRegistrationEnabled(activeDetailItem))return;activeDetailItem._selectedRegistration=type==='registered'?'registered':'unregistered';document.querySelectorAll('#modalRegistrationChoice .reg-choice-btn').forEach(b=>b.classList.remove('active'));document.querySelector(`#modalRegistrationChoice .reg-choice-btn.${activeDetailItem._selectedRegistration}`)?.classList.add('active');updateModalRegistrationPrice();};
   window.updateModalRegistrationPrice=function(){if(!activeDetailItem)return;const rate=num(document.getElementById('dollarRate')?.value)||43.169,u=getSaleUsd(activeDetailItem),r=getRegisteredUsd(activeDetailItem),reg=isRegistrationEnabled(activeDetailItem)&&activeDetailItem._selectedRegistration==='registered',usd=reg?r:u,tl=usd*rate;document.getElementById('modalProductPrice').textContent=formatTlDisplay(tl,rate);const lab=document.getElementById('modalSelectedRegistrationLabel');if(lab){lab.textContent=reg?'Kayıtlı fiyat':'Kayıtsız fiyat';lab.style.color=reg?'#22c55e':'#fb923c';}const wa=document.getElementById('modalWhatsAppBtn');if(wa){const txt=`Merhaba, ${activeDetailItem.model} (${activeDetailItem.storage}) sipariş vermek istiyorum. Tercihim: ${reg?'KAYITLI':'KAYITSIZ'}. Fiyat: ${formatUsdDisplay(usd)} / ${formatTlDisplay(tl,rate)}`;wa.href='https://wa.me/905345513747?text='+encodeURIComponent(txt);}};
-  window.openProductModal=function(item){activeDetailItem=item;item._selectedRegistration='unregistered';document.getElementById('modalProductTitle').textContent=item.model;document.getElementById('modalProductDesc').textContent=item.desc||'ANUBIS GSM güvencesiyle yüksek kaliteli teknoloji ürünü.';document.getElementById('modalProductStorage').textContent=item.storage||'-';document.getElementById('modalProductReg').closest('.glorious-info-box')?.remove();document.getElementById('modalProductUsd').textContent=isRegistrationEnabled(item)?`Kayıtsız: ${formatUsdDisplay(getSaleUsd(item))} • Kayıtlı: ${formatUsdDisplay(getRegisteredUsd(item))}`:`Kayıtsız: ${formatUsdDisplay(getSaleUsd(item))}`;document.getElementById('modalProductStock').textContent=item.stock||'HAZIR STOK';const img=document.getElementById('modalImgContainer');img.innerHTML=item.image?`<img src="${item.image}" alt="${item.model}">`:`<span style="color:var(--text-muted);font-size:13px">Görsel Bulunmuyor</span>`;const choice=document.getElementById('modalRegistrationChoice'),label=document.querySelector('.glorious-price-box > span');if(choice){if(!isRegistrationEnabled(item)){choice.innerHTML=`<div class="single-price-modal"><span class="single-price-tag" style="color:#fb923c">KAYITSIZ</span><strong>${formatUsdDisplay(getSaleUsd(item))}</strong></div>`;if(label)label.textContent='Fiyat';}else{choice.innerHTML=`<button type="button" class="reg-choice-btn unregistered active" onclick="selectProductRegistration('unregistered')"><span class="reg-choice-title">KAYITSIZ</span><span class="reg-choice-price">${formatUsdDisplay(getSaleUsd(item))}</span></button><button type="button" class="reg-choice-btn registered" onclick="selectProductRegistration('registered')"><span class="reg-choice-title">KAYITLI</span><span class="reg-choice-price">${formatUsdDisplay(getRegisteredUsd(item))}</span></button>`;if(label)label.textContent='Kayıt Seçimi';}}updateModalRegistrationPrice();const fav=document.getElementById('modalFavoriteBtn');if(fav){fav.style.display=isAdmin?'none':'block';fav.textContent=isFavorite(item.id)?'♥ Favoride':'♡ Favori';}document.getElementById('productDetailModal').style.display='flex';};
+  window.openProductModal=function(item){activeDetailItem=item;item._selectedRegistration='unregistered';document.getElementById('modalProductTitle').textContent=item.model;document.getElementById('modalProductDesc').textContent=item.desc||'ANUBIS GSM güvencesiyle yüksek kaliteli teknoloji ürünü.';document.getElementById('modalProductStorage').textContent=item.storage||'-';const modalRegBox = document.getElementById('modalProductReg')?.closest('.glorious-info-box'); if(modalRegBox) modalRegBox.style.display='none';document.getElementById('modalProductUsd').textContent=isRegistrationEnabled(item)?`Kayıtsız: ${formatUsdDisplay(getSaleUsd(item))} • Kayıtlı: ${formatUsdDisplay(getRegisteredUsd(item))}`:`Kayıtsız: ${formatUsdDisplay(getSaleUsd(item))}`;document.getElementById('modalProductStock').textContent=item.stock||'HAZIR STOK';const img=document.getElementById('modalImgContainer');img.innerHTML=item.image?`<img src="${item.image}" alt="${item.model}">`:`<span style="color:var(--text-muted);font-size:13px">Görsel Bulunmuyor</span>`;const choice=document.getElementById('modalRegistrationChoice'),label=document.querySelector('.glorious-price-box > span');if(choice){if(!isRegistrationEnabled(item)){choice.innerHTML=`<div class="single-price-modal"><span class="single-price-tag" style="color:#fb923c">KAYITSIZ</span><strong>${formatUsdDisplay(getSaleUsd(item))}</strong></div>`;if(label)label.textContent='Fiyat';}else{choice.innerHTML=`<button type="button" class="reg-choice-btn unregistered active" onclick="selectProductRegistration('unregistered')"><span class="reg-choice-title">KAYITSIZ</span><span class="reg-choice-price">${formatUsdDisplay(getSaleUsd(item))}</span></button><button type="button" class="reg-choice-btn registered" onclick="selectProductRegistration('registered')"><span class="reg-choice-title">KAYITLI</span><span class="reg-choice-price">${formatUsdDisplay(getRegisteredUsd(item))}</span></button>`;if(label)label.textContent='Kayıt Seçimi';}}updateModalRegistrationPrice();const fav=document.getElementById('modalFavoriteBtn');if(fav){fav.style.display=isAdmin?'none':'block';fav.textContent=isFavorite(item.id)?'♥ Favoride':'♡ Favori';}document.getElementById('productDetailModal').style.display='flex';};
   window.copyModalDetails=function(){if(!activeDetailItem)return;const rate=num(document.getElementById('dollarRate')?.value)||43.169,u=getSaleUsd(activeDetailItem),r=getRegisteredUsd(activeDetailItem),reg=isRegistrationEnabled(activeDetailItem)&&activeDetailItem._selectedRegistration==='registered',usd=reg?r:u,txt=`Ürün: ${activeDetailItem.model}\nHafıza: ${activeDetailItem.storage}\nKayıt tercihi: ${reg?'KAYITLI':'KAYITSIZ'}\nKayıtsız fiyat: ${formatUsdDisplay(u)}${isRegistrationEnabled(activeDetailItem)?`\nKayıtlı fiyat: ${formatUsdDisplay(r)}`:''}\nSeçilen fiyat: ${formatUsdDisplay(usd)} / ${formatTlDisplay(usd*rate,rate)}\nStok: ${activeDetailItem.stock}`;navigator.clipboard.writeText(txt).then(()=>showToast('Ürün bilgileri panoya kopyalandı! 📋'));};
 
   function migrateLocalData(){
@@ -5056,8 +5052,10 @@ body.anubis-light-theme .currency-picker option{background:#fff;color:#172033}
 /* Ana ekran kayıt durumu: admin için net, müşteri tarafında görünmez. */
 .anubis-admin-mode .registration-status-cell{display:table-cell!important;min-width:145px;text-align:center}
 .anubis-admin-mode .main-reg-toggle{width:100%;max-width:145px;margin:0 auto;min-height:38px;padding:8px 10px;border-radius:10px;font-size:10px;line-height:1.15}
-.anubis-customer-mode .registration-status-cell{display:none!important}
-.customer-reg-placeholder{display:none}
+.anubis-customer-mode .registration-status-cell{display:table-cell!important;min-width:145px;text-align:center}
+.customer-reg-placeholder{display:inline-flex;align-items:center;justify-content:center;min-width:120px;min-height:38px;box-sizing:border-box;padding:8px 10px;border-radius:10px;font-size:10.5px;font-weight:950;line-height:1.15;text-align:center}
+.customer-reg-placeholder.reg-yes{color:#22c55e;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.34)}
+.customer-reg-placeholder.reg-no{color:#ef4444;background:rgba(239,68,68,.10);border:1px solid rgba(239,68,68,.34)}
 @media (min-width:769px){
   .anubis-admin-mode #tableHeaderRow th:nth-child(4){display:table-cell!important;text-align:center}
   .anubis-admin-mode #tableHeaderRow th:nth-child(4){font-size:10px;letter-spacing:.8px}
@@ -5237,5 +5235,17 @@ body.anubis-light-theme .currency-picker option{background:#fff;color:#172033}
 })();
 </script>
 
+
+<style id="anubis-final-ui-polish-v20">
+.anubis-customer-mode #tableHeaderRow th:nth-child(4),
+.anubis-admin-mode #tableHeaderRow th:nth-child(4){display:table-cell!important;text-align:center}
+.registration-status-cell{vertical-align:middle;white-space:nowrap}
+@media(max-width:768px){
+  .customer-reg-placeholder.main-reg-toggle-mobile{width:100%;max-width:none;min-width:0;min-height:42px;margin-top:0}
+  .main-reg-toggle-mobile{width:100%;box-sizing:border-box}
+  .m-card-header{align-items:flex-start!important}
+  .m-product-card{cursor:pointer}
+}
+</style>
 </body>
 </html>

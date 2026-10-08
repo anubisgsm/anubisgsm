@@ -3617,7 +3617,13 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                             </div>
                             ${isAdmin ? `<button class="admin-img-upload-btn" style="margin-top:4px;" onclick="event.stopPropagation(); openImageEditModal(${item.originalIndex})">Resim Ekle</button><button class="image-auto-btn" onclick="event.stopPropagation(); openImageSearchModal(${item.originalIndex})">🌐 Görsel Ara</button>` : ''}
                         </td>
-                        <td style="font-weight:600;">${item.model}${isAdmin ? `<select class="admin-category-select" onclick="event.stopPropagation()" onchange="moveProductCategory(${item.originalIndex}, this.value)">${categoryOrder.map(c => `<option value="${c}" ${c === (item.category || 'DİĞER').toUpperCase() ? 'selected' : ''}>${c}</option>`).join('')}</select>` : ''}</td>
+                        <td style="font-weight:600;">
+                            ${item.model}
+                            ${isAdmin ? `<select class="admin-category-select" onclick="event.stopPropagation()" onchange="moveProductCategory(${item.originalIndex}, this.value)">${categoryOrder.map(c => `<option value="${c}" ${c === (item.category || 'DİĞER').toUpperCase() ? 'selected' : ''}>${c}</option>`).join('')}</select>
+                            <button type="button" class="main-reg-toggle ${isRegistrationEnabled(item) ? 'registered' : 'unregistered'}" onclick="toggleProductRegistrationFromMain(${item.originalIndex}, event)">
+                                ${isRegistrationEnabled(item) ? '🟢 Kayıtlı' : '🔴 Kayıtsız'}
+                            </button>` : ''}
+                        </td>
                         <td>${item.storage || "-"}</td>
                         <td><span class="badge-orange">${item.reg || "KAYITSIZ"}</span></td>
                         <td>${registrationPriceStack(item, rate)}</td>
@@ -3634,7 +3640,10 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                     card.onclick = () => { triggerHaptic(); openProductModal(item); };
                     card.innerHTML = `
                         <div class="m-card-header">
-                            <h4 class="m-card-title">${item.model}</h4>
+                            <div style="min-width:0;display:flex;flex-direction:column;gap:6px;">
+                                <h4 class="m-card-title">${item.model}</h4>
+                                ${isAdmin ? `<button type="button" class="main-reg-toggle ${isRegistrationEnabled(item) ? 'registered' : 'unregistered'} main-reg-toggle-mobile" onclick="toggleProductRegistrationFromMain(${item.originalIndex}, event)">${isRegistrationEnabled(item) ? '🟢 Kayıtlı' : '🔴 Kayıtsız'}</button>` : ''}
+                            </div>
                             <div style="display:flex;align-items:center;gap:7px;">
                                 <span class="badge-green">${item.stock || "HAZIR STOK"}</span>
                                 ${!isAdmin ? `<button class="favorite-btn ${isFavorite(item.id) ? 'active' : ''}" aria-label="Favori" onclick="toggleFavorite('${item.id}', event)">${isFavorite(item.id) ? '♥' : '♡'}</button>` : ''}
@@ -4962,6 +4971,61 @@ body.anubis-light-theme .currency-picker option{background:#fff;color:#172033}
   });
   window.addEventListener('load',()=>{setTimeout(v18CleanupAdminForm,120);setTimeout(v18RestyleRegistrationButtons,260);});
   setInterval(v18FetchRates,30*60*1000);
+})();
+</script>
+
+
+<style id="anubis-main-registration-toggle">
+.main-reg-toggle{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    min-width:104px;
+    margin-top:6px;
+    padding:7px 10px;
+    border-radius:9px;
+    font-size:10.5px;
+    line-height:1;
+    font-weight:950;
+    letter-spacing:.15px;
+    cursor:pointer;
+    transition:all .16s ease;
+}
+.main-reg-toggle.registered{
+    background:rgba(34,197,94,.11);
+    color:#22c55e;
+    border:1px solid rgba(34,197,94,.42);
+    box-shadow:0 0 0 1px rgba(34,197,94,.03);
+}
+.main-reg-toggle.unregistered{
+    background:rgba(239,68,68,.11);
+    color:#ef4444;
+    border:1px solid rgba(239,68,68,.42);
+    box-shadow:0 0 0 1px rgba(239,68,68,.03);
+}
+.main-reg-toggle:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.main-reg-toggle:active{transform:scale(.97)}
+.main-reg-toggle-mobile{width:auto;min-width:94px;margin-top:0;padding:6px 9px;font-size:10px}
+@media(max-width:768px){
+    .main-reg-toggle-mobile{align-self:flex-start}
+}
+</style>
+<script>
+(function(){
+    window.toggleProductRegistrationFromMain = function(idx, event){
+        if(event){event.preventDefault();event.stopPropagation();}
+        if(typeof isAdmin === 'undefined' || !isAdmin || !Array.isArray(products) || !products[idx]) return;
+        const current = !!products[idx].registrationEnabled;
+        products[idx] = normalizeProduct({
+            ...products[idx],
+            registrationEnabled: !current
+        });
+        if(typeof saveToStorage === 'function') saveToStorage();
+        if(typeof renderTable === 'function') renderTable();
+        if(typeof triggerHaptic === 'function') triggerHaptic();
+        if(typeof showToast === 'function') showToast(current ? '🔴 Kayıtsız olarak değiştirildi.' : '🟢 Kayıtlı olarak değiştirildi.');
+    };
 })();
 </script>
 

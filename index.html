@@ -1959,6 +1959,63 @@ header .header-right-area .instagram-badge {
 }
 </style>
 
+
+<style id="anubis-theme-toggle-fix">
+body.anubis-light-theme{--bg-deep:#f4f1f7;--bg-card:rgba(255,255,255,.94);--bg-glass:rgba(255,255,255,.97);--text-main:#21172a;--text-muted:#62556b;--border-color:rgba(73,43,84,.16);background-color:var(--bg-deep)!important;background-image:radial-gradient(circle at 15% 12%,rgba(25,199,181,.10),transparent 38%),radial-gradient(circle at 86% 18%,rgba(244,194,13,.12),transparent 35%),radial-gradient(circle at 50% 88%,rgba(111,62,130,.08),transparent 48%)!important;color:var(--text-main)!important}
+body.anubis-light-theme header{background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(246,239,249,.98))!important;color:#21172a!important}
+body.anubis-light-theme header h1,body.anubis-light-theme header p,body.anubis-light-theme .mobile-welcome h2,body.anubis-light-theme .mobile-welcome p,body.anubis-light-theme .product-card h3,body.anubis-light-theme .product-card .product-name,body.anubis-light-theme .modal-card h3,body.anubis-light-theme .modal-card h4,body.anubis-light-theme .filter-tab,body.anubis-light-theme label{color:#21172a!important}
+body.anubis-light-theme .product-card,body.anubis-light-theme .modal-card,body.anubis-light-theme .admin-panel,body.anubis-light-theme .search-box,body.anubis-light-theme .filter-bar,body.anubis-light-theme .glorious-info-box,body.anubis-light-theme .mobile-welcome{background-color:rgba(255,255,255,.90)!important;color:#21172a;border-color:rgba(73,43,84,.14)!important}
+body.anubis-light-theme input,body.anubis-light-theme textarea,body.anubis-light-theme select{background:#fff!important;color:#21172a!important;border-color:rgba(73,43,84,.18)!important}
+body.anubis-light-theme .utility-btn,body.anubis-light-theme .filter-tab{background:rgba(73,43,84,.06)!important;color:#21172a!important;border-color:rgba(73,43,84,.15)!important}
+body.anubis-light-theme .filter-tab.active{background:rgba(25,199,181,.14)!important}
+body.anubis-light-theme .mobile-bottom-bar{background:rgba(255,255,255,.97)!important;border-color:rgba(73,43,84,.15)!important}
+body.anubis-light-theme .nav-bar-item{color:#4c3a55!important}.theme-toggle-icon{display:inline-block;margin-right:5px}
+</style>
+
+<style id="anubis-live-chat-css">
+.anubis-chat-fab{position:fixed;right:20px;bottom:22px;z-index:9997;border:0;border-radius:999px;padding:13px 18px;background:linear-gradient(135deg,#19c7b5,#0ea5e9);color:#031313;font-weight:950;box-shadow:0 10px 35px rgba(25,199,181,.35);cursor:pointer;display:flex;align-items:center;gap:8px;font-size:13px}.anubis-chat-fab:hover{transform:translateY(-2px)}
+.anubis-chat-badge{min-width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 12px #22c55e}
+.anubis-chat-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);z-index:9998;align-items:flex-end;justify-content:flex-end;padding:22px}.anubis-chat-overlay.show{display:flex}
+.anubis-chat-window{width:min(390px,calc(100vw - 24px));height:min(650px,calc(100vh - 44px));background:var(--bg-card,#0d1420);border:1px solid var(--border-color,#29364a);border-radius:20px;overflow:hidden;box-shadow:0 25px 80px rgba(0,0,0,.55);display:flex;flex-direction:column}
+.anubis-chat-head{padding:15px 16px;background:linear-gradient(135deg,rgba(25,199,181,.18),rgba(244,194,13,.08));border-bottom:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between}.anubis-chat-head strong{font-size:15px;color:var(--text-main)}.anubis-chat-head small{display:block;color:var(--text-muted);font-size:10px;margin-top:3px}.anubis-chat-close{border:0;background:rgba(255,255,255,.08);color:var(--text-main);border-radius:9px;width:32px;height:32px;cursor:pointer}
+.anubis-chat-messages{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:8px}.anubis-chat-empty{margin:auto;text-align:center;color:var(--text-muted);font-size:12px;line-height:1.6}.anubis-chat-msg{max-width:82%;padding:9px 11px;border-radius:13px;font-size:12px;line-height:1.45;white-space:pre-wrap;word-break:break-word}.anubis-chat-msg.customer{align-self:flex-end;background:rgba(25,199,181,.18);border:1px solid rgba(25,199,181,.35);color:var(--text-main)}.anubis-chat-msg.admin{align-self:flex-start;background:rgba(148,163,184,.12);border:1px solid var(--border-color);color:var(--text-main)}.anubis-chat-msg time{display:block;font-size:8px;color:var(--text-muted);margin-top:4px}
+.anubis-chat-start{padding:15px;border-top:1px solid var(--border-color)}.anubis-chat-start input,.anubis-chat-start textarea,.anubis-chat-admin-login input{width:100%;box-sizing:border-box;background:rgba(7,9,14,.72);color:var(--text-main);border:1px solid var(--border-color);border-radius:10px;padding:10px;font-size:12px;outline:none;margin-bottom:8px}.anubis-chat-start textarea{height:72px;resize:none}.anubis-chat-start input:focus,.anubis-chat-start textarea:focus,.anubis-chat-admin-login input:focus{border-color:var(--primary-color)}.anubis-chat-send{width:100%;border:0;border-radius:10px;padding:11px;background:linear-gradient(135deg,#f4c20d,#d99d00);color:#07090e;font-weight:950;cursor:pointer}.anubis-chat-note{font-size:9px;color:var(--text-muted);margin-top:7px;text-align:center}
+.anubis-chat-admin-box{margin-top:15px;border:1px solid rgba(25,199,181,.35);border-radius:14px;padding:13px;background:rgba(25,199,181,.045)}.anubis-chat-admin-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.anubis-chat-admin-title strong{color:var(--primary-color);font-size:13px}.anubis-chat-admin-login{display:grid;grid-template-columns:1fr 1fr;gap:7px}.anubis-chat-admin-login input{margin:0}.anubis-chat-admin-login button{grid-column:1/-1;border:0;border-radius:9px;padding:10px;background:#19c7b5;color:#031313;font-weight:900;cursor:pointer}.anubis-chat-admin-status{font-size:10px;color:var(--text-muted);margin-top:7px}.anubis-chat-admin-grid{display:grid;grid-template-columns:145px 1fr;gap:10px;min-height:280px}.anubis-chat-list{border:1px solid var(--border-color);border-radius:10px;overflow:auto;background:rgba(7,9,14,.35)}.anubis-chat-conv{padding:9px;border-bottom:1px solid var(--border-color);cursor:pointer;font-size:10px}.anubis-chat-conv:hover,.anubis-chat-conv.active{background:rgba(25,199,181,.1)}.anubis-chat-conv b{display:block;color:var(--text-main);font-size:10px}.anubis-chat-conv span{display:block;color:var(--text-muted);margin-top:3px}.anubis-admin-chat-window{border:1px solid var(--border-color);border-radius:10px;display:flex;flex-direction:column;min-width:0}.anubis-admin-chat-messages{flex:1;min-height:180px;overflow:auto;padding:9px;display:flex;flex-direction:column;gap:6px}.anubis-admin-chat-compose{display:flex;gap:6px;padding:8px;border-top:1px solid var(--border-color)}.anubis-admin-chat-compose input{margin:0!important}.anubis-admin-chat-compose button{border:0;border-radius:8px;padding:8px 10px;background:#f4c20d;color:#07090e;font-weight:900;cursor:pointer}.anubis-chat-end{margin-top:8px;width:100%;border:1px solid #ef4444;background:transparent;color:#fb7185;border-radius:8px;padding:7px;cursor:pointer;font-size:10px;font-weight:800}
+@media(max-width:700px){.anubis-chat-fab{right:12px;bottom:78px;padding:12px 15px}.anubis-chat-overlay{padding:0;align-items:flex-end}.anubis-chat-window{width:100%;height:calc(100vh - 58px);border-radius:18px 18px 0 0}.anubis-chat-admin-grid{grid-template-columns:1fr;}.anubis-chat-list{max-height:145px}.anubis-chat-admin-login{grid-template-columns:1fr}.anubis-chat-admin-login button{grid-column:auto}}
+</style>
+
+
+<style id="anubis-registration-price-fix">
+.reg-price-stack{display:flex;flex-direction:column;gap:5px;min-width:128px}
+.reg-price-line{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 8px;border-radius:8px;border:1px solid var(--border-color);font-weight:850;font-size:11px;line-height:1.15}
+.reg-price-line small{font-size:9px;font-weight:900;letter-spacing:.4px}
+.reg-price-line strong{font-size:12px;white-space:nowrap}
+.reg-price-line.unregistered{color:#fb923c;background:rgba(249,115,22,.09);border-color:rgba(249,115,22,.35)}
+.reg-price-line.registered{color:#22c55e;background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.35)}
+.reg-price-line.single{color:#19c7b5;background:rgba(25,199,181,.08);border-color:rgba(25,199,181,.35)}
+.single-price-modal{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid rgba(25,199,181,.35);background:rgba(25,199,181,.08);border-radius:11px;color:#19c7b5}
+.single-price-modal strong{font-size:18px;font-weight:950;white-space:nowrap}
+.single-price-tag{font-size:11px;font-weight:950;letter-spacing:.5px}
+.reg-price-muted{font-size:10px;color:var(--text-muted);font-weight:700}
+.reg-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.reg-choice-btn{border:1px solid var(--border-color);background:rgba(15,23,42,.65);color:var(--text-main);border-radius:11px;padding:10px 8px;cursor:pointer;text-align:left;transition:.18s}
+.reg-choice-btn:hover{transform:translateY(-1px)}
+.reg-choice-btn.unregistered{border-color:rgba(249,115,22,.42);background:rgba(249,115,22,.08)}
+.reg-choice-btn.registered{border-color:rgba(34,197,94,.42);background:rgba(34,197,94,.08)}
+.reg-choice-btn.active{box-shadow:0 0 0 2px currentColor inset;transform:translateY(-1px)}
+.reg-choice-btn .reg-choice-title{display:block;font-size:11px;font-weight:950;letter-spacing:.4px}
+.reg-choice-btn .reg-choice-price{display:block;font-size:15px;font-weight:950;margin-top:4px}
+.reg-choice-btn.registered .reg-choice-price,.reg-choice-btn.registered .reg-choice-title{color:#22c55e}
+.reg-choice-btn.unregistered .reg-choice-price,.reg-choice-btn.unregistered .reg-choice-title{color:#fb923c}
+.modal-price-summary{display:flex;flex-direction:column;gap:5px;align-items:center}
+.product-edit-price-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.product-edit-field.registered-price-field{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.04)}
+.product-edit-field.unregistered-price-field{border-color:rgba(249,115,22,.35);background:rgba(249,115,22,.04)}
+.quick-price-reg-note{font-size:10px;color:var(--text-muted);margin-top:5px}
+@media(max-width:600px){.reg-price-stack{min-width:0}.reg-price-line{padding:5px 7px}.reg-price-line strong{font-size:11px}.reg-choice-grid{grid-template-columns:1fr 1fr}.product-edit-price-grid{grid-template-columns:1fr}}
+body.anubis-light-theme .reg-choice-btn{background:#fff;color:#172033}
+</style>
+
 </head>
 <body>
 
@@ -1996,7 +2053,7 @@ header .header-right-area .instagram-badge {
     <header>
         <div class="header-content">
             <div class="logo-area" onclick="triggerHaptic(); handleLogoClick()" title="ANUBIS GSM">
-                <img src="anubis-logo.png" alt="ANUBIS GSM Logo" onerror="this.style.display='none'">
+                <img src="anubis-logo.jpg" alt="ANUBIS GSM Logo" onerror="this.style.display='none'">
                 <div>
                     <h1>ANUBIS GSM</h1>
                     <p class="subtitle">Premium Teknoloji Marketi</p>
@@ -2006,7 +2063,7 @@ header .header-right-area .instagram-badge {
 
             <div class="header-right-area">
                 <button class="discount-pulse-btn" onclick="triggerHaptic(); openQuizModal()">
-                    🎯 200 TL İndirim Kazan!
+                    📸 Instagram'ı Takip Et → 200 TL Kazan!
                 </button>
                 <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge" onclick="triggerHaptic()">
                     <svg viewBox="0 0 24 24">
@@ -2015,7 +2072,14 @@ header .header-right-area .instagram-badge {
                     @anubisgsm
                 </a>
                 <div class="top-tools-bar">
-                    <button class="utility-btn" onclick="triggerHaptic(); toggleCurrencyMode()">Para Birimi: <span id="currencyModeLabel">TL (₺)</span></button>
+                    <label class="currency-picker-wrap" title="Fiyat para birimi">
+                    <span class="currency-picker-label">Para Birimi</span>
+                    <select id="currencySelector" class="currency-picker" onchange="triggerHaptic(); setDisplayCurrency(this.value)">
+                        <option value="TRY" selected>₺ TL</option>
+                        <option value="USD">$ USD</option>
+                        <option value="EUR">€ EUR</option>
+                    </select>
+                </label>
                     <button class="utility-btn" onclick="triggerHaptic(); toggleTheme()">Tema Değiştir</button>
                 </div>
             </div>
@@ -2042,6 +2106,26 @@ header .header-right-area .instagram-badge {
                 <button type="button" class="admin-tool-btn" onclick="triggerHaptic(); loadProductsFromCloud(true)">🔄 Buluttan Yenile</button>
             </div>
             
+
+            <div class="anubis-chat-admin-box">
+                <div class="anubis-chat-admin-title"><strong>💬 Canlı Destek Yönetimi</strong><span id="anubisAdminChatStatus" class="anubis-chat-admin-status">Giriş yapılmadı</span></div>
+                <div id="anubisAdminChatLogin" class="anubis-chat-admin-login">
+                    <input id="anubisAdminEmail" type="email" autocomplete="username" placeholder="Admin e-posta">
+                    <input id="anubisAdminPassword" type="password" autocomplete="current-password" placeholder="Admin şifre">
+                    <button type="button" onclick="anubisAdminChatLogin()">🔐 Canlı Desteğe Giriş Yap</button>
+                </div>
+                <div id="anubisAdminChatArea" style="display:none">
+                    <div class="anubis-chat-admin-grid">
+                        <div id="anubisChatConversationList" class="anubis-chat-list"></div>
+                        <div class="anubis-admin-chat-window">
+                            <div id="anubisAdminChatMessages" class="anubis-admin-chat-messages"><div class="anubis-chat-empty">Soldan bir müşteri seç.</div></div>
+                            <div class="anubis-admin-chat-compose"><input id="anubisAdminChatInput" placeholder="Cevabınızı yazın..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendAdminChatMessage()}"><button onclick="sendAdminChatMessage()">Gönder</button></div>
+                        </div>
+                    </div>
+                    <button class="anubis-chat-end" onclick="closeSelectedAnubisConversation()">⛔ Seçili görüşmeyi kapat</button>
+                </div>
+            </div>
+
             <div class="smart-paste-box">
                 <label>⚡ Akıllı Hızlı Yapıştır — Tek ürün veya birden fazla satır yapıştırabilirsin.</label>
                 <textarea id="smartPasteInput" class="smart-paste-textarea" placeholder="Örn: ONEPLUS 15. 12/256 FASON KUTU 🟣 256GB KAYITSIZ 620$
@@ -2086,7 +2170,8 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 <input type="text" id="newStorage" placeholder="Hafıza">
                 <input type="text" id="newReg" placeholder="Kayıt Durumu">
                 <input type="text" id="newCostUsd" class="price-input" inputmode="decimal" autocomplete="off" enterkeyhint="next" placeholder="Alış ($)">
-                <input type="text" id="newUsd" class="price-input" inputmode="decimal" autocomplete="off" enterkeyhint="next" placeholder="Satış ($)">
+                <input type="text" id="newUsd" class="price-input" inputmode="decimal" autocomplete="off" enterkeyhint="next" placeholder="Satış Fiyatı ($)">
+                <input type="text" id="newRegisteredUsd" class="price-input" inputmode="decimal" autocomplete="off" enterkeyhint="next" placeholder="Kayıtlı Satış ($)">
                 <input type="text" id="newStock" placeholder="Stok">
                 <input type="text" id="newDesc" placeholder="Açıklama">
                 <label class="file-upload-label" for="newImageFile">
@@ -2118,7 +2203,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
         <div class="rate-container">
             <div class="rate-box">
-                <span>KUR (USD/TRY):</span>
+                <span>CANLI KUR:</span>
                 <input type="number" id="dollarRate" class="rate-input" value="43.169" step="0.001" oninput="renderTable()">
             </div>
             <div class="update-date">
@@ -2231,8 +2316,12 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                         </div>
                     </div>
                     <div class="glorious-price-box">
-                        <span style="font-size:11px; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Güncel Tutar</span>
-                        <div id="modalProductPrice" style="font-size:26px; font-weight:800; color:var(--primary-color); margin-top:4px;">0.00 ₺</div>
+                        <span style="font-size:11px; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Kayıt Seçimi</span>
+                        <div id="modalRegistrationChoice" class="reg-choice-grid"></div>
+                        <div class="modal-price-summary">
+                            <span id="modalSelectedRegistrationLabel" style="font-size:11px; color:var(--text-muted); text-transform:uppercase; font-weight:800;">Kayıtsız fiyat</span>
+                            <div id="modalProductPrice" style="font-size:26px; font-weight:800; color:var(--primary-color); margin-top:4px;">0.00 ₺</div>
+                        </div>
                     </div>
                     <div class="glorious-actions">
                         <button class="glorious-btn-secondary" onclick="triggerHaptic(); copyModalDetails()">📋 Kopyala</button>
@@ -2275,7 +2364,12 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                     <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge" style="display:flex; justify-content:center; margin:15px 0;" onclick="triggerHaptic()">
                         Instagram'da Takip Et (@anubisgsm)
                     </a>
-                    <button class="admin-btn" onclick="triggerHaptic(); goToQuizStep2()">Takip Ettim, Soruyu Getir 🚀</button>
+                    <input id="campaignInstagramUser" type="text" placeholder="Instagram kullanıcı adın (@ornek)" autocomplete="off" style="width:100%;box-sizing:border-box;margin-bottom:10px;padding:11px 12px;border-radius:10px;border:1px solid var(--border-color);background:rgba(255,255,255,.04);color:white;">
+                    <label style="display:flex;gap:8px;align-items:flex-start;text-align:left;font-size:12px;color:var(--text-muted)!important;margin-bottom:12px;">
+                        <input id="campaignFollowConfirm" type="checkbox" style="margin-top:2px;width:16px;height:16px;">
+                        <span style="color:var(--text-muted)!important;">@anubisgsm hesabını takip ettiğimi onaylıyorum. Takip kampanyası WhatsApp üzerinden kontrol edilebilir.</span>
+                    </label>
+                    <button class="admin-btn" onclick="triggerHaptic(); startCampaignQuiz()">Takip Ettim, Soruyu Getir 🚀</button>
                 </div>
                 <div id="quizStep2" class="quiz-step">
                     <p id="quizQuestionText" style="font-weight:700; color:white; font-size:14px; margin-bottom:12px;"></p>
@@ -2284,10 +2378,10 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 <div id="quizStep3" class="quiz-step" style="text-align:center;">
                     <div style="font-size:40px; margin-bottom:8px;">🎉</div>
                     <h3 style="color:var(--accent-gold); margin-bottom:8px;">Tebrikler, Doğru Cevap!</h3>
-                    <div style="background:rgba(7,9,14,0.9); border:2px dashed var(--accent-gold); padding:12px; border-radius:10px; font-size:18px; font-weight:800; color:var(--accent-gold); margin:12px 0;">
-                        ANUBIS200TR
+                    <div style="background:rgba(7,9,14,0.9);border:2px dashed var(--accent-gold);padding:12px;border-radius:10px;font-size:14px;font-weight:700;color:var(--accent-gold);margin:12px 0;line-height:1.5;">
+                        🎁 200 TL indirim hakkın oluştu!<br><span style="font-size:11px;color:var(--text-muted);">Instagram takip bilgisi WhatsApp üzerinden kontrol edilir.</span>
                     </div>
-                    <a href="#" id="whatsappCouponBtn" target="_blank" class="glorious-btn-primary" onclick="triggerHaptic()">📲 Kuponla WhatsApp'tan Sipariş Ver</a>
+                    <a href="#" id="whatsappCouponBtn" target="_blank" class="glorious-btn-primary" onclick="triggerHaptic()">📲 200 TL İndirim İçin WhatsApp'tan Yaz</a>
                 </div>
             </div>
         </div>
@@ -2380,7 +2474,12 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             document.querySelectorAll(".quiz-step").forEach(el => el.classList.remove("active"));
             document.getElementById("quizStep" + stepNum).classList.add("active");
         }
-        function goToQuizStep2() {
+        function startCampaignQuiz() {
+            const username = String(document.getElementById("campaignInstagramUser")?.value || "").trim();
+            const confirmed = document.getElementById("campaignFollowConfirm")?.checked;
+            if (!username) { alert("Lütfen Instagram kullanıcı adını yaz."); return; }
+            if (!confirmed) { alert("Devam etmek için Instagram'ı takip ettiğini onaylamalısın."); return; }
+            localStorage.setItem("anubis_campaign_instagram", username);
             showQuizStep(2);
             let randomIndex = Math.floor(Math.random() * generalKnowledgeQuestions.length);
             currentActiveQuestion = generalKnowledgeQuestions[randomIndex];
@@ -2394,11 +2493,12 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         function checkQuizAnswer(selectedIndex) {
             if (selectedIndex === currentActiveQuestion.answer) {
                 showQuizStep(3);
-                let waText = "Merhaba, genel kültür sorusunu bildim ve 200 TL indirim hakkı kazandım. (Kupon: ANUBIS200TR)";
+                const igUser = localStorage.getItem("anubis_campaign_instagram") || "belirtilmedi";
+                let waText = `Merhaba, ANUBIS GSM 200 TL Instagram kampanyasından yararlanmak istiyorum. Instagram kullanıcı adım: ${igUser}. Genel kültür sorusunu doğru cevapladım. Takip kontrolü sonrası indirimimi kullanmak istiyorum.`;
                 document.getElementById("whatsappCouponBtn").href = "https://wa.me/905345513747?text=" + encodeURIComponent(waText);
             } else {
                 alert("Yanlış cevap! Tekrar deneyebilirsin.");
-                goToQuizStep2();
+                startCampaignQuiz();
             }
         }
 
@@ -2429,6 +2529,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
         function normalizeProduct(p) {
             const sale = Number(p.saleUsd ?? p.usd) || 0;
+            const registered = Number(p.registeredUsd ?? p.registered_usd) || 0;
             return {
                 id: p.id || makeProductId(),
                 category: String(p.category || 'DİĞER').toUpperCase(),
@@ -2437,6 +2538,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 reg: String(p.reg || 'KAYITSIZ').toUpperCase(),
                 usd: sale,
                 saleUsd: sale,
+                registeredUsd: registered,
                 costUsd: Number(p.costUsd) || 0,
                 stock: String(p.stock || 'HAZIR STOK'),
                 desc: String(p.desc || ''),
@@ -2489,6 +2591,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 reg: p.reg || 'KAYITSIZ',
                 usd: Number(p.saleUsd ?? p.usd) || 0,
                 sale_usd: Number(p.saleUsd ?? p.usd) || 0,
+                registered_usd: Number(p.registeredUsd) || 0,
                 cost_usd: Number(p.costUsd) || 0,
                 stock: p.stock || 'HAZIR STOK',
                 description: p.desc || '',
@@ -2500,7 +2603,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         function fromCloudRow(r) {
             return normalizeProduct({
                 id: r.id, category: r.category, model: r.model, storage: r.storage, reg: r.reg,
-                usd: r.sale_usd ?? r.usd, saleUsd: r.sale_usd ?? r.usd, costUsd: r.cost_usd,
+                usd: r.sale_usd ?? r.usd, saleUsd: r.sale_usd ?? r.usd, registeredUsd: r.registered_usd, costUsd: r.cost_usd,
                 stock: r.stock, desc: r.description, image: r.image
             });
         }
@@ -2665,7 +2768,20 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             document.getElementById("currencyModeLabel").textContent = currentCurrency === 'TL' ? 'TL (₺)' : 'USD ($)';
             renderTable();
         }
-        function toggleTheme() { alert("Tema modu aktif!"); }
+        function applySavedTheme() {
+            const saved = localStorage.getItem("anubis_theme") || "dark";
+            document.body.classList.toggle("anubis-light-theme", saved === "light");
+            const btn = document.querySelector('.utility-btn[onclick*="toggleTheme"]');
+            if (btn) btn.innerHTML = saved === "light" ? '<span class="theme-toggle-icon">🌙</span> Koyu Tema' : '<span class="theme-toggle-icon">☀️</span> Açık Tema';
+        }
+        function toggleTheme() {
+            const isLight = document.body.classList.toggle("anubis-light-theme");
+            localStorage.setItem("anubis_theme", isLight ? "light" : "dark");
+            const btn = document.querySelector('.utility-btn[onclick*="toggleTheme"]');
+            if (btn) btn.innerHTML = isLight ? '<span class="theme-toggle-icon">🌙</span> Koyu Tema' : '<span class="theme-toggle-icon">☀️</span> Açık Tema';
+            triggerHaptic();
+        }
+        document.addEventListener("DOMContentLoaded", applySavedTheme);
 
         function renderFilterTabs() {
             let tabsContainer = document.getElementById("filterTabsContainer");
@@ -2907,12 +3023,14 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         function parseProductLine(text) {
             let upperText = text.toUpperCase();
             let labeledCost = text.match(/(?:ALIŞ|MALIYET|MALİYET)\s*[:=]?\s*(\d+(?:[.,]\d+)?)\s*\$?/i);
-            let labeledSale = text.match(/(?:SATIŞ|SATIS)\s*[:=]?\s*(\d+(?:[.,]\d+)?)\s*\$?/i);
+            let labeledSale = text.match(/(?:SATIŞ|SATIS|KAYITSIZ)\s*[:=]?\s*(\d+(?:[.,]\d+)?)\s*\$?/i);
+            let labeledRegistered = text.match(/(?:KAYITLI|SERVER|CPID)\s*[:=]?\s*(\d+(?:[.,]\d+)?)\s*\$?/i);
             let dollarMatches = [...text.matchAll(/(\d+(?:[.,]\d+)?)\s*\$/g)].map(m => parseFloat(m[1].replace(',', '.')));
             let slashPrices = text.match(/(\d+(?:[.,]\d+)?)\s*\$?\s*(?:\/|->|→)\s*(\d+(?:[.,]\d+)?)\s*\$?/);
             let trailingPrice = text.match(/(?:^|\s)(\d{3,5})(?:\s*)$/);
             let costVal = labeledCost ? parseFloat(labeledCost[1].replace(',', '.')) : (slashPrices ? parseFloat(slashPrices[1].replace(',', '.')) : 0);
             let usdVal = labeledSale ? parseFloat(labeledSale[1].replace(',', '.')) : (slashPrices ? parseFloat(slashPrices[2].replace(',', '.')) : (dollarMatches.length ? dollarMatches[dollarMatches.length - 1] : (trailingPrice ? parseFloat(trailingPrice[1]) : 0)));
+            let registeredVal = labeledRegistered ? parseFloat(labeledRegistered[1].replace(',', '.')) : 0;
 
             let slashStorage = text.match(/\b\d+\s*\/\s*(\d+)\s*(?:GB|TB)?\b/i);
             let storageMatch = text.match(/(\d+\s*(?:GB|TB))/i);
@@ -2925,7 +3043,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
             let catVal = detectCategory(text);
             let cleanModel = text
-                .replace(/(?:ALIŞ|MALIYET|MALİYET|SATIŞ|SATIS)\s*[:=]?\s*\d+(?:[.,]\d+)?\s*\$?/gi, "")
+                .replace(/(?:ALIŞ|MALIYET|MALİYET|SATIŞ|SATIS|KAYITSIZ|KAYITLI|SERVER|CPID)\s*[:=]?\s*\d+(?:[.,]\d+)?\s*\$?/gi, "")
                 .replace(/\d+(?:[.,]\d+)?\s*\$\s*(?:\/|->|→)\s*\d+(?:[.,]\d+)?\s*\$?/gi, "")
                 .replace(/(\d+(?:[.,]\d+)?\s*\$|\$\s*\d+(?:[.,]\d+)?)/gi, "")
                 .replace(/\s+\d{3,5}\s*$/, "")
@@ -2936,7 +3054,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 .trim()
                 .toUpperCase();
 
-            return { category: catVal, model: cleanModel, storage: storageVal, reg: regVal, usd: usdVal, costUsd: costVal };
+            return { category: catVal, model: cleanModel, storage: storageVal, reg: regVal, usd: usdVal, registeredUsd: registeredVal, costUsd: costVal };
         }
 
         function parseSmartPaste(text) {
@@ -2951,6 +3069,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             if (item.reg) document.getElementById("newReg").value = item.reg;
             if (item.costUsd) document.getElementById("newCostUsd").value = item.costUsd;
             if (item.usd) document.getElementById("newUsd").value = item.usd;
+            if (item.registeredUsd) document.getElementById("newRegisteredUsd").value = item.registeredUsd;
             document.getElementById("newStock").value = "HAZIR STOK";
 
             let lines = text.split(/\r?\n/).filter(line => line.trim());
@@ -2982,6 +3101,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                     reg: item.reg,
                     usd: item.usd,
                     saleUsd: item.usd,
+                    registeredUsd: item.registeredUsd || 0,
                     costUsd: item.costUsd || 0,
                     stock: "HAZIR STOK",
                     desc: "",
@@ -3006,8 +3126,49 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         }
 
         function getSaleUsd(item) { return Number(item.saleUsd ?? item.usd) || 0; }
+        function getRegisteredUsd(item) { return Number(item.registeredUsd ?? item.registered_usd) || 0; }
         function getCostUsd(item) { return Number(item.costUsd) || 0; }
         function getProfitUsd(item) { return getSaleUsd(item) - getCostUsd(item); }
+        function getRegisteredProfitUsd(item) { const registered = getRegisteredUsd(item); return registered > 0 ? registered - getCostUsd(item) : 0; }
+        function formatUsdDisplay(v) { return Number(v || 0).toLocaleString('tr-TR', { maximumFractionDigits: 2 }) + ' $'; }
+        function formatTlDisplay(v, rate) { return Number(v || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₺'; }
+        // Bazı ürünlerde iki farklı kayıt seçeneği anlamlı değil. Bu ürünlerde
+        // arayüz sadece tek fiyat gösterir ve kayıt seçimi alanını kaldırır.
+        function isSingleRegistrationProduct(item) {
+            const category = String(item?.category || '').toUpperCase();
+            const model = String(item?.model || '').toUpperCase();
+            const reg = String(item?.reg || '').toUpperCase();
+            return category === 'İPHONE' || category === 'IPHONE' || /\bSERVER\b/.test(reg) || /\bSERVER\b/.test(model);
+        }
+        function getSingleRegistrationLabel(item) {
+            const category = String(item?.category || '').toUpperCase();
+            const reg = String(item?.reg || '').toUpperCase();
+            if (category === 'İPHONE' || category === 'IPHONE') return 'KAYIT YOK';
+            if (/\bSERVER\b/.test(reg)) return 'SERVER KAYITLI';
+            return 'TEK FİYAT';
+        }
+        function registrationPriceStack(item, rate) {
+            const unreg = getSaleUsd(item), reg = getRegisteredUsd(item);
+            if (isSingleRegistrationProduct(item)) {
+                const label = getSingleRegistrationLabel(item);
+                return `<div class="reg-price-stack single-price-stack"><div class="reg-price-line single"><small>${label}</small><strong>${formatUsdDisplay(unreg)}</strong></div></div>`;
+            }
+            return `<div class="reg-price-stack">
+                <div class="reg-price-line unregistered"><small>KAYITSIZ</small><strong>${formatUsdDisplay(unreg)}</strong></div>
+                ${reg > 0 ? `<div class="reg-price-line registered"><small>KAYITLI</small><strong>${formatUsdDisplay(reg)}</strong></div>` : ''}
+            </div>`;
+        }
+        function registrationTlStack(item, rate) {
+            const unreg = getSaleUsd(item), reg = getRegisteredUsd(item);
+            if (isSingleRegistrationProduct(item)) {
+                const label = getSingleRegistrationLabel(item);
+                return `<div class="reg-price-stack single-price-stack"><div class="reg-price-line single"><small>${label}</small><strong>${formatTlDisplay(unreg * rate, rate)}</strong></div></div>`;
+            }
+            return `<div class="reg-price-stack">
+                <div class="reg-price-line unregistered"><small>KAYITSIZ</small><strong>${formatTlDisplay(unreg * rate, rate)}</strong></div>
+                ${reg > 0 ? `<div class="reg-price-line registered"><small>KAYITLI</small><strong>${formatTlDisplay(reg * rate, rate)}</strong></div>` : ''}
+            </div>`;
+        }
 
 
         // Liste içindeki alış/satış kutuları artık her tuşta renderTable() çağırmaz.
@@ -3136,7 +3297,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             if (!row) return;
             row.innerHTML = `
                 <th>GÖRSEL</th><th>MODEL</th><th>HAFIZA</th><th>KAYIT DURUMU</th>
-                <th>DOLAR ($)</th><th>FİYAT</th><th>STOK DURUMU</th><th>SİPARİŞ</th>
+                <th>FİYAT ($)</th><th>GÜNCEL FİYAT</th><th>STOK DURUMU</th><th>SİPARİŞ</th>
                 ${isAdmin ? '<th colspan="2">FİYAT DÜZENLE</th><th>KÂR $</th>' : ''}
                 ${isAdmin ? '<th>İŞLEM</th>' : ''}`;
         }
@@ -3172,6 +3333,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                         category: normalizeBrandText(p.category || 'DİĞER'), model: String(p.model || ''),
                         storage: p.storage || '256GB', reg: p.reg || 'KAYITSIZ',
                         usd: Number(p.saleUsd ?? p.usd) || 0, saleUsd: Number(p.saleUsd ?? p.usd) || 0,
+                        registeredUsd: Number(p.registeredUsd ?? p.registered_usd) || 0,
                         costUsd: Number(p.costUsd) || 0, stock: p.stock || 'HAZIR STOK', desc: p.desc || '', image: p.image || ''
                     }));
                     categoryOrder = Array.isArray(data.categoryOrder) && data.categoryOrder.length ? data.categoryOrder.map(normalizeBrandText) : [...DEFAULT_CATEGORIES];
@@ -3458,8 +3620,8 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                         <td style="font-weight:600;">${item.model}${isAdmin ? `<select class="admin-category-select" onclick="event.stopPropagation()" onchange="moveProductCategory(${item.originalIndex}, this.value)">${categoryOrder.map(c => `<option value="${c}" ${c === (item.category || 'DİĞER').toUpperCase() ? 'selected' : ''}>${c}</option>`).join('')}</select>` : ''}</td>
                         <td>${item.storage || "-"}</td>
                         <td><span class="badge-orange">${item.reg || "KAYITSIZ"}</span></td>
-                        <td><span style="font-weight:800;">${usdVal.toLocaleString('tr-TR')} $</span></td>
-                        <td class="price-display">${priceText}</td>
+                        <td>${registrationPriceStack(item, rate)}</td>
+                        <td class="price-display">${registrationTlStack(item, rate)}</td>
                         <td><span class="badge-green">${item.stock || "HAZIR STOK"}</span></td>
                         <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
                         ${isAdmin ? `<td colspan="2"><button class="quick-price-edit-btn" onclick="event.stopPropagation(); openQuickPriceEditor(${item.originalIndex})">✏️ Fiyat Düzenle</button><button class="product-edit-btn" style="margin-top:5px" onclick="event.stopPropagation(); openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button></td><td class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal.toLocaleString('tr-TR')} $</td>` : ''}
@@ -3493,16 +3655,17 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                             </div>
                         </div>
                         <div class="m-card-footer">
+                            <div style="margin-bottom:8px">${registrationTlStack(item, rate)}</div>
                             <div class="mobile-price-row">
                                 <div class="m-price-wrap">
-                                    <div class="m-price">${priceText}</div>
-                                    <div class="m-price-usd">${usdVal.toLocaleString('tr-TR')} $</div>
+                                    <div class="m-price">${getSaleUsd(item) > 0 ? formatUsdDisplay(getSaleUsd(item)) : 'Fiyat sorunuz'}</div>
+                                    <div class="m-price-usd">Kayıtsız fiyat</div>
                                 </div>
                                 <div class="m-stock-dot">${item.stock || 'STOKTA'}</div>
                             </div>
                             <a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp açılıyor...');">📲 WhatsApp'tan Sor</a>
                         </div>
-                        ${isAdmin ? `<div style="font-size:11px;color:var(--text-muted);margin-top:5px;">Alış: <b>${costVal}$</b> • Satış: <b>${usdVal}$</b> • Kâr: <b class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal}$</b></div><button class="product-edit-btn" style="margin-top:7px;" onclick="event.stopPropagation(); openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button><button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Ürünü Sil</button>` : ''}
+                        ${isAdmin ? `<div style="font-size:11px;color:var(--text-muted);margin-top:5px;">Alış: <b>${costVal}$</b> • Kayıtsız: <b>${usdVal}$</b> • Kâr: <b class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal}$</b>${getRegisteredUsd(item)>0 ? ` • Kayıtlı: <b>${getRegisteredUsd(item)}$</b> • Kâr: <b class="${getRegisteredProfitUsd(item) >= 0 ? 'profit-positive' : 'profit-negative'}">${getRegisteredProfitUsd(item)}$</b>` : ''}</div><button class="product-edit-btn" style="margin-top:7px;" onclick="event.stopPropagation(); openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button><button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Ürünü Sil</button>` : ''}
                     `;
                     cardGrid.appendChild(card);
                 });
@@ -3562,33 +3725,94 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
         function openProductModal(item) {
             activeDetailItem = item;
+            item._selectedRegistration = 'unregistered';
             document.getElementById("modalProductTitle").textContent = item.model;
             document.getElementById("modalProductDesc").textContent = item.desc || "ANUBIS GSM güvencesiyle yüksek kaliteli teknoloji ürünü.";
             document.getElementById("modalProductStorage").textContent = item.storage || "-";
+            const singleReg = isSingleRegistrationProduct(item);
             document.getElementById("modalProductReg").textContent = item.reg || "KAYITSIZ";
-            document.getElementById("modalProductUsd").textContent = (parseFloat(item.usd) || 0).toLocaleString() + " $";
+            document.getElementById("modalProductUsd").textContent = singleReg
+                ? `${getSingleRegistrationLabel(item)}: ${formatUsdDisplay(getSaleUsd(item))}`
+                : `Kayıtsız: ${formatUsdDisplay(getSaleUsd(item))}${getRegisteredUsd(item)>0 ? ` • Kayıtlı: ${formatUsdDisplay(getRegisteredUsd(item))}` : ''}`;
             document.getElementById("modalProductStock").textContent = item.stock || "HAZIR STOK";
 
             let imgContainer = document.getElementById("modalImgContainer");
             imgContainer.innerHTML = item.image ? `<img src="${item.image}" alt="${item.model}">` : `<span style="color:var(--text-muted); font-size:13px;">Görsel Bulunmuyor</span>`;
 
-            let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
-            let calculatedTl = ((parseFloat(item.usd) || 0) * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺";
-            document.getElementById("modalProductPrice").textContent = calculatedTl;
+            const choice = document.getElementById('modalRegistrationChoice');
+            const choiceLabel = document.querySelector('.glorious-price-box > span');
+            if (choice) {
+                const unreg = getSaleUsd(item), reg = getRegisteredUsd(item);
+                if (singleReg) {
+                    choice.innerHTML = `<div class="single-price-modal"><span class="single-price-tag">${getSingleRegistrationLabel(item)}</span><strong>${formatUsdDisplay(unreg)}</strong></div>`;
+                    if (choiceLabel) choiceLabel.textContent = 'Fiyat';
+                } else {
+                    choice.innerHTML = `
+                        <button type="button" class="reg-choice-btn unregistered active" onclick="selectProductRegistration('unregistered')">
+                            <span class="reg-choice-title">KAYITSIZ</span>
+                            <span class="reg-choice-price">${formatUsdDisplay(unreg)}</span>
+                        </button>
+                        ${reg > 0 ? `<button type="button" class="reg-choice-btn registered" onclick="selectProductRegistration('registered')">
+                            <span class="reg-choice-title">KAYITLI</span>
+                            <span class="reg-choice-price">${formatUsdDisplay(reg)}</span>
+                        </button>` : ''}`;
+                    if (choiceLabel) choiceLabel.textContent = 'Kayıt Seçimi';
+                }
+            }
+            updateModalRegistrationPrice();
 
-            let waText = `Merhaba, ${item.model} (${item.storage} - ${item.reg}) modelini inceledim ve sipariş vermek istiyorum. Fiyat: ${calculatedTl}`;
-            document.getElementById("modalWhatsAppBtn").href = `https://wa.me/905345513747?text=` + encodeURIComponent(waText);
             const favBtn = document.getElementById('modalFavoriteBtn');
             if (favBtn) { favBtn.style.display = isAdmin ? 'none' : 'block'; favBtn.textContent = isFavorite(item.id) ? '♥ Favoride' : '♡ Favori'; }
             document.getElementById("productDetailModal").style.display = "flex";
         }
 
+        function selectProductRegistration(type) {
+            if (!activeDetailItem) return;
+            if (type === 'registered' && getRegisteredUsd(activeDetailItem) <= 0) return;
+            activeDetailItem._selectedRegistration = type === 'registered' ? 'registered' : 'unregistered';
+            document.querySelectorAll('#modalRegistrationChoice .reg-choice-btn').forEach(btn => btn.classList.remove('active'));
+            const btn = document.querySelector(`#modalRegistrationChoice .reg-choice-btn.${activeDetailItem._selectedRegistration}`);
+            if (btn) btn.classList.add('active');
+            updateModalRegistrationPrice();
+        }
+
+        function updateModalRegistrationPrice() {
+            if (!activeDetailItem) return;
+            const rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
+            const unreg = getSaleUsd(activeDetailItem);
+            const reg = getRegisteredUsd(activeDetailItem);
+            const singleReg = isSingleRegistrationProduct(activeDetailItem);
+            const isRegistered = !singleReg && activeDetailItem._selectedRegistration === 'registered' && reg > 0;
+            const usd = isRegistered ? reg : unreg;
+            const tl = usd * rate;
+            const calculatedTl = formatTlDisplay(tl, rate);
+            const priceEl = document.getElementById('modalProductPrice');
+            if (priceEl) priceEl.textContent = calculatedTl;
+            const labelEl = document.getElementById('modalSelectedRegistrationLabel');
+            if (labelEl) {
+                labelEl.textContent = singleReg ? getSingleRegistrationLabel(activeDetailItem) : (isRegistered ? 'Kayıtlı fiyat' : 'Kayıtsız fiyat');
+                labelEl.style.color = singleReg ? '#19c7b5' : (isRegistered ? '#22c55e' : '#fb923c');
+            }
+            const waBtn = document.getElementById('modalWhatsAppBtn');
+            if (waBtn) {
+                const regText = singleReg ? getSingleRegistrationLabel(activeDetailItem) : (isRegistered ? 'KAYITLI (SERVER / CPID)' : 'KAYITSIZ');
+                const usdText = formatUsdDisplay(usd);
+                const waText = `Merhaba, ${activeDetailItem.model} (${activeDetailItem.storage}) sipariş vermek istiyorum. Tercihim: ${regText}. Fiyat: ${usdText} / ${calculatedTl}`;
+                waBtn.href = `https://wa.me/905345513747?text=` + encodeURIComponent(waText);
+            }
+        }
         function closeProductModal() { document.getElementById("productDetailModal").style.display = "none"; }
         function copyModalDetails() {
             if (!activeDetailItem) return;
             let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
-            let calculatedTl = ((parseFloat(activeDetailItem.usd) || 0) * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺";
-            let textToCopy = `Ürün: ${activeDetailItem.model}\nHafıza: ${activeDetailItem.storage}\nKayıt: ${activeDetailItem.reg}\nFiyat: ${calculatedTl} (${activeDetailItem.usd}$)\nStok: ${activeDetailItem.stock}`;
+            const unreg = getSaleUsd(activeDetailItem), reg = getRegisteredUsd(activeDetailItem);
+            const singleReg = isSingleRegistrationProduct(activeDetailItem);
+            const selected = singleReg ? getSingleRegistrationLabel(activeDetailItem) : (activeDetailItem._selectedRegistration === 'registered' && reg > 0 ? 'KAYITLI' : 'KAYITSIZ');
+            const selectedUsd = (!singleReg && selected === 'KAYITLI') ? reg : unreg;
+            let calculatedTl = (selectedUsd * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺";
+            let textToCopy = singleReg
+                ? `Ürün: ${activeDetailItem.model}\nHafıza: ${activeDetailItem.storage}\nKayıt durumu: ${selected}\nFiyat: ${formatUsdDisplay(selectedUsd)}\nTL: ${calculatedTl}\nStok: ${activeDetailItem.stock}`
+                : `Ürün: ${activeDetailItem.model}\nHafıza: ${activeDetailItem.storage}\nKayıt tercihi: ${selected}\nKayıtsız fiyat: ${formatUsdDisplay(unreg)}\nKayıtlı fiyat: ${reg > 0 ? formatUsdDisplay(reg) : 'Fiyat girilmedi'}\nSeçilen fiyat: ${calculatedTl} (${formatUsdDisplay(selectedUsd)})\nStok: ${activeDetailItem.stock}`;
             navigator.clipboard.writeText(textToCopy).then(() => showToast("Ürün bilgileri panoya kopyalandı! 📋"));
         }
 
@@ -3600,6 +3824,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             let storage = document.getElementById("newStorage").value.trim() || "512GB";
             let reg = document.getElementById("newReg").value.trim().toUpperCase() || "KAYITSIZ";
             let usd = parseFloat(document.getElementById("newUsd").value) || 0;
+            let registeredUsd = parseFloat(document.getElementById("newRegisteredUsd").value) || 0;
             let costUsd = parseFloat(document.getElementById("newCostUsd").value) || 0;
             let stock = document.getElementById("newStock").value.trim().toUpperCase() || "HAZIR STOK";
             let desc = document.getElementById("newDesc").value.trim();
@@ -3607,7 +3832,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
             if (cat && model) {
                 if (!usd) { alert("Lütfen dolar fiyatını girin veya akıllı yapıştırmada fiyatı belirtin."); return; }
-                products.push({ id: makeProductId(), category: cat, model: model, storage: storage, reg: reg, usd: usd, saleUsd: usd, costUsd: costUsd, stock: stock, desc: desc, image: image });
+                products.push({ id: makeProductId(), category: cat, model: model, storage: storage, reg: reg, usd: usd, saleUsd: usd, registeredUsd: registeredUsd, costUsd: costUsd, stock: stock, desc: desc, image: image });
                 localStorage.setItem("anubis_last_usd", usd);
                 saveToStorage();
                 renderTable();
@@ -3618,6 +3843,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 document.getElementById("newReg").value = "";
                 document.getElementById("newCostUsd").value = "";
                 document.getElementById("newUsd").value = "";
+                document.getElementById("newRegisteredUsd").value = "";
                 document.getElementById("newStock").value = "";
                 document.getElementById("newDesc").value = "";
                 document.getElementById("newImageFile").value = "";
@@ -3664,6 +3890,8 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 Number(p.costUsd ?? 0) || 0;
             document.getElementById('quickSaleV11').value =
                 Number(p.saleUsd ?? p.usd ?? 0) || 0;
+            document.getElementById('quickRegisteredSaleV11').value =
+                Number(p.registeredUsd ?? 0) || 0;
 
             const modal = document.getElementById('quickPriceModalV11');
             modal.classList.add('show');
@@ -3686,9 +3914,11 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         function updateQuickProfitV11() {
             const cost = parseFloat(document.getElementById('quickCostV11')?.value) || 0;
             const sale = parseFloat(document.getElementById('quickSaleV11')?.value) || 0;
+            const registered = parseFloat(document.getElementById('quickRegisteredSaleV11')?.value) || 0;
             const el = document.getElementById('quickProfitV11');
             if (el) {
-                el.textContent = `Kâr: ${(sale - cost).toLocaleString('tr-TR')} $`;
+                const regProfitText = registered > 0 ? ` • Kayıtlı kâr: ${(registered - cost).toLocaleString('tr-TR')} $` : '';
+                el.textContent = `Kayıtsız kâr: ${(sale - cost).toLocaleString('tr-TR')} $${regProfitText}`;
                 el.style.color = sale >= cost ? '#34d399' : '#ff6575';
             }
         }
@@ -3699,9 +3929,11 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
             const cost = parseFloat(String(document.getElementById('quickCostV11').value).replace(',', '.')) || 0;
             const sale = parseFloat(String(document.getElementById('quickSaleV11').value).replace(',', '.')) || 0;
+            const registered = parseFloat(String(document.getElementById('quickRegisteredSaleV11').value).replace(',', '.')) || 0;
 
             products[idx].costUsd = cost;
             products[idx].saleUsd = sale;
+            products[idx].registeredUsd = registered;
             products[idx].usd = sale;
             products[idx] = normalizeProduct(products[idx]);
 
@@ -3715,13 +3947,13 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         }
 
         document.addEventListener('input', (e) => {
-            if (e.target?.id === 'quickCostV11' || e.target?.id === 'quickSaleV11') {
+            if (e.target?.id === 'quickCostV11' || e.target?.id === 'quickSaleV11' || e.target?.id === 'quickRegisteredSaleV11') {
                 updateQuickProfitV11();
             }
         });
 
         document.addEventListener('keydown', (e) => {
-            if (e.target?.id === 'quickCostV11' || e.target?.id === 'quickSaleV11') {
+            if (e.target?.id === 'quickCostV11' || e.target?.id === 'quickSaleV11' || e.target?.id === 'quickRegisteredSaleV11') {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     saveQuickPriceEditor();
@@ -3910,6 +4142,7 @@ function openProductEditor(idx){
     document.getElementById('editRegV15').value = p.reg || 'KAYITSIZ';
     document.getElementById('editCostV15').value = Number(p.costUsd || 0) || '';
     document.getElementById('editSaleV15').value = Number(p.saleUsd ?? p.usd ?? 0) || '';
+    document.getElementById('editRegisteredSaleV15').value = Number(p.registeredUsd ?? 0) || '';
     document.getElementById('editStockV15').value = p.stock || 'HAZIR STOK';
     document.getElementById('editDescV15').value = p.desc || '';
     const img = document.getElementById('editImageV15');
@@ -3939,6 +4172,7 @@ function saveProductEditor(){
     if(!model){ alert('Model adı boş bırakılamaz.'); return; }
     const cost=parseFloat(String(document.getElementById('editCostV15').value||'0').replace(',','.'))||0;
     const sale=parseFloat(String(document.getElementById('editSaleV15').value||'0').replace(',','.'))||0;
+    const registered=parseFloat(String(document.getElementById('editRegisteredSaleV15').value||'0').replace(',','.'))||0;
     const old=products[idx];
     products[idx]=normalizeProduct({
         ...old,
@@ -3948,6 +4182,7 @@ function saveProductEditor(){
         reg:document.getElementById('editRegV15').value.trim().toUpperCase() || 'KAYITSIZ',
         costUsd:cost,
         saleUsd:sale,
+        registeredUsd:registered,
         usd:sale,
         stock:document.getElementById('editStockV15').value.trim().toUpperCase() || 'HAZIR STOK',
         desc:document.getElementById('editDescV15').value.trim()
@@ -3980,8 +4215,11 @@ document.addEventListener('keydown',(e)=>{
                 <label>ALIŞ ($)
                     <input id="quickCostV11" type="text" inputmode="decimal" autocomplete="off">
                 </label>
-                <label>SATIŞ ($)
+                <label style="color:#fb923c">KAYITSIZ SATIŞ ($)
                     <input id="quickSaleV11" type="text" inputmode="decimal" autocomplete="off">
+                </label>
+                <label style="color:#22c55e">KAYITLI SATIŞ ($)
+                    <input id="quickRegisteredSaleV11" type="text" inputmode="decimal" autocomplete="off">
                 </label>
             </div>
             <div id="quickProfitV11" class="quick-price-summary"></div>
@@ -4040,9 +4278,13 @@ document.addEventListener('keydown',(e)=>{
                     <label>ALIŞ ($)</label>
                     <input id="editCostV15" type="text" inputmode="decimal" autocomplete="off">
                 </div>
-                <div class="product-edit-field">
-                    <label>SATIŞ ($)</label>
+                <div class="product-edit-field unregistered-price-field">
+                    <label style="color:#fb923c">SATIŞ ($)</label>
                     <input id="editSaleV15" type="text" inputmode="decimal" autocomplete="off">
+                </div>
+                <div class="product-edit-field registered-price-field">
+                    <label style="color:#22c55e">KAYITLI SATIŞ ($)</label>
+                    <input id="editRegisteredSaleV15" type="text" inputmode="decimal" autocomplete="off" placeholder="Kayıtlı fiyat">
                 </div>
                 <div class="product-edit-field">
                     <label>STOK DURUMU</label>
@@ -4070,5 +4312,658 @@ document.addEventListener('keydown',(e)=>{
             <div style="text-align:center;color:#66758b;font-size:9px;margin-top:8px">Ctrl + Enter ile kaydedebilirsin.</div>
         </div>
     </div>
+
+
+<!-- ANUBIS GSM REAL-TIME LIVE SUPPORT -->
+<button id="anubisChatFab" class="anubis-chat-fab" type="button" onclick="openAnubisChat()"><span class="anubis-chat-badge"></span>💬 Canlı Destek</button>
+<div id="anubisChatOverlay" class="anubis-chat-overlay" onclick="if(event.target===this) closeAnubisChat()">
+  <div class="anubis-chat-window" onclick="event.stopPropagation()">
+    <div class="anubis-chat-head"><div><strong>ANUBIS GSM Canlı Destek</strong><small id="anubisChatStatus">Bağlanıyor...</small></div><button class="anubis-chat-close" onclick="closeAnubisChat()">✕</button></div>
+    <div id="anubisChatMessages" class="anubis-chat-messages"><div class="anubis-chat-empty">Merhaba 👋<br>Size nasıl yardımcı olabiliriz?</div></div>
+    <div id="anubisChatStart" class="anubis-chat-start">
+      <input id="anubisChatName" maxlength="60" placeholder="Adınız / Kullanıcı adınız">
+      <textarea id="anubisChatInput" maxlength="1000" placeholder="Mesajınızı yazın..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAnubisChatMessage()}"></textarea>
+      <button class="anubis-chat-send" onclick="sendAnubisChatMessage()">📩 Mesaj Gönder</button>
+      <div class="anubis-chat-note">Mesajlar güvenli şekilde Supabase üzerinden gerçek zamanlı iletilir.</div>
+    </div>
+  </div>
+</div>
+
+
+<script id="anubis-live-chat-js">
+let anubisChatUser = null;
+let anubisChatConversation = null;
+let anubisChatChannel = null;
+let anubisAdminUser = null;
+let anubisAdminConversations = [];
+let anubisSelectedConversation = null;
+let anubisAdminChannel = null;
+let anubisAdminMessageChannel = null;
+
+function anubisEscapeChat(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');}
+function anubisChatTime(v){try{return new Date(v).toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});}catch(e){return '';}}
+function setAnubisChatStatus(t,ok=false){const el=document.getElementById('anubisChatStatus');if(el){el.textContent=t;el.style.color=ok?'#22c55e':'var(--text-muted)';}}
+
+async function ensureAnubisChatUser(){
+  const {data:{session}}=await supabaseClient.auth.getSession();
+  if(session?.user){anubisChatUser=session.user;return session.user;}
+  const {data,error}=await supabaseClient.auth.signInAnonymously({options:{data:{source:'anubisgsm_live_chat'}}});
+  if(error) throw error;
+  anubisChatUser=data.user;
+  return data.user;
+}
+
+async function openAnubisChat(){
+  document.getElementById('anubisChatOverlay').classList.add('show');
+  try{await ensureAnubisChatUser();setAnubisChatStatus('🟢 Çevrimiçi',true);await loadOrCreateAnubisConversation();}
+  catch(e){console.error(e);setAnubisChatStatus('🔴 Bağlantı kurulamadı');document.getElementById('anubisChatMessages').innerHTML='<div class="anubis-chat-empty">Canlı destek şu anda bağlanamadı.<br>Lütfen biraz sonra tekrar deneyin.</div>';}
+}
+function closeAnubisChat(){document.getElementById('anubisChatOverlay').classList.remove('show');}
+
+async function loadOrCreateAnubisConversation(){
+  if(!anubisChatUser)return;
+  const {data,error}=await supabaseClient.from('chat_conversations').select('*').eq('customer_id',anubisChatUser.id).in('status',['open','pending']).order('created_at',{ascending:false}).limit(1).maybeSingle();
+  if(error)throw error;
+  if(data){anubisChatConversation=data;await loadAnubisMessages();subscribeAnubisCustomerChat();return;}
+  anubisChatConversation=null;
+  document.getElementById('anubisChatMessages').innerHTML='<div class="anubis-chat-empty">Merhaba 👋<br>Adınızı yazıp ilk mesajınızı gönderin.</div>';
+}
+async function createAnubisConversationIfNeeded(name,message){
+  if(anubisChatConversation)return anubisChatConversation;
+  const {data,error}=await supabaseClient.from('chat_conversations').insert({customer_id:anubisChatUser.id,customer_name:name.trim()||'Misafir',status:'open'}).select().single();
+  if(error)throw error;
+  anubisChatConversation=data;subscribeAnubisCustomerChat();
+  return data;
+}
+async function sendAnubisChatMessage(){
+  try{
+    await ensureAnubisChatUser();
+    const nameEl=document.getElementById('anubisChatName'),input=document.getElementById('anubisChatInput');
+    const name=(nameEl.value||'').trim(),body=(input.value||'').trim();
+    if(!name){nameEl.focus();return alert('Lütfen adınızı yazın.');}
+    if(!body)return;
+    const conv=await createAnubisConversationIfNeeded(name,body);
+    if(conv.customer_name!==name){await supabaseClient.from('chat_conversations').update({customer_name:name}).eq('id',conv.id);conv.customer_name=name;}
+    const {error}=await supabaseClient.from('chat_messages').insert({conversation_id:conv.id,sender_id:anubisChatUser.id,sender_role:'customer',body});
+    if(error)throw error;
+    input.value='';await loadAnubisMessages();
+  }catch(e){console.error(e);alert('Mesaj gönderilemedi: '+(e.message||e));}
+}
+async function loadAnubisMessages(){
+  if(!anubisChatConversation)return;
+  const {data,error}=await supabaseClient.from('chat_messages').select('*').eq('conversation_id',anubisChatConversation.id).order('created_at',{ascending:true});
+  if(error)throw error;
+  const box=document.getElementById('anubisChatMessages');
+  box.innerHTML=(data||[]).length?(data||[]).map(m=>`<div class="anubis-chat-msg ${m.sender_role==='admin'?'admin':'customer'}">${anubisEscapeChat(m.body)}<time>${m.sender_role==='admin'?'ANUBIS GSM':'Siz'} • ${anubisChatTime(m.created_at)}</time></div>`).join(''):'<div class="anubis-chat-empty">Henüz mesaj yok. İlk mesajınızı gönderin 👋</div>';
+  box.scrollTop=box.scrollHeight;
+}
+function subscribeAnubisCustomerChat(){
+  if(!anubisChatConversation)return;
+  if(anubisChatChannel){supabaseClient.removeChannel(anubisChatChannel);anubisChatChannel=null;}
+  anubisChatChannel=supabaseClient.channel('anubis-chat-customer-'+anubisChatConversation.id).on('postgres_changes',{event:'INSERT',schema:'public',table:'chat_messages',filter:'conversation_id=eq.'+anubisChatConversation.id},payload=>{loadAnubisMessages().catch(console.error);}).subscribe();
+}
+
+async function anubisAdminChatLogin(){
+  const email=document.getElementById('anubisAdminEmail').value.trim(),password=document.getElementById('anubisAdminPassword').value;
+  if(!email||!password)return alert('Admin e-posta ve şifre gerekli.');
+  const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+  if(error) return alert('Admin girişi başarısız: '+error.message);
+  const {data:profile,error:profileError}=await supabaseClient.from('profiles').select('role').eq('id',data.user.id).single();
+  if(profileError||profile?.role!=='admin'){await supabaseClient.auth.signOut();return alert('Bu hesap canlı destek admini değil. Supabase profiles tablosunda role = admin yapmalısın.');}
+  anubisAdminUser=data.user;
+  document.getElementById('anubisAdminChatLogin').style.display='none';document.getElementById('anubisAdminChatArea').style.display='block';
+  document.getElementById('anubisAdminChatStatus').textContent='🟢 Admin bağlı: '+email;
+  await loadAdminConversations();subscribeAdminConversationList();
+}
+async function loadAdminConversations(){
+  const {data,error}=await supabaseClient.from('chat_conversations').select('*').neq('status','closed').order('updated_at',{ascending:false});
+  if(error)throw error;anubisAdminConversations=data||[];renderAdminConversationList();
+}
+function renderAdminConversationList(){
+  const box=document.getElementById('anubisChatConversationList');if(!box)return;
+  box.innerHTML=anubisAdminConversations.length?anubisAdminConversations.map(c=>`<div class="anubis-chat-conv ${anubisSelectedConversation?.id===c.id?'active':''}" onclick="selectAdminConversation('${c.id}')"><b>${anubisEscapeChat(c.customer_name||'Misafir')}</b><span>${c.status==='pending'?'🟠 Yeni':'🟢 Açık'}<br>${anubisChatTime(c.updated_at||c.created_at)}</span></div>`).join(''):'<div class="anubis-chat-empty" style="padding:15px">Açık görüşme yok.</div>';
+}
+function subscribeAdminConversationList(){
+  if(anubisAdminChannel)supabaseClient.removeChannel(anubisAdminChannel);
+  anubisAdminChannel=supabaseClient.channel('anubis-admin-conversations').on('postgres_changes',{event:'*',schema:'public',table:'chat_conversations'},()=>loadAdminConversations().catch(console.error)).subscribe();
+}
+async function selectAdminConversation(id){
+  anubisSelectedConversation=anubisAdminConversations.find(c=>c.id===id)||null;renderAdminConversationList();
+  if(!anubisSelectedConversation)return;
+  await loadAdminConversationMessages();subscribeAdminMessageChannel();
+}
+async function loadAdminConversationMessages(){
+  const c=anubisSelectedConversation;if(!c)return;
+  const {data,error}=await supabaseClient.from('chat_messages').select('*').eq('conversation_id',c.id).order('created_at',{ascending:true});
+  if(error)throw error;const box=document.getElementById('anubisAdminChatMessages');
+  box.innerHTML=(data||[]).map(m=>`<div class="anubis-chat-msg ${m.sender_role==='admin'?'admin':'customer'}">${anubisEscapeChat(m.body)}<time>${m.sender_role==='admin'?'Sen':'Müşteri'} • ${anubisChatTime(m.created_at)}</time></div>`).join('')||'<div class="anubis-chat-empty">Mesaj yok.</div>';box.scrollTop=box.scrollHeight;
+}
+function subscribeAdminMessageChannel(){
+  if(anubisAdminMessageChannel)supabaseClient.removeChannel(anubisAdminMessageChannel);
+  const id=anubisSelectedConversation?.id;if(!id)return;
+  anubisAdminMessageChannel=supabaseClient.channel('anubis-admin-messages-'+id).on('postgres_changes',{event:'INSERT',schema:'public',table:'chat_messages',filter:'conversation_id=eq.'+id},()=>loadAdminConversationMessages().catch(console.error)).subscribe();
+}
+async function sendAdminChatMessage(){
+  const c=anubisSelectedConversation,input=document.getElementById('anubisAdminChatInput');if(!c||!anubisAdminUser)return;
+  const body=(input.value||'').trim();if(!body)return;
+  const {error}=await supabaseClient.from('chat_messages').insert({conversation_id:c.id,sender_id:anubisAdminUser.id,sender_role:'admin',body});
+  if(error)return alert('Cevap gönderilemedi: '+error.message);input.value='';await supabaseClient.from('chat_conversations').update({status:'open'}).eq('id',c.id);await loadAdminConversationMessages();
+}
+async function closeSelectedAnubisConversation(){
+  if(!anubisSelectedConversation)return;
+  const {error}=await supabaseClient.from('chat_conversations').update({status:'closed'}).eq('id',anubisSelectedConversation.id);if(error)return alert('Görüşme kapatılamadı: '+error.message);
+  anubisSelectedConversation=null;await loadAdminConversations();document.getElementById('anubisAdminChatMessages').innerHTML='<div class="anubis-chat-empty">Görüşme kapatıldı.</div>';
+}
+window.addEventListener('beforeunload',()=>{if(anubisChatChannel)supabaseClient.removeChannel(anubisChatChannel);if(anubisAdminChannel)supabaseClient.removeChannel(anubisAdminChannel);if(anubisAdminMessageChannel)supabaseClient.removeChannel(anubisAdminMessageChannel);});
+</script>
+
+
+<style id="anubis-registration-toggle-v16">
+/* Kayıt alanlarını sadeleştir: seçim admin tarafından yapılır, müşteri sadece mevcut fiyatları görür. */
+#newReg,#newRegisteredUsd{display:none!important}
+#editRegV15{display:none!important}
+#editRegisteredSaleV15{display:none!important}
+#quickRegisteredSaleV11{display:none!important}
+.desktop-table-view th:nth-child(4),.desktop-table-view td:nth-child(4){display:none!important}
+.m-card-details .m-detail-box:nth-child(2){display:none!important}
+.reg-toggle-box-v16{grid-column:1/-1;border:1px solid var(--border-color);border-radius:12px;padding:11px 13px;background:rgba(25,199,181,.04)}
+.reg-toggle-head-v16{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.reg-toggle-title-v16{font-size:11px;font-weight:950;color:var(--text-main);letter-spacing:.3px}
+.reg-toggle-actions-v16{display:flex;gap:7px}
+.reg-toggle-btn-v16{border:1px solid var(--border-color);background:rgba(15,23,42,.68);color:var(--text-muted);padding:8px 11px;border-radius:9px;font-size:10px;font-weight:900;cursor:pointer}
+.reg-toggle-btn-v16.active.no{background:rgba(148,163,184,.14);color:#cbd5e1;border-color:#64748b}
+.reg-toggle-btn-v16.active.yes{background:rgba(34,197,94,.11);color:#22c55e;border-color:rgba(34,197,94,.45)}
+.reg-fee-row-v16{display:grid;grid-template-columns:1fr 1fr;gap:9px;align-items:end;margin-top:9px}
+.reg-fee-row-v16.hidden{display:none}
+.reg-derived-v16{font-size:10px;color:var(--text-muted);padding-bottom:4px}
+.reg-derived-v16 b{color:#22c55e}
+@media(max-width:700px){.reg-toggle-box-v16{grid-column:auto}.reg-fee-row-v16{grid-template-columns:1fr}}
+</style>
+<script>
+(function(){
+  const V16={
+    activeQuick:false,
+    newEnabled:false,
+    editEnabled:false,
+    initialized:false
+  };
+
+  function num(v){ return parseFloat(String(v??'0').replace(',','.')) || 0; }
+
+  // Yeni model: kayıtsız temel fiyat + opsiyonel kayıt ücreti.
+  window.normalizeProduct=function(p){
+    const sale=Math.max(0,num(p.saleUsd ?? p.usd));
+    let fee=num(p.registrationFeeUsd ?? p.registration_fee_usd);
+    const legacy=num(p.registeredUsd ?? p.registered_usd);
+    const hasToggle=p.registrationEnabled!==undefined || p.registration_enabled!==undefined;
+    let enabled=hasToggle ? Boolean(p.registrationEnabled ?? p.registration_enabled) : legacy>sale;
+    if(!hasToggle && enabled && fee<=0) fee=Math.max(0,legacy-sale);
+    fee=Math.max(0,fee);
+    const registered=enabled ? sale+fee : 0;
+    return {
+      id:p.id||('p_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,9)),
+      category:String(p.category||'DİĞER').toUpperCase(), model:String(p.model||'').trim(), storage:String(p.storage||''),
+      reg:enabled?'KAYITLI':'KAYITSIZ',
+      usd:sale, saleUsd:sale, registrationEnabled:enabled, registrationFeeUsd:fee, registeredUsd:registered,
+      costUsd:num(p.costUsd), stock:String(p.stock||'HAZIR STOK'), desc:String(p.desc||''), image:String(p.image||''),
+      imageSource:p.imageSource||'', imageTitle:p.imageTitle||''
+    };
+  };
+
+  window.getSaleUsd=function(item){return num(item?.saleUsd ?? item?.usd)};
+  window.isRegistrationEnabled=function(item){return !!item?.registrationEnabled};
+  window.getRegistrationFeeUsd=function(item){return Math.max(0,num(item?.registrationFeeUsd))};
+  window.getRegisteredUsd=function(item){return isRegistrationEnabled(item)?getSaleUsd(item)+getRegistrationFeeUsd(item):0};
+  window.getRegisteredProfitUsd=function(item){const r=getRegisteredUsd(item); return r>0?r-num(item?.costUsd):0};
+  window.isSingleRegistrationProduct=function(){return false};
+  window.getSingleRegistrationLabel=function(){return 'KAYIT YOK'};
+
+  window.registrationPriceStack=function(item){
+    const u=getSaleUsd(item), r=getRegisteredUsd(item);
+    if(!isRegistrationEnabled(item)) return `<div class="reg-price-stack single-price-stack"><div class="reg-price-line unregistered single"><small>KAYITSIZ</small><strong>${formatUsdDisplay(u)}</strong></div></div>`;
+    return `<div class="reg-price-stack"><div class="reg-price-line unregistered"><small>KAYITSIZ</small><strong>${formatUsdDisplay(u)}</strong></div><div class="reg-price-line registered"><small>KAYITLI</small><strong>${formatUsdDisplay(r)}</strong></div></div>`;
+  };
+  window.registrationTlStack=function(item,rate){
+    const u=getSaleUsd(item), r=getRegisteredUsd(item);
+    if(!isRegistrationEnabled(item)) return `<div class="reg-price-stack single-price-stack"><div class="reg-price-line unregistered single"><small>KAYITSIZ</small><strong>${formatTlDisplay(u*rate,rate)}</strong></div></div>`;
+    return `<div class="reg-price-stack"><div class="reg-price-line unregistered"><small>KAYITSIZ</small><strong>${formatTlDisplay(u*rate,rate)}</strong></div><div class="reg-price-line registered"><small>KAYITLI</small><strong>${formatTlDisplay(r*rate,rate)}</strong></div></div>`;
+  };
+
+  window.toCloudRow=function(p){
+    const n=normalizeProduct(p);
+    return {id:n.id,category:n.category,model:n.model,storage:n.storage,reg:n.reg,usd:n.saleUsd,sale_usd:n.saleUsd,
+      registration_enabled:n.registrationEnabled,registration_fee_usd:n.registrationFeeUsd,registered_usd:n.registeredUsd,
+      cost_usd:n.costUsd,stock:n.stock,description:n.desc,image:n.image,created_at:p.created_at||undefined};
+  };
+  window.fromCloudRow=function(r){
+    return normalizeProduct({id:r.id,category:r.category,model:r.model,storage:r.storage,reg:r.reg,usd:r.sale_usd??r.usd,saleUsd:r.sale_usd??r.usd,
+      registrationEnabled:r.registration_enabled,registrationFeeUsd:r.registration_fee_usd,registeredUsd:r.registered_usd,costUsd:r.cost_usd,stock:r.stock,desc:r.description,image:r.image,created_at:r.created_at});
+  };
+
+  function newBox(){
+    if(document.getElementById('newRegistrationBoxV16')) return;
+    const storage=document.getElementById('newStorage');
+    if(!storage) return;
+    const box=document.createElement('div');box.id='newRegistrationBoxV16';box.className='reg-toggle-box-v16';
+    box.innerHTML=`<div class="reg-toggle-head-v16"><div class="reg-toggle-title-v16">📲 BU CİHAZDA KAYIT OLUYOR MU?</div><div class="reg-toggle-actions-v16"><button type="button" id="newRegYesV16" class="reg-toggle-btn-v16" onclick="setNewRegistrationV16(true)">🟢 Kayıt Oluyor</button><button type="button" id="newRegNoV16" class="reg-toggle-btn-v16 active no" onclick="setNewRegistrationV16(false)">⚪ Kayıt Olmuyor</button></div></div><div id="newRegFeeRowV16" class="reg-fee-row-v16 hidden"><div><label style="display:block;font-size:10px;font-weight:900;color:var(--text-muted);margin-bottom:4px">KAYIT ÜCRETİ ($)</label><input id="newRegistrationFeeV16" class="price-input" type="text" inputmode="decimal" placeholder="Örn. 150"></div><div id="newRegDerivedV16" class="reg-derived-v16">Kayıtlı fiyat: <b>0$</b></div></div>`;
+    storage.insertAdjacentElement('afterend',box);
+  }
+  window.setNewRegistrationV16=function(enabled){
+    V16.newEnabled=!!enabled;
+    document.getElementById('newRegYesV16')?.classList.toggle('active',V16.newEnabled);document.getElementById('newRegYesV16')?.classList.toggle('yes',V16.newEnabled);
+    document.getElementById('newRegNoV16')?.classList.toggle('active',!V16.newEnabled);document.getElementById('newRegNoV16')?.classList.toggle('no',!V16.newEnabled);
+    document.getElementById('newRegFeeRowV16')?.classList.toggle('hidden',!V16.newEnabled);updateNewRegDerivedV16();
+  };
+  function updateNewRegDerivedV16(){const s=num(document.getElementById('newUsd')?.value),f=num(document.getElementById('newRegistrationFeeV16')?.value);const e=document.getElementById('newRegDerivedV16');if(e)e.innerHTML=`Kayıtlı fiyat: <b>${(s+f).toLocaleString('tr-TR')} $</b>`;}
+
+  window.addNewProduct=function(){
+    const cat=normalizeBrandText(document.getElementById('newCategory')?.value||'DİĞER').trim(), model=(document.getElementById('newModel')?.value||'').trim(), storage=(document.getElementById('newStorage')?.value||'').trim()||'512GB';
+    const sale=num(document.getElementById('newUsd')?.value), cost=num(document.getElementById('newCostUsd')?.value), stock=(document.getElementById('newStock')?.value||'').trim().toUpperCase()||'HAZIR STOK', desc=(document.getElementById('newDesc')?.value||'').trim(), image=typeof tempUploadedImageBase64!=='undefined'?tempUploadedImageBase64:'';
+    const legacyReg=num(document.getElementById('newRegisteredUsd')?.value);
+    const enabled=V16.newEnabled || legacyReg>sale;
+    const fee=enabled ? (num(document.getElementById('newRegistrationFeeV16')?.value) || Math.max(0,legacyReg-sale)) : 0;
+    if(!cat||!model)return alert('Lütfen Kategori ve Model alanlarını doldurun.');
+    if(!sale)return alert('Lütfen kayıtsız satış fiyatını girin.');
+    products.push(normalizeProduct({id:makeProductId(),category:cat,model,storage,saleUsd:sale,usd:sale,registrationEnabled:enabled,registrationFeeUsd:fee,costUsd:cost,stock,desc,image}));
+    localStorage.setItem('anubis_last_usd',sale);saveToStorage();renderTable();
+    ['smartPasteInput','newModel','newStorage','newCostUsd','newUsd','newRegistrationFeeV16','newStock','newDesc'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+    const nf=document.getElementById('newImageFile');if(nf)nf.value='';const fl=document.getElementById('fileNameLabel');if(fl)fl.textContent='Resim Seç';tempUploadedImageBase64='';setNewRegistrationV16(false);showToast('Ürün başarıyla eklendi! 🚀');
+  };
+
+  function editBox(){
+    if(document.getElementById('editRegistrationBoxV16')) return;
+    const cost=document.getElementById('editCostV15');if(!cost)return;
+    const box=document.createElement('div');box.id='editRegistrationBoxV16';box.className='reg-toggle-box-v16';
+    box.innerHTML=`<div class="reg-toggle-head-v16"><div class="reg-toggle-title-v16">📲 BU CİHAZDA KAYIT OLUYOR MU?</div><div class="reg-toggle-actions-v16"><button type="button" id="editRegYesV16" class="reg-toggle-btn-v16" onclick="setEditRegistrationV16(true)">🟢 Kayıt Oluyor</button><button type="button" id="editRegNoV16" class="reg-toggle-btn-v16 active no" onclick="setEditRegistrationV16(false)">⚪ Kayıt Olmuyor</button></div></div><div id="editRegFeeRowV16" class="reg-fee-row-v16 hidden"><div><label style="display:block;font-size:10px;font-weight:900;color:var(--text-muted);margin-bottom:4px">KAYIT ÜCRETİ ($)</label><input id="editRegistrationFeeV16" type="text" inputmode="decimal" autocomplete="off" placeholder="Örn. 150"></div><div id="editRegDerivedV16" class="reg-derived-v16">Kayıtlı fiyat: <b>0$</b></div></div>`;
+    cost.parentElement.insertAdjacentElement('beforebegin',box);
+  }
+  window.setEditRegistrationV16=function(enabled){
+    V16.editEnabled=!!enabled;
+    document.getElementById('editRegYesV16')?.classList.toggle('active',V16.editEnabled);document.getElementById('editRegYesV16')?.classList.toggle('yes',V16.editEnabled);
+    document.getElementById('editRegNoV16')?.classList.toggle('active',!V16.editEnabled);document.getElementById('editRegNoV16')?.classList.toggle('no',!V16.editEnabled);
+    document.getElementById('editRegFeeRowV16')?.classList.toggle('hidden',!V16.editEnabled);updateEditRegDerivedV16();
+  };
+  function updateEditRegDerivedV16(){const s=num(document.getElementById('editSaleV15')?.value),f=num(document.getElementById('editRegistrationFeeV16')?.value);const e=document.getElementById('editRegDerivedV16');if(e)e.innerHTML=`Kayıtlı fiyat: <b>${(s+f).toLocaleString('tr-TR')} $</b>`;}
+
+  window.openProductEditor=function(idx){
+    if(!isAdmin||!products[idx])return; v15EditIndex=idx; const p=products[idx]; const modal=document.getElementById('productEditModalV15');if(!modal)return;editBox();
+    document.getElementById('editProductTitleV15').textContent=p.model||'Ürün Düzenle';
+    const cs=document.getElementById('editCategoryV15');cs.innerHTML=categoryOrder.map(c=>`<option value="${v15Esc(c)}">${v15Esc(c)}</option>`).join('');if(![...cs.options].some(o=>o.value===(p.category||'DİĞER')))cs.insertAdjacentHTML('beforeend',`<option value="${v15Esc(p.category||'DİĞER')}">${v15Esc(p.category||'DİĞER')}</option>`);cs.value=p.category||'DİĞER';
+    document.getElementById('editModelV15').value=p.model||'';document.getElementById('editStorageV15').value=p.storage||'';document.getElementById('editCostV15').value=num(p.costUsd)||'';document.getElementById('editSaleV15').value=num(p.saleUsd??p.usd)||'';document.getElementById('editRegistrationFeeV16').value=getRegistrationFeeUsd(p)||'';setEditRegistrationV16(!!p.registrationEnabled);document.getElementById('editStockV15').value=p.stock||'HAZIR STOK';document.getElementById('editDescV15').value=p.desc||'';
+    const img=document.getElementById('editImageV15'),txt=document.getElementById('editImageTextV15');if(p.image){img.src=p.image;img.style.display='block';txt.textContent='Mevcut ürün görseli';}else{img.removeAttribute('src');img.style.display='none';txt.textContent='Bu üründe görsel yok';}
+    modal.classList.add('show');
+  };
+  window.saveProductEditor=function(){
+    const idx=v15EditIndex;if(!isAdmin||idx===null||!products[idx])return;const model=(document.getElementById('editModelV15')?.value||'').trim();if(!model)return alert('Model adı boş bırakılamaz.');
+    const sale=num(document.getElementById('editSaleV15')?.value),fee=V16.editEnabled?Math.max(0,num(document.getElementById('editRegistrationFeeV16')?.value)):0;const cost=num(document.getElementById('editCostV15')?.value);const category=normalizeBrandText(document.getElementById('editCategoryV15')?.value||'DİĞER').trim()||'DİĞER';
+    products[idx]=normalizeProduct({...products[idx],category,model,storage:(document.getElementById('editStorageV15')?.value||'512GB').trim()||'512GB',costUsd:cost,saleUsd:sale,usd:sale,registrationEnabled:V16.editEnabled,registrationFeeUsd:fee,stock:(document.getElementById('editStockV15')?.value||'HAZIR STOK').trim().toUpperCase(),desc:(document.getElementById('editDescV15')?.value||'').trim()});
+    if(!categoryOrder.includes(category)){categoryOrder.push(category);saveCategoryOrder();}localStorage.setItem(MASTER_STORAGE_KEY,JSON.stringify(products));closeProductEditor();renderCategoryManager();renderTable();scheduleCloudSync();showToast(`${products[idx].model} güncellendi! 💾`);
+  };
+
+  // Hızlı fiyat: eski "kayıtlı satış" kutusunu kayıt ücreti olarak kullan, ayrıca toggle ekle.
+  function quickBox(){
+    const model=document.getElementById('quickPriceModelV11');if(!model||document.getElementById('quickRegToggleV16'))return;
+    const box=document.createElement('div');box.id='quickRegToggleV16';box.innerHTML=`<div class="reg-toggle-actions-v16" style="margin:9px 0"><button type="button" id="quickRegYesV16" class="reg-toggle-btn-v16" onclick="setQuickRegistrationV16(true)">🟢 Kayıt Oluyor</button><button type="button" id="quickRegNoV16" class="reg-toggle-btn-v16 active no" onclick="setQuickRegistrationV16(false)">⚪ Kayıt Olmuyor</button></div>`;model.insertAdjacentElement('afterend',box);
+    const old=document.getElementById('quickRegisteredSaleV11'); if(old){old.id='quickRegistrationFeeV16';old.placeholder='Örn. 150';const lab=old.parentElement;if(lab)lab.childNodes[0].textContent='KAYIT ÜCRETİ ($)';}
+  }
+  window.setQuickRegistrationV16=function(enabled){V16.activeQuick=!!enabled;document.getElementById('quickRegYesV16')?.classList.toggle('active',V16.activeQuick);document.getElementById('quickRegYesV16')?.classList.toggle('yes',V16.activeQuick);document.getElementById('quickRegNoV16')?.classList.toggle('active',!V16.activeQuick);document.getElementById('quickRegNoV16')?.classList.toggle('no',!V16.activeQuick);const f=document.getElementById('quickRegistrationFeeV16');if(f)f.disabled=!V16.activeQuick;updateQuickProfitV16();};
+  function updateQuickProfitV16(){const c=num(document.getElementById('quickCostV11')?.value),s=num(document.getElementById('quickSaleV11')?.value),f=V16.activeQuick?num(document.getElementById('quickRegistrationFeeV16')?.value):0,e=document.getElementById('quickProfitV11');if(e){const r=s+f;e.textContent=`Kayıtsız kâr: ${(s-c).toLocaleString('tr-TR')} $${V16.activeQuick?` • Kayıtlı: ${r.toLocaleString('tr-TR')}$ • Kâr: ${(r-c).toLocaleString('tr-TR')} $`:''}`;}}
+  window.openQuickPriceEditor=function(idx){if(!isAdmin||!products[idx])return;quickPriceIndexV11=idx;quickBox();const p=products[idx];document.getElementById('quickPriceModelV11').textContent=`${p.model||'Ürün'} — ${p.storage||''}`;document.getElementById('quickCostV11').value=num(p.costUsd)||0;document.getElementById('quickSaleV11').value=num(p.saleUsd??p.usd)||0;document.getElementById('quickRegistrationFeeV16').value=getRegistrationFeeUsd(p)||0;setQuickRegistrationV16(!!p.registrationEnabled);document.getElementById('quickPriceModalV11').classList.add('show');updateQuickProfitV16();};
+  window.saveQuickPriceEditor=function(){const idx=quickPriceIndexV11;if(!isAdmin||idx===null||!products[idx])return;const c=num(document.getElementById('quickCostV11')?.value),s=num(document.getElementById('quickSaleV11')?.value),f=V16.activeQuick?num(document.getElementById('quickRegistrationFeeV16')?.value):0;products[idx]=normalizeProduct({...products[idx],costUsd:c,saleUsd:s,usd:s,registrationEnabled:V16.activeQuick,registrationFeeUsd:f});localStorage.setItem(MASTER_STORAGE_KEY,JSON.stringify(products));closeQuickPriceEditor();renderTable();scheduleCloudSync();showToast(`${products[idx].model} fiyatı güncellendi! 💾`);};
+
+  window.selectProductRegistration=function(type){if(!activeDetailItem)return;if(type==='registered'&&!isRegistrationEnabled(activeDetailItem))return;activeDetailItem._selectedRegistration=type==='registered'?'registered':'unregistered';document.querySelectorAll('#modalRegistrationChoice .reg-choice-btn').forEach(b=>b.classList.remove('active'));document.querySelector(`#modalRegistrationChoice .reg-choice-btn.${activeDetailItem._selectedRegistration}`)?.classList.add('active');updateModalRegistrationPrice();};
+  window.updateModalRegistrationPrice=function(){if(!activeDetailItem)return;const rate=num(document.getElementById('dollarRate')?.value)||43.169,u=getSaleUsd(activeDetailItem),r=getRegisteredUsd(activeDetailItem),reg=isRegistrationEnabled(activeDetailItem)&&activeDetailItem._selectedRegistration==='registered',usd=reg?r:u,tl=usd*rate;document.getElementById('modalProductPrice').textContent=formatTlDisplay(tl,rate);const lab=document.getElementById('modalSelectedRegistrationLabel');if(lab){lab.textContent=reg?'Kayıtlı fiyat':'Kayıtsız fiyat';lab.style.color=reg?'#22c55e':'#fb923c';}const wa=document.getElementById('modalWhatsAppBtn');if(wa){const txt=`Merhaba, ${activeDetailItem.model} (${activeDetailItem.storage}) sipariş vermek istiyorum. Tercihim: ${reg?'KAYITLI':'KAYITSIZ'}. Fiyat: ${formatUsdDisplay(usd)} / ${formatTlDisplay(tl,rate)}`;wa.href='https://wa.me/905345513747?text='+encodeURIComponent(txt);}};
+  window.openProductModal=function(item){activeDetailItem=item;item._selectedRegistration='unregistered';document.getElementById('modalProductTitle').textContent=item.model;document.getElementById('modalProductDesc').textContent=item.desc||'ANUBIS GSM güvencesiyle yüksek kaliteli teknoloji ürünü.';document.getElementById('modalProductStorage').textContent=item.storage||'-';document.getElementById('modalProductReg').closest('.glorious-info-box')?.remove();document.getElementById('modalProductUsd').textContent=isRegistrationEnabled(item)?`Kayıtsız: ${formatUsdDisplay(getSaleUsd(item))} • Kayıtlı: ${formatUsdDisplay(getRegisteredUsd(item))}`:`Kayıtsız: ${formatUsdDisplay(getSaleUsd(item))}`;document.getElementById('modalProductStock').textContent=item.stock||'HAZIR STOK';const img=document.getElementById('modalImgContainer');img.innerHTML=item.image?`<img src="${item.image}" alt="${item.model}">`:`<span style="color:var(--text-muted);font-size:13px">Görsel Bulunmuyor</span>`;const choice=document.getElementById('modalRegistrationChoice'),label=document.querySelector('.glorious-price-box > span');if(choice){if(!isRegistrationEnabled(item)){choice.innerHTML=`<div class="single-price-modal"><span class="single-price-tag" style="color:#fb923c">KAYITSIZ</span><strong>${formatUsdDisplay(getSaleUsd(item))}</strong></div>`;if(label)label.textContent='Fiyat';}else{choice.innerHTML=`<button type="button" class="reg-choice-btn unregistered active" onclick="selectProductRegistration('unregistered')"><span class="reg-choice-title">KAYITSIZ</span><span class="reg-choice-price">${formatUsdDisplay(getSaleUsd(item))}</span></button><button type="button" class="reg-choice-btn registered" onclick="selectProductRegistration('registered')"><span class="reg-choice-title">KAYITLI</span><span class="reg-choice-price">${formatUsdDisplay(getRegisteredUsd(item))}</span></button>`;if(label)label.textContent='Kayıt Seçimi';}}updateModalRegistrationPrice();const fav=document.getElementById('modalFavoriteBtn');if(fav){fav.style.display=isAdmin?'none':'block';fav.textContent=isFavorite(item.id)?'♥ Favoride':'♡ Favori';}document.getElementById('productDetailModal').style.display='flex';};
+  window.copyModalDetails=function(){if(!activeDetailItem)return;const rate=num(document.getElementById('dollarRate')?.value)||43.169,u=getSaleUsd(activeDetailItem),r=getRegisteredUsd(activeDetailItem),reg=isRegistrationEnabled(activeDetailItem)&&activeDetailItem._selectedRegistration==='registered',usd=reg?r:u,txt=`Ürün: ${activeDetailItem.model}\nHafıza: ${activeDetailItem.storage}\nKayıt tercihi: ${reg?'KAYITLI':'KAYITSIZ'}\nKayıtsız fiyat: ${formatUsdDisplay(u)}${isRegistrationEnabled(activeDetailItem)?`\nKayıtlı fiyat: ${formatUsdDisplay(r)}`:''}\nSeçilen fiyat: ${formatUsdDisplay(usd)} / ${formatTlDisplay(usd*rate,rate)}\nStok: ${activeDetailItem.stock}`;navigator.clipboard.writeText(txt).then(()=>showToast('Ürün bilgileri panoya kopyalandı! 📋'));};
+
+  function migrateLocalData(){
+    if(!Array.isArray(products))return;
+    products=products.map(normalizeProduct);products.forEach(p=>{p.reg=p.registrationEnabled?'KAYITLI':'KAYITSIZ';});localStorage.setItem(MASTER_STORAGE_KEY,JSON.stringify(products));
+  }
+  function ensureUI(){
+    if(V16.initialized)return;V16.initialized=true;newBox();editBox();quickBox();migrateLocalData();
+    document.getElementById('newReg')?.parentElement?.style.setProperty('display','none');
+    document.getElementById('newRegisteredUsd')?.parentElement?.style.setProperty('display','none');
+    document.getElementById('editRegV15')?.parentElement?.style.setProperty('display','none');
+    document.getElementById('editRegisteredSaleV15')?.parentElement?.style.setProperty('display','none');
+    if(typeof renderTable==='function')renderTable();
+  }
+  document.addEventListener('input',e=>{if(['newUsd','newRegistrationFeeV16'].includes(e.target?.id))updateNewRegDerivedV16();if(['quickCostV11','quickSaleV11','quickRegistrationFeeV16'].includes(e.target?.id))updateQuickProfitV16();if(['editSaleV15','editRegistrationFeeV16'].includes(e.target?.id))updateEditRegDerivedV16();});
+  window.addEventListener('load',()=>setTimeout(ensureUI,80));
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(ensureUI,50));
+})();
+</script>
+
+
+<style id="anubis-registration-clean-v17">
+/* V17 — müşteri ürün listesini sade tut, kayıt seçimini sadece detay ekranında göster */
+.reg-price-stack,
+#modalProductUsd { display:none !important; }
+.m-card-footer > div:first-child { display:none !important; }
+#subFilterContainer .sub-chip { display:none !important; }
+#subFilterContainer .sub-chip:first-child { display:block !important; }
+#modalRegistrationChoice { margin:10px 0 8px !important; }
+#modalRegistrationChoice.reg-choice-grid { gap:7px !important; }
+.reg-choice-btn{
+  min-height:54px;
+  padding:9px 10px !important;
+  border-radius:12px !important;
+  background:rgba(15,23,42,.42) !important;
+  box-shadow:none !important;
+}
+.reg-choice-btn.unregistered{border-color:rgba(249,115,22,.28) !important;}
+.reg-choice-btn.registered{border-color:rgba(34,197,94,.28) !important;}
+.reg-choice-btn.active{box-shadow:0 0 0 2px currentColor inset !important;}
+.reg-choice-title{font-size:10px !important;letter-spacing:.35px;}
+.reg-choice-price{font-size:14px !important;margin-top:4px;display:block;}
+.reg-choice-note{display:block;margin-top:3px;font-size:8px;color:var(--text-muted);font-weight:700;}
+.single-price-modal{justify-content:flex-start !important;gap:12px !important;padding:9px 11px !important;}
+.single-price-modal .single-price-tag{font-size:9px !important;}
+.single-price-modal strong{font-size:15px !important;}
+</style>
+
+<script>
+(function(){
+  /* Ürün listesinde yalnızca normal (kayıtsız) fiyatı göster. */
+  window.registrationPriceStack=function(item){
+    return `<div class="reg-price-stack"><div class="reg-price-line unregistered single"><small>FİYAT</small><strong>${formatUsdDisplay(getSaleUsd(item))}</strong></div></div>`;
+  };
+  window.registrationTlStack=function(item,rate){
+    return `<div class="reg-price-stack"><div class="reg-price-line unregistered single"><small>FİYAT</small><strong>${formatTlDisplay(getSaleUsd(item)*rate,rate)}</strong></div></div>`;
+  };
+
+  /* Detay penceresi: kayıt seçimini burada tut, ama daha temiz göster. */
+  const oldOpen=window.openProductModal;
+  window.openProductModal=function(item){
+    oldOpen(item);
+    const choice=document.getElementById('modalRegistrationChoice');
+    const label=document.querySelector('.glorious-price-box > span');
+    if(!choice) return;
+    if(isRegistrationEnabled(item)){
+      const fee=getRegistrationFeeUsd(item);
+      choice.classList.add('reg-choice-grid');
+      choice.innerHTML=`
+        <button type="button" class="reg-choice-btn unregistered active" onclick="selectProductRegistration('unregistered')">
+          <span class="reg-choice-title">KAYITSIZ</span>
+          <span class="reg-choice-price">${formatUsdDisplay(getSaleUsd(item))}</span>
+        </button>
+        <button type="button" class="reg-choice-btn registered" onclick="selectProductRegistration('registered')">
+          <span class="reg-choice-title">KAYITLI</span>
+          <span class="reg-choice-price">${formatUsdDisplay(getRegisteredUsd(item))}</span>
+          <span class="reg-choice-note">+${formatUsdDisplay(fee)} kayıt</span>
+        </button>`;
+      if(label) label.textContent='Satın alma seçeneği';
+    }else{
+      choice.classList.remove('reg-choice-grid');
+      choice.innerHTML=`<div class="single-price-modal"><span class="single-price-tag" style="color:#fb923c">KAYITSIZ</span><strong>${formatUsdDisplay(getSaleUsd(item))}</strong></div>`;
+      if(label) label.textContent='Fiyat';
+    }
+    /* Müşteriye liste fiyatlarını tekrar göstermesin. */
+    const extra=document.getElementById('modalProductUsd');
+    if(extra) extra.style.display='none';
+  };
+
+  /* Kayıt filtreleri artık gereksiz: yalnızca "Tüm Hafızalar" kalsın. */
+  function cleanRegistrationFilters(){
+    document.querySelectorAll('#subFilterContainer .sub-chip').forEach((el,i)=>{
+      if(i>0) el.remove();
+    });
+  }
+  document.addEventListener('DOMContentLoaded',cleanRegistrationFilters);
+  window.addEventListener('load',cleanRegistrationFilters);
+  setTimeout(cleanRegistrationFilters,200);
+  setTimeout(cleanRegistrationFilters,900);
+})();
+</script>
+
+
+<style id="anubis-v18-final-ui">
+/* V18: sade kayıt seçimi + 3 para birimi + mobil dokunuşlar */
+.currency-picker-wrap{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border-color);background:rgba(30,41,59,.82);backdrop-filter:blur(6px);padding:5px 7px 5px 9px;border-radius:10px;color:var(--text-muted);font-size:10px;font-weight:850}
+.currency-picker-label{white-space:nowrap}
+.currency-picker{appearance:none;border:0;outline:none;background:transparent;color:var(--text-main);font-size:11px;font-weight:950;cursor:pointer;padding:2px 18px 2px 1px;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 9px) 50%,calc(100% - 5px) 50%;background-size:4px 4px,4px 4px;background-repeat:no-repeat}
+.currency-picker option{background:#0b111c;color:#fff}
+.anubis-admin-mode .desktop-table-view th:nth-child(4),.anubis-admin-mode .desktop-table-view td:nth-child(4){display:table-cell!important}
+.anubis-customer-mode .desktop-table-view th:nth-child(4),.anubis-customer-mode .desktop-table-view td:nth-child(4),.anubis-customer-mode .desktop-table-view th:nth-child(5),.anubis-customer-mode .desktop-table-view td:nth-child(5){display:none!important}
+.anubis-v18-reg-btn{min-height:44px;min-width:118px;border-radius:11px;border:1px solid var(--border-color);padding:8px 12px;background:rgba(15,23,42,.58);font-size:11px;font-weight:950;cursor:pointer;transition:.16s;display:flex;align-items:center;justify-content:center;gap:5px;letter-spacing:.2px}
+.anubis-v18-reg-btn.registered{color:#22c55e;border-color:rgba(34,197,94,.34);background:rgba(34,197,94,.08)}
+.anubis-v18-reg-btn.unregistered{color:#ef4444;border-color:rgba(239,68,68,.34);background:rgba(239,68,68,.08)}
+.anubis-v18-reg-btn.active{box-shadow:0 0 0 2px currentColor inset,0 0 16px rgba(255,255,255,.05);transform:translateY(-1px)}
+.anubis-v18-reg-actions{display:flex;gap:8px;flex-wrap:wrap}
+.reg-derived-v16{display:none!important}
+#newRegistrationFeeV16,#editRegistrationFeeV16,#quickRegistrationFeeV16{font-size:12px}
+.m-card-footer .m-price-usd{font-size:9px;opacity:.72}
+#modalRegistrationChoice{width:100%}
+#modalRegistrationChoice.reg-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.anubis-v18-price-note{font-size:9px;color:var(--text-muted);margin-top:2px}
+.anubis-chat-fab{right:18px;bottom:84px;min-height:48px;padding:12px 16px;border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.28)}
+.anubis-chat-overlay{z-index:9999}
+@media(max-width:700px){
+  .top-tools-bar{width:100%;justify-content:flex-end;flex-wrap:wrap}
+  .currency-picker-wrap{flex:1;justify-content:space-between;min-width:128px}
+  .currency-picker{flex:1;text-align:right}
+  .header-content{gap:12px}
+  .header-right-area{width:100%;align-items:stretch}
+  .discount-pulse-btn{justify-content:center;width:100%}
+  .instagram-badge{justify-content:center}
+  .mobile-bottom-bar{z-index:10000}
+  .anubis-chat-fab{right:12px;bottom:76px;max-width:calc(100vw - 24px);font-size:12px}
+  #modalRegistrationChoice.reg-choice-grid{grid-template-columns:1fr 1fr}
+  .anubis-v18-reg-btn{min-width:0;width:100%;min-height:46px}
+  .modal-price-summary{margin-top:4px}
+  .glorious-actions{grid-template-columns:1fr 1fr!important}
+  .glorious-btn-primary{grid-column:1/-1}
+}
+@media(max-width:390px){
+  .currency-picker-wrap{min-width:0}
+  #modalRegistrationChoice.reg-choice-grid{grid-template-columns:1fr}
+}
+body.anubis-light-theme .currency-picker-wrap{background:#fff}
+body.anubis-light-theme .currency-picker option{background:#fff;color:#172033}
+</style>
+
+<script id="anubis-v18-final-js">
+(function(){
+  'use strict';
+  const DEFAULT_USD_TRY=43.169;
+  const DEFAULT_USD_EUR=0.92;
+  let v18UsdTry=parseFloat(localStorage.getItem('anubis_usd_try'))||parseFloat(document.getElementById('dollarRate')?.value)||DEFAULT_USD_TRY;
+  let v18UsdEur=parseFloat(localStorage.getItem('anubis_usd_eur'))||DEFAULT_USD_EUR;
+  let v18Currency='TRY';
+
+  function v18Num(v){const n=parseFloat(String(v??'').replace(',','.'));return Number.isFinite(n)?n:0;}
+  function v18Symbol(c){return c==='USD'?'$':c==='EUR'?'€':'₺';}
+  function v18Name(c){return c==='USD'?'USD':c==='EUR'?'EUR':'TL';}
+  function v18MoneyFromUsd(usd,c=v18Currency){
+    const n=v18Num(usd);
+    const value=c==='USD'?n:(c==='EUR'?n*v18UsdEur:n*v18UsdTry);
+    return `${value.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2})} ${v18Symbol(c)}`;
+  }
+  function v18SetBodyMode(){document.body.classList.toggle('anubis-admin-mode',!!isAdmin);document.body.classList.toggle('anubis-customer-mode',!isAdmin);}
+  window.getV18Currency=function(){return v18Currency;};
+  window.setDisplayCurrency=function(c){
+    v18Currency=['TRY','USD','EUR'].includes(c)?c:'TRY';
+    currentCurrency = v18Currency==='TRY' ? 'TL' : v18Currency;
+    const sel=document.getElementById('currencySelector');if(sel)sel.value=v18Currency;
+    renderTable();
+    updateModalRegistrationPrice();
+  };
+  window.toggleCurrencyMode=function(){
+    const order=['TRY','USD','EUR'];
+    const i=order.indexOf(v18Currency);setDisplayCurrency(order[(i+1)%order.length]);
+  };
+  function v18SyncHeader(){const sel=document.getElementById('currencySelector');if(sel)sel.value=v18Currency;}
+
+  async function v18FetchRates(){
+    try{
+      const response=await fetch('https://open.er-api.com/v6/latest/USD',{cache:'no-store'});
+      const data=await response.json();
+      if(data?.rates?.TRY){
+        v18UsdTry=v18Num(data.rates.TRY)||v18UsdTry;
+        const eur=v18Num(data.rates.EUR); if(eur>0)v18UsdEur=eur;
+        const rateEl=document.getElementById('dollarRate');if(rateEl)rateEl.value=v18UsdTry.toFixed(3);
+        localStorage.setItem('anubis_usd_try',String(v18UsdTry));
+        localStorage.setItem('anubis_usd_eur',String(v18UsdEur));
+        const status=document.getElementById('rateUpdateStatus');if(status)status.textContent='Canlı Kur • USD / EUR / TL';
+        renderTable();updateModalRegistrationPrice();
+      }
+    }catch(e){const status=document.getElementById('rateUpdateStatus');if(status)status.textContent='Kur çevrimdışı • Son kayıtlı kur';}
+  }
+  window.fetchLiveExchangeRate=v18FetchRates;
+  document.addEventListener('input',e=>{if(e.target?.id==='dollarRate'){const v=v18Num(e.target.value);if(v>0){v18UsdTry=v;localStorage.setItem('anubis_usd_try',String(v));setTimeout(()=>{v18RefreshRenderedPrices();updateModalRegistrationPrice();},0);}}});
+
+  function v18RefreshRenderedPrices(){
+    document.querySelectorAll('.desktop-table-view .price-display').forEach(el=>{
+      const row=el.closest('tr');const idx=row?.dataset?.originalIndex;
+      if(idx===undefined)return;
+    });
+    document.querySelectorAll('.m-product-card').forEach(card=>{
+      const idx=parseInt(card.dataset.index,10); if(!Number.isInteger(idx)||!products[idx])return;
+      const p=products[idx], price=card.querySelector('.m-price');
+      if(price)price.textContent=getSaleUsd(p)>0?v18MoneyFromUsd(getSaleUsd(p)):'Fiyat sorunuz';
+      const note=card.querySelector('.m-price-usd');if(note)note.textContent=`${v18Name(v18Currency)} satış fiyatı`;
+    });
+    document.querySelectorAll('.desktop-table-view tr.product-row').forEach((row)=>{
+      const item=products.find(p=>p.model===row.querySelector('td:nth-child(2)')?.textContent?.trim());
+      if(item){const priceCell=row.querySelector('.price-display');if(priceCell)priceCell.textContent=v18MoneyFromUsd(getSaleUsd(item));}
+    });
+    // Daha güvenilir eşleme: tablo satırındaki sıra üzerinden güncelle.
+    document.querySelectorAll('.desktop-table-view tr.product-row').forEach((row)=>{
+      const dataIndex=row.getAttribute('data-index');
+      if(dataIndex!==null && products[Number(dataIndex)]){
+        const priceCell=row.querySelector('.price-display');if(priceCell)priceCell.textContent=v18MoneyFromUsd(getSaleUsd(products[Number(dataIndex)]));
+      }
+    });
+  }
+
+  function v18PriceRenderWrapper(){
+    v18SetBodyMode();
+    v18RefreshRenderedPrices();
+    v18SyncHeader();
+  }
+  const previousRenderTable=window.renderTable;
+  if(typeof previousRenderTable==='function'){
+    window.renderTable=function(){previousRenderTable();setTimeout(v18PriceRenderWrapper,0);};
+  }
+
+  // Satış listesinde fiyatı sade biçimde yalnızca seçilen para biriminde göster.
+  function v18PatchTableRows(){
+    document.querySelectorAll('.desktop-table-view tr.product-row').forEach((row)=>{
+      const cells=row.querySelectorAll('td');
+      // Model hücresinin ilk metin düğümü yalnızca model adını içerir; admin select'i yok say.
+      const model=String(cells[1]?.childNodes?.[0]?.textContent||'').trim();
+      const p=products.find(x=>x.model===model);
+      const priceCell=row.querySelector('.price-display');
+      if(p&&priceCell)priceCell.textContent=v18MoneyFromUsd(getSaleUsd(p));
+    });
+  }
+
+  const oldToggleAdmin=window.toggleAdminPanel;
+  if(typeof oldToggleAdmin==='function'){
+    window.toggleAdminPanel=function(show){oldToggleAdmin(show);v18SetBodyMode();};
+  }
+
+  // Admin kayıt seçimi: yeşil Kayıtlı / kırmızı Kayıtsız.
+  function v18RestyleRegistrationButtons(){
+    document.querySelectorAll('.reg-toggle-btn-v16').forEach(btn=>{
+      const yes=btn.classList.contains('yes')||/kayıt oluyor/i.test(btn.textContent);
+      const no=btn.classList.contains('no')||/kayıt olmuyor/i.test(btn.textContent);
+      btn.classList.toggle('anubis-v18-reg-btn',yes||no);
+      if(yes){btn.textContent='🟢 Kayıtlı';btn.classList.add('registered');btn.classList.remove('unregistered');}
+      if(no){btn.textContent='🔴 Kayıtsız';btn.classList.add('unregistered');btn.classList.remove('registered');}
+    });
+  }
+  const oldNewSet=window.setNewRegistrationV16;
+  if(typeof oldNewSet==='function'){
+    window.setNewRegistrationV16=function(enabled){oldNewSet(enabled);v18RestyleRegistrationButtons();};
+  }
+  const oldEditSet=window.setEditRegistrationV16;
+  if(typeof oldEditSet==='function'){
+    window.setEditRegistrationV16=function(enabled){oldEditSet(enabled);v18RestyleRegistrationButtons();};
+  }
+  const oldQuickSet=window.setQuickRegistrationV16;
+  if(typeof oldQuickSet==='function'){
+    window.setQuickRegistrationV16=function(enabled){oldQuickSet(enabled);v18RestyleRegistrationButtons();};
+  }
+
+  // Müşteri detayında fiyatları seçim butonlarından kaldır; tek bir seçili fiyat göster.
+  function v18BuildRegistrationChoice(item){
+    const box=document.getElementById('modalRegistrationChoice');
+    const label=document.querySelector('.glorious-price-box > span');
+    if(!box)return;
+    if(typeof isRegistrationEnabled==='function' && isRegistrationEnabled(item)){
+      box.classList.add('reg-choice-grid');
+      box.innerHTML=`<button type="button" class="anubis-v18-reg-btn unregistered active" onclick="selectProductRegistration('unregistered')">🔴 Kayıtsız</button><button type="button" class="anubis-v18-reg-btn registered" onclick="selectProductRegistration('registered')">🟢 Kayıtlı</button>`;
+      if(label)label.textContent='Kayıt seçimi';
+    }else{
+      box.classList.remove('reg-choice-grid');
+      box.innerHTML=`<button type="button" class="anubis-v18-reg-btn unregistered active" style="width:100%" onclick="selectProductRegistration('unregistered')">🔴 Kayıtsız</button>`;
+      if(label)label.textContent='Kayıt durumu';
+    }
+  }
+
+  const oldOpenModal=window.openProductModal;
+  window.openProductModal=function(item){
+    oldOpenModal(item);
+    item._selectedRegistration='unregistered';
+    v18BuildRegistrationChoice(item);
+    const usd=getSaleUsd(item);
+    const priceEl=document.getElementById('modalProductUsd');if(priceEl)priceEl.style.display='none';
+    updateModalRegistrationPrice();
+  };
+
+  window.updateModalRegistrationPrice=function(){
+    if(!activeDetailItem)return;
+    const item=activeDetailItem;
+    const registered=typeof isRegistrationEnabled==='function'&&isRegistrationEnabled(item)&&item._selectedRegistration==='registered';
+    const usd=getSaleUsd(item)+(registered?(typeof getRegistrationFeeUsd==='function'?getRegistrationFeeUsd(item):0):0);
+    const priceEl=document.getElementById('modalProductPrice');if(priceEl)priceEl.textContent=v18MoneyFromUsd(usd);
+    const labelEl=document.getElementById('modalSelectedRegistrationLabel');
+    if(labelEl){labelEl.textContent=registered?'Kayıtlı fiyat':'Kayıtsız fiyat';labelEl.style.color=registered?'#22c55e':'#ef4444';}
+    const selected=document.querySelector('#modalRegistrationChoice .anubis-v18-reg-btn.active');
+    if(selected)selected.setAttribute('aria-pressed','true');
+    const wa=document.getElementById('modalWhatsAppBtn');
+    if(wa){
+      const currency=v18MoneyFromUsd(usd);const status=registered?'KAYITLI':'KAYITSIZ';
+      wa.href='https://wa.me/905345513747?text='+encodeURIComponent(`Merhaba, ${item.model} (${item.storage}) sipariş vermek istiyorum. Tercihim: ${status}. Fiyat: ${currency}`);
+    }
+  };
+  const oldSelectReg=window.selectProductRegistration;
+  window.selectProductRegistration=function(type){
+    oldSelectReg(type);
+    if(activeDetailItem)v18BuildRegistrationChoice(activeDetailItem);
+    updateModalRegistrationPrice();
+  };
+
+  window.copyModalDetails=function(){
+    const item=activeDetailItem;if(!item)return;
+    const registered=typeof isRegistrationEnabled==='function'&&isRegistrationEnabled(item)&&item._selectedRegistration==='registered';
+    const usd=getSaleUsd(item)+(registered?(typeof getRegistrationFeeUsd==='function'?getRegistrationFeeUsd(item):0):0);
+    const status=registered?'KAYITLI':'KAYITSIZ';
+    const txt=`Ürün: ${item.model}\nHafıza: ${item.storage}\nKayıt tercihi: ${status}\nFiyat: ${v18MoneyFromUsd(usd)}\nStok: ${item.stock}`;
+    navigator.clipboard.writeText(txt).then(()=>showToast('Ürün bilgileri panoya kopyalandı! 📋'));
+  };
+
+  // Admin alanlarında tek fiyat + kayıt ücreti modelini zorla.
+  function v18CleanupAdminForm(){
+    document.querySelectorAll('#newReg,#newRegisteredUsd,#editRegV15,#editRegisteredSaleV15,#quickRegisteredSaleV11').forEach(el=>{el.style.display='none';if(el.parentElement)el.parentElement.style.display='none';});
+    document.querySelectorAll('.reg-derived-v16').forEach(el=>el.style.display='none');
+    v18RestyleRegistrationButtons();
+    const n=document.getElementById('newUsd');if(n)n.placeholder='Satış Fiyatı ($)';
+    const q=document.getElementById('quickSaleV11');if(q)q.previousElementSibling?.childNodes?.length && (q.parentElement.childNodes[0].textContent='SATIŞ ($)');
+    const e=document.getElementById('editSaleV15');if(e){const lab=e.parentElement?.querySelector('label');if(lab)lab.firstChild.textContent='SATIŞ ($) ';}
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    setDisplayCurrency('TRY');
+    v18SetBodyMode();
+    v18CleanupAdminForm();
+    v18FetchRates();
+  });
+  window.addEventListener('load',()=>{setTimeout(v18CleanupAdminForm,120);setTimeout(v18RestyleRegistrationButtons,260);});
+  setInterval(v18FetchRates,30*60*1000);
+})();
+</script>
+
 </body>
 </html>

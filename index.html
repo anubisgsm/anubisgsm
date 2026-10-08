@@ -1959,6 +1959,18 @@ header .header-right-area .instagram-badge {
 }
 </style>
 
+
+<style id="anubis-theme-toggle-fix">
+body.anubis-light-theme{--bg-deep:#f4f1f7;--bg-card:rgba(255,255,255,.94);--bg-glass:rgba(255,255,255,.97);--text-main:#21172a;--text-muted:#62556b;--border-color:rgba(73,43,84,.16);background-color:var(--bg-deep)!important;background-image:radial-gradient(circle at 15% 12%,rgba(25,199,181,.10),transparent 38%),radial-gradient(circle at 86% 18%,rgba(244,194,13,.12),transparent 35%),radial-gradient(circle at 50% 88%,rgba(111,62,130,.08),transparent 48%)!important;color:var(--text-main)!important}
+body.anubis-light-theme header{background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(246,239,249,.98))!important;color:#21172a!important}
+body.anubis-light-theme header h1,body.anubis-light-theme header p,body.anubis-light-theme .mobile-welcome h2,body.anubis-light-theme .mobile-welcome p,body.anubis-light-theme .product-card h3,body.anubis-light-theme .product-card .product-name,body.anubis-light-theme .modal-card h3,body.anubis-light-theme .modal-card h4,body.anubis-light-theme .filter-tab,body.anubis-light-theme label{color:#21172a!important}
+body.anubis-light-theme .product-card,body.anubis-light-theme .modal-card,body.anubis-light-theme .admin-panel,body.anubis-light-theme .search-box,body.anubis-light-theme .filter-bar,body.anubis-light-theme .glorious-info-box,body.anubis-light-theme .mobile-welcome{background-color:rgba(255,255,255,.90)!important;color:#21172a;border-color:rgba(73,43,84,.14)!important}
+body.anubis-light-theme input,body.anubis-light-theme textarea,body.anubis-light-theme select{background:#fff!important;color:#21172a!important;border-color:rgba(73,43,84,.18)!important}
+body.anubis-light-theme .utility-btn,body.anubis-light-theme .filter-tab{background:rgba(73,43,84,.06)!important;color:#21172a!important;border-color:rgba(73,43,84,.15)!important}
+body.anubis-light-theme .filter-tab.active{background:rgba(25,199,181,.14)!important}
+body.anubis-light-theme .mobile-bottom-bar{background:rgba(255,255,255,.97)!important;border-color:rgba(73,43,84,.15)!important}
+body.anubis-light-theme .nav-bar-item{color:#4c3a55!important}.theme-toggle-icon{display:inline-block;margin-right:5px}
+</style>
 </head>
 <body>
 
@@ -2006,7 +2018,7 @@ header .header-right-area .instagram-badge {
 
             <div class="header-right-area">
                 <button class="discount-pulse-btn" onclick="triggerHaptic(); openQuizModal()">
-                    🎯 200 TL İndirim Kazan!
+                    📸 Instagram'ı Takip Et → 200 TL Kazan!
                 </button>
                 <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge" onclick="triggerHaptic()">
                     <svg viewBox="0 0 24 24">
@@ -2275,7 +2287,12 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                     <a href="https://instagram.com/anubisgsm" target="_blank" class="instagram-badge" style="display:flex; justify-content:center; margin:15px 0;" onclick="triggerHaptic()">
                         Instagram'da Takip Et (@anubisgsm)
                     </a>
-                    <button class="admin-btn" onclick="triggerHaptic(); goToQuizStep2()">Takip Ettim, Soruyu Getir 🚀</button>
+                    <input id="campaignInstagramUser" type="text" placeholder="Instagram kullanıcı adın (@ornek)" autocomplete="off" style="width:100%;box-sizing:border-box;margin-bottom:10px;padding:11px 12px;border-radius:10px;border:1px solid var(--border-color);background:rgba(255,255,255,.04);color:white;">
+                    <label style="display:flex;gap:8px;align-items:flex-start;text-align:left;font-size:12px;color:var(--text-muted)!important;margin-bottom:12px;">
+                        <input id="campaignFollowConfirm" type="checkbox" style="margin-top:2px;width:16px;height:16px;">
+                        <span style="color:var(--text-muted)!important;">@anubisgsm hesabını takip ettiğimi onaylıyorum. Takip kampanyası WhatsApp üzerinden kontrol edilebilir.</span>
+                    </label>
+                    <button class="admin-btn" onclick="triggerHaptic(); startCampaignQuiz()">Takip Ettim, Soruyu Getir 🚀</button>
                 </div>
                 <div id="quizStep2" class="quiz-step">
                     <p id="quizQuestionText" style="font-weight:700; color:white; font-size:14px; margin-bottom:12px;"></p>
@@ -2284,10 +2301,10 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 <div id="quizStep3" class="quiz-step" style="text-align:center;">
                     <div style="font-size:40px; margin-bottom:8px;">🎉</div>
                     <h3 style="color:var(--accent-gold); margin-bottom:8px;">Tebrikler, Doğru Cevap!</h3>
-                    <div style="background:rgba(7,9,14,0.9); border:2px dashed var(--accent-gold); padding:12px; border-radius:10px; font-size:18px; font-weight:800; color:var(--accent-gold); margin:12px 0;">
-                        ANUBIS200TR
+                    <div style="background:rgba(7,9,14,0.9);border:2px dashed var(--accent-gold);padding:12px;border-radius:10px;font-size:14px;font-weight:700;color:var(--accent-gold);margin:12px 0;line-height:1.5;">
+                        🎁 200 TL indirim hakkın oluştu!<br><span style="font-size:11px;color:var(--text-muted);">Instagram takip bilgisi WhatsApp üzerinden kontrol edilir.</span>
                     </div>
-                    <a href="#" id="whatsappCouponBtn" target="_blank" class="glorious-btn-primary" onclick="triggerHaptic()">📲 Kuponla WhatsApp'tan Sipariş Ver</a>
+                    <a href="#" id="whatsappCouponBtn" target="_blank" class="glorious-btn-primary" onclick="triggerHaptic()">📲 200 TL İndirim İçin WhatsApp'tan Yaz</a>
                 </div>
             </div>
         </div>
@@ -2380,7 +2397,12 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             document.querySelectorAll(".quiz-step").forEach(el => el.classList.remove("active"));
             document.getElementById("quizStep" + stepNum).classList.add("active");
         }
-        function goToQuizStep2() {
+        function startCampaignQuiz() {
+            const username = String(document.getElementById("campaignInstagramUser")?.value || "").trim();
+            const confirmed = document.getElementById("campaignFollowConfirm")?.checked;
+            if (!username) { alert("Lütfen Instagram kullanıcı adını yaz."); return; }
+            if (!confirmed) { alert("Devam etmek için Instagram'ı takip ettiğini onaylamalısın."); return; }
+            localStorage.setItem("anubis_campaign_instagram", username);
             showQuizStep(2);
             let randomIndex = Math.floor(Math.random() * generalKnowledgeQuestions.length);
             currentActiveQuestion = generalKnowledgeQuestions[randomIndex];
@@ -2394,11 +2416,12 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         function checkQuizAnswer(selectedIndex) {
             if (selectedIndex === currentActiveQuestion.answer) {
                 showQuizStep(3);
-                let waText = "Merhaba, genel kültür sorusunu bildim ve 200 TL indirim hakkı kazandım. (Kupon: ANUBIS200TR)";
+                const igUser = localStorage.getItem("anubis_campaign_instagram") || "belirtilmedi";
+                let waText = `Merhaba, ANUBIS GSM 200 TL Instagram kampanyasından yararlanmak istiyorum. Instagram kullanıcı adım: ${igUser}. Genel kültür sorusunu doğru cevapladım. Takip kontrolü sonrası indirimimi kullanmak istiyorum.`;
                 document.getElementById("whatsappCouponBtn").href = "https://wa.me/905345513747?text=" + encodeURIComponent(waText);
             } else {
                 alert("Yanlış cevap! Tekrar deneyebilirsin.");
-                goToQuizStep2();
+                startCampaignQuiz();
             }
         }
 
@@ -2665,7 +2688,20 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             document.getElementById("currencyModeLabel").textContent = currentCurrency === 'TL' ? 'TL (₺)' : 'USD ($)';
             renderTable();
         }
-        function toggleTheme() { alert("Tema modu aktif!"); }
+        function applySavedTheme() {
+            const saved = localStorage.getItem("anubis_theme") || "dark";
+            document.body.classList.toggle("anubis-light-theme", saved === "light");
+            const btn = document.querySelector('.utility-btn[onclick*="toggleTheme"]');
+            if (btn) btn.innerHTML = saved === "light" ? '<span class="theme-toggle-icon">🌙</span> Koyu Tema' : '<span class="theme-toggle-icon">☀️</span> Açık Tema';
+        }
+        function toggleTheme() {
+            const isLight = document.body.classList.toggle("anubis-light-theme");
+            localStorage.setItem("anubis_theme", isLight ? "light" : "dark");
+            const btn = document.querySelector('.utility-btn[onclick*="toggleTheme"]');
+            if (btn) btn.innerHTML = isLight ? '<span class="theme-toggle-icon">🌙</span> Koyu Tema' : '<span class="theme-toggle-icon">☀️</span> Açık Tema';
+            triggerHaptic();
+        }
+        document.addEventListener("DOMContentLoaded", applySavedTheme);
 
         function renderFilterTabs() {
             let tabsContainer = document.getElementById("filterTabsContainer");

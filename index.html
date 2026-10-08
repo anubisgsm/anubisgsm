@@ -5247,5 +5247,273 @@ body.anubis-light-theme .currency-picker option{background:#fff;color:#172033}
   .m-product-card{cursor:pointer}
 }
 </style>
+
+<style id="anubis-status-final-v22">
+/* V22 — Ana ekranda kayıt durumu + doğru sütun hizası + mobil */
+#priceTable thead th, #priceTable tbody td { box-sizing:border-box; }
+#priceTable .final-status-cell { display:table-cell !important; text-align:center; vertical-align:middle; min-width:150px; }
+#priceTable .final-price-cell { display:table-cell !important; text-align:left; vertical-align:middle; min-width:150px; }
+body.anubis-customer-mode #priceTable .final-status-cell,
+body.anubis-admin-mode #priceTable .final-status-cell { display:table-cell !important; }
+
+.final-reg-pill{
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  min-width:128px; min-height:38px; padding:8px 12px; box-sizing:border-box;
+  border-radius:10px; font-size:10.5px; font-weight:950; line-height:1.15;
+  letter-spacing:.15px; white-space:nowrap;
+}
+.final-reg-pill.yes{
+  color:#22c55e; background:rgba(34,197,94,.10);
+  border:1px solid rgba(34,197,94,.35);
+}
+.final-reg-pill.no{
+  color:#ef4444; background:rgba(239,68,68,.10);
+  border:1px solid rgba(239,68,68,.35);
+}
+button.final-reg-pill{cursor:pointer; transition:.16s ease;}
+button.final-reg-pill:hover{transform:translateY(-1px);filter:brightness(1.07);}
+button.final-reg-pill:active{transform:scale(.97);}
+
+#priceTable .final-main-price{
+  color:var(--primary-color); font-size:15px; font-weight:950;
+  text-shadow:0 0 10px var(--primary-glow); white-space:nowrap;
+}
+#priceTable .final-admin-price-note{
+  display:block; margin-top:4px; color:var(--text-muted); font-size:9.5px; font-weight:700;
+}
+
+@media(max-width:768px){
+  #priceTable{font-size:12px;}
+  #priceTable .final-status-cell{display:table-cell!important;min-width:0;width:1%;white-space:nowrap;}
+  .mobile-final-status{
+    width:100%; display:flex; margin-top:2px;
+  }
+  .mobile-final-status .final-reg-pill{width:100%; min-width:0; min-height:40px;}
+  .m-card-title{max-width:100%!important;}
+  .m-product-card .final-mobile-price-wrap{
+    display:flex; align-items:flex-end; justify-content:space-between; gap:10px;
+    margin-bottom:9px;
+  }
+  .m-product-card .final-mobile-price{
+    font-size:21px; font-weight:950; color:var(--primary-color);
+    line-height:1.05; text-shadow:0 0 10px var(--primary-glow);
+  }
+  .m-product-card .final-mobile-currency-note{
+    margin-top:3px; font-size:9px; color:var(--text-muted); font-weight:700;
+  }
+}
+@media(max-width:390px){
+  .mobile-final-status .final-reg-pill{font-size:10px; min-height:38px;}
+  .m-product-card .final-mobile-price{font-size:20px;}
+}
+</style>
+<script id="anubis-status-final-v22-js">
+(function(){
+  'use strict';
+
+  function n(v){
+    const x=parseFloat(String(v??'').replace(',','.'));
+    return Number.isFinite(x)?x:0;
+  }
+  function esc(v){
+    return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+  }
+  function currency(){
+    try { return typeof getV18Currency==='function' ? getV18Currency() : 'TRY'; } catch(_){ return 'TRY'; }
+  }
+  function mainPrice(usd){
+    const c=currency();
+    const usdTry=n(localStorage.getItem('anubis_usd_try')) || n(document.getElementById('dollarRate')?.value) || 43.169;
+    const usdEur=n(localStorage.getItem('anubis_usd_eur')) || 0.92;
+    let val=usd;
+    let sym='$';
+    if(c==='EUR'){ val=usd*usdEur; sym='€'; }
+    else if(c==='TRY'){ val=usd*usdTry; sym='₺'; }
+    return `${val.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2})} ${sym}`;
+  }
+  function currencyName(){
+    const c=currency(); return c==='EUR'?'EUR':c==='USD'?'USD':'TL';
+  }
+  function regEnabled(p){ return !!(typeof isRegistrationEnabled==='function' ? isRegistrationEnabled(p) : (p?.registrationEnabled ?? p?.registration_enabled)); }
+  function regLabel(p){ return regEnabled(p) ? '🟢 Kayıt Oluyor' : '🔴 Kayıt Olmuyor'; }
+
+  function ensureModes(){
+    document.body.classList.toggle('anubis-admin-mode',!!isAdmin);
+    document.body.classList.toggle('anubis-customer-mode',!isAdmin);
+  }
+
+  function headerHtml(){
+    return `
+      <th>GÖRSEL</th>
+      <th>MODEL</th>
+      <th>HAFIZA</th>
+      <th class="final-status-head">KAYIT DURUMU</th>
+      <th>GÜNCEL FİYAT</th>
+      <th>STOK DURUMU</th>
+      <th>SİPARİŞ</th>
+      ${isAdmin ? '<th>FİYAT DÜZENLE</th><th>KÂR $</th><th>İŞLEM</th>' : ''}
+    `;
+  }
+
+  function statusControl(item){
+    const enabled=regEnabled(item);
+    if(isAdmin){
+      return `<button type="button" class="final-reg-pill ${enabled?'yes':'no'}"
+        onclick="toggleProductRegistrationFromMain(${item.originalIndex}, event)"
+        title="Kayıt durumunu değiştir">${enabled?'🟢 Kayıt Oluyor':'🔴 Kayıt Olmuyor'}</button>`;
+    }
+    return `<span class="final-reg-pill ${enabled?'yes':'no'}">${enabled?'🟢 Kayıt Oluyor':'🔴 Kayıt Olmuyor'}</span>`;
+  }
+
+  function renderHeader(){
+    const h=document.getElementById('tableHeaderRow');
+    if(h) h.innerHTML=headerHtml();
+  }
+
+  function closeModalSafe(){
+    const m=document.getElementById('productDetailModal');
+    if(m) m.style.display='none';
+    try{ activeDetailItem=null; }catch(_){}
+  }
+
+  function openModalSafe(item){
+    if(!item) return;
+    try{
+      if(typeof window.openProductModal==='function' && window.openProductModal!==openModalSafe){
+        // The existing modal chain handles the content and registration chooser.
+        window.openProductModal(item);
+      }
+    }catch(e){ console.error('Ürün modalı açılırken hata:',e); }
+  }
+
+  function renderTableFinal(){
+    ensureModes();
+    const tbody=document.getElementById('tableBody');
+    const cards=document.getElementById('mobileCardContainer');
+    if(!tbody||!cards||!Array.isArray(products)) return;
+    renderHeader();
+    tbody.innerHTML='';
+    cards.innerHTML='';
+
+    const search=(document.getElementById('searchInput')?.value||'').toLocaleLowerCase('tr-TR').trim();
+    const rate=n(document.getElementById('dollarRate')?.value)||43.169;
+    let cats=[...new Set(products.map(p=>(p.category||'DİĞER').toUpperCase()))];
+    try{
+      const ordered=categoryOrder.filter(c=>cats.includes(c));
+      cats.forEach(c=>{if(!ordered.includes(c))ordered.push(c);});
+      cats=ordered;
+    }catch(_){}
+
+    cats.forEach(cat=>{
+      let list=products.map((p,idx)=>({...p,originalIndex:idx})).filter(p=>{
+        if((p.category||'DİĞER').toUpperCase()!==cat) return false;
+        if(activeCategoryFilter!=='TÜMÜ' && activeCategoryFilter!==(p.category||'DİĞER').toUpperCase()) return false;
+        if(showOnlyFavorites && !favoriteProductIds.has(p.id)) return false;
+        if(typeof v12OnlyStock!=='undefined' && v12OnlyStock && typeof v12HasStock==='function' && !v12HasStock(p)) return false;
+        if(activeSubFilter!=='TÜMÜ'){
+          const s=String(p.storage||'').toUpperCase();
+          if(!s.includes(activeSubFilter)) return false;
+        }
+        if(search && !(String(p.model||'').toLocaleLowerCase('tr-TR').includes(search) || s.includes(search))) return false;
+        return true;
+      });
+      if(typeof v12SortProducts==='function') list=v12SortProducts(list);
+      if(!list.length) return;
+
+      const headerTr=document.createElement('tr');
+      headerTr.className='category-row';
+      headerTr.innerHTML=`<td colspan="${isAdmin?10:7}">${esc(cat)} SERİSİ</td>`;
+      tbody.appendChild(headerTr);
+
+      const mCat=document.createElement('div');
+      mCat.style.cssText="grid-column:1 / -1;color:var(--accent-gold);font-weight:800;font-size:14px;letter-spacing:1px;margin-top:10px;border-bottom:1px solid var(--border-color);padding-bottom:5px;";
+      mCat.textContent=`${cat} SERİSİ`;
+      cards.appendChild(mCat);
+
+      list.forEach(item=>{
+        const usd=getSaleUsd(item);
+        const cost=getCostUsd(item);
+        const profit=getProfitUsd(item);
+        const tr=document.createElement('tr');
+        tr.className='product-row';
+        tr.dataset.index=item.originalIndex;
+        tr.innerHTML=`
+          <td>
+            <div style="width:40px;height:40px;background:rgba(7,9,14,.6);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+              ${item.image?`<img src="${item.image}" alt="${esc(item.model)}" style="width:100%;height:100%;object-fit:contain;">`:`<span style="font-size:9px;color:var(--text-muted)">Yok</span>`}
+            </div>
+            ${isAdmin?`<button class="admin-img-upload-btn" style="margin-top:4px;" onclick="event.stopPropagation();openImageEditModal(${item.originalIndex})">Resim Ekle</button><button class="image-auto-btn" onclick="event.stopPropagation();openImageSearchModal(${item.originalIndex})">🌐 Görsel Ara</button>`:''}
+          </td>
+          <td style="font-weight:600;">${esc(item.model)}
+            ${isAdmin?`<select class="admin-category-select" onclick="event.stopPropagation()" onchange="moveProductCategory(${item.originalIndex}, this.value)">${categoryOrder.map(c=>`<option value="${esc(c)}" ${c===(item.category||'DİĞER').toUpperCase()?'selected':''}>${esc(c)}</option>`).join('')}</select>`:''}
+          </td>
+          <td>${esc(item.storage||'-')}</td>
+          <td class="final-status-cell">${statusControl(item)}</td>
+          <td class="final-price-cell"><span class="final-main-price">${getSaleUsd(item)>0?mainPrice(usd):'Fiyat sorunuz'}</span>${isAdmin?`<span class="final-admin-price-note">Kayıtsız fiyat: ${usd.toLocaleString('tr-TR')} $</span>`:''}</td>
+          <td><span class="badge-green">${esc(item.stock||'HAZIR STOK')}</span></td>
+          <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, '+item.model+' ('+item.storage+') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation();triggerHaptic();showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
+          ${isAdmin?`<td><button class="quick-price-edit-btn" onclick="event.stopPropagation();openQuickPriceEditor(${item.originalIndex})">✏️ Fiyat Düzenle</button><button class="product-edit-btn" style="margin-top:5px" onclick="event.stopPropagation();openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button></td><td class="${profit>=0?'profit-positive':'profit-negative'}">${profit.toLocaleString('tr-TR')} $</td><td><button class="admin-btn-danger" onclick="event.stopPropagation();triggerHaptic();deleteProduct(${item.originalIndex})">Sil</button></td>`:''}
+        `;
+        tr.addEventListener('click',()=>{ triggerHaptic(); openModalSafe(item); });
+        tbody.appendChild(tr);
+
+        const card=document.createElement('div');
+        card.className='m-product-card';
+        card.dataset.index=item.originalIndex;
+        card.innerHTML=`
+          <div class="m-card-header">
+            <div style="min-width:0;display:flex;flex-direction:column;gap:7px;flex:1">
+              <h4 class="m-card-title">${esc(item.model)}</h4>
+              <div class="mobile-final-status">${statusControl(item)}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <span class="badge-green">${esc(item.stock||'HAZIR STOK')}</span>
+              ${!isAdmin?`<button class="favorite-btn ${isFavorite(item.id)?'active':''}" aria-label="Favori" onclick="toggleFavorite('${String(item.id).replace(/'/g,"\\\\'")}', event)">${isFavorite(item.id)?'♥':'♡'}</button>`:''}
+            </div>
+          </div>
+          <div class="m-card-img">${item.image?`<img src="${item.image}" alt="${esc(item.model)}">`:`<span style="color:var(--text-muted);font-size:11px;">Görsel Yok</span>`}</div>
+          ${isAdmin?`<button class="admin-img-upload-btn" onclick="event.stopPropagation();openImageEditModal(${item.originalIndex})">📷 Resmi Düzenle / Ekle</button>`:''}
+          <div class="m-card-details">
+            <div class="m-detail-box"><div class="m-detail-label">Hafıza</div><div class="m-detail-val">${esc(item.storage||'-')}</div></div>
+          </div>
+          <div class="m-card-footer">
+            <div class="final-mobile-price-wrap">
+              <div><div class="final-mobile-price">${usd>0?mainPrice(usd):'Fiyat sorunuz'}</div><div class="final-mobile-currency-note">${currencyName()} satış fiyatı</div></div>
+              <div class="m-stock-dot">${esc(item.stock||'STOKTA')}</div>
+            </div>
+            <a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, '+item.model+' ('+item.storage+') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation();triggerHaptic();showToast('WhatsApp açılıyor...');">📲 WhatsApp'tan Sor</a>
+          </div>
+          ${isAdmin?`<div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Alış: <b>${cost}</b> $ • Satış: <b>${usd}</b> $ • Kâr: <b class="${profit>=0?'profit-positive':'profit-negative'}">${profit}</b> $</div><button class="product-edit-btn" style="margin-top:7px;" onclick="event.stopPropagation();openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button><button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation();triggerHaptic();deleteProduct(${item.originalIndex})">Ürünü Sil</button>`:''}
+        `;
+        card.addEventListener('click',()=>{ triggerHaptic(); openModalSafe(item); });
+        cards.appendChild(card);
+      });
+    });
+
+    ensureModes();
+  }
+
+  // Son render fonksiyonu: önceki sürümlerdeki sütun gizleme kurallarını by-pass eder.
+  window.updateTableAdminHeader=renderHeader;
+  window.renderTable=renderTableFinal;
+
+  // Modal kapanışını güvenli hale getir.
+  window.closeProductModal=closeModalSafe;
+
+  // Re-render sırasında status metnini ve rengi tekrar doğru üret.
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{ensureModes();renderTableFinal();},120));
+  window.addEventListener('load',()=>setTimeout(()=>{ensureModes();renderTableFinal();},160));
+
+  // Eski wrapper'ların yeniden tanımladığı renderTable'ı yakala.
+  let last=window.renderTable;
+  Object.defineProperty(window,'renderTable',{
+    configurable:true,
+    get(){ return last; },
+    set(fn){ last=renderTableFinal; }
+  });
+})();
+</script>
+
 </body>
 </html>

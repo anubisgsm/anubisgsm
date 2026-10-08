@@ -1992,6 +1992,10 @@ body.anubis-light-theme .nav-bar-item{color:#4c3a55!important}.theme-toggle-icon
 .reg-price-line strong{font-size:12px;white-space:nowrap}
 .reg-price-line.unregistered{color:#fb923c;background:rgba(249,115,22,.09);border-color:rgba(249,115,22,.35)}
 .reg-price-line.registered{color:#22c55e;background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.35)}
+.reg-price-line.single{color:#19c7b5;background:rgba(25,199,181,.08);border-color:rgba(25,199,181,.35)}
+.single-price-modal{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid rgba(25,199,181,.35);background:rgba(25,199,181,.08);border-radius:11px;color:#19c7b5}
+.single-price-modal strong{font-size:18px;font-weight:950;white-space:nowrap}
+.single-price-tag{font-size:11px;font-weight:950;letter-spacing:.5px}
 .reg-price-muted{font-size:10px;color:var(--text-muted);font-weight:700}
 .reg-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
 .reg-choice-btn{border:1px solid var(--border-color);background:rgba(15,23,42,.65);color:var(--text-main);border-radius:11px;padding:10px 8px;cursor:pointer;text-align:left;transition:.18s}
@@ -3121,18 +3125,41 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         function getRegisteredProfitUsd(item) { const registered = getRegisteredUsd(item); return registered > 0 ? registered - getCostUsd(item) : 0; }
         function formatUsdDisplay(v) { return Number(v || 0).toLocaleString('tr-TR', { maximumFractionDigits: 2 }) + ' $'; }
         function formatTlDisplay(v, rate) { return Number(v || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₺'; }
+        // Bazı ürünlerde iki farklı kayıt seçeneği anlamlı değil. Bu ürünlerde
+        // arayüz sadece tek fiyat gösterir ve kayıt seçimi alanını kaldırır.
+        function isSingleRegistrationProduct(item) {
+            const category = String(item?.category || '').toUpperCase();
+            const model = String(item?.model || '').toUpperCase();
+            const reg = String(item?.reg || '').toUpperCase();
+            return category === 'İPHONE' || category === 'IPHONE' || /\bSERVER\b/.test(reg) || /\bSERVER\b/.test(model);
+        }
+        function getSingleRegistrationLabel(item) {
+            const category = String(item?.category || '').toUpperCase();
+            const reg = String(item?.reg || '').toUpperCase();
+            if (category === 'İPHONE' || category === 'IPHONE') return 'KAYIT YOK';
+            if (/\bSERVER\b/.test(reg)) return 'SERVER KAYITLI';
+            return 'TEK FİYAT';
+        }
         function registrationPriceStack(item, rate) {
             const unreg = getSaleUsd(item), reg = getRegisteredUsd(item);
+            if (isSingleRegistrationProduct(item)) {
+                const label = getSingleRegistrationLabel(item);
+                return `<div class="reg-price-stack single-price-stack"><div class="reg-price-line single"><small>${label}</small><strong>${formatUsdDisplay(unreg)}</strong></div></div>`;
+            }
             return `<div class="reg-price-stack">
                 <div class="reg-price-line unregistered"><small>KAYITSIZ</small><strong>${formatUsdDisplay(unreg)}</strong></div>
-                <div class="reg-price-line registered"><small>KAYITLI</small><strong>${reg > 0 ? formatUsdDisplay(reg) : 'Fiyat girilmedi'}</strong></div>
+                ${reg > 0 ? `<div class="reg-price-line registered"><small>KAYITLI</small><strong>${formatUsdDisplay(reg)}</strong></div>` : ''}
             </div>`;
         }
         function registrationTlStack(item, rate) {
             const unreg = getSaleUsd(item), reg = getRegisteredUsd(item);
+            if (isSingleRegistrationProduct(item)) {
+                const label = getSingleRegistrationLabel(item);
+                return `<div class="reg-price-stack single-price-stack"><div class="reg-price-line single"><small>${label}</small><strong>${formatTlDisplay(unreg * rate, rate)}</strong></div></div>`;
+            }
             return `<div class="reg-price-stack">
                 <div class="reg-price-line unregistered"><small>KAYITSIZ</small><strong>${formatTlDisplay(unreg * rate, rate)}</strong></div>
-                <div class="reg-price-line registered"><small>KAYITLI</small><strong>${reg > 0 ? formatTlDisplay(reg * rate, rate) : 'Fiyat girilmedi'}</strong></div>
+                ${reg > 0 ? `<div class="reg-price-line registered"><small>KAYITLI</small><strong>${formatTlDisplay(reg * rate, rate)}</strong></div>` : ''}
             </div>`;
         }
 
@@ -3695,25 +3722,35 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             document.getElementById("modalProductTitle").textContent = item.model;
             document.getElementById("modalProductDesc").textContent = item.desc || "ANUBIS GSM güvencesiyle yüksek kaliteli teknoloji ürünü.";
             document.getElementById("modalProductStorage").textContent = item.storage || "-";
+            const singleReg = isSingleRegistrationProduct(item);
             document.getElementById("modalProductReg").textContent = item.reg || "KAYITSIZ";
-            document.getElementById("modalProductUsd").textContent = `Kayıtsız: ${formatUsdDisplay(getSaleUsd(item))} • Kayıtlı: ${getRegisteredUsd(item)>0 ? formatUsdDisplay(getRegisteredUsd(item)) : 'Fiyat girilmedi'}`;
+            document.getElementById("modalProductUsd").textContent = singleReg
+                ? `${getSingleRegistrationLabel(item)}: ${formatUsdDisplay(getSaleUsd(item))}`
+                : `Kayıtsız: ${formatUsdDisplay(getSaleUsd(item))}${getRegisteredUsd(item)>0 ? ` • Kayıtlı: ${formatUsdDisplay(getRegisteredUsd(item))}` : ''}`;
             document.getElementById("modalProductStock").textContent = item.stock || "HAZIR STOK";
 
             let imgContainer = document.getElementById("modalImgContainer");
             imgContainer.innerHTML = item.image ? `<img src="${item.image}" alt="${item.model}">` : `<span style="color:var(--text-muted); font-size:13px;">Görsel Bulunmuyor</span>`;
 
             const choice = document.getElementById('modalRegistrationChoice');
+            const choiceLabel = document.querySelector('.glorious-price-box > span');
             if (choice) {
                 const unreg = getSaleUsd(item), reg = getRegisteredUsd(item);
-                choice.innerHTML = `
-                    <button type="button" class="reg-choice-btn unregistered active" onclick="selectProductRegistration('unregistered')">
-                        <span class="reg-choice-title">KAYITSIZ</span>
-                        <span class="reg-choice-price">${formatUsdDisplay(unreg)}</span>
-                    </button>
-                    <button type="button" class="reg-choice-btn registered ${reg>0 ? '' : 'disabled'}" ${reg>0 ? '' : 'disabled'} onclick="selectProductRegistration('registered')">
-                        <span class="reg-choice-title">KAYITLI</span>
-                        <span class="reg-choice-price">${reg>0 ? formatUsdDisplay(reg) : 'Fiyat girilmedi'}</span>
-                    </button>`;
+                if (singleReg) {
+                    choice.innerHTML = `<div class="single-price-modal"><span class="single-price-tag">${getSingleRegistrationLabel(item)}</span><strong>${formatUsdDisplay(unreg)}</strong></div>`;
+                    if (choiceLabel) choiceLabel.textContent = 'Fiyat';
+                } else {
+                    choice.innerHTML = `
+                        <button type="button" class="reg-choice-btn unregistered active" onclick="selectProductRegistration('unregistered')">
+                            <span class="reg-choice-title">KAYITSIZ</span>
+                            <span class="reg-choice-price">${formatUsdDisplay(unreg)}</span>
+                        </button>
+                        ${reg > 0 ? `<button type="button" class="reg-choice-btn registered" onclick="selectProductRegistration('registered')">
+                            <span class="reg-choice-title">KAYITLI</span>
+                            <span class="reg-choice-price">${formatUsdDisplay(reg)}</span>
+                        </button>` : ''}`;
+                    if (choiceLabel) choiceLabel.textContent = 'Kayıt Seçimi';
+                }
             }
             updateModalRegistrationPrice();
 
@@ -3734,32 +3771,41 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
 
         function updateModalRegistrationPrice() {
             if (!activeDetailItem) return;
-            const isRegistered = activeDetailItem._selectedRegistration === 'registered';
-            const usd = isRegistered ? getRegisteredUsd(activeDetailItem) : getSaleUsd(activeDetailItem);
-            const rate = parseFloat(document.getElementById("dollarRate")?.value) || 43.169;
-            const calculatedTl = formatTlDisplay(usd * rate, rate);
-            const priceEl = document.getElementById("modalProductPrice");
-            const labelEl = document.getElementById("modalSelectedRegistrationLabel");
-            if (priceEl) { priceEl.textContent = calculatedTl; priceEl.style.color = isRegistered ? '#22c55e' : '#fb923c'; }
-            if (labelEl) { labelEl.textContent = isRegistered ? 'Kayıtlı fiyat' : 'Kayıtsız fiyat'; labelEl.style.color = isRegistered ? '#22c55e' : '#fb923c'; }
-            const waBtn = document.getElementById("modalWhatsAppBtn");
+            const rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
+            const unreg = getSaleUsd(activeDetailItem);
+            const reg = getRegisteredUsd(activeDetailItem);
+            const singleReg = isSingleRegistrationProduct(activeDetailItem);
+            const isRegistered = !singleReg && activeDetailItem._selectedRegistration === 'registered' && reg > 0;
+            const usd = isRegistered ? reg : unreg;
+            const tl = usd * rate;
+            const calculatedTl = formatTlDisplay(tl, rate);
+            const priceEl = document.getElementById('modalProductPrice');
+            if (priceEl) priceEl.textContent = calculatedTl;
+            const labelEl = document.getElementById('modalSelectedRegistrationLabel');
+            if (labelEl) {
+                labelEl.textContent = singleReg ? getSingleRegistrationLabel(activeDetailItem) : (isRegistered ? 'Kayıtlı fiyat' : 'Kayıtsız fiyat');
+                labelEl.style.color = singleReg ? '#19c7b5' : (isRegistered ? '#22c55e' : '#fb923c');
+            }
+            const waBtn = document.getElementById('modalWhatsAppBtn');
             if (waBtn) {
-                const regText = isRegistered ? 'KAYITLI (SERVER / CPID)' : 'KAYITSIZ';
+                const regText = singleReg ? getSingleRegistrationLabel(activeDetailItem) : (isRegistered ? 'KAYITLI (SERVER / CPID)' : 'KAYITSIZ');
                 const usdText = formatUsdDisplay(usd);
                 const waText = `Merhaba, ${activeDetailItem.model} (${activeDetailItem.storage}) sipariş vermek istiyorum. Tercihim: ${regText}. Fiyat: ${usdText} / ${calculatedTl}`;
                 waBtn.href = `https://wa.me/905345513747?text=` + encodeURIComponent(waText);
             }
         }
-
         function closeProductModal() { document.getElementById("productDetailModal").style.display = "none"; }
         function copyModalDetails() {
             if (!activeDetailItem) return;
             let rate = parseFloat(document.getElementById("dollarRate").value) || 43.169;
             const unreg = getSaleUsd(activeDetailItem), reg = getRegisteredUsd(activeDetailItem);
-            const selected = activeDetailItem._selectedRegistration === 'registered' && reg > 0 ? 'KAYITLI' : 'KAYITSIZ';
-            const selectedUsd = selected === 'KAYITLI' ? reg : unreg;
+            const singleReg = isSingleRegistrationProduct(activeDetailItem);
+            const selected = singleReg ? getSingleRegistrationLabel(activeDetailItem) : (activeDetailItem._selectedRegistration === 'registered' && reg > 0 ? 'KAYITLI' : 'KAYITSIZ');
+            const selectedUsd = (!singleReg && selected === 'KAYITLI') ? reg : unreg;
             let calculatedTl = (selectedUsd * rate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺";
-            let textToCopy = `Ürün: ${activeDetailItem.model}\nHafıza: ${activeDetailItem.storage}\nKayıt tercihi: ${selected}\nKayıtsız fiyat: ${formatUsdDisplay(unreg)}\nKayıtlı fiyat: ${reg > 0 ? formatUsdDisplay(reg) : 'Fiyat girilmedi'}\nSeçilen fiyat: ${calculatedTl} (${formatUsdDisplay(selectedUsd)})\nStok: ${activeDetailItem.stock}`;
+            let textToCopy = singleReg
+                ? `Ürün: ${activeDetailItem.model}\nHafıza: ${activeDetailItem.storage}\nKayıt durumu: ${selected}\nFiyat: ${formatUsdDisplay(selectedUsd)}\nTL: ${calculatedTl}\nStok: ${activeDetailItem.stock}`
+                : `Ürün: ${activeDetailItem.model}\nHafıza: ${activeDetailItem.storage}\nKayıt tercihi: ${selected}\nKayıtsız fiyat: ${formatUsdDisplay(unreg)}\nKayıtlı fiyat: ${reg > 0 ? formatUsdDisplay(reg) : 'Fiyat girilmedi'}\nSeçilen fiyat: ${calculatedTl} (${formatUsdDisplay(selectedUsd)})\nStok: ${activeDetailItem.stock}`;
             navigator.clipboard.writeText(textToCopy).then(() => showToast("Ürün bilgileri panoya kopyalandı! 📋"));
         }
 
@@ -4402,6 +4448,183 @@ async function closeSelectedAnubisConversation(){
   anubisSelectedConversation=null;await loadAdminConversations();document.getElementById('anubisAdminChatMessages').innerHTML='<div class="anubis-chat-empty">Görüşme kapatıldı.</div>';
 }
 window.addEventListener('beforeunload',()=>{if(anubisChatChannel)supabaseClient.removeChannel(anubisChatChannel);if(anubisAdminChannel)supabaseClient.removeChannel(anubisAdminChannel);if(anubisAdminMessageChannel)supabaseClient.removeChannel(anubisAdminMessageChannel);});
+</script>
+
+
+<style id="anubis-registration-toggle-v16">
+/* Kayıt alanlarını sadeleştir: seçim admin tarafından yapılır, müşteri sadece mevcut fiyatları görür. */
+#newReg,#newRegisteredUsd{display:none!important}
+#editRegV15{display:none!important}
+#editRegisteredSaleV15{display:none!important}
+#quickRegisteredSaleV11{display:none!important}
+.desktop-table-view th:nth-child(4),.desktop-table-view td:nth-child(4){display:none!important}
+.m-card-details .m-detail-box:nth-child(2){display:none!important}
+.reg-toggle-box-v16{grid-column:1/-1;border:1px solid var(--border-color);border-radius:12px;padding:11px 13px;background:rgba(25,199,181,.04)}
+.reg-toggle-head-v16{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.reg-toggle-title-v16{font-size:11px;font-weight:950;color:var(--text-main);letter-spacing:.3px}
+.reg-toggle-actions-v16{display:flex;gap:7px}
+.reg-toggle-btn-v16{border:1px solid var(--border-color);background:rgba(15,23,42,.68);color:var(--text-muted);padding:8px 11px;border-radius:9px;font-size:10px;font-weight:900;cursor:pointer}
+.reg-toggle-btn-v16.active.no{background:rgba(148,163,184,.14);color:#cbd5e1;border-color:#64748b}
+.reg-toggle-btn-v16.active.yes{background:rgba(34,197,94,.11);color:#22c55e;border-color:rgba(34,197,94,.45)}
+.reg-fee-row-v16{display:grid;grid-template-columns:1fr 1fr;gap:9px;align-items:end;margin-top:9px}
+.reg-fee-row-v16.hidden{display:none}
+.reg-derived-v16{font-size:10px;color:var(--text-muted);padding-bottom:4px}
+.reg-derived-v16 b{color:#22c55e}
+@media(max-width:700px){.reg-toggle-box-v16{grid-column:auto}.reg-fee-row-v16{grid-template-columns:1fr}}
+</style>
+<script>
+(function(){
+  const V16={
+    activeQuick:false,
+    newEnabled:false,
+    editEnabled:false,
+    initialized:false
+  };
+
+  function num(v){ return parseFloat(String(v??'0').replace(',','.')) || 0; }
+
+  // Yeni model: kayıtsız temel fiyat + opsiyonel kayıt ücreti.
+  window.normalizeProduct=function(p){
+    const sale=Math.max(0,num(p.saleUsd ?? p.usd));
+    let fee=num(p.registrationFeeUsd ?? p.registration_fee_usd);
+    const legacy=num(p.registeredUsd ?? p.registered_usd);
+    const hasToggle=p.registrationEnabled!==undefined || p.registration_enabled!==undefined;
+    let enabled=hasToggle ? Boolean(p.registrationEnabled ?? p.registration_enabled) : legacy>sale;
+    if(!hasToggle && enabled && fee<=0) fee=Math.max(0,legacy-sale);
+    fee=Math.max(0,fee);
+    const registered=enabled ? sale+fee : 0;
+    return {
+      id:p.id||('p_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,9)),
+      category:String(p.category||'DİĞER').toUpperCase(), model:String(p.model||'').trim(), storage:String(p.storage||''),
+      reg:enabled?'KAYITLI':'KAYITSIZ',
+      usd:sale, saleUsd:sale, registrationEnabled:enabled, registrationFeeUsd:fee, registeredUsd:registered,
+      costUsd:num(p.costUsd), stock:String(p.stock||'HAZIR STOK'), desc:String(p.desc||''), image:String(p.image||''),
+      imageSource:p.imageSource||'', imageTitle:p.imageTitle||''
+    };
+  };
+
+  window.getSaleUsd=function(item){return num(item?.saleUsd ?? item?.usd)};
+  window.isRegistrationEnabled=function(item){return !!item?.registrationEnabled};
+  window.getRegistrationFeeUsd=function(item){return Math.max(0,num(item?.registrationFeeUsd))};
+  window.getRegisteredUsd=function(item){return isRegistrationEnabled(item)?getSaleUsd(item)+getRegistrationFeeUsd(item):0};
+  window.getRegisteredProfitUsd=function(item){const r=getRegisteredUsd(item); return r>0?r-num(item?.costUsd):0};
+  window.isSingleRegistrationProduct=function(){return false};
+  window.getSingleRegistrationLabel=function(){return 'KAYIT YOK'};
+
+  window.registrationPriceStack=function(item){
+    const u=getSaleUsd(item), r=getRegisteredUsd(item);
+    if(!isRegistrationEnabled(item)) return `<div class="reg-price-stack single-price-stack"><div class="reg-price-line unregistered single"><small>KAYITSIZ</small><strong>${formatUsdDisplay(u)}</strong></div></div>`;
+    return `<div class="reg-price-stack"><div class="reg-price-line unregistered"><small>KAYITSIZ</small><strong>${formatUsdDisplay(u)}</strong></div><div class="reg-price-line registered"><small>KAYITLI</small><strong>${formatUsdDisplay(r)}</strong></div></div>`;
+  };
+  window.registrationTlStack=function(item,rate){
+    const u=getSaleUsd(item), r=getRegisteredUsd(item);
+    if(!isRegistrationEnabled(item)) return `<div class="reg-price-stack single-price-stack"><div class="reg-price-line unregistered single"><small>KAYITSIZ</small><strong>${formatTlDisplay(u*rate,rate)}</strong></div></div>`;
+    return `<div class="reg-price-stack"><div class="reg-price-line unregistered"><small>KAYITSIZ</small><strong>${formatTlDisplay(u*rate,rate)}</strong></div><div class="reg-price-line registered"><small>KAYITLI</small><strong>${formatTlDisplay(r*rate,rate)}</strong></div></div>`;
+  };
+
+  window.toCloudRow=function(p){
+    const n=normalizeProduct(p);
+    return {id:n.id,category:n.category,model:n.model,storage:n.storage,reg:n.reg,usd:n.saleUsd,sale_usd:n.saleUsd,
+      registration_enabled:n.registrationEnabled,registration_fee_usd:n.registrationFeeUsd,registered_usd:n.registeredUsd,
+      cost_usd:n.costUsd,stock:n.stock,description:n.desc,image:n.image,created_at:p.created_at||undefined};
+  };
+  window.fromCloudRow=function(r){
+    return normalizeProduct({id:r.id,category:r.category,model:r.model,storage:r.storage,reg:r.reg,usd:r.sale_usd??r.usd,saleUsd:r.sale_usd??r.usd,
+      registrationEnabled:r.registration_enabled,registrationFeeUsd:r.registration_fee_usd,registeredUsd:r.registered_usd,costUsd:r.cost_usd,stock:r.stock,desc:r.description,image:r.image,created_at:r.created_at});
+  };
+
+  function newBox(){
+    if(document.getElementById('newRegistrationBoxV16')) return;
+    const storage=document.getElementById('newStorage');
+    if(!storage) return;
+    const box=document.createElement('div');box.id='newRegistrationBoxV16';box.className='reg-toggle-box-v16';
+    box.innerHTML=`<div class="reg-toggle-head-v16"><div class="reg-toggle-title-v16">📲 BU CİHAZDA KAYIT OLUYOR MU?</div><div class="reg-toggle-actions-v16"><button type="button" id="newRegYesV16" class="reg-toggle-btn-v16" onclick="setNewRegistrationV16(true)">🟢 Kayıt Oluyor</button><button type="button" id="newRegNoV16" class="reg-toggle-btn-v16 active no" onclick="setNewRegistrationV16(false)">⚪ Kayıt Olmuyor</button></div></div><div id="newRegFeeRowV16" class="reg-fee-row-v16 hidden"><div><label style="display:block;font-size:10px;font-weight:900;color:var(--text-muted);margin-bottom:4px">KAYIT ÜCRETİ ($)</label><input id="newRegistrationFeeV16" class="price-input" type="text" inputmode="decimal" placeholder="Örn. 150"></div><div id="newRegDerivedV16" class="reg-derived-v16">Kayıtlı fiyat: <b>0$</b></div></div>`;
+    storage.insertAdjacentElement('afterend',box);
+  }
+  window.setNewRegistrationV16=function(enabled){
+    V16.newEnabled=!!enabled;
+    document.getElementById('newRegYesV16')?.classList.toggle('active',V16.newEnabled);document.getElementById('newRegYesV16')?.classList.toggle('yes',V16.newEnabled);
+    document.getElementById('newRegNoV16')?.classList.toggle('active',!V16.newEnabled);document.getElementById('newRegNoV16')?.classList.toggle('no',!V16.newEnabled);
+    document.getElementById('newRegFeeRowV16')?.classList.toggle('hidden',!V16.newEnabled);updateNewRegDerivedV16();
+  };
+  function updateNewRegDerivedV16(){const s=num(document.getElementById('newUsd')?.value),f=num(document.getElementById('newRegistrationFeeV16')?.value);const e=document.getElementById('newRegDerivedV16');if(e)e.innerHTML=`Kayıtlı fiyat: <b>${(s+f).toLocaleString('tr-TR')} $</b>`;}
+
+  window.addNewProduct=function(){
+    const cat=normalizeBrandText(document.getElementById('newCategory')?.value||'DİĞER').trim(), model=(document.getElementById('newModel')?.value||'').trim(), storage=(document.getElementById('newStorage')?.value||'').trim()||'512GB';
+    const sale=num(document.getElementById('newUsd')?.value), cost=num(document.getElementById('newCostUsd')?.value), stock=(document.getElementById('newStock')?.value||'').trim().toUpperCase()||'HAZIR STOK', desc=(document.getElementById('newDesc')?.value||'').trim(), image=typeof tempUploadedImageBase64!=='undefined'?tempUploadedImageBase64:'';
+    const legacyReg=num(document.getElementById('newRegisteredUsd')?.value);
+    const enabled=V16.newEnabled || legacyReg>sale;
+    const fee=enabled ? (num(document.getElementById('newRegistrationFeeV16')?.value) || Math.max(0,legacyReg-sale)) : 0;
+    if(!cat||!model)return alert('Lütfen Kategori ve Model alanlarını doldurun.');
+    if(!sale)return alert('Lütfen kayıtsız satış fiyatını girin.');
+    products.push(normalizeProduct({id:makeProductId(),category:cat,model,storage,saleUsd:sale,usd:sale,registrationEnabled:enabled,registrationFeeUsd:fee,costUsd:cost,stock,desc,image}));
+    localStorage.setItem('anubis_last_usd',sale);saveToStorage();renderTable();
+    ['smartPasteInput','newModel','newStorage','newCostUsd','newUsd','newRegistrationFeeV16','newStock','newDesc'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+    const nf=document.getElementById('newImageFile');if(nf)nf.value='';const fl=document.getElementById('fileNameLabel');if(fl)fl.textContent='Resim Seç';tempUploadedImageBase64='';setNewRegistrationV16(false);showToast('Ürün başarıyla eklendi! 🚀');
+  };
+
+  function editBox(){
+    if(document.getElementById('editRegistrationBoxV16')) return;
+    const cost=document.getElementById('editCostV15');if(!cost)return;
+    const box=document.createElement('div');box.id='editRegistrationBoxV16';box.className='reg-toggle-box-v16';
+    box.innerHTML=`<div class="reg-toggle-head-v16"><div class="reg-toggle-title-v16">📲 BU CİHAZDA KAYIT OLUYOR MU?</div><div class="reg-toggle-actions-v16"><button type="button" id="editRegYesV16" class="reg-toggle-btn-v16" onclick="setEditRegistrationV16(true)">🟢 Kayıt Oluyor</button><button type="button" id="editRegNoV16" class="reg-toggle-btn-v16 active no" onclick="setEditRegistrationV16(false)">⚪ Kayıt Olmuyor</button></div></div><div id="editRegFeeRowV16" class="reg-fee-row-v16 hidden"><div><label style="display:block;font-size:10px;font-weight:900;color:var(--text-muted);margin-bottom:4px">KAYIT ÜCRETİ ($)</label><input id="editRegistrationFeeV16" type="text" inputmode="decimal" autocomplete="off" placeholder="Örn. 150"></div><div id="editRegDerivedV16" class="reg-derived-v16">Kayıtlı fiyat: <b>0$</b></div></div>`;
+    cost.parentElement.insertAdjacentElement('beforebegin',box);
+  }
+  window.setEditRegistrationV16=function(enabled){
+    V16.editEnabled=!!enabled;
+    document.getElementById('editRegYesV16')?.classList.toggle('active',V16.editEnabled);document.getElementById('editRegYesV16')?.classList.toggle('yes',V16.editEnabled);
+    document.getElementById('editRegNoV16')?.classList.toggle('active',!V16.editEnabled);document.getElementById('editRegNoV16')?.classList.toggle('no',!V16.editEnabled);
+    document.getElementById('editRegFeeRowV16')?.classList.toggle('hidden',!V16.editEnabled);updateEditRegDerivedV16();
+  };
+  function updateEditRegDerivedV16(){const s=num(document.getElementById('editSaleV15')?.value),f=num(document.getElementById('editRegistrationFeeV16')?.value);const e=document.getElementById('editRegDerivedV16');if(e)e.innerHTML=`Kayıtlı fiyat: <b>${(s+f).toLocaleString('tr-TR')} $</b>`;}
+
+  window.openProductEditor=function(idx){
+    if(!isAdmin||!products[idx])return; v15EditIndex=idx; const p=products[idx]; const modal=document.getElementById('productEditModalV15');if(!modal)return;editBox();
+    document.getElementById('editProductTitleV15').textContent=p.model||'Ürün Düzenle';
+    const cs=document.getElementById('editCategoryV15');cs.innerHTML=categoryOrder.map(c=>`<option value="${v15Esc(c)}">${v15Esc(c)}</option>`).join('');if(![...cs.options].some(o=>o.value===(p.category||'DİĞER')))cs.insertAdjacentHTML('beforeend',`<option value="${v15Esc(p.category||'DİĞER')}">${v15Esc(p.category||'DİĞER')}</option>`);cs.value=p.category||'DİĞER';
+    document.getElementById('editModelV15').value=p.model||'';document.getElementById('editStorageV15').value=p.storage||'';document.getElementById('editCostV15').value=num(p.costUsd)||'';document.getElementById('editSaleV15').value=num(p.saleUsd??p.usd)||'';document.getElementById('editRegistrationFeeV16').value=getRegistrationFeeUsd(p)||'';setEditRegistrationV16(!!p.registrationEnabled);document.getElementById('editStockV15').value=p.stock||'HAZIR STOK';document.getElementById('editDescV15').value=p.desc||'';
+    const img=document.getElementById('editImageV15'),txt=document.getElementById('editImageTextV15');if(p.image){img.src=p.image;img.style.display='block';txt.textContent='Mevcut ürün görseli';}else{img.removeAttribute('src');img.style.display='none';txt.textContent='Bu üründe görsel yok';}
+    modal.classList.add('show');
+  };
+  window.saveProductEditor=function(){
+    const idx=v15EditIndex;if(!isAdmin||idx===null||!products[idx])return;const model=(document.getElementById('editModelV15')?.value||'').trim();if(!model)return alert('Model adı boş bırakılamaz.');
+    const sale=num(document.getElementById('editSaleV15')?.value),fee=V16.editEnabled?Math.max(0,num(document.getElementById('editRegistrationFeeV16')?.value)):0;const cost=num(document.getElementById('editCostV15')?.value);const category=normalizeBrandText(document.getElementById('editCategoryV15')?.value||'DİĞER').trim()||'DİĞER';
+    products[idx]=normalizeProduct({...products[idx],category,model,storage:(document.getElementById('editStorageV15')?.value||'512GB').trim()||'512GB',costUsd:cost,saleUsd:sale,usd:sale,registrationEnabled:V16.editEnabled,registrationFeeUsd:fee,stock:(document.getElementById('editStockV15')?.value||'HAZIR STOK').trim().toUpperCase(),desc:(document.getElementById('editDescV15')?.value||'').trim()});
+    if(!categoryOrder.includes(category)){categoryOrder.push(category);saveCategoryOrder();}localStorage.setItem(MASTER_STORAGE_KEY,JSON.stringify(products));closeProductEditor();renderCategoryManager();renderTable();scheduleCloudSync();showToast(`${products[idx].model} güncellendi! 💾`);
+  };
+
+  // Hızlı fiyat: eski "kayıtlı satış" kutusunu kayıt ücreti olarak kullan, ayrıca toggle ekle.
+  function quickBox(){
+    const model=document.getElementById('quickPriceModelV11');if(!model||document.getElementById('quickRegToggleV16'))return;
+    const box=document.createElement('div');box.id='quickRegToggleV16';box.innerHTML=`<div class="reg-toggle-actions-v16" style="margin:9px 0"><button type="button" id="quickRegYesV16" class="reg-toggle-btn-v16" onclick="setQuickRegistrationV16(true)">🟢 Kayıt Oluyor</button><button type="button" id="quickRegNoV16" class="reg-toggle-btn-v16 active no" onclick="setQuickRegistrationV16(false)">⚪ Kayıt Olmuyor</button></div>`;model.insertAdjacentElement('afterend',box);
+    const old=document.getElementById('quickRegisteredSaleV11'); if(old){old.id='quickRegistrationFeeV16';old.placeholder='Örn. 150';const lab=old.parentElement;if(lab)lab.childNodes[0].textContent='KAYIT ÜCRETİ ($)';}
+  }
+  window.setQuickRegistrationV16=function(enabled){V16.activeQuick=!!enabled;document.getElementById('quickRegYesV16')?.classList.toggle('active',V16.activeQuick);document.getElementById('quickRegYesV16')?.classList.toggle('yes',V16.activeQuick);document.getElementById('quickRegNoV16')?.classList.toggle('active',!V16.activeQuick);document.getElementById('quickRegNoV16')?.classList.toggle('no',!V16.activeQuick);const f=document.getElementById('quickRegistrationFeeV16');if(f)f.disabled=!V16.activeQuick;updateQuickProfitV16();};
+  function updateQuickProfitV16(){const c=num(document.getElementById('quickCostV11')?.value),s=num(document.getElementById('quickSaleV11')?.value),f=V16.activeQuick?num(document.getElementById('quickRegistrationFeeV16')?.value):0,e=document.getElementById('quickProfitV11');if(e){const r=s+f;e.textContent=`Kayıtsız kâr: ${(s-c).toLocaleString('tr-TR')} $${V16.activeQuick?` • Kayıtlı: ${r.toLocaleString('tr-TR')}$ • Kâr: ${(r-c).toLocaleString('tr-TR')} $`:''}`;}}
+  window.openQuickPriceEditor=function(idx){if(!isAdmin||!products[idx])return;quickPriceIndexV11=idx;quickBox();const p=products[idx];document.getElementById('quickPriceModelV11').textContent=`${p.model||'Ürün'} — ${p.storage||''}`;document.getElementById('quickCostV11').value=num(p.costUsd)||0;document.getElementById('quickSaleV11').value=num(p.saleUsd??p.usd)||0;document.getElementById('quickRegistrationFeeV16').value=getRegistrationFeeUsd(p)||0;setQuickRegistrationV16(!!p.registrationEnabled);document.getElementById('quickPriceModalV11').classList.add('show');updateQuickProfitV16();};
+  window.saveQuickPriceEditor=function(){const idx=quickPriceIndexV11;if(!isAdmin||idx===null||!products[idx])return;const c=num(document.getElementById('quickCostV11')?.value),s=num(document.getElementById('quickSaleV11')?.value),f=V16.activeQuick?num(document.getElementById('quickRegistrationFeeV16')?.value):0;products[idx]=normalizeProduct({...products[idx],costUsd:c,saleUsd:s,usd:s,registrationEnabled:V16.activeQuick,registrationFeeUsd:f});localStorage.setItem(MASTER_STORAGE_KEY,JSON.stringify(products));closeQuickPriceEditor();renderTable();scheduleCloudSync();showToast(`${products[idx].model} fiyatı güncellendi! 💾`);};
+
+  window.selectProductRegistration=function(type){if(!activeDetailItem)return;if(type==='registered'&&!isRegistrationEnabled(activeDetailItem))return;activeDetailItem._selectedRegistration=type==='registered'?'registered':'unregistered';document.querySelectorAll('#modalRegistrationChoice .reg-choice-btn').forEach(b=>b.classList.remove('active'));document.querySelector(`#modalRegistrationChoice .reg-choice-btn.${activeDetailItem._selectedRegistration}`)?.classList.add('active');updateModalRegistrationPrice();};
+  window.updateModalRegistrationPrice=function(){if(!activeDetailItem)return;const rate=num(document.getElementById('dollarRate')?.value)||43.169,u=getSaleUsd(activeDetailItem),r=getRegisteredUsd(activeDetailItem),reg=isRegistrationEnabled(activeDetailItem)&&activeDetailItem._selectedRegistration==='registered',usd=reg?r:u,tl=usd*rate;document.getElementById('modalProductPrice').textContent=formatTlDisplay(tl,rate);const lab=document.getElementById('modalSelectedRegistrationLabel');if(lab){lab.textContent=reg?'Kayıtlı fiyat':'Kayıtsız fiyat';lab.style.color=reg?'#22c55e':'#fb923c';}const wa=document.getElementById('modalWhatsAppBtn');if(wa){const txt=`Merhaba, ${activeDetailItem.model} (${activeDetailItem.storage}) sipariş vermek istiyorum. Tercihim: ${reg?'KAYITLI':'KAYITSIZ'}. Fiyat: ${formatUsdDisplay(usd)} / ${formatTlDisplay(tl,rate)}`;wa.href='https://wa.me/905345513747?text='+encodeURIComponent(txt);}};
+  window.openProductModal=function(item){activeDetailItem=item;item._selectedRegistration='unregistered';document.getElementById('modalProductTitle').textContent=item.model;document.getElementById('modalProductDesc').textContent=item.desc||'ANUBIS GSM güvencesiyle yüksek kaliteli teknoloji ürünü.';document.getElementById('modalProductStorage').textContent=item.storage||'-';document.getElementById('modalProductReg').closest('.glorious-info-box')?.remove();document.getElementById('modalProductUsd').textContent=isRegistrationEnabled(item)?`Kayıtsız: ${formatUsdDisplay(getSaleUsd(item))} • Kayıtlı: ${formatUsdDisplay(getRegisteredUsd(item))}`:`Kayıtsız: ${formatUsdDisplay(getSaleUsd(item))}`;document.getElementById('modalProductStock').textContent=item.stock||'HAZIR STOK';const img=document.getElementById('modalImgContainer');img.innerHTML=item.image?`<img src="${item.image}" alt="${item.model}">`:`<span style="color:var(--text-muted);font-size:13px">Görsel Bulunmuyor</span>`;const choice=document.getElementById('modalRegistrationChoice'),label=document.querySelector('.glorious-price-box > span');if(choice){if(!isRegistrationEnabled(item)){choice.innerHTML=`<div class="single-price-modal"><span class="single-price-tag" style="color:#fb923c">KAYITSIZ</span><strong>${formatUsdDisplay(getSaleUsd(item))}</strong></div>`;if(label)label.textContent='Fiyat';}else{choice.innerHTML=`<button type="button" class="reg-choice-btn unregistered active" onclick="selectProductRegistration('unregistered')"><span class="reg-choice-title">KAYITSIZ</span><span class="reg-choice-price">${formatUsdDisplay(getSaleUsd(item))}</span></button><button type="button" class="reg-choice-btn registered" onclick="selectProductRegistration('registered')"><span class="reg-choice-title">KAYITLI</span><span class="reg-choice-price">${formatUsdDisplay(getRegisteredUsd(item))}</span></button>`;if(label)label.textContent='Kayıt Seçimi';}}updateModalRegistrationPrice();const fav=document.getElementById('modalFavoriteBtn');if(fav){fav.style.display=isAdmin?'none':'block';fav.textContent=isFavorite(item.id)?'♥ Favoride':'♡ Favori';}document.getElementById('productDetailModal').style.display='flex';};
+  window.copyModalDetails=function(){if(!activeDetailItem)return;const rate=num(document.getElementById('dollarRate')?.value)||43.169,u=getSaleUsd(activeDetailItem),r=getRegisteredUsd(activeDetailItem),reg=isRegistrationEnabled(activeDetailItem)&&activeDetailItem._selectedRegistration==='registered',usd=reg?r:u,txt=`Ürün: ${activeDetailItem.model}\nHafıza: ${activeDetailItem.storage}\nKayıt tercihi: ${reg?'KAYITLI':'KAYITSIZ'}\nKayıtsız fiyat: ${formatUsdDisplay(u)}${isRegistrationEnabled(activeDetailItem)?`\nKayıtlı fiyat: ${formatUsdDisplay(r)}`:''}\nSeçilen fiyat: ${formatUsdDisplay(usd)} / ${formatTlDisplay(usd*rate,rate)}\nStok: ${activeDetailItem.stock}`;navigator.clipboard.writeText(txt).then(()=>showToast('Ürün bilgileri panoya kopyalandı! 📋'));};
+
+  function migrateLocalData(){
+    if(!Array.isArray(products))return;
+    products=products.map(normalizeProduct);products.forEach(p=>{p.reg=p.registrationEnabled?'KAYITLI':'KAYITSIZ';});localStorage.setItem(MASTER_STORAGE_KEY,JSON.stringify(products));
+  }
+  function ensureUI(){
+    if(V16.initialized)return;V16.initialized=true;newBox();editBox();quickBox();migrateLocalData();
+    document.getElementById('newReg')?.parentElement?.style.setProperty('display','none');
+    document.getElementById('newRegisteredUsd')?.parentElement?.style.setProperty('display','none');
+    document.getElementById('editRegV15')?.parentElement?.style.setProperty('display','none');
+    document.getElementById('editRegisteredSaleV15')?.parentElement?.style.setProperty('display','none');
+    if(typeof renderTable==='function')renderTable();
+  }
+  document.addEventListener('input',e=>{if(['newUsd','newRegistrationFeeV16'].includes(e.target?.id))updateNewRegDerivedV16();if(['quickCostV11','quickSaleV11','quickRegistrationFeeV16'].includes(e.target?.id))updateQuickProfitV16();if(['editSaleV15','editRegistrationFeeV16'].includes(e.target?.id))updateEditRegDerivedV16();});
+  window.addEventListener('load',()=>setTimeout(ensureUI,80));
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(ensureUI,50));
+})();
 </script>
 
 </body>

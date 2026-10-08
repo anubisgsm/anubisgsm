@@ -4627,5 +4627,87 @@ window.addEventListener('beforeunload',()=>{if(anubisChatChannel)supabaseClient.
 })();
 </script>
 
+
+<style id="anubis-registration-clean-v17">
+/* V17 — müşteri ürün listesini sade tut, kayıt seçimini sadece detay ekranında göster */
+.reg-price-stack,
+#modalProductUsd { display:none !important; }
+.m-card-footer > div:first-child { display:none !important; }
+#subFilterContainer .sub-chip { display:none !important; }
+#subFilterContainer .sub-chip:first-child { display:block !important; }
+#modalRegistrationChoice { margin:10px 0 8px !important; }
+#modalRegistrationChoice.reg-choice-grid { gap:7px !important; }
+.reg-choice-btn{
+  min-height:54px;
+  padding:9px 10px !important;
+  border-radius:12px !important;
+  background:rgba(15,23,42,.42) !important;
+  box-shadow:none !important;
+}
+.reg-choice-btn.unregistered{border-color:rgba(249,115,22,.28) !important;}
+.reg-choice-btn.registered{border-color:rgba(34,197,94,.28) !important;}
+.reg-choice-btn.active{box-shadow:0 0 0 2px currentColor inset !important;}
+.reg-choice-title{font-size:10px !important;letter-spacing:.35px;}
+.reg-choice-price{font-size:14px !important;margin-top:4px;display:block;}
+.reg-choice-note{display:block;margin-top:3px;font-size:8px;color:var(--text-muted);font-weight:700;}
+.single-price-modal{justify-content:flex-start !important;gap:12px !important;padding:9px 11px !important;}
+.single-price-modal .single-price-tag{font-size:9px !important;}
+.single-price-modal strong{font-size:15px !important;}
+</style>
+
+<script>
+(function(){
+  /* Ürün listesinde yalnızca normal (kayıtsız) fiyatı göster. */
+  window.registrationPriceStack=function(item){
+    return `<div class="reg-price-stack"><div class="reg-price-line unregistered single"><small>FİYAT</small><strong>${formatUsdDisplay(getSaleUsd(item))}</strong></div></div>`;
+  };
+  window.registrationTlStack=function(item,rate){
+    return `<div class="reg-price-stack"><div class="reg-price-line unregistered single"><small>FİYAT</small><strong>${formatTlDisplay(getSaleUsd(item)*rate,rate)}</strong></div></div>`;
+  };
+
+  /* Detay penceresi: kayıt seçimini burada tut, ama daha temiz göster. */
+  const oldOpen=window.openProductModal;
+  window.openProductModal=function(item){
+    oldOpen(item);
+    const choice=document.getElementById('modalRegistrationChoice');
+    const label=document.querySelector('.glorious-price-box > span');
+    if(!choice) return;
+    if(isRegistrationEnabled(item)){
+      const fee=getRegistrationFeeUsd(item);
+      choice.classList.add('reg-choice-grid');
+      choice.innerHTML=`
+        <button type="button" class="reg-choice-btn unregistered active" onclick="selectProductRegistration('unregistered')">
+          <span class="reg-choice-title">KAYITSIZ</span>
+          <span class="reg-choice-price">${formatUsdDisplay(getSaleUsd(item))}</span>
+        </button>
+        <button type="button" class="reg-choice-btn registered" onclick="selectProductRegistration('registered')">
+          <span class="reg-choice-title">KAYITLI</span>
+          <span class="reg-choice-price">${formatUsdDisplay(getRegisteredUsd(item))}</span>
+          <span class="reg-choice-note">+${formatUsdDisplay(fee)} kayıt</span>
+        </button>`;
+      if(label) label.textContent='Satın alma seçeneği';
+    }else{
+      choice.classList.remove('reg-choice-grid');
+      choice.innerHTML=`<div class="single-price-modal"><span class="single-price-tag" style="color:#fb923c">KAYITSIZ</span><strong>${formatUsdDisplay(getSaleUsd(item))}</strong></div>`;
+      if(label) label.textContent='Fiyat';
+    }
+    /* Müşteriye liste fiyatlarını tekrar göstermesin. */
+    const extra=document.getElementById('modalProductUsd');
+    if(extra) extra.style.display='none';
+  };
+
+  /* Kayıt filtreleri artık gereksiz: yalnızca "Tüm Hafızalar" kalsın. */
+  function cleanRegistrationFilters(){
+    document.querySelectorAll('#subFilterContainer .sub-chip').forEach((el,i)=>{
+      if(i>0) el.remove();
+    });
+  }
+  document.addEventListener('DOMContentLoaded',cleanRegistrationFilters);
+  window.addEventListener('load',cleanRegistrationFilters);
+  setTimeout(cleanRegistrationFilters,200);
+  setTimeout(cleanRegistrationFilters,900);
+})();
+</script>
+
 </body>
 </html>

@@ -5578,5 +5578,148 @@ button.final-reg-pill:active{transform:scale(.97);}
 }
 </style>
 
+
+<style id="anubis-mobile-product-detail-compact-v1">
+/* Mobilde ürün detayı: tam ekran dev kart yerine kompakt alt pencere */
+@media (max-width: 700px) {
+  #productDetailModal {
+    align-items: flex-end !important;
+    justify-content: center !important;
+    padding: 0 0 env(safe-area-inset-bottom) 0 !important;
+    background: rgba(2, 6, 23, .72) !important;
+  }
+  #productDetailModal > .modal-card {
+    width: 100% !important;
+    max-width: 600px !important;
+    max-height: 80dvh !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    border-radius: 20px 20px 0 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-shadow: 0 -12px 38px rgba(0,0,0,.38) !important;
+    border-bottom: 0 !important;
+  }
+  #productDetailModal .modal-header {
+    flex: 0 0 auto !important;
+    padding: 10px 14px !important;
+    min-height: 45px !important;
+    gap: 10px !important;
+  }
+  #productDetailModal .modal-header h3 {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    overflow-wrap: anywhere !important;
+  }
+  #productDetailModal .close-btn {
+    min-width: 32px !important;
+    min-height: 32px !important;
+    font-size: 23px !important;
+  }
+  #productDetailModal .modal-body {
+    padding: 10px 12px calc(12px + env(safe-area-inset-bottom)) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  #productDetailModal .glorious-card-content {
+    gap: 9px !important;
+  }
+  #productDetailModal .glorious-img-container {
+    height: clamp(78px, 15vh, 118px) !important;
+    min-height: 78px !important;
+    border-radius: 11px !important;
+  }
+  #productDetailModal .glorious-img-container img {
+    object-fit: contain !important;
+    width: 90% !important;
+    height: 90% !important;
+  }
+  #productDetailModal #modalProductDesc {
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  #productDetailModal .glorious-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+  #productDetailModal .glorious-info-box {
+    min-width: 0 !important;
+    padding: 7px 9px !important;
+    border-radius: 9px !important;
+  }
+  #productDetailModal .glorious-info-title {
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+  }
+  #productDetailModal .glorious-info-value {
+    margin-top: 2px !important;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    overflow-wrap: anywhere !important;
+  }
+  #productDetailModal .glorious-price-box {
+    padding: 9px 10px !important;
+    border-radius: 11px !important;
+    border-width: 1px !important;
+  }
+  #productDetailModal .glorious-price-box > span {
+    font-size: 9px !important;
+  }
+  #productDetailModal .reg-choice-grid {
+    gap: 6px !important;
+    margin-top: 6px !important;
+  }
+  #productDetailModal .reg-choice-btn {
+    min-height: 40px !important;
+    padding: 7px 8px !important;
+    border-radius: 9px !important;
+  }
+  #productDetailModal .reg-choice-title { font-size: 9px !important; }
+  #productDetailModal .reg-choice-price { font-size: 12px !important; }
+  #productDetailModal .modal-price-summary { margin-top: 6px !important; }
+  #productDetailModal #modalSelectedRegistrationLabel { font-size: 9px !important; }
+  #productDetailModal #modalProductPrice {
+    font-size: clamp(20px, 5.5vw, 25px) !important;
+    line-height: 1.1 !important;
+    margin-top: 3px !important;
+  }
+  #productDetailModal .glorious-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+  }
+  #productDetailModal .glorious-actions button,
+  #productDetailModal .glorious-actions a {
+    min-width: 0 !important;
+    min-height: 38px !important;
+    padding: 9px 8px !important;
+    border-radius: 9px !important;
+    box-sizing: border-box !important;
+    font-size: 11px !important;
+  }
+  #productDetailModal #modalWhatsAppBtn {
+    grid-column: 1 / -1 !important;
+    min-height: 42px !important;
+    font-size: 12px !important;
+  }
+}
+@media (max-width: 390px) {
+  #productDetailModal > .modal-card { max-height: 84dvh !important; }
+  #productDetailModal .modal-body { padding-left: 10px !important; padding-right: 10px !important; }
+  #productDetailModal .glorious-img-container { height: 82px !important; min-height: 82px !important; }
+  #productDetailModal .glorious-card-content { gap: 7px !important; }
+}
+</style>
+
 </body>
 </html>

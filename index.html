@@ -2219,16 +2219,13 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
             <div class="sub-chip" onclick="triggerHaptic(); filterBySub('128GB', this)">128GB</div>
             <div class="sub-chip" onclick="triggerHaptic(); filterBySub('256GB', this)">256GB</div>
             <div class="sub-chip" onclick="triggerHaptic(); filterBySub('512GB', this)">512GB</div>
-            <div class="sub-chip" onclick="triggerHaptic(); filterBySub('KAYITSIZ', this)">Kayıtsız</div>
-            <div class="sub-chip" onclick="triggerHaptic(); filterBySub('KAYITLI', this)">Kayıtlı</div>
         </div>
 
         <div class="controls-wrapper">
             <div class="v12-search-wrap">
-                <input type="text" id="searchInput" class="search-box" placeholder="🔎 Cihaz veya model ara..." oninput="v12SearchChanged()">
+                <input type="text" id="searchInput" class="search-box" placeholder="🔎 Marka, model veya hafıza ara..." oninput="v12SearchChanged()">
                 <button id="v12ClearSearch" class="v12-clear" type="button" onclick="v12ClearSearch()">×</button>
             </div>
-            <button class="faq-open-btn" onclick="triggerHaptic(); openFaqModal()">❓ Sıkça Sorulan Sorular</button>
             <div class="v12-tools">
                 <button id="v12StockBtn" class="v12-filter-btn" type="button" onclick="v12ToggleStock()">📦 Sadece stokta</button>
                 <button id="v12FavBtn" class="v12-filter-btn" type="button" onclick="v12ToggleFav()">❤️ Favoriler</button>
@@ -2387,72 +2384,6 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         </div>
     </div>
 
-    <div id="faqModal" class="modal-overlay" onclick="closeFaqModal()">
-        <div class="modal-card" style="max-width:700px;" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h3>❓ Sıkça Sorulan Sorular</h3>
-                <button class="close-btn" onclick="closeFaqModal()">&times;</button>
-            </div>
-            <div class="modal-body" style="max-height:75vh; overflow-y:auto;">
-                <div style="display:flex; flex-direction:column; gap:10px;">
-                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
-                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Satılan telefonlar kayıtlı mı?</span>
-                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Hayır, tüm cihazlar yurt dışı ve kayıtsızdır. Ancak "Kayıtlı" olarak belirtilen modeller kayıtlı şekilde gönderilir.</p>
-                    </div>
-                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
-                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 IMEI kaydı yapıyor musunuz?</span>
-                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Evet, modele göre Dirençle, CPID ya da Server (Samsung) kaydı yapılabilir. Kayıt yöntemi ve ücreti ürün açıklamasında belirtilir. Dilerseniz kendi IMEI’nizi verebilirsiniz.</p>
-                    </div>
-                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
-                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Atılan IMEI’lerin garantisi var mı?</span>
-                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Atılan IMEI’ler garanti kapsamında değildir. Klona düşme/kopyalanma durumunda sorun uygun fiyatla uzaktan bağlantı yoluyla çözülebilir.</p>
-                    </div>
-                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
-                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Telefonlar orijinal mi?</span>
-                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Evet. Tüm cihazlarımız %100 orijinal, sıfır ve kullanılmamış ürünlerdir.</p>
-                    </div>
-                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
-                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 iPhone Değişim Cihazı Nedir?</span>
-                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Apple’ın garanti kapsamında arızalı cihazlar karşılığında verdiği yenilenmiş, sıfır ve kapalı kutulu cihazlardır.</p>
-                    </div>
-                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
-                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Şarj cihazı orijinal mi?</span>
-                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Kutu içeriğinde şarj cihazı varsa orijinal olarak, yoksa Xiaomi marka adaptörle gönderilir.</p>
-                    </div>
-                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
-                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Siparişim ne zaman kargoya verilir?</span>
-                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">EFT ödemesi mesai saatleri içinde yapıldıysa genellikle aynı gün kargoya verilir. Kargo alımı olmazsa gönderim ertesi güne kalabilir.</p>
-                    </div>
-                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
-                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Garanti var mı?</span>
-                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Cihazlarımız aksi belirtilmedikçe garanti kapsamında değildir. İlk kullanımda sorun yaşanırsa, video kayıtlı teslimatla ilk gün değişim sağlanır.</p>
-                    </div>
-                    <div style="padding:14px 15px; border:1px solid var(--border-color); border-radius:12px; background:rgba(255,255,255,.025);">
-                        <span style="font-weight:700; color:white; display:block; margin-bottom:6px;">📌 Kargoda risk olursa ne olur?</span>
-                        <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Çalınma, kaybolma, el konulması gibi durumlar alıcı sorumluluğundadır. Teslim alırken mutlaka video ile kutu açılışı yapılmalıdır.</p>
-                    </div>
-                </div>
-
-                <div style="margin-top:18px; padding:16px; border:1px solid var(--accent-gold); border-radius:14px; background:rgba(245,158,11,.055); box-shadow:0 0 18px rgba(245,158,11,.08);">
-                    <h4 style="font-size:16px; color:white; margin:0 0 14px;">📌 Kayıt Yöntemleri</h4>
-                    <div style="display:flex; flex-direction:column; gap:12px;">
-                        <div style="padding:12px; border-radius:10px; background:rgba(0,0,0,.16);">
-                            <span style="font-weight:700; color:white; display:block; margin-bottom:5px;">• Server Kaydı</span>
-                            <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Samsung cihazlara yazılımsal IMEI işlemi uygulanır. Hurda Samsung cihaz IMEI’si gereklidir. Kayıt sonrası oluşabilecek sorunların sorumluluğu kullanıcıya aittir.</p>
-                        </div>
-                        <div style="padding:12px; border-radius:10px; background:rgba(0,0,0,.16);">
-                            <span style="font-weight:700; color:white; display:block; margin-bottom:5px;">• Direnç Kaydı</span>
-                            <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Anakart üzerindeki direnç çipine işlem uygulanarak yapılan fiziksel kayıt yöntemidir.</p>
-                        </div>
-                        <div style="padding:12px; border-radius:10px; background:rgba(0,0,0,.16);">
-                            <span style="font-weight:700; color:white; display:block; margin-bottom:5px;">• CPID Kaydı</span>
-                            <p style="color:var(--text-muted); margin:0; font-size:13px; line-height:1.6;">Xiaomi cihazlarda uygulanan tek SIM destekli yazılımsal kayıt yöntemidir. Uzaktan yapılır, cihaz sıfırlanır. Sadece 1 adet şahsi IMEI girilebilir.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <script>
         function triggerHaptic() {
             if (window.navigator && window.navigator.vibrate) {
@@ -2806,14 +2737,42 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
         }
         document.addEventListener("DOMContentLoaded", applySavedTheme);
 
+        function categoryDisplayName(category) {
+            const raw = String(category || 'DİĞER').trim();
+            const key = raw.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase().replace(/İ/g, 'I');
+            const names = {
+                'IPHONE': 'Apple', 'APPLE': 'Apple', 'SAMSUNG': 'Samsung', 'XIAOMI': 'Xiaomi',
+                'REDMI': 'Redmi', 'ONEPLUS': 'OnePlus', 'REDMAGIC': 'RedMagic', 'INFINIX': 'Infinix',
+                'POCO': 'POCO', 'TECNO': 'Tecno', 'GOOGLE': 'Google Pixel', 'PIXEL': 'Google Pixel',
+                'OPPO': 'OPPO', 'REALME': 'realme', 'HONOR': 'HONOR', 'MOTOROLA': 'Motorola',
+                'VIVO': 'vivo', 'NOTHING': 'Nothing', 'ASUS': 'ASUS', 'HUAWEI': 'Huawei',
+                'DİĞER': 'Diğer', 'DIGER': 'Diğer'
+            };
+            return names[key] || raw;
+        }
+
+        function categoryIcon(category) {
+            const key = String(category || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase().replace(/İ/g, 'I');
+            const icons = { IPHONE:'🍎', APPLE:'🍎', SAMSUNG:'📱', XIAOMI:'📱', REDMI:'📱', ONEPLUS:'📱', REDMAGIC:'🎮', INFINIX:'📱', POCO:'⚡', TECNO:'📱', GOOGLE:'📱', PIXEL:'📱', OPPO:'📱', REALME:'📱', HONOR:'📱', MOTOROLA:'📱', VIVO:'📱', NOTHING:'📱', ASUS:'🎮', HUAWEI:'📱', DIGER:'📦' };
+            return icons[key] || '📱';
+        }
+
         function renderFilterTabs() {
-            let tabsContainer = document.getElementById("filterTabsContainer");
-            let used = new Set(products.map(p => (p.category || "DİĞER").toUpperCase()));
-            let categories = categoryOrder.filter(cat => used.has(cat));
-            [...used].forEach(cat => { if (!categories.includes(cat)) categories.push(cat); });
-            let html = `<button class="filter-tab ${activeCategoryFilter === 'TÜMÜ' ? 'active' : ''}" onclick="triggerHaptic(); filterByCategory('TÜMÜ', this)">✨ Tüm Ürünler</button>`;
+            const tabsContainer = document.getElementById('filterTabsContainer');
+            if (!tabsContainer || !Array.isArray(products)) return;
+            const counts = new Map();
+            products.forEach(p => {
+                const cat = String(p.category || 'DİĞER').toUpperCase();
+                counts.set(cat, (counts.get(cat) || 0) + 1);
+            });
+            let categories = categoryOrder.filter(cat => counts.has(String(cat).toUpperCase()));
+            for (const cat of counts.keys()) if (!categories.some(c => String(c).toUpperCase() === cat)) categories.push(cat);
+            const allCount = products.length;
+            let html = `<button class="filter-tab ${activeCategoryFilter === 'TÜMÜ' ? 'active' : ''}" data-category="TÜMÜ" onclick="triggerHaptic(); filterByCategory('TÜMÜ', this)"><span class="filter-tab-name">✨ Tüm Ürünler</span><span class="category-count">${allCount}</span></button>`;
             categories.forEach(cat => {
-                html += `<button class="filter-tab ${activeCategoryFilter === cat ? 'active' : ''}" onclick="triggerHaptic(); filterByCategory('${cat}', this)">📱 ${cat}</button>`;
+                const catValue = String(cat).toUpperCase();
+                const safeArg = encodeURIComponent(catValue);
+                html += `<button class="filter-tab ${activeCategoryFilter === catValue ? 'active' : ''}" data-category="${catValue.replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" onclick="triggerHaptic(); filterByCategory(decodeURIComponent('${safeArg}'), this)"><span class="filter-tab-name">${categoryIcon(catValue)} ${categoryDisplayName(catValue)}</span><span class="category-count">${counts.get(catValue) || 0}</span></button>`;
             });
             tabsContainer.innerHTML = html;
         }
@@ -5393,6 +5352,7 @@ button.final-reg-pill:active{transform:scale(.97);}
     const cards=document.getElementById('mobileCardContainer');
     if(!tbody||!cards||!Array.isArray(products)) return;
     renderHeader();
+    renderFilterTabs();
     tbody.innerHTML='';
     cards.innerHTML='';
 
@@ -5407,15 +5367,16 @@ button.final-reg-pill:active{transform:scale(.97);}
 
     cats.forEach(cat=>{
       let list=products.map((p,idx)=>({...p,originalIndex:idx})).filter(p=>{
-        if((p.category||'DİĞER').toUpperCase()!==cat) return false;
-        if(activeCategoryFilter!=='TÜMÜ' && activeCategoryFilter!==(p.category||'DİĞER').toUpperCase()) return false;
+        const productCategory=String(p.category||'DİĞER').toUpperCase();
+        const storageText=String(p.storage||'').toLocaleLowerCase('tr-TR');
+        const searchable=[p.model, productCategory, categoryDisplayName(productCategory), p.storage]
+          .map(v=>String(v||'').toLocaleLowerCase('tr-TR')).join(' ');
+        if(productCategory!==cat) return false;
+        if(activeCategoryFilter!=='TÜMÜ' && activeCategoryFilter!==productCategory) return false;
         if(showOnlyFavorites && !favoriteProductIds.has(p.id)) return false;
         if(typeof v12OnlyStock!=='undefined' && v12OnlyStock && typeof v12HasStock==='function' && !v12HasStock(p)) return false;
-        if(activeSubFilter!=='TÜMÜ'){
-          const s=String(p.storage||'').toUpperCase();
-          if(!s.includes(activeSubFilter)) return false;
-        }
-        if(search && !(String(p.model||'').toLocaleLowerCase('tr-TR').includes(search) || s.includes(search))) return false;
+        if(activeSubFilter!=='TÜMÜ' && !storageText.toUpperCase().includes(activeSubFilter)) return false;
+        if(search && !searchable.includes(search)) return false;
         return true;
       });
       if(typeof v12SortProducts==='function') list=v12SortProducts(list);
@@ -5479,7 +5440,7 @@ button.final-reg-pill:active{transform:scale(.97);}
           </div>
           <div class="m-card-footer">
             <div class="final-mobile-price-wrap">
-              <div><div class="final-mobile-price">${usd>0?mainPrice(usd):'Fiyat sorunuz'}</div><div class="final-mobile-currency-note">${currencyName()} satış fiyatı</div></div>
+              <div><div class="final-mobile-price">${usd>0?mainPrice(usd):'Fiyat sorunuz'}</div></div>
               <div class="m-stock-dot">${esc(item.stock||'STOKTA')}</div>
             </div>
             <a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, '+item.model+' ('+item.storage+') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation();triggerHaptic();showToast('WhatsApp açılıyor...');">📲 WhatsApp'tan Sor</a>
@@ -5515,5 +5476,303 @@ button.final-reg-pill:active{transform:scale(.97);}
 })();
 </script>
 
+
+<style id="anubis-customer-ux-final">
+/* Desktop: WhatsApp and live support are vertically separated. */
+@media (min-width: 701px) {
+  .whatsapp-float { right: 22px !important; bottom: 88px !important; z-index: 996 !important; }
+  .anubis-chat-fab { right: 20px !important; bottom: 22px !important; z-index: 9997 !important; }
+  .filter-tabs { display:flex !important; flex-wrap:wrap !important; overflow:visible !important; gap:8px !important; }
+  .filter-tab { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:43px; }
+}
+.filter-tabs { scrollbar-width:none; -webkit-overflow-scrolling:touch; padding-bottom:5px; }
+.filter-tabs::-webkit-scrollbar { display:none; }
+.filter-tab { display:inline-flex; align-items:center; justify-content:center; gap:8px; }
+.filter-tab-name { display:inline-flex; align-items:center; gap:6px; }
+.category-count { display:inline-flex; align-items:center; justify-content:center; min-width:19px; height:19px; padding:0 5px; border-radius:999px; background:rgba(255,255,255,.09); color:inherit; font-size:9px; font-weight:900; }
+.filter-tab.active .category-count { background:rgba(0,0,0,.16); }
+/* The old sub-label sometimes looked blank; display only one clear selling price. */
+.m-price-usd, .final-mobile-currency-note, .final-admin-price-note, .anubis-v18-price-note { display:none !important; }
+/* Remove any leftover FAQ layout styling from the live page. */
+.faq-open-btn { display:none !important; }
+@media (max-width: 700px) {
+  .filter-tabs { flex-wrap:nowrap !important; overflow-x:auto !important; overscroll-behavior-x:contain; gap:7px !important; padding:2px 0 8px !important; margin-left:0; margin-right:0; }
+  .filter-tab { flex:0 0 auto !important; min-height:41px !important; padding:8px 12px !important; border-radius:12px !important; font-size:11px !important; }
+  .category-count { min-width:17px; height:17px; font-size:9px; }
+  .whatsapp-float { display:none !important; }
+  .anubis-chat-fab { right:12px !important; bottom:calc(76px + env(safe-area-inset-bottom)) !important; z-index:9997 !important; max-width:calc(100vw - 24px); }
+  .mobile-bottom-bar { z-index:10000 !important; }
+  .controls-wrapper { gap:9px !important; }
+  .v12-tools { margin-top:2px; }
+  .sub-filter-chips { margin-top:2px; }
+}
+@media (max-width: 390px) {
+  .filter-tab { padding:8px 10px !important; font-size:10px !important; }
+  .anubis-chat-fab { padding:11px 13px !important; font-size:11px !important; }
+}
+</style>
+
 </body>
 </html>
+
+<style id="anubis-phone-compare-v1">
+  .ancmp-section{margin:14px 0 20px;padding:18px;border:1px solid rgba(56,189,248,.24);border-radius:18px;background:linear-gradient(145deg,rgba(15,23,42,.94),rgba(7,11,20,.97));box-shadow:0 12px 28px rgba(0,0,0,.22);color:var(--text-main)}
+  .ancmp-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .ancmp-title{margin:0;color:var(--accent-gold);font-size:18px;font-weight:950;letter-spacing:.2px}
+  .ancmp-note{margin:5px 0 0;color:var(--text-muted);font-size:11px;line-height:1.5}
+  .ancmp-chip{display:inline-flex;align-items:center;gap:5px;border:1px solid rgba(34,197,94,.25);border-radius:999px;background:rgba(34,197,94,.08);color:#4ade80;font-size:10px;font-weight:850;padding:6px 9px;white-space:nowrap}
+  .ancmp-selects{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .ancmp-select-box{min-width:0;padding:12px;border:1px solid var(--border-color);border-radius:13px;background:rgba(2,6,23,.35)}
+  .ancmp-label{display:block;color:var(--text-muted);font-size:10px;font-weight:900;letter-spacing:.8px;margin:0 0 7px;text-transform:uppercase}
+  .ancmp-select{width:100%;min-width:0;box-sizing:border-box;background:#0b1220;color:#f8fafc;border:1px solid #334155;border-radius:10px;padding:12px;font-size:13px;font-weight:750;outline:none}
+  .ancmp-select:focus{border-color:var(--primary-color);box-shadow:0 0 0 3px var(--primary-glow)}
+  .ancmp-select option{background:#0b1220;color:#fff}
+  .ancmp-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}
+  .ancmp-compare-btn,.ancmp-reset-btn{border:0;border-radius:11px;min-height:44px;padding:11px 17px;font-size:12px;font-weight:950;cursor:pointer}
+  .ancmp-compare-btn{background:linear-gradient(135deg,#d4af37,#f59e0b);color:#111827;box-shadow:0 6px 15px rgba(212,175,55,.15)}
+  .ancmp-compare-btn:disabled{opacity:.6;cursor:wait}
+  .ancmp-reset-btn{background:rgba(148,163,184,.1);color:var(--text-main);border:1px solid var(--border-color)}
+  .ancmp-status{font-size:11px;color:var(--text-muted);line-height:1.5;min-width:0;flex:1}
+  .ancmp-result{margin-top:16px;display:none}
+  .ancmp-device-heads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  .ancmp-device-head{border:1px solid var(--border-color);background:rgba(30,41,59,.42);border-radius:13px;padding:12px;min-width:0}
+  .ancmp-device-name{font-size:14px;font-weight:950;line-height:1.3;overflow-wrap:anywhere}
+  .ancmp-device-meta{font-size:10px;color:var(--text-muted);margin-top:5px}
+  .ancmp-device-price{font-size:20px;color:var(--primary-color);font-weight:950;margin-top:8px;font-variant-numeric:tabular-nums}
+  .ancmp-specs{display:flex;flex-direction:column;gap:6px}
+  .ancmp-spec-row{display:grid;grid-template-columns:140px minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:stretch;padding:7px;border:1px solid rgba(148,163,184,.12);border-radius:10px;background:rgba(2,6,23,.24)}
+  .ancmp-spec-label{display:flex;align-items:center;color:var(--text-muted);font-size:10px;font-weight:950;text-transform:uppercase;letter-spacing:.3px;padding:6px}
+  .ancmp-spec-value{min-width:0;display:flex;align-items:center;border-radius:8px;padding:8px 9px;background:rgba(148,163,184,.055);font-size:12px;font-weight:700;line-height:1.45;overflow-wrap:anywhere;white-space:pre-line}
+  .ancmp-spec-value.ancmp-different{border:1px solid rgba(56,189,248,.18);background:rgba(56,189,248,.055)}
+  .ancmp-match-note{margin-top:9px;font-size:10px;line-height:1.5;color:var(--text-muted)}
+  body.anubis-light-theme .ancmp-section{background:linear-gradient(145deg,#fff,#f5f7fb);border-color:rgba(73,43,84,.15);color:#172033}
+  body.anubis-light-theme .ancmp-select-box,body.anubis-light-theme .ancmp-device-head{background:#f8fafc}
+  body.anubis-light-theme .ancmp-select{background:#fff;color:#172033;border-color:#cbd5e1}
+  body.anubis-light-theme .ancmp-select option{background:#fff;color:#172033}
+  body.anubis-light-theme .ancmp-spec-row{background:#f8fafc;border-color:#e2e8f0}
+  body.anubis-light-theme .ancmp-spec-value{background:#eef2f7;color:#172033}
+  @media(max-width:650px){
+    .ancmp-section{padding:13px;border-radius:15px;margin:12px 0 15px}
+    .ancmp-title{font-size:16px}
+    .ancmp-selects{grid-template-columns:1fr;gap:8px}
+    .ancmp-select-box{padding:10px}
+    .ancmp-select{font-size:16px;min-height:46px}
+    .ancmp-actions{align-items:stretch}
+    .ancmp-compare-btn,.ancmp-reset-btn{min-height:45px}
+    .ancmp-compare-btn{flex:1}
+    .ancmp-status{flex-basis:100%;}
+    .ancmp-device-heads{gap:7px}
+    .ancmp-device-head{padding:10px}
+    .ancmp-device-name{font-size:12px}
+    .ancmp-device-price{font-size:16px}
+    .ancmp-spec-row{grid-template-columns:1fr;gap:6px;padding:8px}
+    .ancmp-spec-label{padding:2px 3px;font-size:9px}
+    .ancmp-values{display:grid;grid-template-columns:1fr 1fr;gap:6px;min-width:0}
+    .ancmp-spec-value{font-size:11px;padding:8px}
+  }
+  @media(max-width:360px){.ancmp-device-heads{grid-template-columns:1fr}.ancmp-values{grid-template-columns:1fr 1fr}}
+</style>
+<script id="anubis-phone-compare-v1">
+(function(){
+  'use strict';
+  const CACHE_PREFIX='anubis_phone_spec_browser_v1:';
+  let lastComparison=null;
+  let compareSection=null;
+  const brandPrefixes={
+    'İPHONE':'Apple iPhone','IPHONE':'Apple iPhone','SAMSUNG':'Samsung','XIAOMI':'Xiaomi',
+    'REDMI':'Redmi','POCO':'POCO','ONEPLUS':'OnePlus','REDMAGIC':'Nubia RedMagic',
+    'GOOGLE':'Google Pixel','OPPO':'OPPO','REALME':'realme','HONOR':'HONOR',
+    'MOTOROLA':'Motorola','VIVO':'vivo','NOTHING':'Nothing','ASUS':'ASUS ROG',
+    'INFINIX':'Infinix','TECNO':'TECNO','HUAWEI':'HUAWEI'
+  };
+  const $=id=>document.getElementById(id);
+  const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  function usdPrice(item){
+    try { if(typeof getSaleUsd==='function') return Number(getSaleUsd(item))||0; } catch(_){}
+    return Number(item?.saleUsd??item?.sale_usd??item?.usd)||0;
+  }
+  function money(usd){
+    let currency='TRY';
+    try{if(typeof window.getV18Currency==='function')currency=window.getV18Currency();}catch(_){}
+    const usdTry=Number(localStorage.getItem('anubis_usd_try'))||Number($('dollarRate')?.value)||43.169;
+    const usdEur=Number(localStorage.getItem('anubis_usd_eur'))||0.92;
+    let value=Number(usd)||0, symbol='$';
+    if(currency==='TRY'){value*=usdTry;symbol='₺';}
+    else if(currency==='EUR'){value*=usdEur;symbol='€';}
+    return `${value.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2})} ${symbol}`;
+  }
+  function queryFor(item){
+    const category=String(item?.category||'').toLocaleUpperCase('tr-TR');
+    const prefix=brandPrefixes[category]||category;
+    let model=String(item?.model||'').trim();
+    model=model.replace(/\b(KAYITSIZ|KAYITLI|KAYIT OLUR|KAYIT OLMAZ|SERVER KAYITLI|SERVER|CPID|DİRENÇ|DIRENC|DIRenç)\b/gi,' ')
+      .replace(/\b\d{1,2}\s*\/\s*\d{2,4}\s?GB\b/gi,' ')
+      .replace(/\s+/g,' ').trim();
+    const toStrip=[...new Set([category, 'APPLE','IPHONE','İPHONE','SAMSUNG','XIAOMI','REDMI','POCO','ONEPLUS','REDMAGIC','GOOGLE','PIXEL','OPPO','REALME','HONOR','MOTOROLA','VIVO','NOTHING','ASUS','INFINIX','TECNO','HUAWEI'])];
+    for(const word of toStrip){
+      const re=new RegExp('^'+word.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s+','i');
+      model=model.replace(re,'').trim();
+    }
+    if(category==='İPHONE'||category==='IPHONE') return `Apple iPhone ${model}`.trim();
+    if(category==='GOOGLE') return `Google Pixel ${model}`.trim();
+    return `${prefix} ${model}`.trim();
+  }
+  function cacheRead(name){
+    try{
+      const x=JSON.parse(localStorage.getItem(CACHE_PREFIX+name)||'null');
+      if(x?.savedAt&&x?.result&&Date.now()-x.savedAt<30*24*60*60*1000)return x.result;
+    }catch(_){}
+    return null;
+  }
+  function cacheWrite(name,result){try{localStorage.setItem(CACHE_PREFIX+name,JSON.stringify({savedAt:Date.now(),result}));}catch(_){}
+  }
+  async function getSpecs(item){
+    const name=queryFor(item);
+    const cached=cacheRead(name);if(cached)return cached;
+    if(!window.supabaseClient)throw new Error('Supabase bağlantısı bulunamadı.');
+    const {data:sessionData,error:sessionError}=await supabaseClient.auth.getSession();
+    if(sessionError)throw new Error('Oturum kontrol edilemedi: '+sessionError.message);
+    if(!sessionData?.session){
+      const {error}=await supabaseClient.auth.signInAnonymously({options:{data:{source:'anubisgsm_phone_compare'}}});
+      if(error)throw new Error('Anonim oturum açılamadı. Supabase Anonymous Sign-Ins ayarını kontrol et. '+error.message);
+    }
+    const {data,error}=await supabaseClient.functions.invoke('phone-specs',{body:{name}});
+    if(error){
+      let detail=error.message||'Teknik özellik isteği başarısız.';
+      try{const d=await error.context?.json?.();if(d?.error)detail=d.error;}catch(_){}
+      throw new Error(detail+' (Supabase Edge Function: phone-specs)');
+    }
+    if(data?.error)throw new Error(data.error);
+    if(!data?.specs)throw new Error('Teknik özellik verisi boş döndü.');
+    cacheWrite(name,data);
+    return data;
+  }
+  function first(obj,keys){
+    for(const key of keys){
+      let v=obj?.[key];
+      if(v===undefined||v===null||v==='') v=obj?.specifications?.[key];
+      if(v!==undefined&&v!==null&&v!==''){
+        if(Array.isArray(v))return v.map(x=>typeof x==='object'?Object.values(x).join(' '):String(x)).join(', ');
+        if(typeof v==='object')return Object.entries(v).map(([k,val])=>`${k}: ${val}`).join(' • ');
+        return String(v);
+      }
+    }
+    return '';
+  }
+  function registrationLabel(item){
+    let yes=false;
+    try{yes=typeof isRegistrationEnabled==='function'?!!isRegistrationEnabled(item):!!(item?.registrationEnabled??item?.registration_enabled);}catch(_){}
+    return yes?'Kayıt oluyor':'Kayıt olmuyor';
+  }
+  function specsRows(item,data){
+    const d=data?.specs||{};
+    const hardware=first(d,['hardware','chipset','processor','cpu']);
+    const ram=first(d,['ram','ram_capacity']) || ((hardware.match(/\b(?:\d{1,2}\s?GB\s?RAM|RAM\s?\d{1,2}\s?GB)\b/i)||[])[0]||'');
+    let processor=first(d,['chipset','processor','cpu']);
+    if(!processor&&hardware)processor=hardware.replace(/,?\s*\b\d{1,2}\s?GB\s?RAM\b/i,'').replace(/\bRAM\s?\d{1,2}\s?GB\b/i,'').trim();
+    return [
+      ['Satış fiyatı',money(usdPrice(item)),true],
+      ['Kayıt durumu',registrationLabel(item),false],
+      ['Ekran',first(d,['screen_resolution','display','screen','display_size','display_type'])],
+      ['İşlemci',processor],
+      ['RAM',ram],
+      ['Hafıza',String(item?.storage||first(d,['storage','memory'])||'')],
+      ['Arka kamera',first(d,['main_camera','rear_camera','camera','camera_setup'])],
+      ['Ön kamera',first(d,['selfie_camera','front_camera','front_camera_setup'])],
+      ['Batarya',first(d,['battery_capacity','battery','battery_size'])],
+      ['İşletim sistemi',first(d,['os','operating_system','software'])],
+      ['Ağırlık',first(d,['weight'])],
+      ['Boyut / kalınlık',first(d,['dimensions','body_dimensions','thickness'])],
+      ['Çıkış tarihi',first(d,['release_date','announced'])],
+      ['Bağlantı',first(d,['network','connectivity','wlan','bluetooth'])]
+    ].map(r=>[r[0],r[1]||'Belirtilmemiş',!!r[2]]);
+  }
+  function renderResults(left,right,leftData,rightData){
+    const container=$('ancmpResult');if(!container)return;
+    lastComparison={left,right,leftData,rightData};
+    const leftName=left.model||'Telefon 1',rightName=right.model||'Telefon 2';
+    const leftUsd=usdPrice(left),rightUsd=usdPrice(right);
+    const leftSpecs=leftData?.specs||{},rightSpecs=rightData?.specs||{};
+    const leftMatch=leftData?.model_name||leftSpecs.name||queryFor(left);
+    const rightMatch=rightData?.model_name||rightSpecs.name||queryFor(right);
+    const a=specsRows(left,leftData),b=specsRows(right,rightData);
+    const bMap=new Map(b.map(r=>[r[0],r]));
+    const rows=a.map((r,i)=>{
+      const other=bMap.get(r[0])||['','Belirtilmemiş'];
+      const av=r[1],bv=other[1];
+      const different=av!=='Belirtilmemiş'&&bv!=='Belirtilmemiş'&&String(av).trim()!==String(bv).trim();
+      return `<div class="ancmp-spec-row"><div class="ancmp-spec-label">${esc(r[0])}</div><div class="ancmp-values"><div class="ancmp-spec-value ${different?'ancmp-different':''}">${esc(av)}</div><div class="ancmp-spec-value ${different?'ancmp-different':''}">${esc(bv)}</div></div></div>`;
+    }).join('');
+    container.innerHTML=`
+      <div class="ancmp-device-heads">
+        <div class="ancmp-device-head"><div class="ancmp-device-name">${esc(leftName)}</div><div class="ancmp-device-meta">API eşleşmesi: ${esc(leftMatch)}</div><div class="ancmp-device-price">${esc(money(leftUsd))}</div></div>
+        <div class="ancmp-device-head"><div class="ancmp-device-name">${esc(rightName)}</div><div class="ancmp-device-meta">API eşleşmesi: ${esc(rightMatch)}</div><div class="ancmp-device-price">${esc(money(rightUsd))}</div></div>
+      </div>
+      <div class="ancmp-specs">${rows}</div>
+      <div class="ancmp-match-note">Teknik bilgiler MobileAPI.dev cihaz veritabanından otomatik alınır. Ürün satış fiyatı AnubisGsm listesinden gösterilir. Bazı cihazlarda bulunmayan bilgiler “Belirtilmemiş” görünür. Benzer ama kesin olmayan model eşleşmeleri otomatik olarak reddedilir.</div>`;
+    container.style.display='block';
+  }
+  function populateOptions(){
+    const one=$('ancmpDevice1'),two=$('ancmpDevice2');if(!one||!two)return;
+    const old1=one.value,old2=two.value;
+    const list=Array.isArray(products)?products:[];
+    const options=list.map((p,i)=>({p,i})).filter(x=>x.p&&x.p.model&&String(x.p.model).trim());
+    const html='<option value="">Telefon seç…</option>'+options.map(({p})=>{
+      const label=`${p.model}${p.storage?' · '+p.storage:''} — ${money(usdPrice(p))}`;
+      return `<option value="${esc(p.id)}">${esc(label)}</option>`;
+    }).join('');
+    one.innerHTML=html;two.innerHTML=html;
+    if(options.some(x=>String(x.p.id)===old1))one.value=old1;
+    if(options.some(x=>String(x.p.id)===old2))two.value=old2;
+    if(!one.value&&options.length)one.value=String(options[0].p.id);
+    if(!two.value&&options.length>1)two.value=String(options[1].p.id);
+  }
+  function findProduct(id){return (Array.isArray(products)?products:[]).find(p=>String(p.id)===String(id));}
+  async function startCompare(){
+    const one=$('ancmpDevice1'),two=$('ancmpDevice2'),button=$('ancmpCompareBtn'),status=$('ancmpStatus'),result=$('ancmpResult');
+    const left=findProduct(one?.value),right=findProduct(two?.value);
+    if(!left||!right){status.textContent='Karşılaştırmak için iki telefon seç.';return;}
+    if(String(left.id)===String(right.id)){status.textContent='Lütfen birbirinden farklı iki telefon seç.';return;}
+    button.disabled=true;button.textContent='Özellikler alınıyor…';status.textContent='Teknik özellikler otomatik aranıyor. İlk sorgu birkaç saniye sürebilir.';result.style.display='none';
+    try{
+      const [ld,rd]=await Promise.all([getSpecs(left),getSpecs(right)]);
+      renderResults(left,right,ld,rd);status.textContent='Karşılaştırma hazır. Fiyatlar seçili para birimine göre hesaplandı.';
+    }catch(error){
+      console.error('Telefon karşılaştırma:',error);
+      status.textContent=error?.message||'Teknik özellik alınamadı.';
+      result.style.display='block';result.innerHTML=`<div style="padding:13px;border:1px solid rgba(248,113,113,.28);border-radius:12px;background:rgba(127,29,29,.12);color:#fca5a5;font-size:12px;line-height:1.6"><b>Teknik özellik bağlantısı kurulamadı.</b><br>${esc(error?.message||'Bilinmeyen hata')}<br><small>Supabase'te <code>phone-specs</code> Edge Function yayımlanıp MobileAPI anahtarı secret olarak tanımlanmalı.</small></div>`;
+    }finally{button.disabled=false;button.textContent='⚖️ Telefonları Karşılaştır';}
+  }
+  function inject(){
+    if($('phoneCompareSection'))return;
+    const anchor=document.querySelector('.desktop-table-view');if(!anchor)return;
+    const section=document.createElement('section');section.id='phoneCompareSection';section.className='ancmp-section';
+    section.innerHTML=`
+      <div class="ancmp-head"><div><h2 class="ancmp-title">⚖️ Telefon Karşılaştırma</h2><p class="ancmp-note">İki telefonu seç; fiyat, ekran, işlemci, kamera, pil ve diğer teknik özellikleri yan yana gör.</p></div><span class="ancmp-chip">✦ Otomatik teknik özellik</span></div>
+      <div class="ancmp-selects">
+        <div class="ancmp-select-box"><label class="ancmp-label" for="ancmpDevice1">1. Telefon</label><select class="ancmp-select" id="ancmpDevice1"><option value="">Telefon seç…</option></select></div>
+        <div class="ancmp-select-box"><label class="ancmp-label" for="ancmpDevice2">2. Telefon</label><select class="ancmp-select" id="ancmpDevice2"><option value="">Telefon seç…</option></select></div>
+      </div>
+      <div class="ancmp-actions"><button type="button" id="ancmpCompareBtn" class="ancmp-compare-btn">⚖️ Telefonları Karşılaştır</button><button type="button" id="ancmpResetBtn" class="ancmp-reset-btn">Temizle</button><span id="ancmpStatus" class="ancmp-status" aria-live="polite">İki telefon seçerek karşılaştırmayı başlat.</span></div>
+      <div id="ancmpResult" class="ancmp-result" aria-live="polite"></div>`;
+    anchor.parentNode.insertBefore(section,anchor);
+    $('ancmpCompareBtn').addEventListener('click',startCompare);
+    $('ancmpResetBtn').addEventListener('click',()=>{ $('ancmpResult').style.display='none';$('ancmpResult').innerHTML='';$('ancmpStatus').textContent='İki telefon seçerek karşılaştırmayı başlat.';lastComparison=null; });
+    populateOptions();
+  }
+  function refresh(){populateOptions();if(lastComparison){renderResults(lastComparison.left,lastComparison.right,lastComparison.leftData,lastComparison.rightData);}}
+  const ready=()=>{inject();populateOptions();};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready,{once:true});else ready();
+  const originalRender=window.renderTable;
+  if(typeof originalRender==='function'){
+    window.renderTable=function(){const result=originalRender.apply(this,arguments);setTimeout(refresh,0);return result;};
+  }
+  const originalCurrencySetter=window.setDisplayCurrency;
+  if(typeof originalCurrencySetter==='function'){
+    window.setDisplayCurrency=function(){const result=originalCurrencySetter.apply(this,arguments);setTimeout(refresh,0);return result;};
+  }
+  document.addEventListener('change',e=>{if(e.target?.id==='dollarRate')setTimeout(refresh,0);});
+  window.addEventListener('storage',e=>{if(e.key==='anubis_usd_try'||e.key==='anubis_usd_eur')refresh();});
+})();
+</script>
+

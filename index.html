@@ -2038,16 +2038,17 @@ body.anubis-light-theme .reg-choice-btn{background:#fff;color:#172033}
             <svg viewBox="0 0 24 24"><path d="m12 21.35-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54z"/></svg>
             Favoriler
         </button>
-        <a href="https://wa.me/905345513747?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="nav-bar-item nav-bar-whatsapp" onclick="triggerHaptic()">
+        <a href="https://wa.me/905345513747?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="nav-bar-item nav-bar-whatsapp" aria-label="WhatsApp İletişim Hattı" title="WhatsApp İletişim Hattı" onclick="triggerHaptic()">
             <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/></svg>
-            WhatsApp
+            <span class="whatsapp-nav-label">WhatsApp<br>İletişim Hattı</span>
         </a>
     </div>
 
-    <a href="https://wa.me/905345513747?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" title="WhatsApp ile İletişime Geç">
+    <a href="https://wa.me/905345513747?text=Merhaba,%20fiyat%20listesinden%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" aria-label="WhatsApp İletişim Hattı" title="WhatsApp İletişim Hattı">
         <svg viewBox="0 0 24 24">
             <path d="M12.031 6.172c-3.183 0-5.78 2.597-5.78 5.78 0 1.018.267 1.972.733 2.805l-1.107 4.043 4.141-1.088c.801.442 1.737.697 2.73 .697 3.183 0 5.78-2.597 5.78-5.78s-2.597-5.78-5.78-5.78zm3.36 8.21c-.144.407-.834.775-1.161.824-.311.047-.707.086-1.139-.068-.263-.093-.6-.205-1.031-.397-1.815-.796-3.003-2.632-3.095-2.753-.092-.122-.741-.986-.741-1.882 0-.896.47-1.338.637-1.52.167-.183.364-.229.485-.229.121 0 .242.002.348.007.111.005.26-.041.407.311.151.363.515 1.259.56 1.351.045.092.075.2.011.321-.061.122-.092.198-.183.304-.092.106-.193.236-.277.316-.092.092-.188.192-.081.375.107.183.475.785 1.021 1.272.701.624 1.291.817 1.474.908.183.092.29.076.397-.046.107-.122.46-.534.582-.717.122-.183.244-.153.411-.092.167.061 1.061.501 1.243.593.183.092.304.137.35.213.045.076.045.441-.099.848z"/>
         </svg>
+        <span class="whatsapp-float-label">WhatsApp İletişim Hattı</span>
     </a>
 
     <header>
@@ -3609,7 +3610,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                         <td>${registrationPriceStack(item, rate)}</td>
                         <td class="price-display">${registrationTlStack(item, rate)}</td>
                         <td><span class="badge-green">${item.stock || "HAZIR STOK"}</span></td>
-                        <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
+                        <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp sipariş bağlantısı hazırlandı!');">🛒 Sipariş Et</a></td>
                         ${isAdmin ? `<td colspan="2"><button class="quick-price-edit-btn" onclick="event.stopPropagation(); openQuickPriceEditor(${item.originalIndex})">✏️ Fiyat Düzenle</button><button class="product-edit-btn" style="margin-top:5px" onclick="event.stopPropagation(); openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button></td><td class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal.toLocaleString('tr-TR')} $</td>` : ''}
                         ${isAdmin ? `<td><button class="admin-btn-danger" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Sil</button></td>` : ''}
                     `;
@@ -3649,7 +3650,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                                 </div>
                                 <div class="m-stock-dot">${item.stock || 'STOKTA'}</div>
                             </div>
-                            <a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp açılıyor...');">📲 WhatsApp'tan Sor</a>
+                            <a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, ' + item.model + ' (' + item.storage + ') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation(); triggerHaptic(); showToast('WhatsApp açılıyor...');">🛒 Sipariş Et</a>
                         </div>
                         ${isAdmin ? `<div style="font-size:11px;color:var(--text-muted);margin-top:5px;">Alış: <b>${costVal}$</b> • Kayıtsız: <b>${usdVal}$</b> • Kâr: <b class="${profitVal >= 0 ? 'profit-positive' : 'profit-negative'}">${profitVal}$</b>${getRegisteredUsd(item)>0 ? ` • Kayıtlı: <b>${getRegisteredUsd(item)}$</b> • Kâr: <b class="${getRegisteredProfitUsd(item) >= 0 ? 'profit-positive' : 'profit-negative'}">${getRegisteredProfitUsd(item)}$</b>` : ''}</div><button class="product-edit-btn" style="margin-top:7px;" onclick="event.stopPropagation(); openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button><button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation(); triggerHaptic(); deleteProduct(${item.originalIndex})">Ürünü Sil</button>` : ''}
                     `;
@@ -5413,7 +5414,7 @@ button.final-reg-pill:active{transform:scale(.97);}
           <td class="final-status-cell">${statusControl(item)}</td>
           <td class="final-price-cell"><span class="final-main-price">${getSaleUsd(item)>0?mainPrice(usd):'Fiyat sorunuz'}</span>${isAdmin?`<span class="final-admin-price-note">Kayıtsız fiyat: ${usd.toLocaleString('tr-TR')} $</span>`:''}</td>
           <td><span class="badge-green">${esc(item.stock||'HAZIR STOK')}</span></td>
-          <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, '+item.model+' ('+item.storage+') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation();triggerHaptic();showToast('WhatsApp sipariş bağlantısı hazırlandı!');">📲 Sipariş</a></td>
+          <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, '+item.model+' ('+item.storage+') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation();triggerHaptic();showToast('WhatsApp sipariş bağlantısı hazırlandı!');">🛒 Sipariş Et</a></td>
           ${isAdmin?`<td><button class="quick-price-edit-btn" onclick="event.stopPropagation();openQuickPriceEditor(${item.originalIndex})">✏️ Fiyat Düzenle</button><button class="product-edit-btn" style="margin-top:5px" onclick="event.stopPropagation();openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button></td><td class="${profit>=0?'profit-positive':'profit-negative'}">${profit.toLocaleString('tr-TR')} $</td><td><button class="admin-btn-danger" onclick="event.stopPropagation();triggerHaptic();deleteProduct(${item.originalIndex})">Sil</button></td>`:''}
         `;
         tr.addEventListener('click',()=>{ triggerHaptic(); openModalSafe(item); });
@@ -5443,7 +5444,7 @@ button.final-reg-pill:active{transform:scale(.97);}
               <div><div class="final-mobile-price">${usd>0?mainPrice(usd):'Fiyat sorunuz'}</div></div>
               <div class="m-stock-dot">${esc(item.stock||'STOKTA')}</div>
             </div>
-            <a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, '+item.model+' ('+item.storage+') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation();triggerHaptic();showToast('WhatsApp açılıyor...');">📲 WhatsApp'tan Sor</a>
+            <a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, '+item.model+' ('+item.storage+') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation();triggerHaptic();showToast('WhatsApp açılıyor...');">🛒 Sipariş Et</a>
           </div>
           ${isAdmin?`<div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Alış: <b>${cost}</b> $ • Satış: <b>${usd}</b> $ • Kâr: <b class="${profit>=0?'profit-positive':'profit-negative'}">${profit}</b> $</div><button class="product-edit-btn" style="margin-top:7px;" onclick="event.stopPropagation();openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button><button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation();triggerHaptic();deleteProduct(${item.originalIndex})">Ürünü Sil</button>`:''}
         `;
@@ -5509,6 +5510,71 @@ button.final-reg-pill:active{transform:scale(.97);}
 @media (max-width: 390px) {
   .filter-tab { padding:8px 10px !important; font-size:10px !important; }
   .anubis-chat-fab { padding:11px 13px !important; font-size:11px !important; }
+}
+</style>
+
+
+
+<style id="anubis-final-mobile-order-polish">
+/* Clear separation between product ordering and general WhatsApp contact. */
+.whatsapp-float {
+  width:auto !important; height:auto !important; min-height:48px;
+  padding:12px 17px !important; box-sizing:border-box;
+  display:flex !important; align-items:center; justify-content:center; gap:9px;
+  border-radius:999px !important; white-space:nowrap;
+  background:linear-gradient(135deg,#25d366,#128c7e) !important;
+  box-shadow:0 8px 22px rgba(37,211,102,.28) !important;
+}
+.whatsapp-float svg { flex:0 0 25px; width:25px !important; height:25px !important; }
+.whatsapp-float-label { display:inline-block; font-size:12px; font-weight:900; line-height:1.1; }
+.m-order-btn {
+  background:linear-gradient(135deg,#19c7b5,#0d9f91) !important;
+  color:#041513 !important; font-weight:950 !important;
+  min-height:42px; padding:10px 12px !important; border-radius:11px !important;
+  justify-content:center !important; width:100%; box-sizing:border-box;
+}
+@media (max-width:700px) {
+  /* Smaller, denser mobile product cards without shrinking text too far. */
+  .m-product-card {
+    padding:10px !important; gap:7px !important; border-radius:15px !important;
+    box-shadow:0 7px 18px rgba(0,0,0,.23) !important;
+  }
+  .m-card-header { min-height:0 !important; gap:6px !important; }
+  .m-card-title { font-size:14px !important; line-height:1.2 !important; }
+  .mobile-final-status { margin-top:4px !important; }
+  .mobile-final-status .final-reg-pill { min-height:32px !important; padding:5px 7px !important; font-size:10px !important; }
+  .m-card-img { height:124px !important; border-radius:11px !important; }
+  .m-card-img img { width:88% !important; height:88% !important; }
+  .m-card-details { gap:5px !important; }
+  .m-detail-box { min-height:36px !important; padding:6px 8px !important; }
+  .m-detail-label { font-size:8px !important; }
+  .m-detail-val { font-size:11px !important; }
+  .m-card-footer { padding-top:8px !important; }
+  .m-product-card .final-mobile-price-wrap { margin-bottom:7px !important; }
+  .m-product-card .final-mobile-price { font-size:19px !important; }
+  .m-stock-dot { padding:5px 7px !important; max-width:100px; }
+  .m-order-btn { min-height:39px !important; padding:9px 12px !important; font-size:12px !important; }
+  /* The WhatsApp contact item is separate from the order button. */
+  .nav-bar-whatsapp { gap:2px !important; }
+  .nav-bar-whatsapp .whatsapp-nav-label {
+    display:block; max-width:100%; width:100%; white-space:normal;
+    text-align:center; font-size:7.5px; font-weight:900; line-height:1.05;
+    letter-spacing:-.12px; overflow-wrap:anywhere;
+  }
+  .nav-bar-whatsapp svg { width:18px !important; height:18px !important; }
+  .whatsapp-float { display:none !important; }
+  .anubis-chat-fab { bottom:calc(76px + env(safe-area-inset-bottom)) !important; }
+}
+@media (max-width:390px) {
+  .m-product-card { padding:9px !important; gap:6px !important; }
+  .m-card-img { height:112px !important; }
+  .mobile-final-status .final-reg-pill { min-height:30px !important; font-size:9.5px !important; }
+  .m-product-card .final-mobile-price { font-size:18px !important; }
+  .m-order-btn { min-height:38px !important; font-size:11.5px !important; }
+  .nav-bar-whatsapp .whatsapp-nav-label { font-size:7px; }
+}
+@media (min-width:701px) {
+  .m-order-btn { min-height:42px; }
 }
 </style>
 

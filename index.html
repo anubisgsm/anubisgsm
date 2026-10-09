@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ANUBIS GSM | Premium Teknoloji Marketi</title>
+    <meta name="description" content="ANUBIS GSM telefon ve teknoloji mağazası. iPhone, Samsung, Xiaomi ve diğer akıllı telefon modellerini fiyat, hafıza ve kayıt durumuyla inceleyin; WhatsApp üzerinden bilgi alın." />
+    <meta name="theme-color" content="#05070a" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ANUBIS GSM" />
+    <meta property="og:title" content="ANUBIS GSM | Telefon ve Teknoloji Marketi" />
+    <meta property="og:description" content="Telefon modellerini, güncel satış fiyatlarını ve stok durumunu inceleyin. ANUBIS GSM ile WhatsApp üzerinden iletişime geçin." />
+    <meta name="twitter:card" content="summary" />
     <style>
         :root {
             --bg-deep: #05070a;
@@ -2198,7 +2205,22 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                 <button type="button" class="admin-tool-btn" onclick="triggerHaptic(); document.getElementById('backupFileInput').click()">⬆️ Yedekten Geri Yükle</button>
                 <input type="file" id="backupFileInput" accept="application/json,.json" style="display:none" onchange="importBackup(this)">
             </div>
-            <div class="backup-note">Yedek; ürünleri, kategorileri ve son kur ayarını tek JSON dosyasında saklar.</div>
+            <section id="anubisBulkTools" class="anubis-bulk-tools" aria-label="Toplu ürün yönetimi">
+                <h3>⚙️ Toplu Fiyat ve Stok Yönetimi</h3>
+                <label for="anubisBulkCategory">Uygulanacak kategori</label>
+                <select id="anubisBulkCategory"><option value="__ALL__">Tüm kategoriler</option></select>
+                <div class="anubis-bulk-grid">
+                    <div><label for="anubisBulkPriceMode">Fiyat işlemi</label><select id="anubisBulkPriceMode"><option value="percent">Yüzde değişim (%)</option><option value="amount">Sabit tutar ekle/çıkar ($)</option></select></div>
+                    <div><label for="anubisBulkPriceAmount">Değer</label><input id="anubisBulkPriceAmount" type="number" step="0.01" inputmode="decimal" placeholder="Örn. 5 veya -10"></div>
+                </div>
+                <button type="button" class="admin-tool-btn" onclick="anubisApplyBulkPrice()">💲 Seçili ürünlerin satış fiyatını güncelle</button>
+                <div class="anubis-bulk-grid" style="margin-top:10px">
+                    <div style="grid-column:1/-1"><label for="anubisBulkStockValue">Yeni stok durumu</label><input id="anubisBulkStockValue" type="text" maxlength="40" placeholder="Örn. HAZIR STOK, TÜKENDİ, 3 ADET"></div>
+                </div>
+                <button type="button" class="admin-tool-btn" onclick="anubisApplyBulkStock()">📦 Seçili ürünlerin stok bilgisini değiştir</button>
+                <p class="backup-note">Toplu işlemler yalnızca seçilen kategoriye (veya tüm ürünlere) uygulanır. Değişiklik öncesi onay istenir; fiyat değişimi alış maliyetini değiştirmez.</p>
+            </section>
+            <div class="backup-note">Yedek; ürünleri, kategorileri, fiyatları, stokları ve son kur ayarını tek JSON dosyasında saklar.</div>
             <button class="admin-btn" onclick="triggerHaptic(); addNewProduct()">Listeye Ürün Ekle</button>
         </div>
 
@@ -2324,6 +2346,7 @@ SAMSUNG S25 ULTRA 12/512GB KAYITSIZ 1200$" oninput="parseSmartPaste(this.value)"
                     <div class="glorious-actions">
                         <button class="glorious-btn-secondary" onclick="triggerHaptic(); copyModalDetails()">📋 Kopyala</button>
                         <button class="glorious-btn-secondary" id="modalFavoriteBtn" onclick="triggerHaptic(); toggleFavorite(activeDetailItem?.id, event)">♡ Favori</button>
+                        <button class="glorious-btn-secondary" id="modalShareBtn" onclick="triggerHaptic(); shareActiveModalProduct()">↗ Paylaş</button>
                         <a href="#" id="modalWhatsAppBtn" target="_blank" class="glorious-btn-primary" onclick="triggerHaptic()">📲 WhatsApp Sipariş</a>
                     </div>
                 </div>
@@ -3967,6 +3990,33 @@ function v12GetUsd(p) {
     return Number(p.saleUsd ?? p.usd) || 0;
 }
 
+function v12ShareProduct(id) {
+    const all = Array.isArray(products) ? products : [];
+    const p = all.find(x => String(x.id) === String(id)) || (Number.isInteger(Number(id)) ? all[Number(id)] : null);
+    if (!p) return;
+    const price = v12GetUsd(p);
+    const text = `ANUBIS GSM | ${p.model || 'Ürün'} (${p.storage || '-'})\nFiyat: ${price > 0 ? formatUsdDisplay(price) : 'Fiyat sorunuz'}\nStok: ${p.stock || 'HAZIR STOK'}\n${location.href}`;
+    if (navigator.share) {
+        navigator.share({ title: `ANUBIS GSM - ${p.model || 'Ürün'}`, text }).catch(() => {});
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast('Ürün paylaşım bilgileri kopyalandı!')).catch(() => showToast(text));
+    } else {
+        showToast(text);
+    }
+}
+
+function v12DuplicateProduct(index) {
+    if (!isAdmin) return;
+    const source = products?.[index];
+    if (!source) return;
+    const copy = normalizeProduct({ ...source, id: makeProductId(), model: `${source.model || 'Ürün'} (Kopya)` });
+    products.splice(index + 1, 0, copy);
+    saveToStorage();
+    renderTable();
+    if (typeof scheduleCloudSync === 'function') scheduleCloudSync();
+    showToast('Ürün kopyalandı. Model adını düzenleyebilirsin.');
+}
+
 function v12SortProducts(list) {
     if (v12SortMode === 'priceAsc') {
         return [...list].sort((a,b) => v12GetUsd(a) - v12GetUsd(b));
@@ -5413,9 +5463,9 @@ button.final-reg-pill:active{transform:scale(.97);}
           <td>${esc(item.storage||'-')}</td>
           <td class="final-status-cell">${statusControl(item)}</td>
           <td class="final-price-cell"><span class="final-main-price">${getSaleUsd(item)>0?mainPrice(usd):'Fiyat sorunuz'}</span>${isAdmin?`<span class="final-admin-price-note">Kayıtsız fiyat: ${usd.toLocaleString('tr-TR')} $</span>`:''}</td>
-          <td><span class="badge-green">${esc(item.stock||'HAZIR STOK')}</span></td>
-          <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, '+item.model+' ('+item.storage+') hakkında bilgi almak istiyorum.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation();triggerHaptic();showToast('WhatsApp sipariş bağlantısı hazırlandı!');">🛒 Sipariş Et</a></td>
-          ${isAdmin?`<td><button class="quick-price-edit-btn" onclick="event.stopPropagation();openQuickPriceEditor(${item.originalIndex})">✏️ Fiyat Düzenle</button><button class="product-edit-btn" style="margin-top:5px" onclick="event.stopPropagation();openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button></td><td class="${profit>=0?'profit-positive':'profit-negative'}">${profit.toLocaleString('tr-TR')} $</td><td><button class="admin-btn-danger" onclick="event.stopPropagation();triggerHaptic();deleteProduct(${item.originalIndex})">Sil</button></td>`:''}
+          <td><span class="badge-green" style="${v12HasStock(item)?'color:#52e0a2;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.28)':'color:#ff8792;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3)'}">${esc(item.stock||'HAZIR STOK')}</span></td>
+          <td><a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, '+item.model+' ('+item.storage+') hakkında bilgi almak istiyorum. Fiyat: '+(getSaleUsd(item)>0?formatUsdDisplay(getSaleUsd(item)):'Fiyat sorunuz')+'. Stok: '+(item.stock||'HAZIR STOK')+'.')}" target="_blank" class="order-btn-table" onclick="event.stopPropagation();triggerHaptic();showToast('WhatsApp sipariş bağlantısı hazırlandı!');">🛒 Sipariş Et</a></td>
+          ${isAdmin?`<td><button class="quick-price-edit-btn" onclick="event.stopPropagation();openQuickPriceEditor(${item.originalIndex})">✏️ Fiyat Düzenle</button><button class="product-edit-btn" style="margin-top:5px" onclick="event.stopPropagation();openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button><button class="product-edit-btn" style="margin-top:5px" onclick="event.stopPropagation();v12DuplicateProduct(${item.originalIndex})">⧉ Kopyala</button></td><td class="${profit>=0?'profit-positive':'profit-negative'}">${profit.toLocaleString('tr-TR')} $</td><td><button class="admin-btn-danger" onclick="event.stopPropagation();triggerHaptic();deleteProduct(${item.originalIndex})">Sil</button></td>`:''}
         `;
         tr.addEventListener('click',()=>{ triggerHaptic(); openModalSafe(item); });
         tbody.appendChild(tr);
@@ -5431,7 +5481,7 @@ button.final-reg-pill:active{transform:scale(.97);}
             </div>
             <div style="display:flex;align-items:center;gap:7px;">
               <span class="badge-green">${esc(item.stock||'HAZIR STOK')}</span>
-              ${!isAdmin?`<button class="favorite-btn ${isFavorite(item.id)?'active':''}" aria-label="Favori" onclick="toggleFavorite('${String(item.id).replace(/'/g,"\\\\'")}', event)">${isFavorite(item.id)?'♥':'♡'}</button>`:''}
+              ${!isAdmin?`<button class="favorite-btn ${isFavorite(item.id)?'active':''}" aria-label="Favori" onclick="toggleFavorite('${String(item.id).replace(/'/g,"\\\\'")}', event)">${isFavorite(item.id)?'♥':'♡'}</button><button type="button" class="favorite-btn" aria-label="Ürünü paylaş" title="Ürünü paylaş" onclick="event.stopPropagation();v12ShareProduct(${item.originalIndex})">↗</button>`:''}
             </div>
           </div>
           <div class="m-card-img">${item.image?`<img src="${item.image}" alt="${esc(item.model)}">`:`<span style="color:var(--text-muted);font-size:11px;">Görsel Yok</span>`}</div>
@@ -5442,11 +5492,11 @@ button.final-reg-pill:active{transform:scale(.97);}
           <div class="m-card-footer">
             <div class="final-mobile-price-wrap">
               <div><div class="final-mobile-price">${usd>0?mainPrice(usd):'Fiyat sorunuz'}</div></div>
-              <div class="m-stock-dot">${esc(item.stock||'STOKTA')}</div>
+              <div class="m-stock-dot" style="${v12HasStock(item)?'color:#52e0a2;border-color:rgba(34,197,94,.35)':'color:#ff8792;border-color:rgba(239,68,68,.4)'}">${esc(item.stock||'HAZIR STOK')}</div>
             </div>
-            <a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, '+item.model+' ('+item.storage+') sipariş vermek istiyorum.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation();triggerHaptic();showToast('WhatsApp açılıyor...');">🛒 Sipariş Et</a>
+            <a href="https://wa.me/905345513747?text=${encodeURIComponent('Merhaba, '+item.model+' ('+item.storage+') sipariş vermek istiyorum. Fiyat: '+(getSaleUsd(item)>0?formatUsdDisplay(getSaleUsd(item)):'Fiyat sorunuz')+'. Stok: '+(item.stock||'HAZIR STOK')+'.')}" target="_blank" class="m-order-btn" onclick="event.stopPropagation();triggerHaptic();showToast('WhatsApp açılıyor...');">🛒 Sipariş Et</a>
           </div>
-          ${isAdmin?`<div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Alış: <b>${cost}</b> $ • Satış: <b>${usd}</b> $ • Kâr: <b class="${profit>=0?'profit-positive':'profit-negative'}">${profit}</b> $</div><button class="product-edit-btn" style="margin-top:7px;" onclick="event.stopPropagation();openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button><button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation();triggerHaptic();deleteProduct(${item.originalIndex})">Ürünü Sil</button>`:''}
+          ${isAdmin?`<div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Alış: <b>${cost}</b> $ • Satış: <b>${usd}</b> $ • Kâr: <b class="${profit>=0?'profit-positive':'profit-negative'}">${profit}</b> $</div><button class="product-edit-btn" style="margin-top:7px;" onclick="event.stopPropagation();openProductEditor(${item.originalIndex})">⚙️ Ürünü Düzenle</button><button class="product-edit-btn" style="margin-top:5px;" onclick="event.stopPropagation();v12DuplicateProduct(${item.originalIndex})">⧉ Ürünü Kopyala</button><button class="admin-btn-danger" style="margin-top:5px;" onclick="event.stopPropagation();triggerHaptic();deleteProduct(${item.originalIndex})">Ürünü Sil</button>`:''}
         `;
         card.addEventListener('click',()=>{ triggerHaptic(); openModalSafe(item); });
         cards.appendChild(card);
@@ -5765,6 +5815,84 @@ button.final-reg-pill:active{transform:scale(.97);}
   }
 }
 </style>
+
+<script id="anubis-seo-bulk-enhancements-v1">
+(function(){
+  const style=document.createElement('style');
+  style.textContent=`
+    .anubis-bulk-tools{margin:14px 0;padding:14px;border:1px solid rgba(25,199,181,.32);border-radius:14px;background:linear-gradient(145deg,rgba(8,15,22,.96),rgba(18,22,30,.96));color:var(--text-main)}
+    .anubis-bulk-tools h3{margin:0 0 12px;color:#f3cf63;font-size:14px}
+    .anubis-bulk-tools label{display:block;margin:8px 0 5px;color:var(--text-muted);font-size:11px;font-weight:800}
+    .anubis-bulk-tools input,.anubis-bulk-tools select{width:100%;min-width:0;box-sizing:border-box;min-height:40px;padding:9px 10px;border:1px solid rgba(255,255,255,.15);border-radius:9px;background:#0a1017;color:#f8fafc}
+    .anubis-bulk-tools .admin-tool-btn{width:100%;margin-top:9px;min-height:40px;white-space:normal}
+    .anubis-bulk-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    @media(max-width:520px){.anubis-bulk-tools{padding:11px}.anubis-bulk-grid{grid-template-columns:1fr}}
+  `;
+  document.head.appendChild(style);
+  function currentCategory(){return document.getElementById('anubisBulkCategory')?.value||'__ALL__';}
+  function targets(){const cat=currentCategory();return (Array.isArray(products)?products:[]).filter(p=>cat==='__ALL__'||String(p.category||'DİĞER').toLocaleUpperCase('tr-TR')===cat);}
+  window.populateAnubisBulkCategories=function(){
+    const select=document.getElementById('anubisBulkCategory');if(!select)return;
+    const current=select.value||'__ALL__';const cats=[...new Set([...(Array.isArray(categoryOrder)?categoryOrder:[]),...(Array.isArray(products)?products.map(p=>p.category):[])].filter(Boolean).map(c=>String(c).toLocaleUpperCase('tr-TR')))];
+    select.innerHTML='<option value="__ALL__">Tüm kategoriler</option>'+cats.map(c=>`<option value="${String(c).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}">${String(c).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</option>`).join('');
+    if([...select.options].some(o=>o.value===current))select.value=current;
+  };
+  window.anubisApplyBulkPrice=function(){
+    if(!isAdmin){alert('Bu işlem için yönetici girişi gerekli.');return;}
+    const amount=Number(String(document.getElementById('anubisBulkPriceAmount')?.value||'').replace(',','.'));
+    const mode=document.getElementById('anubisBulkPriceMode')?.value||'percent';const list=targets();
+    if(!Number.isFinite(amount)||amount===0){alert('Lütfen sıfırdan farklı bir değer gir.');return;}
+    if(!list.length){alert('Bu seçimde ürün bulunamadı.');return;}
+    const desc=mode==='percent'?`satış fiyatları %${amount>0?'+':''}${amount} değiştirilecek`:`satış fiyatlarına ${amount>0?'+':''}${amount} $ eklenecek`;
+    if(!confirm(`${list.length} ürünün ${desc}. Kayıtlı satış fiyatları da aynı işlemle güncellenecek. Devam edilsin mi?`))return;
+    list.forEach(p=>{
+      const sale=Math.max(0,Number(p.saleUsd??p.usd)||0);const update=v=>Math.max(0,Math.round((mode==='percent'?v*(1+amount/100):v+amount)*100)/100);
+      const next=update(sale);p.saleUsd=next;p.usd=next;
+      const reg=Number(p.registeredUsd)||0;if(reg>0)p.registeredUsd=update(reg);
+    });
+    if(typeof saveToStorage==='function')saveToStorage();else localStorage.setItem(MASTER_STORAGE_KEY,JSON.stringify(products));
+    if(typeof renderTable==='function')renderTable();if(typeof renderCategoryManager==='function')renderCategoryManager();
+    document.getElementById('anubisBulkPriceAmount').value='';
+    if(typeof showToast==='function')showToast(`${list.length} ürünün fiyatı güncellendi.`);else alert('Fiyatlar güncellendi.');
+  };
+  window.anubisApplyBulkStock=function(){
+    if(!isAdmin){alert('Bu işlem için yönetici girişi gerekli.');return;}
+    const stock=String(document.getElementById('anubisBulkStockValue')?.value||'').trim().toLocaleUpperCase('tr-TR');const list=targets();
+    if(!stock){alert('Lütfen stok durumu gir. Örn. HAZIR STOK, TÜKENDİ veya 3 ADET.');return;}
+    if(!list.length){alert('Bu seçimde ürün bulunamadı.');return;}
+    if(!confirm(`${list.length} ürünün stok bilgisi “${stock}” olarak değiştirilecek. Devam edilsin mi?`))return;
+    list.forEach(p=>p.stock=stock);
+    if(typeof saveToStorage==='function')saveToStorage();else localStorage.setItem(MASTER_STORAGE_KEY,JSON.stringify(products));
+    if(typeof renderTable==='function')renderTable();
+    if(typeof showToast==='function')showToast(`${list.length} ürünün stok bilgisi güncellendi.`);else alert('Stok bilgileri güncellendi.');
+  };
+  window.shareActiveModalProduct=function(){
+    if(!activeDetailItem)return;
+    const idx=(Array.isArray(products)?products:[]).findIndex(p=>String(p.id)===String(activeDetailItem.id));
+    if(typeof v12ShareProduct==='function')v12ShareProduct(idx>=0?idx:activeDetailItem.id);
+  };
+  // Favori düğmesinin durumu, modal açıkken de anında yenilensin.
+  const originalToggle=window.toggleFavorite;
+  if(typeof originalToggle==='function')window.toggleFavorite=function(id,event){
+    const result=originalToggle.apply(this,arguments);
+    const btn=document.getElementById('modalFavoriteBtn');
+    if(btn&&activeDetailItem&&String(activeDetailItem.id)===String(id))btn.textContent=(typeof isFavorite==='function'&&isFavorite(id))?'♥ Favoride':'♡ Favori';
+    return result;
+  };
+  function addStructuredData(){
+    if(document.getElementById('anubis-store-jsonld'))return;
+    const node=document.createElement('script');node.type='application/ld+json';node.id='anubis-store-jsonld';
+    node.textContent=JSON.stringify({
+      '@context':'https://schema.org','@type':'Store','name':'ANUBIS GSM','description':'Telefon ve teknoloji mağazası. iPhone, Samsung, Xiaomi ve diğer akıllı telefon modelleri.','telephone':'+905345513747','priceRange':'₺₺'
+    });document.head.appendChild(node);
+  }
+  function init(){window.populateAnubisBulkCategories?.();addStructuredData();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,250));else setTimeout(init,250);
+  document.addEventListener('click',e=>{if(e.target?.closest('#adminPanel'))setTimeout(()=>window.populateAnubisBulkCategories?.(),100);});
+  window.addEventListener('load',()=>setTimeout(init,600));
+})();
+</script>
+
 </body>
 </html>
 

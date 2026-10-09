@@ -4626,7 +4626,7 @@ window.addEventListener('beforeunload',()=>{if(anubisChatChannel)supabaseClient.
 /* V17 — müşteri ürün listesini sade tut, kayıt seçimini sadece detay ekranında göster */
 .reg-price-stack,
 #modalProductUsd { display:none !important; }
-.m-card-footer > div:first-child { display:none !important; }
+.m-card-footer > div:first-child:not(.final-mobile-price-wrap) { display:none !important; }
 #subFilterContainer .sub-chip { display:none !important; }
 #subFilterContainer .sub-chip:first-child { display:block !important; }
 #modalRegistrationChoice { margin:10px 0 8px !important; }
@@ -5721,5 +5721,50 @@ button.final-reg-pill:active{transform:scale(.97);}
 }
 </style>
 
+<style id="anubis-mobile-price-always-visible-v2">
+/* Mobil ana ekranda fiyat modal açılmadan da görünür; Supabase/JS akışına dokunmaz. */
+@media (max-width: 700px) {
+  .mobile-card-grid .m-product-card .m-card-footer > .final-mobile-price-wrap {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+  }
+  .mobile-card-grid .m-product-card .m-card-footer > .final-mobile-price-wrap > div:first-child {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-width: 0 !important;
+  }
+  .mobile-card-grid .m-product-card .final-mobile-price {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #f3cf63 !important;
+    font-size: clamp(18px, 5vw, 22px) !important;
+    line-height: 1.15 !important;
+    font-weight: 950 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    text-shadow: 0 0 12px rgba(244,194,13,.16) !important;
+  }
+  .mobile-card-grid .m-product-card .final-mobile-price-wrap > div:first-child::before {
+    content: "SATIŞ FİYATI";
+    display: block;
+    margin-bottom: 3px;
+    color: #19c7b5;
+    font-size: 9px;
+    line-height: 1.1;
+    font-weight: 900;
+    letter-spacing: .7px;
+  }
+}
+</style>
 </body>
 </html>
+
